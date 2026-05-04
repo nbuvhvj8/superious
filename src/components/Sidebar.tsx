@@ -11,6 +11,7 @@ import {
   ChevronLeft,
   ChevronRight,
   Zap,
+  Sparkles,
 } from 'lucide-react';
 
 interface NavItem {
@@ -39,6 +40,12 @@ const NAV_ITEMS: NavItem[] = [
     label: 'Settings',
     href: '/settings',
     icon: <Settings size={20} />,
+  },
+  {
+    key: 'nav-onboarding',
+    label: 'Onboarding',
+    href: '/onboarding',
+    icon: <Sparkles size={20} />,
   },
 ];
 

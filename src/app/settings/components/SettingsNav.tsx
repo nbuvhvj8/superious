@@ -1,13 +1,14 @@
 'use client';
 
 import React from 'react';
-import { Key, Sliders, Download, Trash2 } from 'lucide-react';
+import { Key, Sliders, Download, Trash2, Link2 } from 'lucide-react';
 
 const NAV_ITEMS = [
-  { key: 'nav-api',      label: 'API Configuration',      href: '#api-config',      icon: <Key size={15} /> },
-  { key: 'nav-research', label: 'Research Preferences',   href: '#research-prefs',  icon: <Sliders size={15} /> },
-  { key: 'nav-export',   label: 'Export & Storage',       href: '#export-storage',  icon: <Download size={15} /> },
-  { key: 'nav-danger',   label: 'Danger Zone',            href: '#danger-zone',     icon: <Trash2 size={15} /> },
+  { key: 'nav-api',           label: 'API Configuration',    href: '#api-config',      icon: <Key size={15} /> },
+  { key: 'nav-integrations',  label: 'Integrations',         href: '#integrations',    icon: <Link2 size={15} /> },
+  { key: 'nav-research',      label: 'Research Preferences', href: '#research-prefs',  icon: <Sliders size={15} /> },
+  { key: 'nav-export',        label: 'Export & Storage',     href: '#export-storage',  icon: <Download size={15} /> },
+  { key: 'nav-danger',        label: 'Danger Zone',          href: '#danger-zone',     icon: <Trash2 size={15} /> },
 ];
 
 export default function SettingsNav() {

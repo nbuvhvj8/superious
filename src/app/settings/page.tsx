@@ -5,6 +5,7 @@ import ApiConfigSection from './components/ApiConfigSection';
 import ResearchPreferencesSection from './components/ResearchPreferencesSection';
 import ExportStorageSection from './components/ExportStorageSection';
 import DangerZoneSection from './components/DangerZoneSection';
+import GoogleDocsIntegrationSection from './components/GoogleDocsIntegrationSection';
 
 export default function SettingsPage() {
   return (
@@ -26,6 +27,7 @@ export default function SettingsPage() {
           {/* Settings Content */}
           <div className="flex-1 min-w-0 space-y-7">
             <ApiConfigSection />
+            <GoogleDocsIntegrationSection />
             <ResearchPreferencesSection />
             <ExportStorageSection />
             <DangerZoneSection />
