@@ -1,0 +1,70 @@
+'use client';
+
+import React from 'react';
+import { Clock, Search, Camera, PenLine, CheckCircle2, XCircle } from 'lucide-react';
+import type { JobStatus } from './StatusBadge';
+
+interface JobStatusBarProps {
+  status: JobStatus;
+  className?: string;
+}
+
+const STAGES: { key: JobStatus; label: string; icon: React.ReactNode }[] = [
+  { key: 'queued',         label: 'Queued',           icon: <Clock size={13} /> },
+  { key: 'researching',    label: 'Researching',       icon: <Search size={13} /> },
+  { key: 'screenshotting', label: 'Capturing Sources', icon: <Camera size={13} /> },
+  { key: 'writing',        label: 'Writing Script',    icon: <PenLine size={13} /> },
+  { key: 'done',           label: 'Done',              icon: <CheckCircle2 size={13} /> },
+];
+
+const STAGE_ORDER: Record<JobStatus, number> = {
+  queued: 0, researching: 1, screenshotting: 2, writing: 3, done: 4, failed: 4,
+};
+
+export default function JobStatusBar({ status, className = '' }: JobStatusBarProps) {
+  const currentIdx = STAGE_ORDER[status];
+  const isFailed = status === 'failed';
+
+  return (
+    <div className={`flex items-center gap-0 ${className}`}>
+      {STAGES.map((stage, i) => {
+        const isCompleted = !isFailed && i < currentIdx;
+        const isActive    = !isFailed && i === currentIdx;
+        const isFuture    = !isFailed && i > currentIdx;
+        const isFailedStage = isFailed && i === currentIdx;
+
+        return (
+          <React.Fragment key={`stage-${stage.key}`}>
+            <div className="flex flex-col items-center gap-1">
+              <div className={`
+                w-8 h-8 rounded-full flex items-center justify-center border-2 shrink-0
+                transition-all duration-300
+                ${isCompleted   ? 'bg-primary border-primary text-primary-foreground' : ''}
+                ${isActive      ? 'bg-primary/10 border-primary text-primary status-pulse' : ''}
+                ${isFuture      ? 'bg-muted border-border text-muted-foreground' : ''}
+                ${isFailedStage ? 'bg-red-100 border-red-400 text-red-500' : ''}
+              `}>
+                {isFailed && i === currentIdx ? <XCircle size={13} /> : stage.icon}
+              </div>
+              <span className={`
+                text-2xs font-semibold whitespace-nowrap
+                ${isCompleted   ? 'text-primary' : ''}
+                ${isActive      ? 'text-primary' : ''}
+                ${isFuture      ? 'text-muted-foreground' : ''}
+                ${isFailedStage ? 'text-red-500' : ''}
+              `}>
+                {isFailed && i === currentIdx ? 'Failed' : stage.label}
+              </span>
+            </div>
+            {i < STAGES.length - 1 && (
+              <div className={`
+                flex-1 h-0.5 mx-1 mt-[-14px] transition-all duration-500
+                ${i < currentIdx && !isFailed ? 'bg-primary' : 'bg-border'}
+              `} />
+            )}
+          </React.Fragment>
+        );
+      })}
+    </div>
+  );
+}
