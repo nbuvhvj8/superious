@@ -15,7 +15,7 @@ export default function WorkspaceContent() {
       <div className="space-y-1">
         <h1 className="text-2xl font-bold text-foreground tracking-tight">Research Workspace</h1>
         <p className="text-sm text-muted-foreground">
-          Submit a research prompt and ScriptForge will autonomously generate a structured video script with source evidence.
+          Submit a research prompt and outlier will autonomously generate a structured video script with source evidence.
         </p>
       </div>
 

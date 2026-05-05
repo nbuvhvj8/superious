@@ -95,7 +95,7 @@ export default function OnboardingPage() {
       {/* Logo */}
       <div className="flex items-center gap-3 mb-10">
         <AppLogo size={36} />
-        <span className="font-extrabold text-xl tracking-tight text-foreground">ScriptForge</span>
+        <span className="font-extrabold text-xl tracking-tight text-foreground">outlier</span>
       </div>
       {/* Step Indicator */}
       <div className="flex items-center gap-2 mb-10">
@@ -135,7 +135,7 @@ export default function OnboardingPage() {
               <Sparkles size={28} className="text-primary" />
             </div>
             <div className="space-y-2">
-              <h1 className="text-2xl font-extrabold text-foreground">Welcome to ScriptForge</h1>
+              <h1 className="text-2xl font-extrabold text-foreground">Welcome to outlier</h1>
               <p className="text-sm text-muted-foreground leading-relaxed">
                 Your AI-powered video script research engine. Submit a topic, get a fully researched, structured script with source evidence — ready to shoot.
               </p>
@@ -294,7 +294,7 @@ export default function OnboardingPage() {
             </div>
 
             <div className="text-xs text-muted-foreground text-center">
-              ScriptForge only requests access to create and edit documents in your Google Drive.
+              outlier only requests access to create and edit documents in your Google Drive.
             </div>
 
             <div className="flex gap-3">
@@ -324,7 +324,7 @@ export default function OnboardingPage() {
               <p className="text-sm text-muted-foreground leading-relaxed">
                 {googleStatus === 'connected'
                   ? `Google Docs is connected as ${googleEmail}. Start creating your first script.`
-                  : 'ScriptForge is ready. You can connect Google Docs anytime from Settings.'}
+                  : 'outlier is ready. You can connect Google Docs anytime from Settings.'}
               </p>
             </div>
             {googleStatus !== 'connected' && (
@@ -336,7 +336,7 @@ export default function OnboardingPage() {
               </div>
             )}
             <button onClick={handleFinish} className="btn-primary w-full text-base py-3">
-              Open ScriptForge
+              Open outlier
               <ChevronRight size={18} />
             </button>
           </div>

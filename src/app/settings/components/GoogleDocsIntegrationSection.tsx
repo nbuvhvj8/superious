@@ -91,7 +91,7 @@ export default function GoogleDocsIntegrationSection() {
         </div>
         <div>
           <h2 className="text-base font-bold text-foreground">Integrations</h2>
-          <p className="text-xs text-muted-foreground">Connect third-party services to enhance your ScriptForge workflow.</p>
+          <p className="text-xs text-muted-foreground">Connect third-party services to enhance your outlier workflow.</p>
         </div>
       </div>
 
@@ -172,7 +172,7 @@ export default function GoogleDocsIntegrationSection() {
         )}
 
         <p className="text-2xs text-muted-foreground">
-          ScriptForge requests access to create and edit Google Docs files only. Your other Drive files are not accessible.
+          outlier requests access to create and edit Google Docs files only. Your other Drive files are not accessible.
         </p>
       </div>
     </section>

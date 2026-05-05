@@ -3,15 +3,14 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import AppLogo from '@/components/ui/AppLogo';
 import {
-  FlaskConical,
-  FileVideo,
+  Microscope,
+  BookOpenText,
   Settings,
-  ChevronLeft,
-  ChevronRight,
-  Zap,
-  Sparkles,
+  PanelLeftClose,
+  PanelLeftOpen,
+  Feather,
+  SwatchBook,
 } from 'lucide-react';
 
 interface NavItem {
@@ -27,13 +26,13 @@ const NAV_ITEMS: NavItem[] = [
     key: 'nav-workspace',
     label: 'Research Workspace',
     href: '/',
-    icon: <FlaskConical size={20} />,
+    icon: <Microscope size={20} />,
   },
   {
     key: 'nav-jobs',
     label: 'Job Detail',
     href: '/job-detail',
-    icon: <FileVideo size={20} />,
+    icon: <BookOpenText size={20} />,
   },
   {
     key: 'nav-settings',
@@ -45,7 +44,7 @@ const NAV_ITEMS: NavItem[] = [
     key: 'nav-onboarding',
     label: 'Onboarding',
     href: '/onboarding',
-    icon: <Sparkles size={20} />,
+    icon: <SwatchBook size={20} />,
   },
 ];
 
@@ -63,21 +62,15 @@ export default function Sidebar() {
     >
       {/* Logo */}
       <div className={`flex items-center h-16 px-4 border-b border-border gap-3 overflow-hidden`}>
-        <div className="shrink-0">
-          <AppLogo size={32} />
-        </div>
         {!collapsed && (
-          <span className="font-extrabold text-base tracking-tight text-foreground whitespace-nowrap overflow-hidden">
-            ScriptForge
+          <span className="font-extrabold text-base tracking-tight text-foreground whitespace-nowrap overflow-hidden italic">
+            outlier
           </span>
         )}
       </div>
 
       {/* Nav Items */}
       <nav className="flex-1 py-4 px-2 space-y-1 overflow-hidden">
-        {!collapsed && (
-          <p className="section-label px-2 mb-3">Navigation</p>
-        )}
         {NAV_ITEMS.map((item) => {
           const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href));
           return (
@@ -128,7 +121,7 @@ export default function Sidebar() {
           flex items-center gap-2 px-3 py-2 rounded-lg bg-secondary/30 border border-secondary
           ${collapsed ? 'justify-center' : ''}
         `}>
-          <Zap size={14} className="text-primary shrink-0 status-pulse" />
+          <Feather size={14} className="text-primary shrink-0 status-pulse" />
           {!collapsed && (
             <span className="text-xs font-semibold text-primary truncate">1 job active</span>
           )}
@@ -145,7 +138,7 @@ export default function Sidebar() {
         "
         aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
       >
-        {collapsed ? <ChevronRight size={12} /> : <ChevronLeft size={12} />}
+        {collapsed ? <PanelLeftOpen size={16} /> : <PanelLeftClose size={16} />}
       </button>
     </aside>
   );
