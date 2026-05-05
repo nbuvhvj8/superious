@@ -13,7 +13,10 @@ interface ToggleProps {
 export default function Toggle({ checked, onChange, label, disabled = false, id }: ToggleProps) {
   const toggleId = id ?? `toggle-${label?.replace(/\s+/g, '-').toLowerCase()}`;
   return (
-    <label htmlFor={toggleId} className={`flex items-center gap-3 cursor-pointer select-none ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}>
+    <label
+      htmlFor={toggleId}
+      className={`flex items-center gap-3 cursor-pointer select-none ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+    >
       <button
         id={toggleId}
         role="switch"

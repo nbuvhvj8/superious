@@ -11,7 +11,13 @@ interface Props {
   label?: string;
 }
 
-export default function ScriptEditor({ value, onSave, className = '', placeholder = '', label }: Props) {
+export default function ScriptEditor({
+  value,
+  onSave,
+  className = '',
+  placeholder = '',
+  label,
+}: Props) {
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState(value);
   const [saved, setSaved] = useState(false);
@@ -86,12 +92,19 @@ export default function ScriptEditor({ value, onSave, className = '', placeholde
 
   return (
     <div className="space-y-2">
-      {label && <span className="text-2xs font-bold text-primary uppercase tracking-wider">Editing: {label}</span>}
+      {label && (
+        <span className="text-2xs font-bold text-primary uppercase tracking-wider">
+          Editing: {label}
+        </span>
+      )}
       <div className="relative rounded-xl border-2 border-primary/40 bg-primary/5 overflow-hidden">
         <textarea
           ref={textareaRef}
           value={draft}
-          onChange={(e) => { setDraft(e.target.value); autoResize(); }}
+          onChange={(e) => {
+            setDraft(e.target.value);
+            autoResize();
+          }}
           className="
             w-full px-4 py-3 bg-transparent text-sm leading-relaxed text-foreground
             resize-none focus:outline-none font-medium min-h-[80px]

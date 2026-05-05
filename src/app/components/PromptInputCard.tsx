@@ -1,7 +1,16 @@
 'use client';
 
 import React, { useState, useRef } from 'react';
-import { Sparkles, SendHorizonal, Lightbulb, ChevronDown, FileVideo, Mic, Film, PlayCircle } from 'lucide-react';
+import {
+  Feather,
+  SendHorizonal,
+  Lightbulb,
+  ChevronDown,
+  FileVideo,
+  Mic,
+  Film,
+  PlayCircle,
+} from 'lucide-react';
 
 const TOPIC_SUGGESTIONS = [
   'The history of solar energy in Africa',
@@ -9,7 +18,7 @@ const TOPIC_SUGGESTIONS = [
   'The rise and fall of Blockbuster Video',
   'Why the Roman Empire really collapsed',
   'The science behind why we dream',
-  'How TikTok\'s algorithm actually works',
+  "How TikTok's algorithm actually works",
   'The future of lab-grown meat',
   'Nuclear fusion: how close are we really?',
 ];
@@ -104,11 +113,13 @@ export default function PromptInputCard() {
     <div className="card p-6 space-y-4">
       <div className="flex items-center gap-2">
         <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-          <Sparkles size={16} className="text-primary" />
+          <Feather size={16} className="text-primary" />
         </div>
         <div>
           <h2 className="text-base font-bold text-foreground">New Research Job</h2>
-          <p className="text-xs text-muted-foreground">Describe your video topic in detail for the best results</p>
+          <p className="text-xs text-muted-foreground">
+            Describe your video topic in detail for the best results
+          </p>
         </div>
       </div>
 
@@ -125,14 +136,19 @@ export default function PromptInputCard() {
               <span className="text-primary">{activeTemplate.icon}</span>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-semibold text-foreground">{activeTemplate.label}</p>
-                <p className="text-xs text-muted-foreground truncate">{activeTemplate.description}</p>
+                <p className="text-xs text-muted-foreground truncate">
+                  {activeTemplate.description}
+                </p>
               </div>
               <div className="flex items-center gap-3 shrink-0 text-2xs text-muted-foreground font-mono">
                 <span>{activeTemplate.targetLength}</span>
                 <span>·</span>
                 <span>{activeTemplate.sections} sections</span>
               </div>
-              <ChevronDown size={14} className={`text-muted-foreground transition-transform duration-150 shrink-0 ${templateOpen ? 'rotate-180' : ''}`} />
+              <ChevronDown
+                size={14}
+                className={`text-muted-foreground transition-transform duration-150 shrink-0 ${templateOpen ? 'rotate-180' : ''}`}
+              />
             </button>
 
             {templateOpen && (
@@ -141,24 +157,35 @@ export default function PromptInputCard() {
                   <button
                     key={tmpl.id}
                     type="button"
-                    onClick={() => { setSelectedTemplate(tmpl.id); setTemplateOpen(false); }}
+                    onClick={() => {
+                      setSelectedTemplate(tmpl.id);
+                      setTemplateOpen(false);
+                    }}
                     className={`
                       w-full flex items-start gap-3 px-4 py-3 text-left transition-colors
                       ${selectedTemplate === tmpl.id ? 'bg-primary/5' : 'hover:bg-muted'}
                     `}
                   >
-                    <span className={`mt-0.5 ${selectedTemplate === tmpl.id ? 'text-primary' : 'text-muted-foreground'}`}>
+                    <span
+                      className={`mt-0.5 ${selectedTemplate === tmpl.id ? 'text-primary' : 'text-muted-foreground'}`}
+                    >
                       {tmpl.icon}
                     </span>
                     <div className="flex-1 min-w-0">
-                      <p className={`text-sm font-semibold ${selectedTemplate === tmpl.id ? 'text-primary' : 'text-foreground'}`}>
+                      <p
+                        className={`text-sm font-semibold ${selectedTemplate === tmpl.id ? 'text-primary' : 'text-foreground'}`}
+                      >
                         {tmpl.label}
                       </p>
                       <p className="text-xs text-muted-foreground mt-0.5">{tmpl.description}</p>
                     </div>
                     <div className="text-right shrink-0 space-y-0.5">
-                      <p className="font-mono text-2xs text-muted-foreground">{tmpl.targetLength}</p>
-                      <p className="font-mono text-2xs text-muted-foreground">{tmpl.sections} sections</p>
+                      <p className="font-mono text-2xs text-muted-foreground">
+                        {tmpl.targetLength}
+                      </p>
+                      <p className="font-mono text-2xs text-muted-foreground">
+                        {tmpl.sections} sections
+                      </p>
                     </div>
                   </button>
                 ))}
@@ -202,7 +229,9 @@ export default function PromptInputCard() {
             </div>
           </div>
           {error && (
-            <p id="prompt-error" className="text-xs text-red-500 font-medium">{error}</p>
+            <p id="prompt-error" className="text-xs text-red-500 font-medium">
+              {error}
+            </p>
           )}
         </div>
 
@@ -239,7 +268,14 @@ export default function PromptInputCard() {
             {isSubmitting ? (
               <span className="flex items-center gap-2">
                 <svg className="animate-spin h-3.5 w-3.5" viewBox="0 0 24 24" fill="none">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  />
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
                 </svg>
                 Queuing job…
@@ -247,7 +283,12 @@ export default function PromptInputCard() {
             ) : submitted ? (
               <span className="flex items-center gap-2">
                 <svg className="h-3.5 w-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2.5}
+                    d="M5 13l4 4L19 7"
+                  />
                 </svg>
                 Job queued!
               </span>

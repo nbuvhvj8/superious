@@ -25,15 +25,14 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: 'outlier — AI Video Script Research Engine',
-  description: 'Submit a topic, let outlier research the web and generate a structured video script with verified source screenshots — ready to shoot.',
+  description:
+    'Submit a topic, let outlier research the web and generate a structured video script with verified source screenshots — ready to shoot.',
   icons: {
     icon: [{ url: '/favicon.ico', type: 'image/x-icon' }],
   },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${plusJakartaSans.variable} ${ibmPlexMono.variable}`}>
       <body className={plusJakartaSans.className}>

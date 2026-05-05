@@ -46,7 +46,9 @@ export default function ExportStorageSection() {
         </div>
         <div>
           <h2 className="text-base font-bold text-foreground">Export & Storage</h2>
-          <p className="text-xs text-muted-foreground">Configure default export format and screenshot storage lifecycle policy.</p>
+          <p className="text-xs text-muted-foreground">
+            Configure default export format and screenshot storage lifecycle policy.
+          </p>
         </div>
       </div>
 
@@ -58,7 +60,8 @@ export default function ExportStorageSection() {
               Default Export Format
             </label>
             <p className="text-xs text-muted-foreground">
-              Used when clicking the Export button on a completed script. Can be overridden per export.
+              Used when clicking the Export button on a completed script. Can be overridden per
+              export.
             </p>
             <select
               id="export-format"
@@ -77,7 +80,8 @@ export default function ExportStorageSection() {
               Screenshot Retention Period
             </label>
             <p className="text-xs text-muted-foreground">
-              Screenshots are automatically deleted from Supabase Storage after this many days. Range: 7–90.
+              Screenshots are automatically deleted from Supabase Storage after this many days.
+              Range: 7–90.
             </p>
             <div className="flex items-center gap-2">
               <input
@@ -108,14 +112,11 @@ export default function ExportStorageSection() {
             <div className="space-y-0.5">
               <p className="text-sm font-semibold text-foreground">Automatic Storage Cleanup</p>
               <p className="text-xs text-muted-foreground">
-                Run a daily cleanup job that removes screenshots older than the retention period from Supabase Storage. Disabling this means screenshots accumulate indefinitely.
+                Run a daily cleanup job that removes screenshots older than the retention period
+                from Supabase Storage. Disabling this means screenshots accumulate indefinitely.
               </p>
             </div>
-            <Toggle
-              checked={autoCleanup}
-              onChange={setAutoCleanup}
-              id="cleanup-toggle"
-            />
+            <Toggle checked={autoCleanup} onChange={setAutoCleanup} id="cleanup-toggle" />
           </div>
         </div>
 
@@ -138,13 +139,22 @@ export default function ExportStorageSection() {
             {saving ? (
               <span className="flex items-center gap-2">
                 <svg className="animate-spin h-3.5 w-3.5" viewBox="0 0 24 24" fill="none">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  />
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
                 </svg>
                 Saving…
               </span>
             ) : saved ? (
-              <span className="flex items-center gap-2"><CheckCircle2 size={14} /> Saved</span>
+              <span className="flex items-center gap-2">
+                <CheckCircle2 size={14} /> Saved
+              </span>
             ) : (
               'Save Storage Settings'
             )}

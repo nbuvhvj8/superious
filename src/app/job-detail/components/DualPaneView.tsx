@@ -12,12 +12,15 @@ export default function DualPaneView() {
   const [highlightedSourceId, setHighlightedSourceId] = useState<string | null>(null);
   const [rightTab, setRightTab] = useState<RightTab>('sources');
   const [bRollItems, setBRollItems] = useState<BRollExportItem[]>([]);
-  const [gdocsStatus, setGdocsStatus] = useState<'idle' | 'exporting' | 'success' | 'error' | 'not_connected'>('idle');
+  const [gdocsStatus, setGdocsStatus] = useState<
+    'idle' | 'exporting' | 'success' | 'error' | 'not_connected'
+  >('idle');
   const [gdocsUrl, setGdocsUrl] = useState('');
   const [gdocsError, setGdocsError] = useState('');
 
   async function handleGoogleDocsExport() {
-    const accessToken = typeof window !== 'undefined' ? localStorage.getItem('google_access_token') : null;
+    const accessToken =
+      typeof window !== 'undefined' ? localStorage.getItem('google_access_token') : null;
 
     if (!accessToken) {
       setGdocsStatus('not_connected');
@@ -85,23 +88,26 @@ CRISPR is not a silver bullet — it is a platform. A set of molecular tools tha
       const docId = docData.documentId;
 
       // Insert content via batchUpdate
-      const insertRes = await fetch(`https://docs.googleapis.com/v1/documents/${docId}:batchUpdate`, {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          requests: [
-            {
-              insertText: {
-                text: markdownContent,
-                endOfSegmentLocation: { segmentId: '' },
+      const insertRes = await fetch(
+        `https://docs.googleapis.com/v1/documents/${docId}:batchUpdate`,
+        {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            requests: [
+              {
+                insertText: {
+                  text: markdownContent,
+                  endOfSegmentLocation: { segmentId: '' },
+                },
               },
-            },
-          ],
-        }),
-      });
+            ],
+          }),
+        }
+      );
 
       if (!insertRes.ok) {
         const errData = await insertRes.json();
@@ -126,10 +132,21 @@ CRISPR is not a silver bullet — it is a platform. A set of molecular tools tha
           <AlertCircle size={14} className="text-amber-600 shrink-0" />
           <p className="text-xs text-amber-700 font-medium flex-1">
             Google Docs is not connected. Connect your account in{' '}
-            <a href="/settings" className="underline font-bold">Settings → Integrations</a> or during{' '}
-            <a href="/onboarding" className="underline font-bold">onboarding</a>.
+            <a href="/settings" className="underline font-bold">
+              Settings → Integrations
+            </a>{' '}
+            or during{' '}
+            <a href="/onboarding" className="underline font-bold">
+              onboarding
+            </a>
+            .
           </p>
-          <button onClick={() => setGdocsStatus('idle')} className="text-amber-600 hover:text-amber-800 text-xs font-bold">✕</button>
+          <button
+            onClick={() => setGdocsStatus('idle')}
+            className="text-amber-600 hover:text-amber-800 text-xs font-bold"
+          >
+            ✕
+          </button>
         </div>
       )}
       {gdocsStatus === 'success' && (
@@ -146,14 +163,24 @@ CRISPR is not a silver bullet — it is a platform. A set of molecular tools tha
           >
             Open Doc <ExternalLink size={11} />
           </a>
-          <button onClick={() => setGdocsStatus('idle')} className="text-primary hover:opacity-70 text-xs font-bold ml-2">✕</button>
+          <button
+            onClick={() => setGdocsStatus('idle')}
+            className="text-primary hover:opacity-70 text-xs font-bold ml-2"
+          >
+            ✕
+          </button>
         </div>
       )}
       {gdocsStatus === 'error' && (
         <div className="flex items-center gap-3 px-6 py-2.5 bg-red-50 border-b border-red-200 shrink-0">
           <AlertCircle size={14} className="text-red-500 shrink-0" />
           <p className="text-xs text-red-600 font-medium flex-1">{gdocsError}</p>
-          <button onClick={() => setGdocsStatus('idle')} className="text-red-500 hover:text-red-700 text-xs font-bold">✕</button>
+          <button
+            onClick={() => setGdocsStatus('idle')}
+            className="text-red-500 hover:text-red-700 text-xs font-bold"
+          >
+            ✕
+          </button>
         </div>
       )}
       {gdocsStatus === 'exporting' && (
@@ -182,7 +209,10 @@ CRISPR is not a silver bullet — it is a platform. A set of molecular tools tha
               onClick={() => setRightTab('sources')}
               className={`
                 flex items-center gap-1.5 px-4 py-3 text-xs font-semibold border-b-2 transition-all duration-150
-                ${rightTab === 'sources' ?'border-primary text-primary' :'border-transparent text-muted-foreground hover:text-foreground'
+                ${
+                  rightTab === 'sources'
+                    ? 'border-primary text-primary'
+                    : 'border-transparent text-muted-foreground hover:text-foreground'
                 }
               `}
             >
@@ -193,7 +223,10 @@ CRISPR is not a silver bullet — it is a platform. A set of molecular tools tha
               onClick={() => setRightTab('broll')}
               className={`
                 flex items-center gap-1.5 px-4 py-3 text-xs font-semibold border-b-2 transition-all duration-150
-                ${rightTab === 'broll' ?'border-primary text-primary' :'border-transparent text-muted-foreground hover:text-foreground'
+                ${
+                  rightTab === 'broll'
+                    ? 'border-primary text-primary'
+                    : 'border-transparent text-muted-foreground hover:text-foreground'
                 }
               `}
             >
@@ -215,9 +248,7 @@ CRISPR is not a silver bullet — it is a platform. A set of molecular tools tha
                 onSourceClick={setHighlightedSourceId}
               />
             )}
-            {rightTab === 'broll' && (
-              <BRollPanel items={bRollItems} />
-            )}
+            {rightTab === 'broll' && <BRollPanel items={bRollItems} />}
           </div>
         </div>
       </div>

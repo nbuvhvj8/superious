@@ -118,10 +118,7 @@ export function calculateTotalDuration(assetCount: number, config: AnimationConf
 /**
  * Generate CSS animation string from preset
  */
-export function generateAnimationCSS(
-  style: AnimationStyle,
-  speed: number
-): string {
+export function generateAnimationCSS(style: AnimationStyle, speed: number): string {
   const preset = ANIMATION_PRESETS[style];
   const keyframesCSS = Object.entries(preset.keyframes)
     .map(([stop, styles]) => {

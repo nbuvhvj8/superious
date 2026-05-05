@@ -56,7 +56,9 @@ export default function ResearchPreferencesSection() {
         </div>
         <div>
           <h2 className="text-base font-bold text-foreground">Research Preferences</h2>
-          <p className="text-xs text-muted-foreground">Control how the research agent and screenshot service behave per job.</p>
+          <p className="text-xs text-muted-foreground">
+            Control how the research agent and screenshot service behave per job.
+          </p>
         </div>
       </div>
 
@@ -80,9 +82,13 @@ export default function ResearchPreferencesSection() {
                 {...register('maxSources', { valueAsNumber: true })}
                 className="flex-1 h-1.5 rounded-full accent-primary cursor-pointer"
               />
-              <span className="font-mono text-sm font-bold text-foreground tabular-nums w-6 text-center">{maxSources}</span>
+              <span className="font-mono text-sm font-bold text-foreground tabular-nums w-6 text-center">
+                {maxSources}
+              </span>
             </div>
-            {errors.maxSources && <p className="text-xs text-red-500">{errors.maxSources.message}</p>}
+            {errors.maxSources && (
+              <p className="text-xs text-red-500">{errors.maxSources.message}</p>
+            )}
           </div>
 
           {/* Screenshot Concurrency */}
@@ -103,7 +109,9 @@ export default function ResearchPreferencesSection() {
                 {...register('screenshotConcurrency', { valueAsNumber: true })}
                 className="flex-1 h-1.5 rounded-full accent-primary cursor-pointer"
               />
-              <span className="font-mono text-sm font-bold text-foreground tabular-nums w-6 text-center">{concurrency}</span>
+              <span className="font-mono text-sm font-bold text-foreground tabular-nums w-6 text-center">
+                {concurrency}
+              </span>
             </div>
           </div>
 
@@ -130,7 +138,9 @@ export default function ResearchPreferencesSection() {
               />
               <span className="text-sm text-muted-foreground font-medium">seconds</span>
             </div>
-            {errors.sourceTimeoutS && <p className="text-xs text-red-500">{errors.sourceTimeoutS.message}</p>}
+            {errors.sourceTimeoutS && (
+              <p className="text-xs text-red-500">{errors.sourceTimeoutS.message}</p>
+            )}
           </div>
 
           {/* Proxy URL */}
@@ -157,24 +167,22 @@ export default function ResearchPreferencesSection() {
           <div className="flex items-start justify-between gap-4">
             <div className="space-y-0.5">
               <p className="text-sm font-semibold text-foreground">Retry Failed Screenshots</p>
-              <p className="text-xs text-muted-foreground">Automatically retry screenshot capture once if the first attempt fails. Uses exponential back-off (1s, 4s, 16s).</p>
+              <p className="text-xs text-muted-foreground">
+                Automatically retry screenshot capture once if the first attempt fails. Uses
+                exponential back-off (1s, 4s, 16s).
+              </p>
             </div>
-            <Toggle
-              checked={retryFailed}
-              onChange={setRetryFailed}
-              id="retry-toggle"
-            />
+            <Toggle checked={retryFailed} onChange={setRetryFailed} id="retry-toggle" />
           </div>
           <div className="flex items-start justify-between gap-4">
             <div className="space-y-0.5">
               <p className="text-sm font-semibold text-foreground">Wayback Machine Fallback</p>
-              <p className="text-xs text-muted-foreground">If a URL is blocked or unavailable, attempt to capture the most recent archive.org snapshot instead.</p>
+              <p className="text-xs text-muted-foreground">
+                If a URL is blocked or unavailable, attempt to capture the most recent archive.org
+                snapshot instead.
+              </p>
             </div>
-            <Toggle
-              checked={archiveFallback}
-              onChange={setArchiveFallback}
-              id="archive-toggle"
-            />
+            <Toggle checked={archiveFallback} onChange={setArchiveFallback} id="archive-toggle" />
           </div>
         </div>
 
@@ -183,13 +191,22 @@ export default function ResearchPreferencesSection() {
             {saving ? (
               <span className="flex items-center gap-2">
                 <svg className="animate-spin h-3.5 w-3.5" viewBox="0 0 24 24" fill="none">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  />
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
                 </svg>
                 Saving…
               </span>
             ) : saved ? (
-              <span className="flex items-center gap-2"><CheckCircle2 size={14} /> Saved</span>
+              <span className="flex items-center gap-2">
+                <CheckCircle2 size={14} /> Saved
+              </span>
             ) : (
               'Save Preferences'
             )}

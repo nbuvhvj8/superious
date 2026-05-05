@@ -39,7 +39,9 @@ export default function DangerZoneSection() {
           </div>
           <div>
             <h2 className="text-base font-bold text-red-700">Danger Zone</h2>
-            <p className="text-xs text-muted-foreground">Destructive actions — these cannot be undone.</p>
+            <p className="text-xs text-muted-foreground">
+              Destructive actions — these cannot be undone.
+            </p>
           </div>
         </div>
 
@@ -52,10 +54,13 @@ export default function DangerZoneSection() {
                 <p className="text-sm font-bold text-foreground">Delete All Jobs</p>
               </div>
               <p className="text-xs text-muted-foreground leading-relaxed">
-                Permanently deletes all 24 jobs, their scripts, source records, and queued tasks. Screenshots are also removed from Supabase Storage.
+                Permanently deletes all 24 jobs, their scripts, source records, and queued tasks.
+                Screenshots are also removed from Supabase Storage.
               </p>
               {clearedJobs && (
-                <p className="text-xs text-primary font-semibold mt-1">All jobs deleted successfully.</p>
+                <p className="text-xs text-primary font-semibold mt-1">
+                  All jobs deleted successfully.
+                </p>
               )}
             </div>
             <button
@@ -75,10 +80,13 @@ export default function DangerZoneSection() {
                 <p className="text-sm font-bold text-foreground">Purge All Screenshots</p>
               </div>
               <p className="text-xs text-muted-foreground leading-relaxed">
-                Deletes all 340 MB of captured screenshots from Supabase Storage immediately. Job records and scripts are preserved, but source thumbnails will no longer load.
+                Deletes all 340 MB of captured screenshots from Supabase Storage immediately. Job
+                records and scripts are preserved, but source thumbnails will no longer load.
               </p>
               {purgedScreenshots && (
-                <p className="text-xs text-primary font-semibold mt-1">All screenshots purged successfully.</p>
+                <p className="text-xs text-primary font-semibold mt-1">
+                  All screenshots purged successfully.
+                </p>
               )}
             </div>
             <button

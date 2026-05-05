@@ -17,9 +17,7 @@ export async function GET(request: NextRequest) {
     }
   } catch {}
 
-  const redirectBase = fromPage === 'settings'
-    ? `${siteUrl}/settings`
-    : `${siteUrl}/onboarding`;
+  const redirectBase = fromPage === 'settings' ? `${siteUrl}/settings` : `${siteUrl}/onboarding`;
 
   if (error || !code) {
     const errMsg = error || 'authorization_failed';

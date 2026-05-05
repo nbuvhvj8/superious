@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Sparkles, CheckCircle2 } from 'lucide-react';
+import { Feather, CheckCircle2 } from 'lucide-react';
 import Toggle from '@/components/ui/Toggle';
 
 interface AnimationFormData {
@@ -81,12 +81,13 @@ export default function AnimationSection() {
     <section id="animation-design" className="card p-6 space-y-5">
       <div className="flex items-center gap-2.5 pb-1 border-b border-border">
         <div className="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center">
-          <Sparkles size={15} className="text-purple-500" />
+          <Feather size={15} className="text-purple-500" />
         </div>
         <div>
           <h2 className="text-base font-bold text-foreground">Motion Design & Animation</h2>
           <p className="text-xs text-muted-foreground">
-            Professional motion graphics for captured assets with newspaper, film, and kinetic effects.
+            Professional motion graphics for captured assets with newspaper, film, and kinetic
+            effects.
           </p>
         </div>
       </div>
@@ -115,10 +116,15 @@ export default function AnimationSection() {
             {/* Animation Style Selection */}
             <div className="space-y-3">
               <label className="text-sm font-semibold text-foreground">Animation Style</label>
-              <p className="text-xs text-muted-foreground">Choose the motion design aesthetic for your assets.</p>
+              <p className="text-xs text-muted-foreground">
+                Choose the motion design aesthetic for your assets.
+              </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                 {animationStyles.map((style) => (
-                  <label key={style.id} className="flex items-start gap-3 p-3 rounded-lg border border-border hover:border-primary/50 cursor-pointer transition-colors has-[:checked]:bg-primary/5 has-[:checked]:border-primary">
+                  <label
+                    key={style.id}
+                    className="flex items-start gap-3 p-3 rounded-lg border border-border hover:border-primary/50 cursor-pointer transition-colors has-[:checked]:bg-primary/5 has-[:checked]:border-primary"
+                  >
                     <input
                       type="radio"
                       value={style.id}
@@ -152,19 +158,19 @@ export default function AnimationSection() {
                   {...register('animationSpeed', { valueAsNumber: true })}
                   className="flex-1 h-1.5 rounded-full accent-primary cursor-pointer"
                 />
-                <span className="font-mono text-sm font-bold text-foreground tabular-nums w-12 text-right">{speed.toFixed(2)}x</span>
+                <span className="font-mono text-sm font-bold text-foreground tabular-nums w-12 text-right">
+                  {speed.toFixed(2)}x
+                </span>
               </div>
             </div>
 
             {/* Auto-Transition */}
             <div className="flex items-start gap-4 p-4 bg-muted/40 rounded-lg border border-border">
-              <Toggle
-                checked={true}
-                onChange={() => {}}
-                id="auto-transition-toggle"
-              />
+              <Toggle checked={true} onChange={() => {}} id="auto-transition-toggle" />
               <div className="flex-1">
-                <h3 className="text-sm font-semibold text-foreground">Auto-Transition Between Assets</h3>
+                <h3 className="text-sm font-semibold text-foreground">
+                  Auto-Transition Between Assets
+                </h3>
                 <p className="text-xs text-muted-foreground mt-0.5">
                   Automatically progress to the next captured asset when animation completes.
                 </p>
@@ -194,20 +200,19 @@ export default function AnimationSection() {
                 />
                 <span className="text-sm text-muted-foreground font-medium">seconds</span>
               </div>
-              {errors.transitionDuration && <p className="text-xs text-red-500">{errors.transitionDuration.message}</p>}
+              {errors.transitionDuration && (
+                <p className="text-xs text-red-500">{errors.transitionDuration.message}</p>
+              )}
             </div>
 
             {/* Sound Design */}
             <div className="flex items-start gap-4 p-4 bg-muted/40 rounded-lg border border-border">
-              <Toggle
-                checked={soundEnabled}
-                onChange={setSoundEnabled}
-                id="sound-design-toggle"
-              />
+              <Toggle checked={soundEnabled} onChange={setSoundEnabled} id="sound-design-toggle" />
               <div className="flex-1">
                 <h3 className="text-sm font-semibold text-foreground">Sound Design</h3>
                 <p className="text-xs text-muted-foreground mt-0.5">
-                  Add procedural sound effects (foley, transitions, emphasis stabs) synchronized with animations.
+                  Add procedural sound effects (foley, transitions, emphasis stabs) synchronized
+                  with animations.
                 </p>
               </div>
             </div>
@@ -228,15 +233,18 @@ export default function AnimationSection() {
 
         {/* Save Button */}
         <div className="flex items-center gap-3 pt-1">
-          <button
-            type="submit"
-            disabled={saving || !isDirty}
-            className="btn-primary min-w-[140px]"
-          >
+          <button type="submit" disabled={saving || !isDirty} className="btn-primary min-w-[140px]">
             {saving ? (
               <span className="flex items-center gap-2">
                 <svg className="animate-spin h-3.5 w-3.5" viewBox="0 0 24 24" fill="none">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  />
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
                 </svg>
                 Saving…

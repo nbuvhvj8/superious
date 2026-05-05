@@ -1,0 +1,48 @@
+PS C:\Users\zephyr\Documents\superious> npm run dev
+
+> outlier@0.1.0 dev
+> next dev -p 4028
+
+   ▲ Next.js 15.1.11
+   - Local:        http://localhost:4028
+   - Environments: .env
+
+ ✓ Starting...
+ ✓ Ready in 8.5s
+ ○ Compiling / ...
+request to https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap failed, reason: getaddrinfo ENOTFOUND fonts.googleapis.com
+
+Retrying 1/3...
+request to https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap failed, reason: getaddrinfo ENOTFOUND fonts.googleapis.com
+
+Retrying 1/3...
+request to https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap failed, reason: getaddrinfo ENOTFOUND fonts.googleapis.com
+
+Retrying 2/3...
+request to https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap failed, reason: getaddrinfo ENOTFOUND fonts.googleapis.com
+
+Retrying 2/3...
+request to https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap failed, reason: getaddrinfo ENOTFOUND fonts.googleapis.com
+
+Retrying 3/3...
+request to https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap failed, reason: getaddrinfo ENOTFOUND fonts.googleapis.com
+
+Retrying 3/3...
+[Error [FetchError]: request to https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap failed, reason: getaddrinfo ENOTFOUND fonts.googleapis.com] {
+  type: 'system',
+  errno: 'ENOTFOUND',
+  code: 'ENOTFOUND',
+  constructor: [Function: FetchError]
+}
+ ⨯ Failed to download `Plus Jakarta Sans` from Google Fonts. Using fallback font instead.
+
+Failed to fetch `Plus Jakarta Sans` from Google Fonts.}
+[Error [FetchError]: request to https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap failed, reason: getaddrinfo ENOTFOUND fonts.googleapis.com] {
+  type: 'system',
+  errno: 'ENOTFOUND',
+  code: 'ENOTFOUND',
+  constructor: [Function: FetchError]
+}
+ ⨯ Failed to download `IBM Plex Mono` from Google Fonts. Using fallback font instead.
+
+Failed to fetch `IBM Plex Mono` from Google Fonts.}

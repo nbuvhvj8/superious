@@ -12,10 +12,10 @@ interface ModalProps {
 }
 
 const SIZE_MAP = {
-  sm:   'max-w-sm',
-  md:   'max-w-md',
-  lg:   'max-w-lg',
-  xl:   'max-w-2xl',
+  sm: 'max-w-sm',
+  md: 'max-w-md',
+  lg: 'max-w-lg',
+  xl: 'max-w-2xl',
   full: 'max-w-5xl',
 };
 
@@ -24,7 +24,9 @@ export default function Modal({ open, onClose, title, children, size = 'md' }: M
 
   useEffect(() => {
     if (!open) return;
-    const handleKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
     document.addEventListener('keydown', handleKey);
     document.body.style.overflow = 'hidden';
     return () => {
@@ -39,7 +41,9 @@ export default function Modal({ open, onClose, title, children, size = 'md' }: M
     <div
       ref={overlayRef}
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-foreground/40 backdrop-blur-sm"
-      onClick={(e) => { if (e.target === overlayRef.current) onClose(); }}
+      onClick={(e) => {
+        if (e.target === overlayRef.current) onClose();
+      }}
       role="dialog"
       aria-modal="true"
       aria-label={title}
@@ -53,11 +57,7 @@ export default function Modal({ open, onClose, title, children, size = 'md' }: M
         {title && (
           <div className="flex items-center justify-between px-5 py-4 border-b border-border">
             <h3 className="text-base font-bold text-foreground">{title}</h3>
-            <button
-              onClick={onClose}
-              className="btn-ghost p-1.5"
-              aria-label="Close modal"
-            >
+            <button onClick={onClose} className="btn-ghost p-1.5" aria-label="Close modal">
               <X size={16} />
             </button>
           </div>

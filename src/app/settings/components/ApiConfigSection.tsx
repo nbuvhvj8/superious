@@ -10,7 +10,15 @@ interface ApiFormData {
   serperKey: string;
 }
 
-function MaskedInput({ id, label, description, placeholder, register, error, name }: {
+function MaskedInput({
+  id,
+  label,
+  description,
+  placeholder,
+  register,
+  error,
+  name,
+}: {
   id: string;
   label: string;
   description: string;
@@ -22,7 +30,9 @@ function MaskedInput({ id, label, description, placeholder, register, error, nam
   const [show, setShow] = useState(false);
   return (
     <div className="space-y-1.5">
-      <label htmlFor={id} className="text-sm font-semibold text-foreground">{label}</label>
+      <label htmlFor={id} className="text-sm font-semibold text-foreground">
+        {label}
+      </label>
       <p className="text-xs text-muted-foreground">{description}</p>
       <div className="relative">
         <input
@@ -58,8 +68,8 @@ export default function ApiConfigSection() {
   } = useForm<ApiFormData>({
     defaultValues: {
       anthropicKey: 'sk-ant-api03-••••••••••••••••••••••••••••••••••••••••••',
-      tavilyKey:    'tvly-••••••••••••••••••••••••••••••••',
-      serperKey:    '',
+      tavilyKey: 'tvly-••••••••••••••••••••••••••••••••',
+      serperKey: '',
     },
   });
 
@@ -80,7 +90,9 @@ export default function ApiConfigSection() {
         </div>
         <div>
           <h2 className="text-base font-bold text-foreground">API Configuration</h2>
-          <p className="text-xs text-muted-foreground">Keys are stored encrypted at rest — never exposed in client responses.</p>
+          <p className="text-xs text-muted-foreground">
+            Keys are stored encrypted at rest — never exposed in client responses.
+          </p>
         </div>
       </div>
 
@@ -114,15 +126,18 @@ export default function ApiConfigSection() {
         />
 
         <div className="flex items-center gap-3 pt-1">
-          <button
-            type="submit"
-            disabled={saving || !isDirty}
-            className="btn-primary min-w-[140px]"
-          >
+          <button type="submit" disabled={saving || !isDirty} className="btn-primary min-w-[140px]">
             {saving ? (
               <span className="flex items-center gap-2">
                 <svg className="animate-spin h-3.5 w-3.5" viewBox="0 0 24 24" fill="none">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  />
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
                 </svg>
                 Saving…

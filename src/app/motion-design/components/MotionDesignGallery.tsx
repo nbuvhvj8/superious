@@ -16,21 +16,24 @@ const mockAssets: CapturedAsset[] = [
     id: '1',
     name: 'Product Hero Image',
     type: 'image',
-    thumbnail: 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 300%22%3E%3Crect fill=%22%2334d399%22 width=%22400%22 height=%22300%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-size=%2248%22 fill=%22white%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22%3EAsset 1%3C/text%3E%3C/svg%3E',
+    thumbnail:
+      'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 300%22%3E%3Crect fill=%22%2334d399%22 width=%22400%22 height=%22300%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-size=%2248%22 fill=%22white%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22%3EAsset 1%3C/text%3E%3C/svg%3E',
     uploadedAt: new Date(Date.now() - 86400000),
   },
   {
     id: '2',
     name: 'Analytics Dashboard',
     type: 'screenshot',
-    thumbnail: 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 300%22%3E%3Crect fill=%223b82f6%22 width=%22400%22 height=%22300%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-size=%2248%22 fill=%22white%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22%3EAsset 2%3C/text%3E%3C/svg%3E',
+    thumbnail:
+      'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 300%22%3E%3Crect fill=%223b82f6%22 width=%22400%22 height=%22300%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-size=%2248%22 fill=%22white%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22%3EAsset 2%3C/text%3E%3C/svg%3E',
     uploadedAt: new Date(Date.now() - 172800000),
   },
   {
     id: '3',
     name: 'User Journey Chart',
     type: 'chart',
-    thumbnail: 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 300%22%3E%3Crect fill=%238b5cf6%22 width=%22400%22 height=%22300%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-size=%2248%22 fill=%22white%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22%3EAsset 3%3C/text%3E%3C/svg%3E',
+    thumbnail:
+      'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 400 300%22%3E%3Crect fill=%238b5cf6%22 width=%22400%22 height=%22300%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 font-size=%2248%22 fill=%22white%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22%3EAsset 3%3C/text%3E%3C/svg%3E',
     uploadedAt: new Date(Date.now() - 259200000),
   },
 ];
@@ -147,7 +150,9 @@ export default function MotionDesignGallery() {
               <div className="p-3 bg-muted/40 rounded-lg border border-border">
                 <p className="text-sm text-foreground font-medium">{selectedPreset.label}</p>
                 <p className="text-xs text-muted-foreground mt-1">{selectedPreset.description}</p>
-                <p className="text-xs text-muted-foreground mt-2">Duration: {selectedPreset.duration}s</p>
+                <p className="text-xs text-muted-foreground mt-2">
+                  Duration: {selectedPreset.duration}s
+                </p>
               </div>
             )}
 
@@ -168,11 +173,7 @@ export default function MotionDesignGallery() {
                 <Download size={16} />
                 Export
               </button>
-              <button
-                onClick={() => setIsPlaying(false)}
-                className="btn-ghost"
-                title="Reset"
-              >
+              <button onClick={() => setIsPlaying(false)} className="btn-ghost" title="Reset">
                 <RotateCcw size={16} />
               </button>
             </div>
@@ -241,7 +242,9 @@ export default function MotionDesignGallery() {
         {/* Additional Options */}
         <div className="mt-6 space-y-4 pt-6 border-t border-border">
           <div>
-            <label className="text-xs font-semibold text-foreground block mb-2">Speed Multiplier</label>
+            <label className="text-xs font-semibold text-foreground block mb-2">
+              Speed Multiplier
+            </label>
             <select className="input-field w-full text-sm">
               <option value="0.5">Slow (0.5x)</option>
               <option value="1" selected>
@@ -263,7 +266,9 @@ export default function MotionDesignGallery() {
           </div>
 
           <div>
-            <label className="text-xs font-semibold text-foreground block mb-2">Export Format</label>
+            <label className="text-xs font-semibold text-foreground block mb-2">
+              Export Format
+            </label>
             <select className="input-field w-full text-sm">
               <option value="mp4">MP4 (Recommended)</option>
               <option value="webm">WebM</option>

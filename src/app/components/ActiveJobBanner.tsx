@@ -8,7 +8,8 @@ import type { JobStatus } from '@/components/ui/StatusBadge';
 
 const MOCK_ACTIVE_JOB = {
   id: 'job-2847fa',
-  prompt: 'The rise and fall of Blockbuster Video — corporate decisions, Netflix rivalry, and lessons for modern media companies',
+  prompt:
+    'The rise and fall of Blockbuster Video — corporate decisions, Netflix rivalry, and lessons for modern media companies',
   status: 'screenshotting' as JobStatus,
   sourcesCaptures: 5,
   totalSources: 8,
@@ -26,21 +27,21 @@ export default function ActiveJobBanner() {
         <div className="space-y-1 min-w-0">
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 rounded-full bg-primary status-pulse" />
-            <span className="text-xs font-bold text-primary uppercase tracking-widest">Active Job</span>
+            <span className="text-xs font-bold text-primary uppercase tracking-widest">
+              Active Job
+            </span>
             <span className="font-mono text-2xs text-muted-foreground">{MOCK_ACTIVE_JOB.id}</span>
           </div>
           <p className="text-sm font-semibold text-foreground truncate max-w-xl">
             {MOCK_ACTIVE_JOB.prompt}
           </p>
           <p className="text-xs text-muted-foreground">
-            Started {MOCK_ACTIVE_JOB.startedAt} &bull; {MOCK_ACTIVE_JOB.sourcesCaptures}/{MOCK_ACTIVE_JOB.totalSources} sources captured
+            Started {MOCK_ACTIVE_JOB.startedAt} &bull; {MOCK_ACTIVE_JOB.sourcesCaptures}/
+            {MOCK_ACTIVE_JOB.totalSources} sources captured
           </p>
         </div>
         <div className="flex items-center gap-2 shrink-0">
-          <Link
-            href="/job-detail"
-            className="btn-secondary text-xs gap-1.5 py-1.5 px-3"
-          >
+          <Link href="/job-detail" className="btn-secondary text-xs gap-1.5 py-1.5 px-3">
             View Live
             <ArrowRight size={12} />
           </Link>
@@ -67,7 +68,9 @@ export default function ActiveJobBanner() {
         <div className="h-1.5 w-full rounded-full bg-border overflow-hidden">
           <div
             className="h-full rounded-full bg-primary transition-all duration-700"
-            style={{ width: `${(MOCK_ACTIVE_JOB.sourcesCaptures / MOCK_ACTIVE_JOB.totalSources) * 100}%` }}
+            style={{
+              width: `${(MOCK_ACTIVE_JOB.sourcesCaptures / MOCK_ACTIVE_JOB.totalSources) * 100}%`,
+            }}
           />
         </div>
       </div>

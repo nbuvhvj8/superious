@@ -37,9 +37,7 @@ export default function BRollPanel({ items }: Props) {
   }
 
   function handleCopy() {
-    const text = items
-      .map((item, i) => `${i + 1}. [${item.segmentTitle}] ${item.cue}`)
-      .join('\n');
+    const text = items.map((item, i) => `${i + 1}. [${item.segmentTitle}] ${item.cue}`).join('\n');
     navigator.clipboard.writeText(text).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
@@ -150,8 +148,10 @@ export default function BRollPanel({ items }: Props) {
                     className={`
                       w-full flex items-start gap-2.5 p-2.5 rounded-lg text-left
                       border transition-all duration-150
-                      ${checkedIds.has(item.id)
-                        ? 'bg-primary/5 border-primary/20' :'bg-muted/40 border-border hover:border-primary/30 hover:bg-muted/60'
+                      ${
+                        checkedIds.has(item.id)
+                          ? 'bg-primary/5 border-primary/20'
+                          : 'bg-muted/40 border-border hover:border-primary/30 hover:bg-muted/60'
                       }
                     `}
                   >
@@ -166,7 +166,9 @@ export default function BRollPanel({ items }: Props) {
                       <span className="font-mono text-2xs text-muted-foreground mr-1.5">
                         #{idx + 1}
                       </span>
-                      <span className={`text-xs font-medium leading-relaxed ${checkedIds.has(item.id) ? 'line-through text-muted-foreground' : 'text-foreground'}`}>
+                      <span
+                        className={`text-xs font-medium leading-relaxed ${checkedIds.has(item.id) ? 'line-through text-muted-foreground' : 'text-foreground'}`}
+                      >
                         {item.cue}
                       </span>
                     </div>

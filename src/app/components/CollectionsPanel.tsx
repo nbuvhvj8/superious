@@ -1,7 +1,16 @@
 'use client';
 
 import React, { useState } from 'react';
-import { FolderOpen, FolderPlus, Folder, ChevronDown, ChevronRight, X, Check, Edit2 } from 'lucide-react';
+import {
+  FolderOpen,
+  FolderPlus,
+  Folder,
+  ChevronDown,
+  ChevronRight,
+  X,
+  Check,
+  Edit2,
+} from 'lucide-react';
 
 interface Collection {
   id: string;
@@ -11,12 +20,23 @@ interface Collection {
 }
 
 const COLLECTION_COLORS = [
-  '#8A9A6B', '#BFD7E2', '#E8A87C', '#9B8EC4', '#E87C8A', '#7CB8E8', '#8AE8B8',
+  '#8A9A6B',
+  '#BFD7E2',
+  '#E8A87C',
+  '#9B8EC4',
+  '#E87C8A',
+  '#7CB8E8',
+  '#8AE8B8',
 ];
 
 const DEFAULT_COLLECTIONS: Collection[] = [
   { id: 'col-1', name: 'Finance Series', color: '#8A9A6B', jobIds: ['job-5e41df', 'job-2d87bc'] },
-  { id: 'col-2', name: 'Science & Tech', color: '#BFD7E2', jobIds: ['job-1c93be', 'job-8d72ac', 'job-6e13fa'] },
+  {
+    id: 'col-2',
+    name: 'Science & Tech',
+    color: '#BFD7E2',
+    jobIds: ['job-1c93be', 'job-8d72ac', 'job-6e13fa'],
+  },
   { id: 'col-3', name: 'Client Work', color: '#E8A87C', jobIds: ['job-7f64aa'] },
 ];
 
@@ -60,9 +80,7 @@ export default function CollectionsPanel({ selectedCollection, onSelectCollectio
 
   function handleSaveEdit(id: string) {
     if (!editName.trim()) return;
-    setCollections((prev) =>
-      prev.map((c) => (c.id === id ? { ...c, name: editName.trim() } : c))
-    );
+    setCollections((prev) => prev.map((c) => (c.id === id ? { ...c, name: editName.trim() } : c)));
     setEditingId(null);
   }
 
@@ -80,7 +98,11 @@ export default function CollectionsPanel({ selectedCollection, onSelectCollectio
             {collections.length}
           </span>
         </div>
-        {expanded ? <ChevronDown size={14} className="text-muted-foreground" /> : <ChevronRight size={14} className="text-muted-foreground" />}
+        {expanded ? (
+          <ChevronDown size={14} className="text-muted-foreground" />
+        ) : (
+          <ChevronRight size={14} className="text-muted-foreground" />
+        )}
       </button>
 
       {expanded && (
@@ -102,18 +124,30 @@ export default function CollectionsPanel({ selectedCollection, onSelectCollectio
             <div key={col.id} className="group relative">
               {editingId === col.id ? (
                 <div className="flex items-center gap-2 px-4 py-2">
-                  <div className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: col.color }} />
+                  <div
+                    className="w-2.5 h-2.5 rounded-full shrink-0"
+                    style={{ backgroundColor: col.color }}
+                  />
                   <input
                     value={editName}
                     onChange={(e) => setEditName(e.target.value)}
-                    onKeyDown={(e) => { if (e.key === 'Enter') handleSaveEdit(col.id); if (e.key === 'Escape') setEditingId(null); }}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') handleSaveEdit(col.id);
+                      if (e.key === 'Escape') setEditingId(null);
+                    }}
                     className="flex-1 text-xs font-semibold bg-transparent border-b border-primary focus:outline-none text-foreground"
                     autoFocus
                   />
-                  <button onClick={() => handleSaveEdit(col.id)} className="text-primary hover:opacity-80">
+                  <button
+                    onClick={() => handleSaveEdit(col.id)}
+                    className="text-primary hover:opacity-80"
+                  >
                     <Check size={12} />
                   </button>
-                  <button onClick={() => setEditingId(null)} className="text-muted-foreground hover:text-foreground">
+                  <button
+                    onClick={() => setEditingId(null)}
+                    className="text-muted-foreground hover:text-foreground"
+                  >
                     <X size={12} />
                   </button>
                 </div>
@@ -125,8 +159,13 @@ export default function CollectionsPanel({ selectedCollection, onSelectCollectio
                     ${selectedCollection === col.id ? 'bg-primary/5' : 'hover:bg-muted/40'}
                   `}
                 >
-                  <div className="w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: col.color }} />
-                  <span className={`text-xs font-semibold flex-1 truncate ${selectedCollection === col.id ? 'text-primary' : 'text-foreground'}`}>
+                  <div
+                    className="w-2.5 h-2.5 rounded-full shrink-0"
+                    style={{ backgroundColor: col.color }}
+                  />
+                  <span
+                    className={`text-xs font-semibold flex-1 truncate ${selectedCollection === col.id ? 'text-primary' : 'text-foreground'}`}
+                  >
                     {col.name}
                   </span>
                   <span className="font-mono text-2xs text-muted-foreground tabular-nums">
@@ -138,13 +177,19 @@ export default function CollectionsPanel({ selectedCollection, onSelectCollectio
               {editingId !== col.id && (
                 <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
                   <button
-                    onClick={(e) => { e.stopPropagation(); handleStartEdit(col); }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleStartEdit(col);
+                    }}
                     className="w-5 h-5 rounded flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
                   >
                     <Edit2 size={10} />
                   </button>
                   <button
-                    onClick={(e) => { e.stopPropagation(); handleDelete(col.id); }}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDelete(col.id);
+                    }}
                     className="w-5 h-5 rounded flex items-center justify-center text-muted-foreground hover:text-red-500 hover:bg-red-50 transition-colors"
                   >
                     <X size={10} />
@@ -160,7 +205,10 @@ export default function CollectionsPanel({ selectedCollection, onSelectCollectio
               <input
                 value={newName}
                 onChange={(e) => setNewName(e.target.value)}
-                onKeyDown={(e) => { if (e.key === 'Enter') handleCreate(); if (e.key === 'Escape') setCreating(false); }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') handleCreate();
+                  if (e.key === 'Escape') setCreating(false);
+                }}
                 placeholder="Collection name…"
                 className="input-field text-xs py-1.5"
                 autoFocus
@@ -176,8 +224,19 @@ export default function CollectionsPanel({ selectedCollection, onSelectCollectio
                 ))}
               </div>
               <div className="flex gap-2">
-                <button onClick={() => setCreating(false)} className="btn-ghost text-xs py-1 px-2 flex-1">Cancel</button>
-                <button onClick={handleCreate} disabled={!newName.trim()} className="btn-primary text-xs py-1 px-2 flex-1">Create</button>
+                <button
+                  onClick={() => setCreating(false)}
+                  className="btn-ghost text-xs py-1 px-2 flex-1"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={handleCreate}
+                  disabled={!newName.trim()}
+                  className="btn-primary text-xs py-1 px-2 flex-1"
+                >
+                  Create
+                </button>
               </div>
             </div>
           ) : (

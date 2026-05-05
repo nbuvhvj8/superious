@@ -34,7 +34,8 @@ const MOCK_SCRIPT: ScriptData = {
       id: 'seg-001',
       order: 1,
       heading: 'What Is CRISPR and How Does It Work?',
-      narration: "CRISPR-Cas9 is essentially a bacterial immune system that scientists have repurposed as a precision genome editing tool. The Cas9 protein acts like molecular scissors, guided by a short RNA sequence to a specific location in the DNA strand. Once there, it makes a targeted double-strand cut. The cell's natural repair machinery then either disables the gene or — in more advanced applications — inserts a corrected sequence. What took decades of work with older tools now takes days. The precision is measured in individual base pairs out of 3 billion.",
+      narration:
+        "CRISPR-Cas9 is essentially a bacterial immune system that scientists have repurposed as a precision genome editing tool. The Cas9 protein acts like molecular scissors, guided by a short RNA sequence to a specific location in the DNA strand. Once there, it makes a targeted double-strand cut. The cell's natural repair machinery then either disables the gene or — in more advanced applications — inserts a corrected sequence. What took decades of work with older tools now takes days. The precision is measured in individual base pairs out of 3 billion.",
       bRollCues: [
         'Animation of Cas9 protein binding to DNA double helix',
         'Lab footage of scientists pipetting samples in blue-lit lab',
@@ -48,7 +49,8 @@ const MOCK_SCRIPT: ScriptData = {
       id: 'seg-002',
       order: 2,
       heading: 'Key Milestones: From Discovery to Clinical Trials',
-      narration: "The CRISPR story accelerates remarkably fast. Jennifer Doudna and Emmanuelle Charpentier published the foundational paper in 2012 — they won the Nobel Prize in Chemistry just eight years later. By 2016, the first human CRISPR clinical trial began in China. In 2020, the first US trial launched for sickle cell disease. Then in November 2023, the FDA approved Casgevy — the world's first CRISPR-based therapy — for sickle cell disease and beta-thalassemia. Cancer applications have followed closely, with T-cell engineering trials showing response rates above 70% in some blood cancer cohorts.",
+      narration:
+        "The CRISPR story accelerates remarkably fast. Jennifer Doudna and Emmanuelle Charpentier published the foundational paper in 2012 — they won the Nobel Prize in Chemistry just eight years later. By 2016, the first human CRISPR clinical trial began in China. In 2020, the first US trial launched for sickle cell disease. Then in November 2023, the FDA approved Casgevy — the world's first CRISPR-based therapy — for sickle cell disease and beta-thalassemia. Cancer applications have followed closely, with T-cell engineering trials showing response rates above 70% in some blood cancer cohorts.",
       bRollCues: [
         'Photo of Doudna and Charpentier receiving Nobel Prize',
         'Timeline graphic 2012–2023 showing key milestones',
@@ -62,7 +64,8 @@ const MOCK_SCRIPT: ScriptData = {
       id: 'seg-003',
       order: 3,
       heading: 'CRISPR in Cancer Treatment: How It Works Clinically',
-      narration: "In oncology, CRISPR is being deployed in two main ways. First, ex vivo editing — taking a patient's T-cells, editing them outside the body to better recognize cancer antigens, then reinfusing them. This approach, used in CAR-T cell therapies, is showing remarkable results in leukemia and lymphoma. Second, in vivo editing — delivering CRISPR directly into the body to silence oncogenes or restore tumor suppressor genes. This is harder but potentially transformative for solid tumors like pancreatic cancer, which historically has a five-year survival rate below 12%. Early trials are reporting stable disease in previously untreatable patients.",
+      narration:
+        "In oncology, CRISPR is being deployed in two main ways. First, ex vivo editing — taking a patient's T-cells, editing them outside the body to better recognize cancer antigens, then reinfusing them. This approach, used in CAR-T cell therapies, is showing remarkable results in leukemia and lymphoma. Second, in vivo editing — delivering CRISPR directly into the body to silence oncogenes or restore tumor suppressor genes. This is harder but potentially transformative for solid tumors like pancreatic cancer, which historically has a five-year survival rate below 12%. Early trials are reporting stable disease in previously untreatable patients.",
       bRollCues: [
         'Animation of T-cell engineering process',
         'Infusion room footage — patient receiving cell therapy',
@@ -76,7 +79,8 @@ const MOCK_SCRIPT: ScriptData = {
       id: 'seg-004',
       order: 4,
       heading: 'Ethical Frameworks: The Lines We Must Not Cross',
-      narration: "The power of CRISPR forces urgent ethical questions. Somatic editing — changing genes in a living adult — is broadly accepted when it treats disease. Germline editing — altering embryos in ways that pass to future generations — is where consensus breaks down. In 2018, He Jiankui shocked the world by announcing the birth of gene-edited twin girls. The scientific community's response was swift condemnation. He was sentenced to three years in prison. The incident accelerated calls for international governance frameworks. The WHO's Expert Advisory Committee released recommendations in 2021 calling for a global registry of all germline editing research and mandatory pre-approval before any clinical application.",
+      narration:
+        "The power of CRISPR forces urgent ethical questions. Somatic editing — changing genes in a living adult — is broadly accepted when it treats disease. Germline editing — altering embryos in ways that pass to future generations — is where consensus breaks down. In 2018, He Jiankui shocked the world by announcing the birth of gene-edited twin girls. The scientific community's response was swift condemnation. He was sentenced to three years in prison. The incident accelerated calls for international governance frameworks. The WHO's Expert Advisory Committee released recommendations in 2021 calling for a global registry of all germline editing research and mandatory pre-approval before any clinical application.",
       bRollCues: [
         'Footage of He Jiankui news coverage',
         'WHO headquarters Geneva exterior shot',
@@ -90,7 +94,8 @@ const MOCK_SCRIPT: ScriptData = {
       id: 'seg-005',
       order: 5,
       heading: 'Access, Equity, and the $2 Million Problem',
-      narration: "Casgevy, the approved CRISPR therapy, is priced at 2.2 million dollars per treatment. For context, the diseases it treats — sickle cell and beta-thalassemia — disproportionately affect populations in sub-Saharan Africa, the Middle East, and South Asia, where healthcare systems cannot absorb costs anywhere near that figure. This creates a profound equity gap: the people who stand to benefit most from CRISPR's cancer-fighting potential are the least likely to access it. Researchers and advocacy groups are pushing for tiered pricing models, compulsory licensing in low-income countries, and public funding mandates for publicly-funded research outputs.",
+      narration:
+        "Casgevy, the approved CRISPR therapy, is priced at 2.2 million dollars per treatment. For context, the diseases it treats — sickle cell and beta-thalassemia — disproportionately affect populations in sub-Saharan Africa, the Middle East, and South Asia, where healthcare systems cannot absorb costs anywhere near that figure. This creates a profound equity gap: the people who stand to benefit most from CRISPR's cancer-fighting potential are the least likely to access it. Researchers and advocacy groups are pushing for tiered pricing models, compulsory licensing in low-income countries, and public funding mandates for publicly-funded research outputs.",
       bRollCues: [
         'Map showing global distribution of sickle cell disease',
         'Hospital in West Africa — contrasting with US treatment center',
@@ -104,7 +109,8 @@ const MOCK_SCRIPT: ScriptData = {
       id: 'seg-006',
       order: 6,
       heading: 'What Comes Next: The 5-Year Horizon',
-      narration: "The next five years will be defined by three developments. First, base editing and prime editing — newer CRISPR variants that make single-letter DNA changes without cutting both strands, dramatically reducing off-target effects. Second, in vivo delivery improvements — lipid nanoparticles and viral vectors are becoming more precise at targeting specific organs. Third, AI-assisted guide RNA design — machine learning models are now predicting the most effective and safest editing sequences orders of magnitude faster than manual design. The convergence of these three trends means we may see CRISPR therapies for solid tumors — the hardest cancers to treat — entering Phase 3 trials by 2027.",
+      narration:
+        'The next five years will be defined by three developments. First, base editing and prime editing — newer CRISPR variants that make single-letter DNA changes without cutting both strands, dramatically reducing off-target effects. Second, in vivo delivery improvements — lipid nanoparticles and viral vectors are becoming more precise at targeting specific organs. Third, AI-assisted guide RNA design — machine learning models are now predicting the most effective and safest editing sequences orders of magnitude faster than manual design. The convergence of these three trends means we may see CRISPR therapies for solid tumors — the hardest cancers to treat — entering Phase 3 trials by 2027.',
       bRollCues: [
         'Animation of base editing mechanism',
         'Lipid nanoparticle delivery animation',
@@ -115,7 +121,8 @@ const MOCK_SCRIPT: ScriptData = {
       durationS: 310,
     },
   ],
-  outro: "CRISPR is not a silver bullet — it is a platform. A set of molecular tools that are improving rapidly, being applied carefully, and generating results that would have been called impossible a decade ago. The ethical and equity challenges are real and urgent. But the trajectory is clear: gene editing is moving from experimental to essential. For video creators, researchers, and anyone tracking the future of medicine, this is the story of our generation. Subscribe for more deep dives into the science reshaping the world.",
+  outro:
+    'CRISPR is not a silver bullet — it is a platform. A set of molecular tools that are improving rapidly, being applied carefully, and generating results that would have been called impossible a decade ago. The ethical and equity challenges are real and urgent. But the trajectory is clear: gene editing is moving from experimental to essential. For video creators, researchers, and anyone tracking the future of medicine, this is the story of our generation. Subscribe for more deep dives into the science reshaping the world.',
   outroSourceIds: ['src-002', 'src-008'],
   wordCount: 2840,
   estimatedDurationS: 1870,
@@ -142,7 +149,12 @@ export interface BRollExportItem {
   checked: boolean;
 }
 
-export default function ScriptViewer({ highlightedSourceId, onCitationClick, onBRollDataReady, onExportGoogleDocs }: Props) {
+export default function ScriptViewer({
+  highlightedSourceId,
+  onCitationClick,
+  onBRollDataReady,
+  onExportGoogleDocs,
+}: Props) {
   const [exportOpen, setExportOpen] = useState(false);
   const [scriptData, setScriptData] = useState<ScriptData>(MOCK_SCRIPT);
 
@@ -173,18 +185,14 @@ export default function ScriptViewer({ highlightedSourceId, onCitationClick, onB
   function updateSegmentNarration(segId: string, newNarration: string) {
     setScriptData((prev) => ({
       ...prev,
-      segments: prev.segments.map((s) =>
-        s.id === segId ? { ...s, narration: newNarration } : s
-      ),
+      segments: prev.segments.map((s) => (s.id === segId ? { ...s, narration: newNarration } : s)),
     }));
   }
 
   function updateSegmentHeading(segId: string, newHeading: string) {
     setScriptData((prev) => ({
       ...prev,
-      segments: prev.segments.map((s) =>
-        s.id === segId ? { ...s, heading: newHeading } : s
-      ),
+      segments: prev.segments.map((s) => (s.id === segId ? { ...s, heading: newHeading } : s)),
     }));
   }
 
@@ -194,8 +202,8 @@ export default function ScriptViewer({ highlightedSourceId, onCitationClick, onB
       format === 'json'
         ? JSON.stringify(scriptData, null, 2)
         : format === 'md'
-        ? `# ${scriptData.title}\n\n${scriptData.hook}\n\n${scriptData.segments.map((s) => `## ${s.heading}\n\n${s.narration}`).join('\n\n')}\n\n${scriptData.outro}`
-        : `${scriptData.title}\n\n${scriptData.hook}\n\n${scriptData.segments.map((s) => `${s.heading}\n\n${s.narration}`).join('\n\n')}\n\n${scriptData.outro}`;
+          ? `# ${scriptData.title}\n\n${scriptData.hook}\n\n${scriptData.segments.map((s) => `## ${s.heading}\n\n${s.narration}`).join('\n\n')}\n\n${scriptData.outro}`
+          : `${scriptData.title}\n\n${scriptData.hook}\n\n${scriptData.segments.map((s) => `${s.heading}\n\n${s.narration}`).join('\n\n')}\n\n${scriptData.outro}`;
 
     const blob = new Blob([content], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
@@ -207,7 +215,7 @@ export default function ScriptViewer({ highlightedSourceId, onCitationClick, onB
   }
 
   return (
-    <div className="px-6 lg:px-8 py-6 space-y-7 max-w-3xl mx-auto">
+    <div className="px-6 lg:px-8 xl:px-10 2xl:px-14 py-6 space-y-7 max-w-[848px]">
       {/* Script Header */}
       <div className="flex items-start justify-between gap-4">
         <div className="space-y-1 min-w-0">
@@ -220,9 +228,13 @@ export default function ScriptViewer({ highlightedSourceId, onCitationClick, onB
           </div>
           <h2 className="text-xl font-bold text-foreground leading-tight">{scriptData.title}</h2>
           <div className="flex items-center gap-3 text-xs text-muted-foreground">
-            <span className="font-mono tabular-nums font-semibold">{scriptData.wordCount.toLocaleString()} words</span>
+            <span className="font-mono tabular-nums font-semibold">
+              {scriptData.wordCount.toLocaleString()} words
+            </span>
             <span>&bull;</span>
-            <span className="font-semibold">{formatDuration(scriptData.estimatedDurationS)} est.</span>
+            <span className="font-semibold">
+              {formatDuration(scriptData.estimatedDurationS)} est.
+            </span>
             <span>&bull;</span>
             <span>{scriptData.segments.length} segments</span>
           </div>
@@ -238,9 +250,18 @@ export default function ScriptViewer({ highlightedSourceId, onCitationClick, onB
               title="Export to Google Docs"
             >
               <svg viewBox="0 0 24 24" width="13" height="13">
-                <path fill="#4285F4" d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/>
-                <path fill="#fff" d="M14 2v6h6"/>
-                <path fill="#fff" d="M8 13h8M8 17h5" stroke="#fff" strokeWidth="1.5" strokeLinecap="round"/>
+                <path
+                  fill="#4285F4"
+                  d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"
+                />
+                <path fill="#fff" d="M14 2v6h6" />
+                <path
+                  fill="#fff"
+                  d="M8 13h8M8 17h5"
+                  stroke="#fff"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                />
               </svg>
               Docs
             </button>
@@ -253,14 +274,32 @@ export default function ScriptViewer({ highlightedSourceId, onCitationClick, onB
             >
               <Download size={13} />
               Export
-              <ChevronDown size={12} className={`transition-transform duration-150 ${exportOpen ? 'rotate-180' : ''}`} />
+              <ChevronDown
+                size={12}
+                className={`transition-transform duration-150 ${exportOpen ? 'rotate-180' : ''}`}
+              />
             </button>
             {exportOpen && (
               <div className="absolute right-0 top-full mt-1.5 w-44 bg-card border border-border rounded-xl shadow-lg z-20 overflow-hidden animate-fade-in">
                 {[
-                  { key: 'export-txt', label: 'Plain Text', fmt: 'txt' as const, icon: <FileText size={13} /> },
-                  { key: 'export-md', label: 'Markdown', fmt: 'md' as const, icon: <Hash size={13} /> },
-                  { key: 'export-json', label: 'JSON', fmt: 'json' as const, icon: <Code size={13} /> },
+                  {
+                    key: 'export-txt',
+                    label: 'Plain Text',
+                    fmt: 'txt' as const,
+                    icon: <FileText size={13} />,
+                  },
+                  {
+                    key: 'export-md',
+                    label: 'Markdown',
+                    fmt: 'md' as const,
+                    icon: <Hash size={13} />,
+                  },
+                  {
+                    key: 'export-json',
+                    label: 'JSON',
+                    fmt: 'json' as const,
+                    icon: <Code size={13} />,
+                  },
                 ].map((opt) => (
                   <button
                     key={opt.key}
@@ -347,7 +386,15 @@ export default function ScriptViewer({ highlightedSourceId, onCitationClick, onB
   );
 }
 
-function CitationBadge({ sourceId, isHighlighted, onClick }: { sourceId: string; isHighlighted: boolean; onClick: () => void }) {
+function CitationBadge({
+  sourceId,
+  isHighlighted,
+  onClick,
+}: {
+  sourceId: string;
+  isHighlighted: boolean;
+  onClick: () => void;
+}) {
   const num = sourceId.replace('src-', '');
   return (
     <button
@@ -355,9 +402,10 @@ function CitationBadge({ sourceId, isHighlighted, onClick }: { sourceId: string;
       className={`
         inline-flex items-center justify-center w-5 h-5 rounded-full text-2xs font-bold
         transition-all duration-150 active:scale-95
-        ${isHighlighted
-          ? 'bg-primary text-primary-foreground ring-2 ring-primary/40'
-          : 'bg-secondary/60 text-foreground hover:bg-primary hover:text-primary-foreground'
+        ${
+          isHighlighted
+            ? 'bg-primary text-primary-foreground ring-2 ring-primary/40'
+            : 'bg-secondary/60 text-foreground hover:bg-primary hover:text-primary-foreground'
         }
       `}
       aria-label={`Source ${num}`}
@@ -414,7 +462,9 @@ function ScriptSegmentBlock({
       {/* B-Roll Cues */}
       {segment.bRollCues.length > 0 && (
         <div className="space-y-1.5">
-          <span className="text-2xs font-bold text-muted-foreground uppercase tracking-wider">B-Roll Cues</span>
+          <span className="text-2xs font-bold text-muted-foreground uppercase tracking-wider">
+            B-Roll Cues
+          </span>
           <div className="flex flex-wrap gap-1.5">
             {segment.bRollCues.map((cue, ci) => (
               <span

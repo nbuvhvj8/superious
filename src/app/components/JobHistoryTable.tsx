@@ -18,29 +18,132 @@ interface Job {
 
 // TODO: Replace with GET /api/v1/jobs?page=X&limit=20&status=Y
 const MOCK_JOBS: Job[] = [
-  { id: 'job-2847fa', prompt: 'The rise and fall of Blockbuster Video — corporate decisions, Netflix rivalry, and lessons for modern media companies', status: 'screenshotting', sourcesCount: 5, wordCount: null, estimatedDuration: null, createdAt: '2026-05-04T21:18:00Z' },
-  { id: 'job-1c93be', prompt: 'How CRISPR gene editing is revolutionizing cancer treatment and what ethical frameworks are needed', status: 'done', sourcesCount: 8, wordCount: 2840, estimatedDuration: '21m 50s', createdAt: '2026-05-04T18:44:00Z' },
-  { id: 'job-8d72ac', prompt: 'The science behind why we dream — neuroscience, memory consolidation, and lucid dreaming research', status: 'done', sourcesCount: 7, wordCount: 2610, estimatedDuration: '20m 5s', createdAt: '2026-05-03T14:22:00Z' },
-  { id: 'job-5e41df', prompt: 'Nuclear fusion energy: ITER project timeline, recent breakthroughs, and realistic path to commercial power', status: 'done', sourcesCount: 8, wordCount: 3120, estimatedDuration: '24m 0s', createdAt: '2026-05-03T09:11:00Z' },
-  { id: 'job-3b19cc', prompt: 'TikTok algorithm deep dive — how content is ranked, why it is addictive, and its impact on attention spans', status: 'failed', sourcesCount: 3, wordCount: null, estimatedDuration: null, createdAt: '2026-05-02T22:07:00Z' },
-  { id: 'job-7f64aa', prompt: 'Lab-grown meat industry: current state, cost trajectory, regulatory landscape, and consumer adoption barriers', status: 'done', sourcesCount: 8, wordCount: 2950, estimatedDuration: '22m 41s', createdAt: '2026-05-02T16:30:00Z' },
-  { id: 'job-9a82cd', prompt: 'History of solar energy in Africa — adoption rates, off-grid solutions, and economic impact on rural communities', status: 'done', sourcesCount: 8, wordCount: 2780, estimatedDuration: '21m 23s', createdAt: '2026-05-01T11:45:00Z' },
-  { id: 'job-4c55ef', prompt: 'Why the Roman Empire really collapsed — economic, military, and climate factors beyond the traditional narrative', status: 'done', sourcesCount: 8, wordCount: 3050, estimatedDuration: '23m 28s', createdAt: '2026-04-30T09:00:00Z' },
-  { id: 'job-2d87bc', prompt: 'The future of remote work — productivity research, hybrid model outcomes, and office real estate implications', status: 'done', sourcesCount: 7, wordCount: 2420, estimatedDuration: '18m 37s', createdAt: '2026-04-29T15:20:00Z' },
-  { id: 'job-6e13fa', prompt: 'Quantum computing explained — current qubit counts, decoherence challenges, and first practical use cases', status: 'failed', sourcesCount: 2, wordCount: null, estimatedDuration: null, createdAt: '2026-04-28T20:11:00Z' },
+  {
+    id: 'job-2847fa',
+    prompt:
+      'The rise and fall of Blockbuster Video — corporate decisions, Netflix rivalry, and lessons for modern media companies',
+    status: 'screenshotting',
+    sourcesCount: 5,
+    wordCount: null,
+    estimatedDuration: null,
+    createdAt: '2026-05-04T21:18:00Z',
+  },
+  {
+    id: 'job-1c93be',
+    prompt:
+      'How CRISPR gene editing is revolutionizing cancer treatment and what ethical frameworks are needed',
+    status: 'done',
+    sourcesCount: 8,
+    wordCount: 2840,
+    estimatedDuration: '21m 50s',
+    createdAt: '2026-05-04T18:44:00Z',
+  },
+  {
+    id: 'job-8d72ac',
+    prompt:
+      'The science behind why we dream — neuroscience, memory consolidation, and lucid dreaming research',
+    status: 'done',
+    sourcesCount: 7,
+    wordCount: 2610,
+    estimatedDuration: '20m 5s',
+    createdAt: '2026-05-03T14:22:00Z',
+  },
+  {
+    id: 'job-5e41df',
+    prompt:
+      'Nuclear fusion energy: ITER project timeline, recent breakthroughs, and realistic path to commercial power',
+    status: 'done',
+    sourcesCount: 8,
+    wordCount: 3120,
+    estimatedDuration: '24m 0s',
+    createdAt: '2026-05-03T09:11:00Z',
+  },
+  {
+    id: 'job-3b19cc',
+    prompt:
+      'TikTok algorithm deep dive — how content is ranked, why it is addictive, and its impact on attention spans',
+    status: 'failed',
+    sourcesCount: 3,
+    wordCount: null,
+    estimatedDuration: null,
+    createdAt: '2026-05-02T22:07:00Z',
+  },
+  {
+    id: 'job-7f64aa',
+    prompt:
+      'Lab-grown meat industry: current state, cost trajectory, regulatory landscape, and consumer adoption barriers',
+    status: 'done',
+    sourcesCount: 8,
+    wordCount: 2950,
+    estimatedDuration: '22m 41s',
+    createdAt: '2026-05-02T16:30:00Z',
+  },
+  {
+    id: 'job-9a82cd',
+    prompt:
+      'History of solar energy in Africa — adoption rates, off-grid solutions, and economic impact on rural communities',
+    status: 'done',
+    sourcesCount: 8,
+    wordCount: 2780,
+    estimatedDuration: '21m 23s',
+    createdAt: '2026-05-01T11:45:00Z',
+  },
+  {
+    id: 'job-4c55ef',
+    prompt:
+      'Why the Roman Empire really collapsed — economic, military, and climate factors beyond the traditional narrative',
+    status: 'done',
+    sourcesCount: 8,
+    wordCount: 3050,
+    estimatedDuration: '23m 28s',
+    createdAt: '2026-04-30T09:00:00Z',
+  },
+  {
+    id: 'job-2d87bc',
+    prompt:
+      'The future of remote work — productivity research, hybrid model outcomes, and office real estate implications',
+    status: 'done',
+    sourcesCount: 7,
+    wordCount: 2420,
+    estimatedDuration: '18m 37s',
+    createdAt: '2026-04-29T15:20:00Z',
+  },
+  {
+    id: 'job-6e13fa',
+    prompt:
+      'Quantum computing explained — current qubit counts, decoherence challenges, and first practical use cases',
+    status: 'failed',
+    sourcesCount: 2,
+    wordCount: null,
+    estimatedDuration: null,
+    createdAt: '2026-04-28T20:11:00Z',
+  },
 ];
 
 const STATUS_FILTERS: { key: string; label: string; value: JobStatus | 'all' }[] = [
-  { key: 'filter-all',           label: 'All',          value: 'all' },
-  { key: 'filter-done',          label: 'Done',         value: 'done' },
-  { key: 'filter-researching',   label: 'In Progress',  value: 'researching' },
-  { key: 'filter-failed',        label: 'Failed',       value: 'failed' },
+  { key: 'filter-all', label: 'All', value: 'all' },
+  { key: 'filter-done', label: 'Done', value: 'done' },
+  { key: 'filter-researching', label: 'In Progress', value: 'researching' },
+  { key: 'filter-failed', label: 'Failed', value: 'failed' },
 ];
 
 function formatDate(iso: string) {
   const d = new Date(iso);
   const day = String(d.getUTCDate()).padStart(2, '0');
-  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const months = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ];
   const month = months[d.getUTCMonth()];
   const year = d.getUTCFullYear();
   return `${day} ${month} ${year}`;
@@ -89,12 +192,16 @@ export default function JobHistoryTable() {
             {STATUS_FILTERS.map((f) => (
               <button
                 key={f.key}
-                onClick={() => { setStatusFilter(f.value); setPage(1); }}
+                onClick={() => {
+                  setStatusFilter(f.value);
+                  setPage(1);
+                }}
                 className={`
                   text-xs px-3 py-1 rounded-full font-semibold border transition-all duration-150
-                  ${statusFilter === f.value
-                    ? 'bg-primary text-primary-foreground border-primary'
-                    : 'bg-muted text-muted-foreground border-border hover:border-primary hover:text-primary'
+                  ${
+                    statusFilter === f.value
+                      ? 'bg-primary text-primary-foreground border-primary'
+                      : 'bg-muted text-muted-foreground border-border hover:border-primary hover:text-primary'
                   }
                 `}
               >
@@ -112,12 +219,24 @@ export default function JobHistoryTable() {
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-border bg-muted/40">
-                <th className="text-left px-5 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider w-[40%]">Prompt</th>
-                <th className="text-left px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Status</th>
-                <th className="text-left px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Sources</th>
-                <th className="text-left px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Duration</th>
-                <th className="text-left px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Created</th>
-                <th className="text-right px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">Actions</th>
+                <th className="text-left px-5 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider w-[40%]">
+                  Prompt
+                </th>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                  Status
+                </th>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                  Sources
+                </th>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                  Duration
+                </th>
+                <th className="text-left px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                  Created
+                </th>
+                <th className="text-right px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                  Actions
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -145,14 +264,13 @@ export default function JobHistoryTable() {
                     `}
                   >
                     <td className="px-5 py-3.5">
-                      <Link
-                        href="/job-detail"
-                        className="block max-w-xs xl:max-w-sm 2xl:max-w-md"
-                      >
+                      <Link href="/job-detail" className="block max-w-xs xl:max-w-sm 2xl:max-w-md">
                         <p className="text-sm font-semibold text-foreground line-clamp-2 leading-snug hover:text-primary transition-colors">
                           {job.prompt}
                         </p>
-                        <span className="font-mono text-2xs text-muted-foreground mt-0.5 block">{job.id}</span>
+                        <span className="font-mono text-2xs text-muted-foreground mt-0.5 block">
+                          {job.id}
+                        </span>
                       </Link>
                     </td>
                     <td className="px-4 py-3.5">
@@ -166,15 +284,21 @@ export default function JobHistoryTable() {
                     </td>
                     <td className="px-4 py-3.5">
                       {job.estimatedDuration ? (
-                        <span className="font-mono text-xs tabular-nums text-foreground">{job.estimatedDuration}</span>
+                        <span className="font-mono text-xs tabular-nums text-foreground">
+                          {job.estimatedDuration}
+                        </span>
                       ) : (
                         <span className="text-muted-foreground text-xs">—</span>
                       )}
                     </td>
                     <td className="px-4 py-3.5">
                       <div className="space-y-0.5">
-                        <p className="text-xs font-semibold text-foreground">{formatDate(job.createdAt)}</p>
-                        <p className="font-mono text-2xs text-muted-foreground">{formatTime(job.createdAt)}</p>
+                        <p className="text-xs font-semibold text-foreground">
+                          {formatDate(job.createdAt)}
+                        </p>
+                        <p className="font-mono text-2xs text-muted-foreground">
+                          {formatTime(job.createdAt)}
+                        </p>
                       </div>
                     </td>
                     <td className="px-4 py-3.5">
@@ -185,12 +309,14 @@ export default function JobHistoryTable() {
                           aria-label="View job detail"
                         >
                           <ExternalLink size={14} />
-                          <span className="
+                          <span
+                            className="
                             absolute bottom-full mb-1.5 left-1/2 -translate-x-1/2
                             px-2 py-1 rounded bg-foreground text-background text-2xs font-medium
                             whitespace-nowrap opacity-0 group-hover/btn:opacity-100 pointer-events-none
                             transition-opacity duration-150 z-10
-                          ">
+                          "
+                          >
                             View detail
                           </span>
                         </Link>
@@ -200,12 +326,14 @@ export default function JobHistoryTable() {
                           aria-label="Delete job"
                         >
                           <Trash2 size={14} />
-                          <span className="
+                          <span
+                            className="
                             absolute bottom-full mb-1.5 left-1/2 -translate-x-1/2
                             px-2 py-1 rounded bg-foreground text-background text-2xs font-medium
                             whitespace-nowrap opacity-0 group-hover/btn:opacity-100 pointer-events-none
                             transition-opacity duration-150 z-10
-                          ">
+                          "
+                          >
                             Delete job
                           </span>
                         </button>
@@ -239,9 +367,10 @@ export default function JobHistoryTable() {
                   onClick={() => setPage(i + 1)}
                   className={`
                     w-7 h-7 rounded-lg text-xs font-semibold transition-all duration-150
-                    ${page === i + 1
-                      ? 'bg-primary text-primary-foreground'
-                      : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+                    ${
+                      page === i + 1
+                        ? 'bg-primary text-primary-foreground'
+                        : 'text-muted-foreground hover:bg-muted hover:text-foreground'
                     }
                   `}
                 >
