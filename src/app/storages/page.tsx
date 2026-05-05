@@ -1,15 +1,399 @@
-import React from 'react';
-import AppLayout from '@/components/AppLayout';
+'use client';
 
-export const dynamic = 'force-static';
+import React, { useState } from 'react';
+import AppLayout from '@/components/AppLayout';
+import Image from 'next/image';
+import {
+  Database,
+  FolderOpen,
+  Cloud,
+  Network,
+  FileText,
+  Image as ImageIcon,
+  FileVideo,
+  ExternalLink,
+  Plus,
+  Search,
+  Tag,
+  Link as LinkIcon,
+  ChevronRight,
+} from 'lucide-react';
+
+type TabType = 'assets' | 'cloud' | 'knowledge';
 
 export default function StoragesPage() {
+  const [activeTab, setActiveTab] = useState<TabType>('assets');
+
   return (
     <AppLayout>
-      <div className="p-8">
-        <h1 className="text-2xl font-bold">Storages</h1>
-        <p className="text-muted-foreground">Manage your storage locations and exports.</p>
+      <div className="p-8 max-w-7xl mx-auto">
+        <header className="mb-10">
+          <div className="flex items-center gap-2 mb-2">
+            <div className="p-2 bg-primary/10 rounded-lg text-primary">
+              <Database size={20} />
+            </div>
+            <span className="text-sm font-bold text-primary uppercase tracking-widest">
+              Storage & Assets
+            </span>
+          </div>
+          <h1 className="text-3xl font-bold tracking-tight text-foreground">Storages</h1>
+          <p className="text-muted-foreground mt-2 text-lg max-w-2xl">
+            Manage your research assets, cloud integrations, and semantic knowledge base.
+          </p>
+        </header>
+
+        {/* Tab Navigation */}
+        <div className="flex border-b border-border mb-8">
+          <button
+            onClick={() => setActiveTab('assets')}
+            className={`px-4 py-3 text-sm font-bold transition-colors relative ${
+              activeTab === 'assets'
+                ? 'text-primary'
+                : 'text-muted-foreground hover:text-foreground'
+            }`}
+          >
+            <div className="flex items-center gap-2">
+              <FolderOpen size={16} />
+              Asset Explorer
+            </div>
+            {activeTab === 'assets' && (
+              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary" />
+            )}
+          </button>
+          <button
+            onClick={() => setActiveTab('cloud')}
+            className={`px-4 py-3 text-sm font-bold transition-colors relative ${
+              activeTab === 'cloud' ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
+            }`}
+          >
+            <div className="flex items-center gap-2">
+              <Cloud size={16} />
+              Cloud Sync
+            </div>
+            {activeTab === 'cloud' && (
+              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary" />
+            )}
+          </button>
+          <button
+            onClick={() => setActiveTab('knowledge')}
+            className={`px-4 py-3 text-sm font-bold transition-colors relative ${
+              activeTab === 'knowledge'
+                ? 'text-primary'
+                : 'text-muted-foreground hover:text-foreground'
+            }`}
+          >
+            <div className="flex items-center gap-2">
+              <Network size={16} />
+              Knowledge Base
+            </div>
+            {activeTab === 'knowledge' && (
+              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary" />
+            )}
+          </button>
+        </div>
+
+        {/* Tab Content */}
+        <div className="min-h-[400px]">
+          {activeTab === 'assets' && <AssetExplorer />}
+          {activeTab === 'cloud' && <CloudSync />}
+          {activeTab === 'knowledge' && <KnowledgeBase />}
+        </div>
       </div>
     </AppLayout>
+  );
+}
+
+function AssetExplorer() {
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <h2 className="text-xl font-bold text-foreground">Asset & B-Roll Management</h2>
+        <div className="flex items-center gap-2">
+          <div className="relative">
+            <Search
+              size={16}
+              className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+            />
+            <input
+              placeholder="Search assets..."
+              className="pl-9 pr-4 py-1.5 bg-muted/50 border border-border rounded-lg text-sm focus:ring-1 focus:ring-primary outline-none w-64"
+            />
+          </div>
+        </div>
+      </div>
+      <p className="text-sm text-muted-foreground -mt-4">
+        A file-explorer style view that organizes all captured screenshots, exported PDFs, and
+        generated script versions.
+      </p>
+
+      <div className="bg-card border border-border rounded-xl overflow-hidden">
+        <div className="bg-muted/30 px-4 py-2 border-b border-border flex items-center text-xs font-bold text-muted-foreground uppercase tracking-wider">
+          <div className="flex-1">Name</div>
+          <div className="w-32">Type</div>
+          <div className="w-32">Job ID</div>
+          <div className="w-32 text-right">Date Added</div>
+        </div>
+        <div className="divide-y divide-border">
+          <AssetRow
+            name="Netflix_Competitive_Analysis.pdf"
+            type="PDF Document"
+            jobId="JOB-001"
+            date="2h ago"
+            icon={<FileText size={18} className="text-red-500" />}
+          />
+          <AssetRow
+            name="B-Roll_Scene_1_Prompt.txt"
+            type="Script Version"
+            jobId="JOB-042"
+            date="5h ago"
+            icon={<FileVideo size={18} className="text-blue-500" />}
+          />
+          <AssetRow
+            name="Screenshot_MarketShare_2024.png"
+            type="Screenshot"
+            jobId="JOB-012"
+            date="Yesterday"
+            icon={<ImageIcon size={18} className="text-emerald-500" />}
+          />
+          <AssetRow
+            name="Source_Archive_Snapshot_V2.zip"
+            type="Archive"
+            jobId="JOB-001"
+            date="2 days ago"
+            icon={<FolderOpen size={18} className="text-amber-500" />}
+          />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function AssetRow({
+  name,
+  type,
+  jobId,
+  date,
+  icon,
+}: {
+  name: string;
+  type: string;
+  jobId: string;
+  date: string;
+  icon: React.ReactNode;
+}) {
+  return (
+    <div className="flex items-center px-4 py-3 hover:bg-muted/50 transition-colors group cursor-pointer">
+      <div className="flex-1 flex items-center gap-3">
+        {icon}
+        <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">
+          {name}
+        </span>
+      </div>
+      <div className="w-32 text-sm text-muted-foreground">{type}</div>
+      <div className="w-32 text-sm font-mono text-muted-foreground">{jobId}</div>
+      <div className="w-32 text-sm text-muted-foreground text-right">{date}</div>
+    </div>
+  );
+}
+
+function CloudSync() {
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <h2 className="text-xl font-bold text-foreground">Multi-Platform Export Sync</h2>
+      </div>
+      <p className="text-sm text-muted-foreground -mt-4">
+        Map your research collections to specific folders in Google Drive, Notion, or Dropbox.
+      </p>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <CloudCard
+          name="Google Drive"
+          icon="https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg"
+          connected={true}
+          folder="/Outlier/Research/2024"
+        />
+        <CloudCard
+          name="Notion"
+          icon="https://upload.wikimedia.org/wikipedia/commons/e/e9/Notion-logo.svg"
+          connected={true}
+          folder="Research Database"
+        />
+        <CloudCard
+          name="Dropbox"
+          icon="https://upload.wikimedia.org/wikipedia/commons/7/78/Dropbox_Icon.svg"
+          connected={false}
+        />
+        <div className="border-2 border-dashed border-border rounded-xl p-8 flex flex-col items-center justify-center text-center hover:border-primary/50 transition-colors cursor-pointer group">
+          <div className="w-12 h-12 bg-muted rounded-full flex items-center justify-center mb-4 group-hover:bg-primary/10 group-hover:text-primary transition-colors">
+            <Plus size={24} />
+          </div>
+          <h3 className="font-bold mb-1">Add New Integration</h3>
+          <p className="text-sm text-muted-foreground">Sync your data to more platforms</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function CloudCard({
+  name,
+  icon,
+  connected,
+  folder,
+}: {
+  name: string;
+  icon: string;
+  connected: boolean;
+  folder?: string;
+}) {
+  return (
+    <div className="bg-card border border-border rounded-xl p-6 shadow-sm">
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center gap-4">
+          <div className="w-10 h-10 p-2 bg-white rounded-lg border border-border shadow-sm flex items-center justify-center overflow-hidden relative">
+            <Image
+              src={icon}
+              alt={name}
+              fill
+              className="object-contain p-2"
+              unoptimized={icon.endsWith('.svg')}
+            />
+          </div>
+          <div>
+            <h3 className="font-bold text-foreground leading-tight">{name}</h3>
+            <div className="flex items-center gap-1.5 mt-0.5">
+              <div
+                className={`w-1.5 h-1.5 rounded-full ${connected ? 'bg-green-500' : 'bg-muted-foreground'}`}
+              />
+              <span className="text-xs text-muted-foreground">
+                {connected ? 'Connected' : 'Not Connected'}
+              </span>
+            </div>
+          </div>
+        </div>
+        <button
+          className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${connected ? 'bg-muted text-foreground hover:bg-muted/80' : 'bg-primary text-primary-foreground'}`}
+        >
+          {connected ? 'Settings' : 'Connect'}
+        </button>
+      </div>
+
+      {connected && (
+        <div className="bg-muted/30 rounded-lg p-3 flex items-center justify-between border border-border/50">
+          <div className="flex items-center gap-2">
+            <FolderOpen size={14} className="text-muted-foreground" />
+            <span className="text-sm font-medium truncate max-w-[200px]">{folder}</span>
+          </div>
+          <ExternalLink
+            size={14}
+            className="text-muted-foreground hover:text-primary cursor-pointer transition-colors"
+          />
+        </div>
+      )}
+    </div>
+  );
+}
+
+function KnowledgeBase() {
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center justify-between">
+        <h2 className="text-xl font-bold text-foreground">Semantic Knowledge Base</h2>
+        <button className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg text-sm font-bold shadow-lg shadow-primary/20">
+          <Network size={16} />
+          Graph View
+        </button>
+      </div>
+      <p className="text-sm text-muted-foreground -mt-4">
+        Cross-reference sources across multiple jobs using semantic tags and AI-driven linking.
+      </p>
+
+      <div className="grid gap-4">
+        <KnowledgeSource
+          title="The Economics of Streaming Services"
+          tags={['Business', 'Streaming', 'Revenue']}
+          jobs={['JOB-001', 'JOB-015']}
+          relevance={98}
+        />
+        <KnowledgeSource
+          title="AI Trends in Content Creation 2025"
+          tags={['AI', 'Future Tech', 'Production']}
+          jobs={['JOB-042']}
+          relevance={92}
+        />
+        <KnowledgeSource
+          title="Social Media Algorithm Changes"
+          tags={['Social Media', 'Marketing']}
+          jobs={['JOB-012', 'JOB-001', 'JOB-088']}
+          relevance={85}
+        />
+      </div>
+    </div>
+  );
+}
+
+function KnowledgeSource({
+  title,
+  tags,
+  jobs,
+  relevance,
+}: {
+  title: string;
+  tags: string[];
+  jobs: string[];
+  relevance: number;
+}) {
+  return (
+    <div className="bg-card border border-border rounded-xl p-5 hover:border-primary/50 transition-all group">
+      <div className="flex items-start justify-between mb-4">
+        <div>
+          <h4 className="font-bold text-lg leading-tight mb-2 group-hover:text-primary transition-colors">
+            {title}
+          </h4>
+          <div className="flex flex-wrap gap-2">
+            {tags.map((tag) => (
+              <span
+                key={tag}
+                className="flex items-center gap-1 px-2 py-0.5 bg-muted rounded-md text-[10px] font-bold text-muted-foreground uppercase"
+              >
+                <Tag size={10} />
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+        <div className="text-right">
+          <div className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-1">
+            Relevance
+          </div>
+          <div className="text-lg font-black text-primary">{relevance}%</div>
+        </div>
+      </div>
+
+      <div className="flex items-center justify-between pt-4 border-t border-border/50">
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
+            <LinkIcon size={14} />
+            Linked in {jobs.length} jobs
+          </div>
+          <div className="flex -space-x-2">
+            {jobs.map((job) => (
+              <div
+                key={job}
+                className="w-7 h-7 rounded-full bg-muted border-2 border-card flex items-center justify-center text-[8px] font-bold"
+                title={job}
+              >
+                {job.split('-')[1]}
+              </div>
+            ))}
+          </div>
+        </div>
+        <button className="text-sm font-bold text-primary flex items-center gap-1 hover:underline">
+          View Connections
+          <ChevronRight size={16} />
+        </button>
+      </div>
+    </div>
   );
 }
