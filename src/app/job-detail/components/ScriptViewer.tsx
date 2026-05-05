@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
-import { Download, ChevronDown, FileText, Code, Hash } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Download, ChevronDown, FileText, Code, Hash, Edit3 } from 'lucide-react';
+import ScriptEditor from './ScriptEditor';
 
 interface ScriptSegment {
   id: string;
@@ -24,7 +25,6 @@ interface ScriptData {
   estimatedDurationS: number;
 }
 
-// TODO: Replace with GET /api/v1/script/:jobId and SSE script event
 const MOCK_SCRIPT: ScriptData = {
   title: 'CRISPR & Cancer: The Gene Editing Revolution',
   hook: "Imagine being told you have cancer — and then, six months later, doctors use a molecular pair of scissors to snip the disease out of your DNA. This isn't science fiction. It happened. And the technology behind it is rewriting the rules of medicine faster than anyone expected.",
@@ -130,20 +130,72 @@ function formatDuration(seconds: number) {
 interface Props {
   highlightedSourceId: string | null;
   onCitationClick: (sourceId: string) => void;
+  onBRollDataReady?: (items: BRollExportItem[]) => void;
+  onExportGoogleDocs?: () => void;
 }
 
-export default function ScriptViewer({ highlightedSourceId, onCitationClick }: Props) {
+export interface BRollExportItem {
+  id: string;
+  segmentTitle: string;
+  segmentOrder: number;
+  cue: string;
+  checked: boolean;
+}
+
+export default function ScriptViewer({ highlightedSourceId, onCitationClick, onBRollDataReady, onExportGoogleDocs }: Props) {
   const [exportOpen, setExportOpen] = useState(false);
+  const [scriptData, setScriptData] = useState<ScriptData>(MOCK_SCRIPT);
+
+  // Notify parent of B-roll data
+  React.useEffect(() => {
+    if (onBRollDataReady) {
+      const items: BRollExportItem[] = scriptData.segments.flatMap((seg) =>
+        seg.bRollCues.map((cue, i) => ({
+          id: `broll-${seg.id}-${i}`,
+          segmentTitle: seg.heading,
+          segmentOrder: seg.order,
+          cue,
+          checked: false,
+        }))
+      );
+      onBRollDataReady(items);
+    }
+  }, [scriptData]);
+
+  function updateHook(newHook: string) {
+    setScriptData((prev) => ({ ...prev, hook: newHook }));
+  }
+
+  function updateOutro(newOutro: string) {
+    setScriptData((prev) => ({ ...prev, outro: newOutro }));
+  }
+
+  function updateSegmentNarration(segId: string, newNarration: string) {
+    setScriptData((prev) => ({
+      ...prev,
+      segments: prev.segments.map((s) =>
+        s.id === segId ? { ...s, narration: newNarration } : s
+      ),
+    }));
+  }
+
+  function updateSegmentHeading(segId: string, newHeading: string) {
+    setScriptData((prev) => ({
+      ...prev,
+      segments: prev.segments.map((s) =>
+        s.id === segId ? { ...s, heading: newHeading } : s
+      ),
+    }));
+  }
 
   function handleExport(format: 'txt' | 'md' | 'json') {
-    // TODO: Generate file content from script data and trigger download
     setExportOpen(false);
     const content =
       format === 'json'
-        ? JSON.stringify(MOCK_SCRIPT, null, 2)
+        ? JSON.stringify(scriptData, null, 2)
         : format === 'md'
-        ? `# ${MOCK_SCRIPT.title}\n\n${MOCK_SCRIPT.hook}\n\n${MOCK_SCRIPT.segments.map((s) => `## ${s.heading}\n\n${s.narration}`).join('\n\n')}\n\n${MOCK_SCRIPT.outro}`
-        : `${MOCK_SCRIPT.title}\n\n${MOCK_SCRIPT.hook}\n\n${MOCK_SCRIPT.segments.map((s) => `${s.heading}\n\n${s.narration}`).join('\n\n')}\n\n${MOCK_SCRIPT.outro}`;
+        ? `# ${scriptData.title}\n\n${scriptData.hook}\n\n${scriptData.segments.map((s) => `## ${s.heading}\n\n${s.narration}`).join('\n\n')}\n\n${scriptData.outro}`
+        : `${scriptData.title}\n\n${scriptData.hook}\n\n${scriptData.segments.map((s) => `${s.heading}\n\n${s.narration}`).join('\n\n')}\n\n${scriptData.outro}`;
 
     const blob = new Blob([content], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
@@ -159,45 +211,69 @@ export default function ScriptViewer({ highlightedSourceId, onCitationClick }: P
       {/* Script Header */}
       <div className="flex items-start justify-between gap-4">
         <div className="space-y-1 min-w-0">
-          <span className="section-label">Video Script</span>
-          <h2 className="text-xl font-bold text-foreground leading-tight">{MOCK_SCRIPT.title}</h2>
+          <div className="flex items-center gap-2">
+            <span className="section-label">Video Script</span>
+            <span className="flex items-center gap-1 text-2xs font-semibold text-primary bg-primary/10 px-2 py-0.5 rounded-full">
+              <Edit3 size={10} />
+              Editable
+            </span>
+          </div>
+          <h2 className="text-xl font-bold text-foreground leading-tight">{scriptData.title}</h2>
           <div className="flex items-center gap-3 text-xs text-muted-foreground">
-            <span className="font-mono tabular-nums font-semibold">{MOCK_SCRIPT.wordCount.toLocaleString()} words</span>
+            <span className="font-mono tabular-nums font-semibold">{scriptData.wordCount.toLocaleString()} words</span>
             <span>&bull;</span>
-            <span className="font-semibold">{formatDuration(MOCK_SCRIPT.estimatedDurationS)} est.</span>
+            <span className="font-semibold">{formatDuration(scriptData.estimatedDurationS)} est.</span>
             <span>&bull;</span>
-            <span>{MOCK_SCRIPT.segments.length} segments</span>
+            <span>{scriptData.segments.length} segments</span>
           </div>
         </div>
 
         {/* Export Menu */}
-        <div className="relative shrink-0">
-          <button
-            onClick={() => setExportOpen(!exportOpen)}
-            className="btn-secondary gap-1.5 text-xs py-1.5 px-3"
-          >
-            <Download size={13} />
-            Export
-            <ChevronDown size={12} className={`transition-transform duration-150 ${exportOpen ? 'rotate-180' : ''}`} />
-          </button>
-          {exportOpen && (
-            <div className="absolute right-0 top-full mt-1.5 w-44 bg-card border border-border rounded-xl shadow-lg z-20 overflow-hidden animate-fade-in">
-              {[
-                { key: 'export-txt',  label: 'Plain Text', fmt: 'txt' as const, icon: <FileText size={13} /> },
-                { key: 'export-md',   label: 'Markdown',   fmt: 'md' as const,  icon: <Hash size={13} /> },
-                { key: 'export-json', label: 'JSON',       fmt: 'json' as const, icon: <Code size={13} /> },
-              ].map((opt) => (
-                <button
-                  key={opt.key}
-                  onClick={() => handleExport(opt.fmt)}
-                  className="w-full flex items-center gap-2.5 px-3.5 py-2.5 text-sm font-medium text-foreground hover:bg-muted transition-colors text-left"
-                >
-                  <span className="text-muted-foreground">{opt.icon}</span>
-                  {opt.label}
-                </button>
-              ))}
-            </div>
+        <div className="flex items-center gap-2 shrink-0">
+          {/* Google Docs Export */}
+          {onExportGoogleDocs && (
+            <button
+              onClick={onExportGoogleDocs}
+              className="btn-secondary gap-1.5 text-xs py-1.5 px-3"
+              title="Export to Google Docs"
+            >
+              <svg viewBox="0 0 24 24" width="13" height="13">
+                <path fill="#4285F4" d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6z"/>
+                <path fill="#fff" d="M14 2v6h6"/>
+                <path fill="#fff" d="M8 13h8M8 17h5" stroke="#fff" strokeWidth="1.5" strokeLinecap="round"/>
+              </svg>
+              Docs
+            </button>
           )}
+
+          <div className="relative">
+            <button
+              onClick={() => setExportOpen(!exportOpen)}
+              className="btn-secondary gap-1.5 text-xs py-1.5 px-3"
+            >
+              <Download size={13} />
+              Export
+              <ChevronDown size={12} className={`transition-transform duration-150 ${exportOpen ? 'rotate-180' : ''}`} />
+            </button>
+            {exportOpen && (
+              <div className="absolute right-0 top-full mt-1.5 w-44 bg-card border border-border rounded-xl shadow-lg z-20 overflow-hidden animate-fade-in">
+                {[
+                  { key: 'export-txt', label: 'Plain Text', fmt: 'txt' as const, icon: <FileText size={13} /> },
+                  { key: 'export-md', label: 'Markdown', fmt: 'md' as const, icon: <Hash size={13} /> },
+                  { key: 'export-json', label: 'JSON', fmt: 'json' as const, icon: <Code size={13} /> },
+                ].map((opt) => (
+                  <button
+                    key={opt.key}
+                    onClick={() => handleExport(opt.fmt)}
+                    className="w-full flex items-center gap-2.5 px-3.5 py-2.5 text-sm font-medium text-foreground hover:bg-muted transition-colors text-left"
+                  >
+                    <span className="text-muted-foreground">{opt.icon}</span>
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
@@ -208,11 +284,14 @@ export default function ScriptViewer({ highlightedSourceId, onCitationClick }: P
           <span className="text-2xs font-mono text-muted-foreground">0–30s</span>
         </div>
         <div className="bg-primary/5 border border-primary/20 rounded-xl p-5 space-y-3">
-          <p className="text-sm leading-relaxed text-foreground font-medium italic">
-            "{MOCK_SCRIPT.hook}"
-          </p>
+          <ScriptEditor
+            value={scriptData.hook}
+            onSave={updateHook}
+            className="text-sm font-medium italic"
+            label="Hook"
+          />
           <div className="flex items-center gap-1.5 flex-wrap">
-            {MOCK_SCRIPT.hookSourceIds.map((sid) => (
+            {scriptData.hookSourceIds.map((sid) => (
               <CitationBadge
                 key={`hook-cite-${sid}`}
                 sourceId={sid}
@@ -227,12 +306,14 @@ export default function ScriptViewer({ highlightedSourceId, onCitationClick }: P
       {/* Script Segments */}
       <div className="space-y-6">
         <span className="section-label">Script Segments</span>
-        {MOCK_SCRIPT.segments.map((seg) => (
+        {scriptData.segments.map((seg) => (
           <ScriptSegmentBlock
             key={seg.id}
             segment={seg}
             highlightedSourceId={highlightedSourceId}
             onCitationClick={onCitationClick}
+            onUpdateNarration={(val) => updateSegmentNarration(seg.id, val)}
+            onUpdateHeading={(val) => updateSegmentHeading(seg.id, val)}
           />
         ))}
       </div>
@@ -241,9 +322,14 @@ export default function ScriptViewer({ highlightedSourceId, onCitationClick }: P
       <div className="space-y-2">
         <span className="section-label">Outro / Call to Action</span>
         <div className="bg-secondary/20 border border-secondary/40 rounded-xl p-5 space-y-3">
-          <p className="text-sm leading-relaxed text-foreground">{MOCK_SCRIPT.outro}</p>
+          <ScriptEditor
+            value={scriptData.outro}
+            onSave={updateOutro}
+            className="text-sm"
+            label="Outro"
+          />
           <div className="flex items-center gap-1.5 flex-wrap">
-            {MOCK_SCRIPT.outroSourceIds.map((sid) => (
+            {scriptData.outroSourceIds.map((sid) => (
               <CitationBadge
                 key={`outro-cite-${sid}`}
                 sourceId={sid}
@@ -282,20 +368,35 @@ function CitationBadge({ sourceId, isHighlighted, onClick }: { sourceId: string;
   );
 }
 
-function ScriptSegmentBlock({ segment, highlightedSourceId, onCitationClick }: {
+function ScriptSegmentBlock({
+  segment,
+  highlightedSourceId,
+  onCitationClick,
+  onUpdateNarration,
+  onUpdateHeading,
+}: {
   segment: ScriptSegment;
   highlightedSourceId: string | null;
   onCitationClick: (id: string) => void;
+  onUpdateNarration: (val: string) => void;
+  onUpdateHeading: (val: string) => void;
 }) {
   return (
     <div className="card p-5 space-y-4 animate-fade-in">
       {/* Segment Header */}
       <div className="flex items-start justify-between gap-3">
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-2.5 flex-1 min-w-0">
           <span className="w-6 h-6 rounded-full bg-primary/10 text-primary text-2xs font-bold flex items-center justify-center shrink-0">
             {segment.order}
           </span>
-          <h3 className="text-sm font-bold text-foreground leading-snug">{segment.heading}</h3>
+          <div className="flex-1 min-w-0">
+            <ScriptEditor
+              value={segment.heading}
+              onSave={onUpdateHeading}
+              className="text-sm font-bold"
+              label="Section Title"
+            />
+          </div>
         </div>
         <span className="font-mono text-2xs text-muted-foreground whitespace-nowrap shrink-0 mt-0.5">
           {formatDuration(segment.durationS)}
@@ -303,7 +404,12 @@ function ScriptSegmentBlock({ segment, highlightedSourceId, onCitationClick }: {
       </div>
 
       {/* Narration */}
-      <p className="text-sm leading-relaxed text-foreground">{segment.narration}</p>
+      <ScriptEditor
+        value={segment.narration}
+        onSave={onUpdateNarration}
+        className="text-sm"
+        label="Narration"
+      />
 
       {/* B-Roll Cues */}
       {segment.bRollCues.length > 0 && (

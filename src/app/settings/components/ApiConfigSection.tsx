@@ -3,16 +3,11 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Eye, EyeOff, Key, CheckCircle2 } from 'lucide-react';
-import Toggle from '@/components/ui/Toggle';
 
 interface ApiFormData {
   anthropicKey: string;
-  geminiKey: string;
-  openaiKey: string;
   tavilyKey: string;
   serperKey: string;
-  scriptGenerationProvider: 'anthropic' | 'gemini' | 'openai';
-  researchProvider: 'anthropic' | 'gemini' | 'openai';
 }
 
 function MaskedInput({ id, label, description, placeholder, register, error, name }: {
@@ -55,8 +50,6 @@ function MaskedInput({ id, label, description, placeholder, register, error, nam
 export default function ApiConfigSection() {
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
-  const [scriptProvider, setScriptProvider] = useState<'anthropic' | 'gemini' | 'openai'>('anthropic');
-  const [researchProvider, setResearchProvider] = useState<'anthropic' | 'gemini' | 'openai'>('anthropic');
 
   const {
     register,
@@ -65,12 +58,8 @@ export default function ApiConfigSection() {
   } = useForm<ApiFormData>({
     defaultValues: {
       anthropicKey: 'sk-ant-api03-••••••••••••••••••••••••••••••••••••••••••',
-      geminiKey: '',
-      openaiKey: '',
       tavilyKey:    'tvly-••••••••••••••••••••••••••••••••',
       serperKey:    '',
-      scriptGenerationProvider: 'anthropic',
-      researchProvider: 'anthropic',
     },
   });
 
@@ -95,81 +84,15 @@ export default function ApiConfigSection() {
         </div>
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-7">
-        {/* Provider Selection */}
-        <div className="space-y-4 p-4 bg-muted/40 rounded-lg border border-border">
-          <div>
-            <h3 className="text-sm font-semibold text-foreground mb-3">Script Generation Provider</h3>
-            <p className="text-xs text-muted-foreground mb-3">Choose based on performance, cost, or quality preferences.</p>
-            <div className="flex gap-3">
-              {(['anthropic', 'gemini', 'openai'] as const).map((provider) => (
-                <button
-                  key={provider}
-                  type="button"
-                  onClick={() => setScriptProvider(provider)}
-                  className={`px-3 py-2 rounded-md text-sm font-medium transition-all ${
-                    scriptProvider === provider
-                      ? 'bg-primary text-primary-foreground'
-                      : 'bg-secondary text-foreground hover:bg-secondary/80'
-                  }`}
-                >
-                  {provider === 'anthropic' ? 'Claude (Anthropic)' : provider === 'gemini' ? 'Gemini' : 'GPT (OpenAI)'}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div className="border-t border-border pt-4">
-            <h3 className="text-sm font-semibold text-foreground mb-3">Research Provider</h3>
-            <p className="text-xs text-muted-foreground mb-3">Provider used for planning and analysis tasks.</p>
-            <div className="flex gap-3">
-              {(['anthropic', 'gemini', 'openai'] as const).map((provider) => (
-                <button
-                  key={provider}
-                  type="button"
-                  onClick={() => setResearchProvider(provider)}
-                  className={`px-3 py-2 rounded-md text-sm font-medium transition-all ${
-                    researchProvider === provider
-                      ? 'bg-primary text-primary-foreground'
-                      : 'bg-secondary text-foreground hover:bg-secondary/80'
-                  }`}
-                >
-                  {provider === 'anthropic' ? 'Claude (Anthropic)' : provider === 'gemini' ? 'Gemini' : 'GPT (OpenAI)'}
-                </button>
-              ))}
-            </div>
-          </div>
-        </div>
-
-        {/* API Keys */}
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
         <MaskedInput
           id="anthropic-key"
           label="Anthropic API Key"
-          description="Used for Claude models (sonnet-4 for generation, haiku-4-5 for research). Optional if not using Claude."
+          description="Used for script generation (claude-sonnet-4) and research planning (claude-haiku-4-5). Required."
           placeholder="sk-ant-api03-…"
           register={register}
           name="anthropicKey"
           error={errors.anthropicKey?.message}
-        />
-
-        <MaskedInput
-          id="gemini-key"
-          label="Google Gemini API Key"
-          description="Used for Gemini models (gemini-2.0-flash for generation). Optional if not using Gemini."
-          placeholder="AIzaSy…"
-          register={register}
-          name="geminiKey"
-          error={errors.geminiKey?.message}
-        />
-
-        <MaskedInput
-          id="openai-key"
-          label="OpenAI API Key"
-          description="Used for GPT models (gpt-4o for generation). Optional if not using OpenAI."
-          placeholder="sk-…"
-          register={register}
-          name="openaiKey"
-          error={errors.openaiKey?.message}
         />
         <MaskedInput
           id="tavily-key"

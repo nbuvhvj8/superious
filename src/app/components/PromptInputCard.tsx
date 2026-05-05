@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useRef } from 'react';
-import { Sparkles, SendHorizonal, Lightbulb } from 'lucide-react';
+import { Sparkles, SendHorizonal, Lightbulb, ChevronDown, FileVideo, Mic, Film, PlayCircle } from 'lucide-react';
 
 const TOPIC_SUGGESTIONS = [
   'The history of solar energy in Africa',
@@ -14,6 +14,55 @@ const TOPIC_SUGGESTIONS = [
   'Nuclear fusion: how close are we really?',
 ];
 
+interface ScriptTemplate {
+  id: string;
+  label: string;
+  icon: React.ReactNode;
+  description: string;
+  hookLength: string;
+  sections: number;
+  targetLength: string;
+}
+
+const SCRIPT_TEMPLATES: ScriptTemplate[] = [
+  {
+    id: 'youtube-longform',
+    label: 'YouTube Long-form',
+    icon: <PlayCircle size={14} />,
+    description: 'Deep-dive format with strong hook, multiple sections, and CTA',
+    hookLength: '30–60s',
+    sections: 6,
+    targetLength: '10–20 min',
+  },
+  {
+    id: 'short-reel',
+    label: 'Short / Reel',
+    icon: <Film size={14} />,
+    description: 'Fast-paced vertical video — hook in 3s, single key insight',
+    hookLength: '3s',
+    sections: 2,
+    targetLength: '30–90s',
+  },
+  {
+    id: 'podcast-intro',
+    label: 'Podcast Intro',
+    icon: <Mic size={14} />,
+    description: 'Conversational tone, episode framing, guest intro if applicable',
+    hookLength: '15–30s',
+    sections: 3,
+    targetLength: '3–5 min',
+  },
+  {
+    id: 'documentary',
+    label: 'Documentary-style',
+    icon: <FileVideo size={14} />,
+    description: 'Narrative arc, B-roll heavy, authoritative voice, no direct CTA',
+    hookLength: '45–90s',
+    sections: 8,
+    targetLength: '20–40 min',
+  },
+];
+
 const MIN_CHARS = 10;
 const MAX_CHARS = 1000;
 
@@ -22,11 +71,14 @@ export default function PromptInputCard() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const [selectedTemplate, setSelectedTemplate] = useState<string>('youtube-longform');
+  const [templateOpen, setTemplateOpen] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const charCount = prompt.length;
   const isValid = charCount >= MIN_CHARS && charCount <= MAX_CHARS;
   const isOverLimit = charCount > MAX_CHARS;
+  const activeTemplate = SCRIPT_TEMPLATES.find((t) => t.id === selectedTemplate)!;
 
   function handleSuggestion(suggestion: string) {
     setPrompt(suggestion);
@@ -40,7 +92,7 @@ export default function PromptInputCard() {
     setError('');
     setIsSubmitting(true);
 
-    // TODO: Connect to POST /api/v1/script/generate
+    // TODO: Connect to POST /api/v1/script/generate with template param
     await new Promise((r) => setTimeout(r, 1400));
 
     setIsSubmitting(false);
@@ -61,6 +113,60 @@ export default function PromptInputCard() {
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-3">
+        {/* Script Format Template Selector */}
+        <div className="space-y-1.5">
+          <label className="text-sm font-semibold text-foreground">Script Format</label>
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => setTemplateOpen(!templateOpen)}
+              className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg border border-border bg-card hover:bg-muted transition-colors text-left"
+            >
+              <span className="text-primary">{activeTemplate.icon}</span>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-semibold text-foreground">{activeTemplate.label}</p>
+                <p className="text-xs text-muted-foreground truncate">{activeTemplate.description}</p>
+              </div>
+              <div className="flex items-center gap-3 shrink-0 text-2xs text-muted-foreground font-mono">
+                <span>{activeTemplate.targetLength}</span>
+                <span>·</span>
+                <span>{activeTemplate.sections} sections</span>
+              </div>
+              <ChevronDown size={14} className={`text-muted-foreground transition-transform duration-150 shrink-0 ${templateOpen ? 'rotate-180' : ''}`} />
+            </button>
+
+            {templateOpen && (
+              <div className="absolute left-0 right-0 top-full mt-1.5 bg-card border border-border rounded-xl shadow-lg z-20 overflow-hidden animate-fade-in">
+                {SCRIPT_TEMPLATES.map((tmpl) => (
+                  <button
+                    key={tmpl.id}
+                    type="button"
+                    onClick={() => { setSelectedTemplate(tmpl.id); setTemplateOpen(false); }}
+                    className={`
+                      w-full flex items-start gap-3 px-4 py-3 text-left transition-colors
+                      ${selectedTemplate === tmpl.id ? 'bg-primary/5' : 'hover:bg-muted'}
+                    `}
+                  >
+                    <span className={`mt-0.5 ${selectedTemplate === tmpl.id ? 'text-primary' : 'text-muted-foreground'}`}>
+                      {tmpl.icon}
+                    </span>
+                    <div className="flex-1 min-w-0">
+                      <p className={`text-sm font-semibold ${selectedTemplate === tmpl.id ? 'text-primary' : 'text-foreground'}`}>
+                        {tmpl.label}
+                      </p>
+                      <p className="text-xs text-muted-foreground mt-0.5">{tmpl.description}</p>
+                    </div>
+                    <div className="text-right shrink-0 space-y-0.5">
+                      <p className="font-mono text-2xs text-muted-foreground">{tmpl.targetLength}</p>
+                      <p className="font-mono text-2xs text-muted-foreground">{tmpl.sections} sections</p>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+
         <div className="space-y-1.5">
           <label htmlFor="prompt-input" className="text-sm font-semibold text-foreground">
             Research Prompt

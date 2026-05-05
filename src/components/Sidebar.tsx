@@ -36,16 +36,16 @@ const NAV_ITEMS: NavItem[] = [
     icon: <FileVideo size={20} />,
   },
   {
-    key: 'nav-motion',
-    label: 'Motion Design Studio',
-    href: '/motion-design',
-    icon: <Sparkles size={20} />,
-  },
-  {
     key: 'nav-settings',
     label: 'Settings',
     href: '/settings',
     icon: <Settings size={20} />,
+  },
+  {
+    key: 'nav-onboarding',
+    label: 'Onboarding',
+    href: '/onboarding',
+    icon: <Sparkles size={20} />,
   },
 ];
 
