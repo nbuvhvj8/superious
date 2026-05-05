@@ -1,6 +1,8 @@
 import React from 'react';
 import AppLayout from '@/components/AppLayout';
 
+export const dynamic = 'force-static';
+
 export default function ChatPage() {
   return (
     <AppLayout>

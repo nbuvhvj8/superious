@@ -3,6 +3,8 @@ import AppLayout from '@/components/AppLayout';
 import JobDetailHeader from './components/JobDetailHeader';
 import DualPaneView from './components/DualPaneView';
 
+export const dynamic = 'force-static';
+
 export default function JobDetailPage() {
   return (
     <AppLayout>

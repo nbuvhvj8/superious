@@ -65,7 +65,7 @@ export default function Sidebar() {
       className={`
         relative flex flex-col h-full border-r border-border bg-background
         transition-all duration-300 ease-in-out shrink-0
-        ${collapsed ? 'w-16' : 'w-[300px]'}
+        ${collapsed ? 'w-14' : 'w-[250px]'}
       `}
     >
       {/* Header with Logo and Toggle */}

@@ -2,6 +2,8 @@ import React from 'react';
 import AppLayout from '@/components/AppLayout';
 import MotionDesignGallery from './components/MotionDesignGallery';
 
+export const dynamic = 'force-static';
+
 export default function MotionDesignPage() {
   return (
     <AppLayout>

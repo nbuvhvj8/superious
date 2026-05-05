@@ -7,6 +7,8 @@ import ExportStorageSection from './components/ExportStorageSection';
 import DangerZoneSection from './components/DangerZoneSection';
 import GoogleDocsIntegrationSection from './components/GoogleDocsIntegrationSection';
 
+export const dynamic = 'force-static';
+
 export default function SettingsPage() {
   return (
     <AppLayout>
