@@ -239,7 +239,9 @@ export default function PromptInputCard() {
         <div className="space-y-2">
           <div className="flex items-center gap-1.5">
             <Lightbulb size={12} strokeWidth={2.25} className="text-foreground" />
-            <span className="text-xs font-semibold text-foreground uppercase tracking-widest">Topic ideas</span>
+            <span className="text-xs font-semibold text-foreground uppercase tracking-widest">
+              Topic ideas
+            </span>
           </div>
           <div className="flex flex-wrap gap-2">
             {TOPIC_SUGGESTIONS.map((suggestion) => (

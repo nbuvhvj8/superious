@@ -232,9 +232,7 @@ export default function ScriptViewer({
               {scriptData.wordCount.toLocaleString()} words
             </span>
             <span className="text-muted-foreground">&bull;</span>
-            <span className="">
-              {formatDuration(scriptData.estimatedDurationS)} est.
-            </span>
+            <span className="">{formatDuration(scriptData.estimatedDurationS)} est.</span>
             <span className="text-muted-foreground">&bull;</span>
             <span>{scriptData.segments.length} segments</span>
           </div>

@@ -1,48 +1,27 @@
-PS C:\Users\zephyr\Documents\superious> npm run dev
 
 > outlier@0.1.0 dev
 > next dev -p 4028
 
    ▲ Next.js 15.1.11
    - Local:        http://localhost:4028
+   - Network:      http://192.168.0.2:4028
    - Environments: .env
 
  ✓ Starting...
- ✓ Ready in 8.5s
- ○ Compiling / ...
-request to https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap failed, reason: getaddrinfo ENOTFOUND fonts.googleapis.com
+ ⚠ Invalid next.config.mjs options detected:
+ ⚠     Unrecognized key(s) in object: 'optimizePackageImports'
+ ⚠ See more info here: https://nextjs.org/docs/messages/invalid-next-config
+Attention: Next.js now collects completely anonymous telemetry regarding usage.
+This information is used to shape Next.js' roadmap and prioritize features.
+You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+https://nextjs.org/telemetry
 
-Retrying 1/3...
-request to https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap failed, reason: getaddrinfo ENOTFOUND fonts.googleapis.com
-
-Retrying 1/3...
-request to https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap failed, reason: getaddrinfo ENOTFOUND fonts.googleapis.com
-
-Retrying 2/3...
-request to https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap failed, reason: getaddrinfo ENOTFOUND fonts.googleapis.com
-
-Retrying 2/3...
-request to https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap failed, reason: getaddrinfo ENOTFOUND fonts.googleapis.com
-
-Retrying 3/3...
-request to https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap failed, reason: getaddrinfo ENOTFOUND fonts.googleapis.com
-
-Retrying 3/3...
-[Error [FetchError]: request to https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap failed, reason: getaddrinfo ENOTFOUND fonts.googleapis.com] {
-  type: 'system',
-  errno: 'ENOTFOUND',
-  code: 'ENOTFOUND',
-  constructor: [Function: FetchError]
-}
- ⨯ Failed to download `Plus Jakarta Sans` from Google Fonts. Using fallback font instead.
-
-Failed to fetch `Plus Jakarta Sans` from Google Fonts.}
-[Error [FetchError]: request to https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap failed, reason: getaddrinfo ENOTFOUND fonts.googleapis.com] {
-  type: 'system',
-  errno: 'ENOTFOUND',
-  code: 'ENOTFOUND',
-  constructor: [Function: FetchError]
-}
- ⨯ Failed to download `IBM Plex Mono` from Google Fonts. Using fallback font instead.
-
-Failed to fetch `IBM Plex Mono` from Google Fonts.}
+ ✓ Ready in 1935ms
+ ○ Compiling /cron-job ...
+ ✓ Compiled /cron-job in 12.8s (2025 modules)
+ GET /cron-job 200 in 14183ms
+ GET /cron-job 200 in 268ms
+ ✓ Compiled in 3s (2007 modules)
+ ✓ Compiled in 860ms (2007 modules)
+ ✓ Compiled in 1227ms (2007 modules)
+ ✓ Compiled in 736ms (1000 modules)

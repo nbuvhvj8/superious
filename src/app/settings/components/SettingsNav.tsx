@@ -4,7 +4,12 @@ import React from 'react';
 import { Key, Sliders, Download, Trash2, Link2 } from 'lucide-react';
 
 const NAV_ITEMS = [
-  { key: 'nav-api', label: 'API Configuration', href: '#api-config', icon: <Key size={15} strokeWidth={2.25} /> },
+  {
+    key: 'nav-api',
+    label: 'API Configuration',
+    href: '#api-config',
+    icon: <Key size={15} strokeWidth={2.25} />,
+  },
   {
     key: 'nav-integrations',
     label: 'Integrations',
@@ -23,7 +28,12 @@ const NAV_ITEMS = [
     href: '#export-storage',
     icon: <Download size={15} strokeWidth={2.25} />,
   },
-  { key: 'nav-danger', label: 'Danger Zone', href: '#danger-zone', icon: <Trash2 size={15} strokeWidth={2.25} /> },
+  {
+    key: 'nav-danger',
+    label: 'Danger Zone',
+    href: '#danger-zone',
+    icon: <Trash2 size={15} strokeWidth={2.25} />,
+  },
 ];
 
 export default function SettingsNav() {

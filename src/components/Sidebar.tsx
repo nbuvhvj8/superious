@@ -85,7 +85,11 @@ export default function Sidebar() {
           "
           aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
         >
-          {collapsed ? <PanelRight size={18} strokeWidth={2.25} /> : <PanelLeft size={18} strokeWidth={2.25} />}
+          {collapsed ? (
+            <PanelRight size={18} strokeWidth={2.25} />
+          ) : (
+            <PanelLeft size={18} strokeWidth={2.25} />
+          )}
         </button>
       </div>
 
