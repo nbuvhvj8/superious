@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Modal from '@/components/ui/Modal';
-import { Bell, Check, Trash2, Clock, AlertCircle } from 'lucide-react';
+import { Bell, Check, Clock, AlertCircle, Info } from 'lucide-react';
 
 interface Notification {
   id: string;
@@ -16,25 +16,25 @@ interface Notification {
 const MOCK_NOTIFICATIONS: Notification[] = [
   {
     id: '1',
-    title: 'Job Completed',
-    message: 'Your research on "Future of AI in Video" is ready.',
-    time: '2 mins ago',
+    title: 'Research Job Completed',
+    message: 'The history of solar energy in Africa is ready for review.',
+    time: '2m',
     type: 'success',
     unread: true,
   },
   {
     id: '2',
-    title: 'Source Captured',
-    message: 'Successfully captured 12 sources for "Blockbuster History".',
-    time: '45 mins ago',
+    title: 'Source Capture Success',
+    message: '12 high-quality sources captured for your latest prompt.',
+    time: '45m',
     type: 'info',
     unread: false,
   },
   {
     id: '3',
-    title: 'Storage Warning',
-    message: 'Your workspace storage is almost full (85%).',
-    time: '2 hours ago',
+    title: 'Storage Capacity',
+    message: 'You have used 85% of your available research storage.',
+    time: '2h',
     type: 'warning',
     unread: true,
   },
@@ -47,71 +47,65 @@ interface NotificationModalProps {
 
 export default function NotificationModal({ open, onClose }: NotificationModalProps) {
   return (
-    <Modal open={open} onClose={onClose} title="Notifications" size="md">
-      <div className="flex flex-col h-[450px]">
-        {/* Header Actions */}
-        <div className="flex items-center justify-between px-5 py-3 bg-muted/30 border-b border-border">
-          <span className="text-xs font-semibold text-muted-foreground uppercase tracking-widest">
-            Recent activity
-          </span>
-          <button className="text-xs font-bold text-primary hover:underline">
-            Mark all as read
+    <Modal open={open} onClose={onClose} title="Activity" size="md">
+      <div className="flex flex-col h-[480px] bg-background">
+        {/* Simple Header */}
+        <div className="flex items-center justify-between px-6 py-4 border-b border-border">
+          <h3 className="text-xs font-bold text-foreground uppercase tracking-widest">
+            Recent Notifications
+          </h3>
+          <button className="text-[10px] font-bold text-primary hover:opacity-80 uppercase tracking-tight">
+            Clear all
           </button>
         </div>
 
-        {/* Notification List */}
-        <div className="flex-1 overflow-y-auto scrollbar-thin divide-y divide-border">
-          {MOCK_NOTIFICATIONS.length > 0 ? (
-            MOCK_NOTIFICATIONS.map((notif) => (
-              <div
-                key={notif.id}
-                className={`p-4 hover:bg-muted/40 transition-colors cursor-pointer group relative ${
-                  notif.unread ? 'bg-primary/[0.02]' : ''
-                }`}
-              >
-                <div className="flex gap-3">
-                  <div className={`mt-0.5 shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
-                    notif.type === 'success' ? 'bg-green-100 text-green-600' :
-                    notif.type === 'warning' ? 'bg-amber-100 text-amber-600' :
-                    notif.type === 'error' ? 'bg-red-100 text-red-600' :
-                    'bg-blue-100 text-blue-600'
-                  }`}>
-                    {notif.type === 'success' && <Check size={16} strokeWidth={2.25} />}
-                    {notif.type === 'warning' && <AlertCircle size={16} strokeWidth={2.25} />}
-                    {notif.type === 'info' && <Bell size={16} strokeWidth={2.25} />}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between mb-0.5">
-                      <h4 className={`text-sm font-bold truncate ${notif.unread ? 'text-foreground' : 'text-muted-foreground'}`}>
-                        {notif.title}
-                      </h4>
-                      <div className="flex items-center gap-1.5 text-2xs text-muted-foreground">
-                        <Clock size={10} strokeWidth={2.25} />
-                        {notif.time}
-                      </div>
-                    </div>
-                    <p className="text-xs text-muted-foreground leading-relaxed line-clamp-2">
-                      {notif.message}
-                    </p>
-                  </div>
-                  {notif.unread && (
-                    <div className="absolute top-4 right-4 w-1.5 h-1.5 bg-primary rounded-full" />
-                  )}
-                </div>
+        {/* Clean List */}
+        <div className="flex-1 overflow-y-auto scrollbar-thin divide-y divide-border/60">
+          {MOCK_NOTIFICATIONS.map((notif) => (
+            <div
+              key={notif.id}
+              className={`
+                group relative flex gap-4 px-6 py-5 transition-colors
+                ${notif.unread ? 'bg-primary/[0.03]' : 'hover:bg-muted/30'}
+              `}
+            >
+              {/* Simple Icon — No circle, just the bold stroke */}
+              <div className="mt-0.5 shrink-0">
+                {notif.type === 'success' && <Check size={18} strokeWidth={2.25} className="text-primary" />}
+                {notif.type === 'warning' && <AlertCircle size={18} strokeWidth={2.25} className="text-amber-600" />}
+                {notif.type === 'info' && <Info size={18} strokeWidth={2.25} className="text-blue-600" />}
+                {notif.type === 'error' && <AlertCircle size={18} strokeWidth={2.25} className="text-red-600" />}
               </div>
-            ))
-          ) : (
-            <div className="flex flex-col items-center justify-center h-full text-muted-foreground gap-3">
-              <Bell size={40} className="opacity-20" strokeWidth={1.5} />
-              <p className="text-sm font-medium">All caught up!</p>
+
+              <div className="flex-1 min-w-0 space-y-1">
+                <div className="flex items-center justify-between gap-2">
+                  <h4 className={`text-sm font-bold truncate ${notif.unread ? 'text-foreground' : 'text-foreground/70'}`}>
+                    {notif.title}
+                  </h4>
+                  <span className="text-[10px] font-bold text-muted-foreground uppercase whitespace-nowrap">
+                    {notif.time}
+                  </span>
+                </div>
+                <p className="text-xs text-foreground/60 leading-relaxed line-clamp-2 font-medium">
+                  {notif.message}
+                </p>
+              </div>
+
+              {/* Unread Indicator — Simple dot */}
+              {notif.unread && (
+                <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-primary rounded-r-full" />
+              )}
             </div>
-          )}
+          ))}
         </div>
 
-        {/* Footer */}
-        <div className="p-4 border-t border-border flex justify-center">
-          <button className="btn-secondary w-full text-xs py-2">
-            View all history
+        {/* Minimal Footer */}
+        <div className="p-6 border-t border-border">
+          <button 
+            onClick={onClose}
+            className="w-full py-3 bg-foreground text-background text-xs font-bold rounded-xl hover:opacity-90 transition-all active:scale-[0.98]"
+          >
+            Close Activity
           </button>
         </div>
       </div>
