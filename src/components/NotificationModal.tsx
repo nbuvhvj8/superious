@@ -71,15 +71,25 @@ export default function NotificationModal({ open, onClose }: NotificationModalPr
             >
               {/* Simple Icon — No circle, just the bold stroke */}
               <div className="mt-0.5 shrink-0">
-                {notif.type === 'success' && <Check size={18} strokeWidth={2.25} className="text-primary" />}
-                {notif.type === 'warning' && <AlertCircle size={18} strokeWidth={2.25} className="text-amber-600" />}
-                {notif.type === 'info' && <Info size={18} strokeWidth={2.25} className="text-blue-600" />}
-                {notif.type === 'error' && <AlertCircle size={18} strokeWidth={2.25} className="text-red-600" />}
+                {notif.type === 'success' && (
+                  <Check size={18} strokeWidth={2.25} className="text-primary" />
+                )}
+                {notif.type === 'warning' && (
+                  <AlertCircle size={18} strokeWidth={2.25} className="text-amber-600" />
+                )}
+                {notif.type === 'info' && (
+                  <Info size={18} strokeWidth={2.25} className="text-blue-600" />
+                )}
+                {notif.type === 'error' && (
+                  <AlertCircle size={18} strokeWidth={2.25} className="text-red-600" />
+                )}
               </div>
 
               <div className="flex-1 min-w-0 space-y-1">
                 <div className="flex items-center justify-between gap-2">
-                  <h4 className={`text-sm font-bold truncate ${notif.unread ? 'text-foreground' : 'text-foreground/70'}`}>
+                  <h4
+                    className={`text-sm font-bold truncate ${notif.unread ? 'text-foreground' : 'text-foreground/70'}`}
+                  >
                     {notif.title}
                   </h4>
                   <span className="text-[10px] font-bold text-muted-foreground uppercase whitespace-nowrap">
@@ -101,7 +111,7 @@ export default function NotificationModal({ open, onClose }: NotificationModalPr
 
         {/* Minimal Footer */}
         <div className="p-6 border-t border-border">
-          <button 
+          <button
             onClick={onClose}
             className="w-full py-3 bg-foreground text-background text-xs font-bold rounded-xl hover:opacity-90 transition-all active:scale-[0.98]"
           >

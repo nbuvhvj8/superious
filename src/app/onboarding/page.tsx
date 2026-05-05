@@ -12,7 +12,7 @@ import {
   ExternalLink,
   Loader2,
   AlertCircle,
-  Youtube,
+  Video,
 } from 'lucide-react';
 import AppLogo from '@/components/ui/AppLogo';
 
@@ -234,9 +234,7 @@ export default function OnboardingPage() {
                   </div>
                   <div>
                     <p className="text-sm font-bold text-foreground">{f?.title}</p>
-                    <p className="text-xs text-foreground mt-1 leading-relaxed">
-                      {f?.desc}
-                    </p>
+                    <p className="text-xs text-foreground mt-1 leading-relaxed">{f?.desc}</p>
                   </div>
                 </div>
               ))}
@@ -359,7 +357,7 @@ export default function OnboardingPage() {
             <div className="rounded-xl border border-border bg-muted/40 p-5 space-y-4">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-red-600 flex items-center justify-center shadow-sm shrink-0">
-                  <Youtube size={22} className="text-white" />
+                  <Video size={22} className="text-white" />
                 </div>
                 <div>
                   <p className="text-sm font-bold text-foreground">YouTube Channel</p>
@@ -387,7 +385,7 @@ export default function OnboardingPage() {
                     </>
                   ) : (
                     <>
-                      <Youtube size={14} className="text-red-600" />
+                      <Video size={14} className="text-red-600" />
                       Connect YouTube Account
                     </>
                   )}

@@ -3,21 +3,21 @@
 @tailwind utilities;
 
 :root {
-  --background: #FAF9F6;
-  --foreground: #1A1A1A;
-  --primary: #8A9A6B;
-  --primary-foreground: #FFFFFF;
-  --secondary: #BFD7E2;
-  --secondary-foreground: #1A1A1A;
-  --accent: #8A9A6B;
-  --accent-foreground: #FFFFFF;
-  --muted: #F0EBE0;
-  --muted-foreground: #6B6B6B;
-  --card: #FFFFFF;
-  --card-foreground: #1A1A1A;
-  --border: #E0E0E0;
-  --input: #F7F3EA;
-  --ring: #8A9A6B;
+  --background: #faf9f6;
+  --foreground: #1a1a1a;
+  --primary: #8a9a6b;
+  --primary-foreground: #ffffff;
+  --secondary: #bfd7e2;
+  --secondary-foreground: #1a1a1a;
+  --accent: #8a9a6b;
+  --accent-foreground: #ffffff;
+  --muted: #f0ebe0;
+  --muted-foreground: #6b6b6b;
+  --card: #ffffff;
+  --card-foreground: #1a1a1a;
+  --border: #e0e0e0;
+  --input: #f7f3ea;
+  --ring: #8a9a6b;
   --radius: 10px;
   --font-sans: var(--font-plus-jakarta-sans), sans-serif;
   --font-mono: var(--font-ibm-plex-mono), monospace;
@@ -41,7 +41,13 @@
     font-size: 15px;
   }
 
-  h1, h2, h3, h4, h5, h6, p {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p {
     margin: 0;
   }
 }
@@ -87,24 +93,47 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(6px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes slideUp {
-  from { opacity: 0; transform: translateY(12px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes pulseHighlight {
-  0%   { background-color: rgba(138, 154, 107, 0.15); }
-  50%  { background-color: rgba(138, 154, 107, 0.3); }
-  100% { background-color: transparent; }
+  0% {
+    background-color: rgba(138, 154, 107, 0.15);
+  }
+  50% {
+    background-color: rgba(138, 154, 107, 0.3);
+  }
+  100% {
+    background-color: transparent;
+  }
 }
 
 @keyframes statusPulse {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0.5; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
 }
 
 .status-pulse {
