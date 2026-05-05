@@ -39,7 +39,7 @@ const AppLogo = memo(function AppLogo({
           unoptimized={src.endsWith('.svg')}
         />
       ) : (
-        <Feather size={size} className="flex-shrink-0 text-primary" />
+        <Feather size={size} strokeWidth={2.25} className="flex-shrink-0 text-primary" />
       )}
     </div>
   );

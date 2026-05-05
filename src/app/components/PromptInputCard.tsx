@@ -37,7 +37,7 @@ const SCRIPT_TEMPLATES: ScriptTemplate[] = [
   {
     id: 'youtube-longform',
     label: 'YouTube Long-form',
-    icon: <PlayCircle size={14} />,
+    icon: <PlayCircle size={14} strokeWidth={2.25} />,
     description: 'Deep-dive format with strong hook, multiple sections, and CTA',
     hookLength: '30–60s',
     sections: 6,
@@ -46,7 +46,7 @@ const SCRIPT_TEMPLATES: ScriptTemplate[] = [
   {
     id: 'short-reel',
     label: 'Short / Reel',
-    icon: <Film size={14} />,
+    icon: <Film size={14} strokeWidth={2.25} />,
     description: 'Fast-paced vertical video — hook in 3s, single key insight',
     hookLength: '3s',
     sections: 2,
@@ -55,7 +55,7 @@ const SCRIPT_TEMPLATES: ScriptTemplate[] = [
   {
     id: 'podcast-intro',
     label: 'Podcast Intro',
-    icon: <Mic size={14} />,
+    icon: <Mic size={14} strokeWidth={2.25} />,
     description: 'Conversational tone, episode framing, guest intro if applicable',
     hookLength: '15–30s',
     sections: 3,
@@ -64,7 +64,7 @@ const SCRIPT_TEMPLATES: ScriptTemplate[] = [
   {
     id: 'documentary',
     label: 'Documentary-style',
-    icon: <FileVideo size={14} />,
+    icon: <FileVideo size={14} strokeWidth={2.25} />,
     description: 'Narrative arc, B-roll heavy, authoritative voice, no direct CTA',
     hookLength: '45–90s',
     sections: 8,
@@ -113,7 +113,7 @@ export default function PromptInputCard() {
     <div className="card p-6 space-y-4">
       <div className="flex items-center gap-2">
         <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-          <Feather size={16} className="text-primary" />
+          <Feather size={16} strokeWidth={2.25} className="text-primary" />
         </div>
         <div>
           <h2 className="text-base font-bold text-foreground">New Research Job</h2>
@@ -238,8 +238,8 @@ export default function PromptInputCard() {
         {/* Suggestions */}
         <div className="space-y-2">
           <div className="flex items-center gap-1.5">
-            <Lightbulb size={12} className="text-muted-foreground" />
-            <span className="text-xs font-semibold text-muted-foreground">Topic ideas</span>
+            <Lightbulb size={12} strokeWidth={2.25} className="text-foreground" />
+            <span className="text-xs font-semibold text-foreground uppercase tracking-widest">Topic ideas</span>
           </div>
           <div className="flex flex-wrap gap-2">
             {TOPIC_SUGGESTIONS.map((suggestion) => (

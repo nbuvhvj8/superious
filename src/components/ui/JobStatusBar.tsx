@@ -10,11 +10,11 @@ interface JobStatusBarProps {
 }
 
 const STAGES: { key: JobStatus; label: string; icon: React.ReactNode }[] = [
-  { key: 'queued', label: 'Queued', icon: <Clock size={11} /> },
-  { key: 'researching', label: 'Researching', icon: <Search size={11} /> },
-  { key: 'screenshotting', label: 'Capturing Sources', icon: <Camera size={11} /> },
-  { key: 'writing', label: 'Writing Script', icon: <PenLine size={11} /> },
-  { key: 'done', label: 'Done', icon: <CheckCircle2 size={11} /> },
+  { key: 'queued', label: 'Queued', icon: <Clock size={11} strokeWidth={2.25} /> },
+  { key: 'researching', label: 'Researching', icon: <Search size={11} strokeWidth={2.25} /> },
+  { key: 'screenshotting', label: 'Capturing Sources', icon: <Camera size={11} strokeWidth={2.25} /> },
+  { key: 'writing', label: 'Writing Script', icon: <PenLine size={11} strokeWidth={2.25} /> },
+  { key: 'done', label: 'Done', icon: <CheckCircle2 size={11} strokeWidth={2.25} /> },
 ];
 
 const STAGE_ORDER: Record<JobStatus, number> = {
@@ -51,7 +51,7 @@ export default function JobStatusBar({ status, className = '' }: JobStatusBarPro
                 ${isFailedStage ? 'bg-red-100 border-red-400 text-red-500' : ''}
               `}
               >
-                {isFailed && i === currentIdx ? <XCircle size={11} /> : stage.icon}
+                {isFailed && i === currentIdx ? <XCircle size={11} strokeWidth={2.25} /> : stage.icon}
               </div>
               <span
                 className={`

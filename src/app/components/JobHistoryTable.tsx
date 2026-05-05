@@ -305,10 +305,10 @@ export default function JobHistoryTable() {
                       <div className="flex items-center gap-1 justify-end opacity-0 group-hover:opacity-100 transition-opacity duration-150">
                         <Link
                           href="/job-detail"
-                          className="btn-ghost p-1.5 relative group/btn"
+                          className="btn-ghost p-1.5 relative group/btn text-foreground"
                           aria-label="View job detail"
                         >
-                          <ExternalLink size={14} />
+                          <ExternalLink size={14} strokeWidth={2.25} />
                           <span
                             className="
                             absolute bottom-full mb-1.5 left-1/2 -translate-x-1/2
@@ -322,10 +322,10 @@ export default function JobHistoryTable() {
                         </Link>
                         <button
                           onClick={() => setDeleteTarget(job.id)}
-                          className="btn-ghost p-1.5 hover:text-red-500 relative group/btn"
+                          className="btn-ghost p-1.5 text-foreground hover:text-red-500 relative group/btn"
                           aria-label="Delete job"
                         >
-                          <Trash2 size={14} />
+                          <Trash2 size={14} strokeWidth={2.25} />
                           <span
                             className="
                             absolute bottom-full mb-1.5 left-1/2 -translate-x-1/2

@@ -34,6 +34,7 @@ function Icon({
       <QuestionMarkCircleIcon
         width={size}
         height={size}
+        strokeWidth={2.25}
         className={`text-gray-400 ${disabled ? 'opacity-50 cursor-not-allowed' : ''} ${className}`}
         onClick={disabled ? undefined : onClick}
         {...props}
@@ -45,6 +46,7 @@ function Icon({
     <IconComponent
       width={size}
       height={size}
+      strokeWidth={variant === 'outline' ? 2.25 : undefined}
       className={`${disabled ? 'opacity-50 cursor-not-allowed' : onClick ? 'cursor-pointer hover:opacity-80' : ''} ${className}`}
       onClick={disabled ? undefined : onClick}
       {...props}

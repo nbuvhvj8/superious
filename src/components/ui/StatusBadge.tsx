@@ -10,32 +10,32 @@ const JOB_STATUS_CONFIG: Record<
 > = {
   queued: {
     label: 'Queued',
-    icon: <Clock size={11} />,
+    icon: <Clock size={11} strokeWidth={2.25} />,
     className: 'bg-amber-100 text-amber-700 border border-amber-200',
   },
   researching: {
     label: 'Researching',
-    icon: <Search size={11} className="status-pulse" />,
+    icon: <Search size={11} strokeWidth={2.25} className="status-pulse" />,
     className: 'bg-blue-100 text-blue-700 border border-blue-200',
   },
   screenshotting: {
     label: 'Capturing',
-    icon: <Camera size={11} className="status-pulse" />,
+    icon: <Camera size={11} strokeWidth={2.25} className="status-pulse" />,
     className: 'bg-purple-100 text-purple-700 border border-purple-200',
   },
   writing: {
     label: 'Writing',
-    icon: <PenLine size={11} className="status-pulse" />,
+    icon: <PenLine size={11} strokeWidth={2.25} className="status-pulse" />,
     className: 'bg-secondary/60 text-blue-700 border border-secondary',
   },
   done: {
     label: 'Done',
-    icon: <CheckCircle2 size={11} />,
+    icon: <CheckCircle2 size={11} strokeWidth={2.25} />,
     className: 'bg-primary/10 text-primary border border-primary/20',
   },
   failed: {
     label: 'Failed',
-    icon: <XCircle size={11} />,
+    icon: <XCircle size={11} strokeWidth={2.25} />,
     className: 'bg-red-100 text-red-600 border border-red-200',
   },
 };

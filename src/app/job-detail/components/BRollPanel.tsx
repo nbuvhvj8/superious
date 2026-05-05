@@ -157,9 +157,9 @@ export default function BRollPanel({ items }: Props) {
                   >
                     <div className="shrink-0 mt-0.5">
                       {checkedIds.has(item.id) ? (
-                        <CheckSquare size={14} className="text-primary" />
+                        <CheckSquare size={14} strokeWidth={2.25} className="text-primary" />
                       ) : (
-                        <Square size={14} className="text-muted-foreground" />
+                        <Square size={14} strokeWidth={2.25} className="text-foreground" />
                       )}
                     </div>
                     <div className="min-w-0">

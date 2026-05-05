@@ -58,7 +58,7 @@ export default function Modal({ open, onClose, title, children, size = 'md' }: M
           <div className="flex items-center justify-between px-5 py-4 border-b border-border">
             <h3 className="text-base font-bold text-foreground">{title}</h3>
             <button onClick={onClose} className="btn-ghost p-1.5" aria-label="Close modal">
-              <X size={16} />
+              <X size={16} strokeWidth={2.25} />
             </button>
           </div>
         )}

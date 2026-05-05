@@ -124,11 +124,11 @@ export default function ScriptEditor({
             Reset
           </button>
           <button
-            onClick={handleCancel}
-            className="flex items-center gap-1 text-2xs text-muted-foreground hover:text-foreground px-2 py-1 rounded-md hover:bg-muted transition-colors"
+            onClick={handleReset}
+            className="flex items-center gap-1 text-2xs text-foreground hover:text-primary px-2 py-1 rounded-md hover:bg-muted transition-colors font-semibold"
           >
-            <X size={11} />
-            Cancel
+            <RotateCcw size={10} strokeWidth={2.25} />
+            Reset
           </button>
           <button
             onClick={handleSave}

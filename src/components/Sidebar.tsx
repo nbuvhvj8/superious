@@ -28,31 +28,31 @@ const NAV_ITEMS: NavItem[] = [
     key: 'nav-chat',
     label: 'Chat',
     href: '/chat',
-    icon: <SquarePen size={20} />,
+    icon: <SquarePen size={20} strokeWidth={2.25} />,
   },
   {
     key: 'nav-workspace',
     label: 'Workspace',
     href: '/',
-    icon: <Microscope size={20} />,
+    icon: <Microscope size={20} strokeWidth={2.25} />,
   },
   {
     key: 'nav-jobs',
     label: 'Job Details',
     href: '/job-detail',
-    icon: <BookOpenText size={20} />,
+    icon: <BookOpenText size={20} strokeWidth={2.25} />,
   },
   {
     key: 'nav-cron',
     label: 'Cron Job',
     href: '/cron-job',
-    icon: <Clock size={20} />,
+    icon: <Clock size={20} strokeWidth={2.25} />,
   },
   {
     key: 'nav-storages',
     label: 'Storages',
     href: '/storages',
-    icon: <Database size={20} />,
+    icon: <Database size={20} strokeWidth={2.25} />,
   },
 ];
 
@@ -80,12 +80,12 @@ export default function Sidebar() {
         <button
           onClick={() => setCollapsed(!collapsed)}
           className="
-            p-1.5 rounded-md text-muted-foreground
-            hover:bg-muted hover:text-foreground transition-all duration-150
+            p-1.5 rounded-md text-foreground
+            hover:bg-muted transition-all duration-150
           "
           aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
         >
-          {collapsed ? <PanelRight size={18} /> : <PanelLeft size={18} />}
+          {collapsed ? <PanelRight size={18} strokeWidth={2.25} /> : <PanelLeft size={18} strokeWidth={2.25} />}
         </button>
       </div>
 
@@ -156,7 +156,7 @@ export default function Sidebar() {
             ${collapsed ? 'justify-center' : ''}
           `}
         >
-          <Settings size={20} className="shrink-0" />
+          <Settings size={20} strokeWidth={2.25} className="shrink-0" />
           {!collapsed && <span>Settings</span>}
           {collapsed && (
             <span
@@ -176,7 +176,7 @@ export default function Sidebar() {
       {!collapsed && (
         <div className="px-3 pb-3">
           <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-secondary/30 border border-secondary">
-            <Feather size={14} className="text-primary shrink-0 status-pulse" />
+            <Feather size={14} strokeWidth={2.25} className="text-primary shrink-0 status-pulse" />
             <span className="text-xs font-semibold text-primary truncate">1 job active</span>
           </div>
         </div>

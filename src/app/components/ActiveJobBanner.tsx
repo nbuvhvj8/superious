@@ -43,14 +43,14 @@ export default function ActiveJobBanner() {
         <div className="flex items-center gap-2 shrink-0">
           <Link href="/job-detail" className="btn-secondary text-xs gap-1.5 py-1.5 px-3">
             View Live
-            <ArrowRight size={12} />
+            <ArrowRight size={12} strokeWidth={2.25} />
           </Link>
           <button
             onClick={() => setDismissed(true)}
             className="btn-ghost p-1.5"
             aria-label="Dismiss banner"
           >
-            <X size={14} />
+            <X size={14} strokeWidth={2.25} />
           </button>
         </div>
       </div>

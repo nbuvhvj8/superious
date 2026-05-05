@@ -89,19 +89,19 @@ export default function CollectionsPanel({ selectedCollection, onSelectCollectio
       {/* Header */}
       <button
         onClick={() => setExpanded(!expanded)}
-        className="w-full flex items-center justify-between px-4 py-3 hover:bg-muted/40 transition-colors"
+        className="w-full flex items-center justify-between px-4 py-2 hover:bg-muted/40 transition-colors"
       >
-        <div className="flex items-center gap-2">
-          <FolderOpen size={15} className="text-primary" />
+        <div className="flex items-center gap-2.5">
+          <FolderOpen size={16} strokeWidth={2.25} className="text-primary" />
           <span className="text-sm font-bold text-foreground">Collections</span>
-          <span className="font-mono text-2xs text-muted-foreground tabular-nums">
+          <span className="bg-muted px-1.5 py-0.5 rounded text-2xs font-bold text-muted-foreground">
             {collections.length}
           </span>
         </div>
         {expanded ? (
-          <ChevronDown size={14} className="text-muted-foreground" />
+          <ChevronDown size={14} strokeWidth={2.25} className="text-foreground" />
         ) : (
-          <ChevronRight size={14} className="text-muted-foreground" />
+          <ChevronRight size={14} strokeWidth={2.25} className="text-foreground" />
         )}
       </button>
 

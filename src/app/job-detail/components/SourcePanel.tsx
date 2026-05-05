@@ -309,10 +309,10 @@ function SourceCard({
           target="_blank"
           rel="noopener noreferrer"
           onClick={(e) => e.stopPropagation()}
-          className="btn-ghost p-1 shrink-0"
+          className="btn-ghost p-1 shrink-0 text-foreground"
           aria-label={`Open ${source.domain} in new tab`}
         >
-          <ExternalLink size={12} />
+          <ExternalLink size={12} strokeWidth={2.25} />
         </a>
       </div>
 

@@ -167,17 +167,17 @@ export default function OnboardingPage() {
             </div>
             <div className="grid grid-cols-2 gap-3 text-left">
               {[
-                { icon: <Feather size={14} />, label: 'AI Script Generation' },
-                { icon: <FileVideo size={14} />, label: 'Source Evidence' },
-                { icon: <FolderOpen size={14} />, label: 'Job Collections' },
-                { icon: <FileText size={14} />, label: 'Google Docs Export' },
+                { icon: <Feather size={14} strokeWidth={2.25} />, label: 'AI Script Generation' },
+                { icon: <FileVideo size={14} strokeWidth={2.25} />, label: 'Source Evidence' },
+                { icon: <FolderOpen size={14} strokeWidth={2.25} />, label: 'Job Collections' },
+                { icon: <FileText size={14} strokeWidth={2.25} />, label: 'Google Docs Export' },
               ]?.map((f) => (
                 <div
                   key={f?.label}
-                  className="flex items-center gap-2 px-3 py-2.5 rounded-lg bg-muted"
+                  className="flex items-center gap-2 px-3 py-2.5 rounded-lg bg-muted border border-border"
                 >
                   <span className="text-primary">{f?.icon}</span>
-                  <span className="text-xs font-semibold text-foreground">{f?.label}</span>
+                  <span className="text-xs font-bold text-foreground">{f?.label}</span>
                 </div>
               ))}
             </div>
@@ -200,41 +200,41 @@ export default function OnboardingPage() {
             <div className="space-y-3">
               {[
                 {
-                  icon: <Feather size={16} className="text-primary" />,
+                  icon: <Feather size={16} strokeWidth={2.25} className="text-primary" />,
                   title: 'Inline Script Editor',
                   desc: 'Edit AI-generated scripts directly in the app. Refine hooks, reorder sections, cut filler.',
                 },
                 {
-                  icon: <FileVideo size={16} className="text-primary" />,
+                  icon: <FileVideo size={16} strokeWidth={2.25} className="text-primary" />,
                   title: 'Script Format Templates',
                   desc: 'Choose from YouTube long-form, Shorts/Reels, Podcast intro, or Documentary-style before generating.',
                 },
                 {
-                  icon: <FileText size={16} className="text-primary" />,
+                  icon: <FileText size={16} strokeWidth={2.25} className="text-primary" />,
                   title: 'B-Roll Shot List Panel',
                   desc: 'Auto-extracted B-roll cues from your script, numbered and exportable for your editor.',
                 },
                 {
-                  icon: <FolderOpen size={16} className="text-primary" />,
+                  icon: <FolderOpen size={16} strokeWidth={2.25} className="text-primary" />,
                   title: 'Job Collections / Folders',
                   desc: 'Group related scripts into folders like "Finance Series" or "Client Work" for easy navigation.',
                 },
                 {
-                  icon: <ExternalLink size={16} className="text-primary" />,
+                  icon: <ExternalLink size={16} strokeWidth={2.25} className="text-primary" />,
                   title: 'Google Docs Export',
                   desc: 'Push your final script to Google Docs in one click — ready to share with editors or collaborators.',
                 },
               ]?.map((f) => (
                 <div
                   key={f?.title}
-                  className="flex items-start gap-3 p-3.5 rounded-xl bg-muted/60 border border-border"
+                  className="flex items-start gap-3 p-3.5 rounded-xl bg-card border border-border shadow-sm"
                 >
                   <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center shrink-0 mt-0.5">
                     {f?.icon}
                   </div>
                   <div>
                     <p className="text-sm font-bold text-foreground">{f?.title}</p>
-                    <p className="text-xs text-muted-foreground mt-0.5 leading-relaxed">
+                    <p className="text-xs text-foreground mt-1 leading-relaxed">
                       {f?.desc}
                     </p>
                   </div>
@@ -445,10 +445,10 @@ export default function OnboardingPage() {
             </div>
             {googleStatus !== 'connected' && (
               <div className="flex items-center gap-2 px-3 py-2.5 rounded-lg bg-muted border border-border text-left">
-                <AlertCircle size={14} className="text-muted-foreground shrink-0" />
-                <p className="text-xs text-muted-foreground">
+                <AlertCircle size={14} strokeWidth={2.25} className="text-foreground shrink-0" />
+                <p className="text-xs text-foreground font-semibold">
                   Google Docs export is not connected. Go to{' '}
-                  <strong>Settings → Integrations</strong> to connect later.
+                  <span className="text-primary">Settings → Integrations</span> to connect later.
                 </p>
               </div>
             )}

@@ -129,7 +129,7 @@ CRISPR is not a silver bullet — it is a platform. A set of molecular tools tha
       {/* Google Docs Status Banner */}
       {gdocsStatus === 'not_connected' && (
         <div className="flex items-center gap-3 px-6 py-2.5 bg-amber-50 border-b border-amber-200 shrink-0">
-          <AlertCircle size={14} className="text-amber-600 shrink-0" />
+          <AlertCircle size={14} strokeWidth={2.25} className="text-amber-600 shrink-0" />
           <p className="text-xs text-amber-700 font-medium flex-1">
             Google Docs is not connected. Connect your account in{' '}
             <a href="/settings" className="underline font-bold">
@@ -151,7 +151,7 @@ CRISPR is not a silver bullet — it is a platform. A set of molecular tools tha
       )}
       {gdocsStatus === 'success' && (
         <div className="flex items-center gap-3 px-6 py-2.5 bg-primary/10 border-b border-primary/20 shrink-0">
-          <CheckCircle2 size={14} className="text-primary shrink-0" />
+          <CheckCircle2 size={14} strokeWidth={2.25} className="text-primary shrink-0" />
           <p className="text-xs text-primary font-medium flex-1">
             Script exported to Google Docs successfully!
           </p>
@@ -161,7 +161,7 @@ CRISPR is not a silver bullet — it is a platform. A set of molecular tools tha
             rel="noopener noreferrer"
             className="flex items-center gap-1 text-xs font-bold text-primary hover:underline"
           >
-            Open Doc <ExternalLink size={11} />
+            Open Doc <ExternalLink size={11} strokeWidth={2.25} />
           </a>
           <button
             onClick={() => setGdocsStatus('idle')}
@@ -173,7 +173,7 @@ CRISPR is not a silver bullet — it is a platform. A set of molecular tools tha
       )}
       {gdocsStatus === 'error' && (
         <div className="flex items-center gap-3 px-6 py-2.5 bg-red-50 border-b border-red-200 shrink-0">
-          <AlertCircle size={14} className="text-red-500 shrink-0" />
+          <AlertCircle size={14} strokeWidth={2.25} className="text-red-500 shrink-0" />
           <p className="text-xs text-red-600 font-medium flex-1">{gdocsError}</p>
           <button
             onClick={() => setGdocsStatus('idle')}
@@ -185,7 +185,7 @@ CRISPR is not a silver bullet — it is a platform. A set of molecular tools tha
       )}
       {gdocsStatus === 'exporting' && (
         <div className="flex items-center gap-3 px-6 py-2.5 bg-muted border-b border-border shrink-0">
-          <Loader2 size={14} className="text-primary animate-spin shrink-0" />
+          <Loader2 size={14} strokeWidth={2.25} className="text-primary animate-spin shrink-0" />
           <p className="text-xs text-muted-foreground font-medium">Exporting to Google Docs…</p>
         </div>
       )}

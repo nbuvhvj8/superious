@@ -28,7 +28,7 @@ export default function ConfirmModal({
       <div className="px-5 py-4 space-y-4">
         <div className="flex items-start gap-3">
           <div className="shrink-0 w-9 h-9 rounded-full bg-red-100 flex items-center justify-center">
-            <AlertTriangle size={16} className="text-red-600" />
+            <AlertTriangle size={16} strokeWidth={2.25} className="text-red-600" />
           </div>
           <p className="text-sm text-muted-foreground leading-relaxed">{description}</p>
         </div>

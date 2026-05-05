@@ -222,20 +222,20 @@ export default function ScriptViewer({
           <div className="flex items-center gap-2">
             <span className="section-label">Video Script</span>
             <span className="flex items-center gap-1 text-2xs font-semibold text-primary bg-primary/10 px-2 py-0.5 rounded-full">
-              <Edit3 size={10} />
+              <Edit3 size={10} strokeWidth={2.25} />
               Editable
             </span>
           </div>
           <h2 className="text-xl font-bold text-foreground leading-tight">{scriptData.title}</h2>
-          <div className="flex items-center gap-3 text-xs text-muted-foreground">
-            <span className="font-mono tabular-nums font-semibold">
+          <div className="flex items-center gap-3 text-xs text-foreground font-semibold">
+            <span className="font-mono tabular-nums">
               {scriptData.wordCount.toLocaleString()} words
             </span>
-            <span>&bull;</span>
-            <span className="font-semibold">
+            <span className="text-muted-foreground">&bull;</span>
+            <span className="">
               {formatDuration(scriptData.estimatedDurationS)} est.
             </span>
-            <span>&bull;</span>
+            <span className="text-muted-foreground">&bull;</span>
             <span>{scriptData.segments.length} segments</span>
           </div>
         </div>
