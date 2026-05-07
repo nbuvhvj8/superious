@@ -390,3 +390,8 @@ ERD + API spec first
 That will save you months later.
 
 Overall, the project direction is strong. The UI structure already resembles a serious productivity/research product rather than a demo app. The main challenge now is designing the backend around asynchronous AI workflows instead of traditional request-response CRUD.
+
+
+
+
+assuming you are a frontend enginner, if you are to spot mistakes and its fixes in this attahed ui, what would that be and how will you fix them
