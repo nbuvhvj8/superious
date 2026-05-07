@@ -8,44 +8,57 @@ import JobStatusBar from '@/components/ui/JobStatusBar';
 
 export default function JobDetailHeader() {
   return (
-    <div className="border-b border-border bg-card px-6 lg:px-8 xl:px-10 2xl:px-14 py-5 space-y-4 shrink-0">
-      <div className="flex items-start gap-4">
+    <div className="border-b border-border bg-background pt-6 pb-8 space-y-6 shrink-0">
+      {/* Back Button - Aligned with the left vertical line */}
+      <div>
         <Link
           href="/"
-          className="btn-ghost p-1.5 mt-0.5 shrink-0 -ml-1.5 text-foreground"
+          className="btn-ghost px-2 py-1.5 shrink-0 -ml-2 text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-colors inline-flex items-center gap-2 group"
           aria-label="Back to workspace"
         >
-          <ArrowLeft size={16} strokeWidth={2.25} />
+          <ArrowLeft size={16} strokeWidth={2.5} className="group-hover:-translate-x-0.5 transition-transform" />
+          <span className="text-xs font-bold uppercase tracking-widest">Back</span>
         </Link>
-        <div className="min-w-0 flex-1 space-y-1">
-          <div className="flex items-center gap-2 flex-wrap">
-            <JobStatusBadge status="done" />
-            <span className="font-mono text-2xs text-foreground">job-1c93be</span>
+      </div>
+
+      <div className="space-y-5">
+        {/* Status and ID */}
+        <div className="flex items-center gap-3">
+          <JobStatusBadge status="done" />
+          <span className="font-mono text-xs text-muted-foreground font-medium">job-1c93be</span>
+        </div>
+
+        {/* Title */}
+        <h1 className="text-3xl font-extrabold text-foreground leading-tight tracking-tight max-w-4xl">
+          How CRISPR gene editing is revolutionizing cancer treatment and what ethical
+          frameworks are needed
+        </h1>
+
+        {/* Stats and Status Bar Group */}
+        <div className="space-y-6">
+          <div className="flex items-center gap-6 flex-wrap">
+            <div className="flex items-center gap-2 text-sm text-foreground/80 font-semibold">
+              <BookOpen size={16} strokeWidth={2.25} className="text-primary" />
+              <span className="tabular-nums">2,840</span>
+              <span className="text-muted-foreground font-medium">words</span>
+            </div>
+            <div className="flex items-center gap-2 text-sm text-foreground/80 font-semibold">
+              <Clock size={16} strokeWidth={2.25} className="text-primary" />
+              <span>21m 50s</span>
+              <span className="text-muted-foreground font-medium">est. read time</span>
+            </div>
+            <div className="flex items-center gap-2 text-sm text-foreground/80 font-semibold">
+              <Hash size={16} strokeWidth={2.25} className="text-primary" />
+              <span className="tabular-nums">8/8</span>
+              <span className="text-muted-foreground font-medium">sources captured</span>
+            </div>
           </div>
-          <h1 className="text-xl font-extrabold text-foreground leading-snug line-clamp-2 max-w-4xl">
-            How CRISPR gene editing is revolutionizing cancer treatment and what ethical frameworks
-            are needed
-          </h1>
-          <div className="flex items-center gap-4 flex-wrap">
-            <div className="flex items-center gap-1.5 text-xs text-foreground font-semibold">
-              <BookOpen size={12} strokeWidth={2.25} />
-              <span className="font-semibold tabular-nums">2,840</span>
-              <span>words</span>
-            </div>
-            <div className="flex items-center gap-1.5 text-xs text-foreground font-semibold">
-              <Clock size={12} strokeWidth={2.25} />
-              <span className="font-semibold">21m 50s</span>
-              <span>est. read time</span>
-            </div>
-            <div className="flex items-center gap-1.5 text-xs text-foreground font-semibold">
-              <Hash size={12} strokeWidth={2.25} />
-              <span className="font-semibold tabular-nums">8/8</span>
-              <span>sources captured</span>
-            </div>
+
+          <div className="pt-2 w-fit">
+            <JobStatusBar status="done" variant="short" />
           </div>
         </div>
       </div>
-      <JobStatusBar status="done" />
     </div>
   );
 }

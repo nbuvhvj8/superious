@@ -52,3 +52,9 @@ This document outlines three high-impact options for utilizing the **Chat**, **C
 ### 3. Storages: Semantic Knowledge Base
 *   **Why:** Research shouldn't be siloed by "Job." Insights from one research job might be relevant to another.
 *   **How:** A "Knowledge Graph" view where sources are tagged semantically. If two different jobs both use a source about "Streaming Wars," they are linked here for easy cross-referencing.
+
+
+
+ i would liek teh icon to have a green dot just like that notifcation red dot, teh green dot work the same way as a signal that something needs to be checked. when user clicked teh icon, i shows a rectangular side-pop that as an uneditable text are with test and a mini button to sedn it  to the 
+
+ remove the italics format and make the text promtp normal, also i want teh green and red  dot to be bigger, increase the notification module width by 100px and i want all color bg in teh module to be that cream

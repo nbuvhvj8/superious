@@ -2,7 +2,8 @@
 
 import React, { useState, useRef } from 'react';
 import {
-  Feather,
+  Microscope,
+  BetweenHorizontalStart,
   SendHorizonal,
   Lightbulb,
   ChevronDown,
@@ -10,6 +11,7 @@ import {
   Mic,
   Film,
   PlayCircle,
+  PlusCircle,
 } from 'lucide-react';
 
 const TOPIC_SUGGESTIONS = [
@@ -82,15 +84,30 @@ export default function PromptInputCard() {
   const [submitted, setSubmitted] = useState(false);
   const [selectedTemplate, setSelectedTemplate] = useState<string>('youtube-longform');
   const [templateOpen, setTemplateOpen] = useState(false);
+  const [sidePopOpen, setSidePopOpen] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const SUGGESTED_DRAFT = {
+    text: "Deep dive into the impact of the 1970s energy crisis on global automotive design — focus on the shift from muscle cars to compact efficiency and the rise of Japanese imports.",
+    templateId: 'documentary'
+  };
 
   const charCount = prompt.length;
   const isValid = charCount >= MIN_CHARS && charCount <= MAX_CHARS;
   const isOverLimit = charCount > MAX_CHARS;
   const activeTemplate = SCRIPT_TEMPLATES.find((t) => t.id === selectedTemplate)!;
+  const suggestedTemplate = SCRIPT_TEMPLATES.find((t) => t.id === SUGGESTED_DRAFT.templateId)!;
 
   function handleSuggestion(suggestion: string) {
     setPrompt(suggestion);
+    setError('');
+    textareaRef.current?.focus();
+  }
+
+  function handleInsert() {
+    setPrompt(SUGGESTED_DRAFT.text);
+    setSelectedTemplate(SUGGESTED_DRAFT.templateId);
+    setSidePopOpen(false);
     setError('');
     textareaRef.current?.focus();
   }
@@ -110,16 +127,81 @@ export default function PromptInputCard() {
   }
 
   return (
-    <div className="card p-6 space-y-4">
-      <div className="flex items-center gap-2">
-        <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-          <Feather size={16} strokeWidth={2.25} className="text-primary" />
+    <div className="card p-6 space-y-4 relative">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+            <Microscope size={16} strokeWidth={2.25} className="text-primary" />
+          </div>
+          <div>
+            <h2 className="text-base font-bold text-foreground">New Research Job</h2>
+            <p className="text-xs text-muted-foreground">
+              Describe your video topic in detail for the best results
+            </p>
+          </div>
         </div>
-        <div>
-          <h2 className="text-base font-bold text-foreground">New Research Job</h2>
-          <p className="text-xs text-muted-foreground">
-            Describe your video topic in detail for the best results
-          </p>
+
+        {/* Side-pop Toggle Icon */}
+        <div className="relative">
+          <button
+            type="button"
+            onClick={() => setSidePopOpen(!sidePopOpen)}
+            className={`
+              p-2 rounded-lg transition-all duration-200 relative group
+              ${sidePopOpen ? 'bg-primary/10 text-primary' : 'text-muted-foreground hover:bg-muted hover:text-foreground'}
+            `}
+          >
+            <BetweenHorizontalStart size={18} strokeWidth={2.25} />
+            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[#22c55e] rounded-full border border-background animate-pulse" />
+          </button>
+
+          {sidePopOpen && (
+            <div className="absolute right-0 top-full mt-2 w-[340px] bg-card border border-border rounded-xl shadow-2xl z-30 overflow-hidden animate-fade-in">
+              <div className="bg-primary/5 px-4 py-3 border-b border-border flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 bg-[#22c55e] rounded-full animate-pulse" />
+                  <span className="text-[10px] font-bold text-primary uppercase tracking-widest">
+                    Optimized Research Draft
+                  </span>
+                </div>
+                <button
+                  onClick={() => setSidePopOpen(false)}
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <ChevronDown size={14} className="rotate-90" />
+                </button>
+              </div>
+              <div className="p-4 space-y-4">
+                <div className="space-y-2">
+                  <span className="text-[10px] font-bold text-muted-foreground uppercase">Recommended Content</span>
+                  <div className="bg-muted rounded-lg p-3 border border-border">
+                    <p className="text-xs text-foreground/80 leading-relaxed italic">
+                      &quot;{SUGGESTED_DRAFT.text}&quot;
+                    </p>
+                  </div>
+                </div>
+
+                <div className="space-y-2">
+                  <span className="text-[10px] font-bold text-muted-foreground uppercase">Target Format</span>
+                  <div className="flex items-center gap-3 px-3 py-2 rounded-lg bg-muted/50 border border-border/50">
+                    <span className="text-primary">{suggestedTemplate.icon}</span>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-xs font-bold text-foreground">{suggestedTemplate.label}</p>
+                      <p className="text-[10px] text-muted-foreground truncate">{suggestedTemplate.description}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <button
+                  onClick={handleInsert}
+                  className="w-full py-2.5 bg-primary text-primary-foreground rounded-lg text-xs font-bold hover:opacity-90 transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary/20"
+                >
+                  <PlusCircle size={14} strokeWidth={2.5} />
+                  Insert Draft & Format
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 

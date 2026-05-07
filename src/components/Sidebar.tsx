@@ -70,12 +70,10 @@ export default function Sidebar() {
     >
       {/* Header with Logo and Toggle */}
       <div
-        className={`flex items-center justify-between h-16 px-4 border-b border-border gap-3 overflow-hidden`}
+        className={`flex items-center justify-between h-16 px-4 gap-3 overflow-hidden`}
       >
         {!collapsed && (
-          <span className="font-extrabold text-base tracking-tight text-foreground whitespace-nowrap overflow-hidden italic">
-            outlier
-          </span>
+          <div className="flex-1" />
         )}
         <button
           onClick={() => setCollapsed(!collapsed)}

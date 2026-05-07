@@ -204,7 +204,7 @@ CRISPR is not a silver bullet — it is a platform. A set of molecular tools tha
         {/* Right Pane — Tabbed Panel */}
         <div className="w-[380px] xl:w-[420px] 2xl:w-[460px] shrink-0 flex flex-col overflow-hidden">
           {/* Tab Bar */}
-          <div className="flex items-center border-b border-border shrink-0 bg-card">
+          <div className="flex items-center border-b border-border shrink-0 bg-background">
             <button
               onClick={() => setRightTab('sources')}
               className={`

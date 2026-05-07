@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
-import { ArrowRight, X } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import JobStatusBar from '@/components/ui/JobStatusBar';
 import type { JobStatus } from '@/components/ui/StatusBadge';
 
@@ -17,10 +17,6 @@ const MOCK_ACTIVE_JOB = {
 };
 
 export default function ActiveJobBanner() {
-  const [dismissed, setDismissed] = useState(false);
-
-  if (dismissed) return null;
-
   return (
     <div className="card border-secondary bg-secondary/10 p-5 space-y-4 animate-fade-in">
       <div className="flex items-start justify-between gap-4">
@@ -45,13 +41,6 @@ export default function ActiveJobBanner() {
             View Live
             <ArrowRight size={12} strokeWidth={2.25} />
           </Link>
-          <button
-            onClick={() => setDismissed(true)}
-            className="btn-ghost p-1.5"
-            aria-label="Dismiss banner"
-          >
-            <X size={14} strokeWidth={2.25} />
-          </button>
         </div>
       </div>
 

@@ -13,13 +13,13 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       <Sidebar />
       <div className="flex-1 flex flex-col min-w-0 relative">
         {/* Global Notification Icon */}
-        <div className="absolute top-4 right-6 z-50">
+        <div className="absolute top-6 right-8 z-50">
           <button
             onClick={() => setShowNotifications(true)}
-            className="p-2 rounded-full bg-card border border-border text-foreground hover:bg-muted transition-all shadow-sm relative"
+            className="p-2 text-foreground/70 hover:text-foreground hover:scale-110 active:scale-90 transition-all relative group"
           >
-            <Bell size={18} strokeWidth={2.25} />
-            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border border-card" />
+            <Bell size={18} strokeWidth={2} />
+            <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full border border-background animate-pulse" />
           </button>
         </div>
 

@@ -215,7 +215,7 @@ export default function ScriptViewer({
   }
 
   return (
-    <div className="px-6 lg:px-8 xl:px-10 2xl:px-14 py-6 space-y-7 max-w-[848px]">
+    <div className="py-6 space-y-7 max-w-[848px]">
       {/* Script Header */}
       <div className="flex items-start justify-between gap-4">
         <div className="space-y-1 min-w-0">

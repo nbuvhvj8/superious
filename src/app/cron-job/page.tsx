@@ -13,11 +13,61 @@ import {
   Bell,
   Globe,
   History,
+  Filter,
+  Trash2,
+  ExternalLink,
 } from 'lucide-react';
 import Modal from '@/components/ui/Modal';
 
+interface ScheduleJob {
+  id: string;
+  title: string;
+  type: 'Recapture' | 'Automated Research' | 'Archive Snapshot';
+  schedule: string;
+  lastRun: string;
+  status: 'active' | 'paused';
+  nextRun: string;
+}
+
+const MOCK_SCHEDULES: ScheduleJob[] = [
+  {
+    id: 'cron-1',
+    title: 'Netflix Streaming Trends',
+    type: 'Recapture',
+    schedule: 'Every Monday at 9:00 AM',
+    lastRun: '2 days ago',
+    status: 'active',
+    nextRun: 'In 5 days',
+  },
+  {
+    id: 'cron-2',
+    title: 'Weekly Tech News Roundup',
+    type: 'Automated Research',
+    schedule: 'Every Friday at 5:00 PM',
+    lastRun: '5 days ago',
+    status: 'active',
+    nextRun: 'In 2 days',
+  },
+  {
+    id: 'cron-3',
+    title: 'Source Archive: AI Ethics',
+    type: 'Archive Snapshot',
+    schedule: 'Monthly on the 1st',
+    lastRun: '28 days ago',
+    status: 'paused',
+    nextRun: 'Paused',
+  },
+];
+
+const TYPE_FILTERS: { key: string; label: string; value: string | 'all' }[] = [
+  { key: 'filter-all', label: 'All', value: 'all' },
+  { key: 'filter-recapture', label: 'Recapture', value: 'Recapture' },
+  { key: 'filter-research', label: 'Research', value: 'Automated Research' },
+  { key: 'filter-archive', label: 'Archive', value: 'Archive Snapshot' },
+];
+
 export default function CronJobPage() {
-  const [activeTab, setActiveTab] = useState<'all' | 'recapture' | 'research' | 'archive'>('all');
+  const [activeTab, setActiveTab] = useState<string | 'all'>('all');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState<'recapture' | 'research' | 'archive'>('recapture');
 
@@ -25,6 +75,10 @@ export default function CronJobPage() {
     setModalType(type);
     setIsModalOpen(true);
   };
+
+  const filtered = MOCK_SCHEDULES.filter(
+    (j) => activeTab === 'all' || j.type === activeTab
+  );
 
   return (
     <AppLayout>
@@ -44,60 +98,6 @@ export default function CronJobPage() {
             archival snapshots.
           </p>
         </header>
-
-        {/* Tab Navigation */}
-        <div className="flex border-b border-border mb-8">
-          <button
-            onClick={() => setActiveTab('all')}
-            className={`px-4 py-3 text-sm font-bold transition-colors relative ${
-              activeTab === 'all' ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
-            }`}
-          >
-            All Schedules
-            {activeTab === 'all' && (
-              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary" />
-            )}
-          </button>
-          <button
-            onClick={() => setActiveTab('recapture')}
-            className={`px-4 py-3 text-sm font-bold transition-colors relative ${
-              activeTab === 'recapture'
-                ? 'text-primary'
-                : 'text-muted-foreground hover:text-foreground'
-            }`}
-          >
-            Competitive Intel
-            {activeTab === 'recapture' && (
-              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary" />
-            )}
-          </button>
-          <button
-            onClick={() => setActiveTab('research')}
-            className={`px-4 py-3 text-sm font-bold transition-colors relative ${
-              activeTab === 'research'
-                ? 'text-primary'
-                : 'text-muted-foreground hover:text-foreground'
-            }`}
-          >
-            Automated Research
-            {activeTab === 'research' && (
-              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary" />
-            )}
-          </button>
-          <button
-            onClick={() => setActiveTab('archive')}
-            className={`px-4 py-3 text-sm font-bold transition-colors relative ${
-              activeTab === 'archive'
-                ? 'text-primary'
-                : 'text-muted-foreground hover:text-foreground'
-            }`}
-          >
-            Archive Snapshots
-            {activeTab === 'archive' && (
-              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary" />
-            )}
-          </button>
-        </div>
 
         {/* Quick Actions / Options Sections */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
@@ -161,46 +161,161 @@ export default function CronJobPage() {
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-bold">Active Schedules</h2>
             <div className="text-sm font-semibold text-muted-foreground bg-muted px-3 py-1 rounded-full">
-              3 jobs running
+              {filtered.length} jobs running
             </div>
           </div>
 
-          <div className="grid gap-4">
-            {(activeTab === 'all' || activeTab === 'recapture') && (
-              <JobCard
-                title="Netflix Streaming Trends"
-                type="Recapture"
-                schedule="Every Monday at 9:00 AM"
-                lastRun="2 days ago"
-                status="active"
-                nextRun="In 5 days"
-                icon={<Zap size={18} className="text-blue-500" />}
-              />
-            )}
+          <div className="card overflow-hidden">
+            {/* Table Toolbar */}
+            <div className="flex items-center justify-between px-5 py-3 border-b border-border gap-3 flex-wrap">
+              <div className="flex items-center gap-1.5">
+                <Filter size={13} className="text-muted-foreground" />
+                <span className="text-xs font-semibold text-muted-foreground mr-2">Type</span>
+                {TYPE_FILTERS.map((f) => (
+                  <button
+                    key={f.key}
+                    onClick={() => {
+                      setActiveTab(f.value);
+                    }}
+                    className={`
+                      text-xs px-3 py-1 rounded-full font-semibold border transition-all duration-150
+                      ${
+                        activeTab === f.value
+                          ? 'bg-primary text-primary-foreground border-primary'
+                          : 'bg-muted text-muted-foreground border-border hover:border-primary hover:text-primary'
+                      }
+                    `}
+                  >
+                    {f.label}
+                  </button>
+                ))}
+              </div>
+            </div>
 
-            {(activeTab === 'all' || activeTab === 'research') && (
-              <JobCard
-                title="Weekly Tech News Roundup"
-                type="Automated Research"
-                schedule="Every Friday at 5:00 PM"
-                lastRun="5 days ago"
-                status="active"
-                nextRun="In 2 days"
-                icon={<FileSearch size={18} className="text-purple-500" />}
-              />
-            )}
-
-            {(activeTab === 'all' || activeTab === 'archive') && (
-              <JobCard
-                title="Source Archive: AI Ethics"
-                type="Archive Snapshot"
-                schedule="Monthly on the 1st"
-                lastRun="28 days ago"
-                status="paused"
-                nextRun="Paused"
-                icon={<Archive size={18} className="text-emerald-500" />}
-              />
-            )}
+            {/* Table */}
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-border bg-muted/40">
+                    <th className="text-left px-5 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider w-[30%]">
+                      Schedule Name
+                    </th>
+                    <th className="text-left px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                      Type
+                    </th>
+                    <th className="text-left px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                      Schedule
+                    </th>
+                    <th className="text-left px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                      Last Run
+                    </th>
+                    <th className="text-left px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                      Status
+                    </th>
+                    <th className="text-right px-4 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                      Actions
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filtered.length === 0 ? (
+                    <tr>
+                      <td colSpan={6} className="px-5 py-14 text-center">
+                        <div className="space-y-2">
+                          <p className="text-sm font-semibold text-foreground">No schedules found</p>
+                          <p className="text-xs text-muted-foreground">
+                            Try a different filter or create a new scheduled job.
+                          </p>
+                        </div>
+                      </td>
+                    </tr>
+                  ) : (
+                    filtered.map((job, i) => (
+                      <tr
+                        key={job.id}
+                        className={`
+                          border-b border-border last:border-0 group
+                          hover:bg-muted/40 transition-colors duration-100
+                          ${i % 2 === 0 ? '' : 'bg-muted/20'}
+                        `}
+                      >
+                        <td className="px-5 py-3.5">
+                          <div>
+                            <p className="text-sm font-semibold text-foreground leading-snug">
+                              {job.title}
+                            </p>
+                            <span className="font-mono text-2xs text-muted-foreground block mt-0.5">
+                              {job.id}
+                            </span>
+                          </div>
+                        </td>
+                        <td className="px-4 py-3.5">
+                          <span
+                            className={`text-[10px] px-2 py-0.5 rounded-full font-extrabold uppercase tracking-widest ${
+                              job.type === 'Recapture'
+                                ? 'bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400'
+                                : job.type === 'Automated Research'
+                                  ? 'bg-purple-100 text-purple-600 dark:bg-purple-900/30 dark:text-purple-400'
+                                  : 'bg-emerald-100 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400'
+                            }`}
+                          >
+                            {job.type}
+                          </span>
+                        </td>
+                        <td className="px-4 py-3.5">
+                          <div className="flex items-center gap-1.5 font-medium text-foreground">
+                            <Clock size={14} className="text-muted-foreground" />
+                            <span className="text-xs">{job.schedule}</span>
+                          </div>
+                        </td>
+                        <td className="px-4 py-3.5">
+                          <span className="text-xs text-muted-foreground">{job.lastRun}</span>
+                        </td>
+                        <td className="px-4 py-3.5">
+                            <div className="flex items-center gap-2">
+                                <div
+                                    className={`w-2 h-2 rounded-full ${job.status === 'active' ? 'bg-green-500 animate-pulse' : 'bg-amber-500'}`}
+                                />
+                                <span className="text-xs font-bold capitalize">{job.status}</span>
+                            </div>
+                        </td>
+                        <td className="px-4 py-3.5 text-right">
+                          <div className="flex items-center gap-1 justify-end opacity-0 group-hover:opacity-100 transition-opacity duration-150">
+                            <button
+                              className="btn-ghost p-1.5 text-foreground hover:text-primary relative group/btn"
+                              aria-label="Run now"
+                            >
+                              <Play size={14} fill="currentColor" className="opacity-50" />
+                              <span className="absolute bottom-full mb-1.5 left-1/2 -translate-x-1/2 px-2 py-1 rounded bg-foreground text-background text-2xs font-medium whitespace-nowrap opacity-0 group-hover/btn:opacity-100 pointer-events-none transition-opacity duration-150 z-10">
+                                Run now
+                              </span>
+                            </button>
+                            <button
+                              className="btn-ghost p-1.5 text-foreground relative group/btn"
+                              aria-label="Edit"
+                            >
+                              <ExternalLink size={14} strokeWidth={2.25} />
+                              <span className="absolute bottom-full mb-1.5 left-1/2 -translate-x-1/2 px-2 py-1 rounded bg-foreground text-background text-2xs font-medium whitespace-nowrap opacity-0 group-hover/btn:opacity-100 pointer-events-none transition-opacity duration-150 z-10">
+                                Edit schedule
+                              </span>
+                            </button>
+                            <button
+                              className="btn-ghost p-1.5 text-foreground hover:text-red-500 relative group/btn"
+                              aria-label="Delete"
+                            >
+                              <Trash2 size={14} strokeWidth={2.25} />
+                              <span className="absolute bottom-full mb-1.5 left-1/2 -translate-x-1/2 px-2 py-1 rounded bg-foreground text-background text-2xs font-medium whitespace-nowrap opacity-0 group-hover/btn:opacity-100 pointer-events-none transition-opacity duration-150 z-10">
+                                Delete
+                              </span>
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
@@ -358,85 +473,5 @@ export default function CronJobPage() {
         </div>
       </Modal>
     </AppLayout>
-  );
-}
-
-function JobCard({
-  title,
-  type,
-  schedule,
-  lastRun,
-  status,
-  nextRun,
-  icon,
-}: {
-  title: string;
-  type: string;
-  schedule: string;
-  lastRun: string;
-  status: 'active' | 'paused';
-  nextRun: string;
-  icon: React.ReactNode;
-}) {
-  return (
-    <div className="bg-card border border-border rounded-xl p-5 flex items-center gap-5 group hover:border-primary/50 transition-all hover:shadow-sm">
-      <div className="w-12 h-12 bg-muted rounded-xl flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
-        {icon}
-      </div>
-      <div className="flex-1 min-w-0">
-        <div className="flex items-center gap-3 mb-1">
-          <h4 className="font-bold text-lg leading-tight truncate">{title}</h4>
-          <span
-            className={`text-[10px] px-2 py-0.5 rounded-full font-extrabold uppercase tracking-widest ${
-              type === 'Recapture'
-                ? 'bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400'
-                : type === 'Automated Research'
-                  ? 'bg-purple-100 text-purple-600 dark:bg-purple-900/30 dark:text-purple-400'
-                  : 'bg-emerald-100 text-emerald-600 dark:bg-emerald-900/30 dark:text-emerald-400'
-            }`}
-          >
-            {type}
-          </span>
-        </div>
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm text-muted-foreground">
-          <div className="flex items-center gap-1.5 font-medium">
-            <Clock size={14} className="text-foreground/40" />
-            {schedule}
-          </div>
-          <div className="flex items-center gap-1.5">
-            <div className="w-1 h-1 rounded-full bg-border" />
-            Last run: {lastRun}
-          </div>
-          <div className="flex items-center gap-1.5 text-primary/80 font-medium">
-            <div className="w-1 h-1 rounded-full bg-primary/40" />
-            Next: {nextRun}
-          </div>
-        </div>
-      </div>
-
-      <div className="flex items-center gap-2">
-        <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 bg-muted/50 rounded-lg mr-2 border border-transparent group-hover:border-border transition-colors">
-          <div
-            className={`w-2 h-2 rounded-full ${status === 'active' ? 'bg-green-500 animate-pulse' : 'bg-amber-500'}`}
-          />
-          <span className="text-xs font-bold capitalize">{status}</span>
-        </div>
-
-        <div className="flex items-center bg-muted/30 rounded-lg p-1">
-          <button
-            className="p-2 hover:bg-background hover:text-primary rounded-md text-muted-foreground transition-all"
-            title="Run now"
-          >
-            <Play size={18} fill="currentColor" className="opacity-50" />
-          </button>
-          <button
-            className="p-2 hover:bg-background hover:text-foreground rounded-md text-muted-foreground transition-all"
-            title="More options"
-          >
-            <MoreVertical size={18} />
-          </button>
-        </div>
-      </div>
-    </div>
   );
 }
