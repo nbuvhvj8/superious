@@ -9,7 +9,6 @@ import {
   Settings,
   PanelLeft,
   PanelRight,
-  Feather,
   SquarePen,
   Clock,
   Database,
@@ -28,31 +27,31 @@ const NAV_ITEMS: NavItem[] = [
     key: 'nav-chat',
     label: 'Chat',
     href: '/chat',
-    icon: <SquarePen size={20} strokeWidth={2.25} />,
+    icon: <SquarePen size={16} strokeWidth={2.25} />,
   },
   {
     key: 'nav-workspace',
     label: 'Workspace',
     href: '/',
-    icon: <Microscope size={20} strokeWidth={2.25} />,
+    icon: <Microscope size={16} strokeWidth={2.25} />,
   },
   {
     key: 'nav-jobs',
     label: 'Job Details',
     href: '/job-detail',
-    icon: <BookOpenText size={20} strokeWidth={2.25} />,
+    icon: <BookOpenText size={16} strokeWidth={2.25} />,
   },
   {
     key: 'nav-cron',
     label: 'Cron Job',
     href: '/cron-job',
-    icon: <Clock size={20} strokeWidth={2.25} />,
+    icon: <Clock size={16} strokeWidth={2.25} />,
   },
   {
     key: 'nav-storages',
     label: 'Storages',
     href: '/storages',
-    icon: <Database size={20} strokeWidth={2.25} />,
+    icon: <Database size={16} strokeWidth={2.25} />,
   },
 ];
 
@@ -65,7 +64,7 @@ export default function Sidebar() {
       className={`
         relative flex flex-col h-full border-r border-border bg-background
         transition-all duration-300 ease-in-out shrink-0
-        ${collapsed ? 'w-14' : 'w-[250px]'}
+        ${collapsed ? 'w-14' : 'w-[340px]'}
       `}
     >
       {/* Header with Logo and Toggle */}
@@ -173,16 +172,6 @@ export default function Sidebar() {
           )}
         </Link>
       </div>
-
-      {/* Active job indicator */}
-      {!collapsed && (
-        <div className="px-3 pb-3">
-          <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-secondary/30 border border-secondary">
-            <Feather size={14} strokeWidth={2.25} className="text-primary shrink-0 status-pulse" />
-            <span className="text-xs font-semibold text-primary truncate">1 job active</span>
-          </div>
-        </div>
-      )}
     </aside>
   );
 }
