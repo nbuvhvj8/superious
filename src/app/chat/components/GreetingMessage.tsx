@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 const GREETINGS = [
   "Hey there! What's on your mind?",
@@ -18,18 +18,17 @@ const GREETINGS = [
 ];
 
 export default function GreetingMessage() {
-  const [greeting, setGreeting] = useState('');
-
-  useEffect(() => {
-    // Select a random greeting on component mount
-    const randomGreeting = GREETINGS[Math.floor(Math.random() * GREETINGS.length)];
-    setGreeting(randomGreeting);
-  }, []);
+  const greeting = GREETINGS[Math.floor(Math.random() * GREETINGS.length)];
 
   return (
-    <div className="flex flex-col gap-4">
-      {/* Greeting message */}
-      <p className="text-lg font-semibold text-foreground">{greeting}</p>
+    <div className="flex flex-col gap-2">
+      <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+        New chat
+      </p>
+      <h1 className="text-xl md:text-2xl font-semibold text-foreground">{greeting}</h1>
+      <p className="text-sm text-muted-foreground">
+        Ask a question, draft content, or explore an idea.
+      </p>
     </div>
   );
 }
