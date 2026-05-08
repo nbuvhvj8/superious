@@ -1,48 +1,54 @@
-# API & Tool Design Patterns
+# API Design (Hono.js)
 
-## 1. The Tool Harness
-Every tool in Superious is wrapped in a deterministic harness. Never allow a model to call a raw function.
+Superious uses **Hono.js** as its primary API framework. It is designed to be lean, type-safe, and highly performant.
+
+## 🔒 Security & Authentication
+
+### User Authentication
+- All protected endpoints must validate the Supabase JWT.
+- Middleware handles session verification and extracts `user_id`.
+
+### API Key Management
+- User-provided keys (Anthropic, Tavily, etc.) are **never** stored in the frontend.
+- Keys are encrypted using **AES-256-GCM** before being stored in Supabase `user_settings`.
+- The API service holds the master `ENCRYPTION_KEY` in environment variables.
+
+## 🛠️ Middleware Stack
+
+1. **CORS**: Restricted to Vercel/localhost domains.
+2. **Logger**: Structured JSON logging (Pino).
+3. **Auth**: Supabase JWT validation.
+4. **Validation**: Zod schema validation for all request bodies.
+
+## 📡 Key Endpoints
+
+### 1. Job Orchestration
+- `POST /api/v1/jobs`: Submits a new research prompt. Returns a `job_id` and adds the job to the BullMQ queue.
+- `GET /api/v1/jobs/:id`: Returns full job details.
+- `GET /api/v1/jobs/:id/stream`: Server-Sent Events (SSE) stream for real-time status and source updates.
+
+### 2. Script Management
+- `PATCH /api/v1/scripts/:job_id`: Updates a script draft.
+- `POST /api/v1/scripts/:job_id/export`: Triggers the `export_formatter` tool.
+
+### 3. Settings
+- `POST /api/v1/settings/keys`: Securely stores encrypted API keys.
+- `GET /api/v1/settings/keys`: Returns metadata about configured keys (masked).
+
+## ⚡ Real-time Delivery (SSE)
+
+Real-time updates are delivered via SSE. The API subscribes to Upstash Redis Pub/Sub channels keyed by `job_id`.
 
 ```typescript
-// Pattern: Deterministic Tool Wrapper
-async function executeTool(name, input, context) {
-  await permissionGate.check(name); // Law: Deny-first
-  validateInput(name, input);      // Law: Structured I/O
-  await rateLimiter.consume();     // Law: Quota enforcement
-  
-  const result = await tools[name](input);
-  
-  await auditLogger.log(name, result); // Law: Observability
-  return result;
-}
-```
-
-## 2. Dynamic Tool Discovery (Meta-Tools)
-Instead of sending 20 tool definitions to the model (wasting 8k tokens), we send one `tool_registry` tool.
-- **Model:** "I need to search the web."
-- **Model calls:** `tool_registry({ query: "web search" })`
-- **Harness returns:** The definition for `web_search`.
-- **Model calls:** `web_search({ query: "..." })`
-
-## 3. SSE (Server-Sent Events) Response Pattern
-Hono.js endpoints should return a stream to the Next.js frontend to ensure the user sees "thinking" in real-time.
-
-```typescript
-app.get('/chat/:id/stream', async (c) => {
+// Conceptual SSE Implementation
+app.get('/api/v1/jobs/:id/stream', (c) => {
   return streamSSE(c, async (stream) => {
-    for await (const event of agent.run()) {
-      await stream.writeSSE({
-        data: JSON.stringify(event),
-        event: event.type
-      });
-    }
+    const subscriber = redis.duplicate();
+    await subscriber.subscribe(`job:${id}`);
+    
+    subscriber.on('message', (channel, message) => {
+      stream.writeSSE({ data: message, event: 'update' });
+    });
   });
 });
 ```
-
-## 4. The 20 Core Tools
-Refer to `architecture/tool/tool-infrastructure.md` for the full list. Highlights:
-- **web_search:** Tavily + Serper fallback.
-- **source_fetch:** Turndown for HTML -> Markdown conversion.
-- **context_manager:** The brain's compaction layer.
-- **screenshot_capture:** Playwright-based visual evidence.
