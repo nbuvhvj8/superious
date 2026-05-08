@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 const GREETINGS = [
   "Hey there! What's on your mind?",
@@ -18,7 +18,14 @@ const GREETINGS = [
 ];
 
 export default function GreetingMessage() {
-  const greeting = GREETINGS[Math.floor(Math.random() * GREETINGS.length)];
+  const [greeting, setGreeting] = useState('');
+
+  useEffect(() => {
+    const randomGreeting = GREETINGS[Math.floor(Math.random() * GREETINGS.length)];
+    setGreeting(randomGreeting);
+  }, []);
+
+  if (!greeting) return <div className="h-[88px]" />; // Prevent layout shift by reserving space
 
   return (
     <div className="flex flex-col gap-2">
