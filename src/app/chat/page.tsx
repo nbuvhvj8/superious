@@ -6,12 +6,11 @@ import GreetingMessage from './components/GreetingMessage';
 export default function ChatPage() {
   return (
     <AppLayout>
-      <div className="flex flex-col items-start justify-start" style={{ paddingTop: '52px', paddingLeft: '16px' }}>
-        {/* Greeting - aligned left with box */}
-        <div className="mb-6" style={{ width: '800px' }}>
+      <div className="flex flex-col items-start justify-start pt-14 px-4 md:px-6 lg:px-8">
+        <div className="mb-6 w-full max-w-4xl">
           <GreetingMessage />
         </div>
-        {/* Chat input box */}
+
         <div className="flex justify-center w-full">
           <ChatInput />
         </div>
