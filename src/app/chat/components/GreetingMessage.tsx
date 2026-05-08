@@ -28,14 +28,9 @@ export default function GreetingMessage() {
   if (!greeting) return <div className="h-[88px]" />; // Prevent layout shift by reserving space
 
   return (
-    <div className="flex flex-col gap-2">
-      <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-        New chat
-      </p>
-      <h1 className="text-xl md:text-2xl font-semibold text-foreground">{greeting}</h1>
-      <p className="text-sm text-muted-foreground">
-        Ask a question, draft content, or explore an idea.
-      </p>
+    <div className="flex flex-col gap-4">
+      {/* Greeting message */}
+      <p className="text-lg font-semibold text-foreground">{greeting}</p>
     </div>
   );
 }
