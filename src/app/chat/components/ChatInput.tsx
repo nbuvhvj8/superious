@@ -1,61 +1,137 @@
 'use client';
 
-import React from 'react';
-import { ArrowUp, Plus } from 'lucide-react';
+import React, { useRef, useState, useEffect, forwardRef, useImperativeHandle } from 'react';
+import { Paperclip, Globe, Camera, Brain } from 'lucide-react';
+import SendButton from './ChatInput/SendButton';
 
-export default function ChatInput() {
-  return (
-    <div
-      className="
-        flex items-end gap-2 w-full min-h-[100px]
-        rounded-[20px] bg-card border border-border/50
-        shadow-[0_2px_12px_rgba(0,0,0,0.04),0_1px_4px_rgba(0,0,0,0.02)]
-        p-3 transition-all duration-200
-        focus-within:border-primary/40 focus-within:ring-[4px] focus-within:ring-primary/5
-      "
-    >
-      {/* Plus icon wrapper */}
-      <div className="flex items-center justify-center shrink-0 mb-1">
-        <button
-          className="
-            p-2 text-muted-foreground/70 transition-all duration-200
-            hover:text-foreground hover:bg-muted rounded-xl
-          "
-          aria-label="Add attachment"
-        >
-          <Plus size={22} strokeWidth={2} />
-        </button>
-      </div>
-
-      {/* Input area */}
-      <textarea
-        placeholder="Type your message..."
-        className="
-          flex-1 bg-transparent text-foreground placeholder:text-muted-foreground/50
-          resize-none outline-none text-[16px] leading-relaxed font-medium
-          py-2.5 px-2 min-h-[44px] max-h-[400px]
-        "
-        rows={1}
-        onInput={(e) => {
-          const target = e.target as HTMLTextAreaElement;
-          target.style.height = 'auto';
-          target.style.height = `${target.scrollHeight}px`;
-        }}
-      />
-
-      {/* Arrow up icon wrapper */}
-      <div className="flex items-center justify-center shrink-0 mb-1">
-        <button
-          className="
-            p-2.5 rounded-full bg-primary text-primary-foreground
-            transition-all duration-200 hover:opacity-90 active:scale-95
-            shadow-md shadow-primary/20
-          "
-          aria-label="Send message"
-        >
-          <ArrowUp size={20} strokeWidth={2.5} />
-        </button>
-      </div>
-    </div>
-  );
+interface ChatInputProps {
+  value: string;
+  onChange: (value: string) => void;
+  onSend: () => void;
+  isGenerating?: boolean;
 }
+
+export interface ChatInputHandle {
+  focus: () => void;
+}
+
+const ChatInput = forwardRef<ChatInputHandle, ChatInputProps>(
+  ({ value, onChange, onSend, isGenerating = false }, ref) => {
+    const textareaRef = useRef<HTMLTextAreaElement>(null);
+    const [isFocused, setIsFocused] = useState(false);
+
+    useImperativeHandle(ref, () => ({
+      focus: () => {
+        textareaRef.current?.focus();
+      },
+    }));
+
+    // Auto-grow logic
+    useEffect(() => {
+      const textarea = textareaRef.current;
+      if (textarea) {
+        textarea.style.height = 'auto';
+        textarea.style.height = `${Math.min(textarea.scrollHeight, 180)}px`;
+      }
+    }, [value]);
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        if (!isGenerating && value.trim()) {
+          onSend();
+        }
+      }
+    };
+
+    const getCardStyles = () => {
+      if (isGenerating) return 'border-border bg-white opacity-100';
+      if (isFocused) return 'border-[#C5D0A8] shadow-[0_0_0_3px_rgba(138,154,107,0.12)] bg-white';
+      return 'border-border bg-white';
+    };
+
+    return (
+      <div className="w-full">
+        {/* Input Card */}
+        <div
+          className={`
+            w-full rounded-[24px] border-[1.5px] transition-all duration-200
+            ${getCardStyles()}
+          `}
+        >
+          {/* Textarea Row */}
+          <div className="px-[14px] pt-[12px] pb-[4px]">
+            <textarea
+              ref={textareaRef}
+              placeholder="Message Superious..."
+              value={value}
+              onChange={(e) => onChange(e.target.value)}
+              onFocus={() => setIsFocused(true)}
+              onBlur={() => setIsFocused(false)}
+              onKeyDown={handleKeyDown}
+              disabled={isGenerating}
+              className={`
+                w-full bg-transparent border-none outline-none resize-none
+                text-[15px] leading-relaxed text-foreground placeholder:text-muted-foreground/60
+                min-h-[44px] max-h-[180px] scrollbar-thin
+                ${isGenerating ? 'opacity-60 pointer-events-none' : ''}
+              `}
+              rows={1}
+              maxLength={1000}
+            />
+          </div>
+
+          {/* Toolbar Row */}
+          <div className="flex items-center justify-between px-[10px] pt-[6px] pb-[10px]">
+            {/* Left Tools */}
+            <div className="flex items-center gap-0.5">
+              <button className="tool-btn flex items-center gap-1.5 px-2.5 h-[30px] rounded-lg text-muted-foreground hover:bg-muted/50 hover:text-foreground transition-all">
+                <Paperclip size={15} />
+                <span className="text-[12px] font-medium hidden sm:inline">Attach</span>
+              </button>
+              
+              <div className="w-[1px] h-[18px] bg-border mx-1" />
+
+              <button className="tool-btn active flex items-center gap-1.5 px-2.5 h-[30px] rounded-lg bg-[rgba(138,154,107,0.12)] text-[#6B7A52] transition-all">
+                <Globe size={15} />
+                <span className="text-[12px] font-medium hidden sm:inline">Search</span>
+              </button>
+              
+              <button className="tool-btn flex items-center gap-1.5 px-2.5 h-[30px] rounded-lg text-muted-foreground hover:bg-muted/50 hover:text-foreground transition-all">
+                <Camera size={15} />
+                <span className="text-[12px] font-medium hidden sm:inline">Screenshot</span>
+              </button>
+
+              <button className="tool-btn flex items-center gap-1.5 px-2.5 h-[30px] rounded-lg text-muted-foreground hover:bg-muted/50 hover:text-foreground transition-all">
+                <Brain size={15} />
+                <span className="text-[12px] font-medium hidden sm:inline">Deep</span>
+              </button>
+            </div>
+
+            {/* Right Tools & Send */}
+            <div className="flex items-center gap-3">
+              {value.length > 800 && (
+                <span className={`text-[11px] font-medium tabular-nums ${value.length > 950 ? 'text-amber-600' : 'text-muted-foreground'}`}>
+                  {value.length}/1000
+                </span>
+              )}
+              <SendButton
+                state={isGenerating ? 'stop' : value.trim() ? 'ready' : 'empty'}
+                onClick={onSend}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Disclaimer */}
+        <p className="text-[11px] text-muted-foreground text-center mt-[7px] select-none">
+          outlier can make mistakes. Review important sources before publishing.
+        </p>
+      </div>
+    );
+  }
+);
+
+ChatInput.displayName = 'ChatInput';
+
+export default ChatInput;

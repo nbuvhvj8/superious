@@ -1,36 +1,24 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-
-const GREETINGS = [
-  "Hey there! What's on your mind?",
-  "Welcome back! Let's create something great.",
-  "Ready to brainstorm? I'm listening.",
-  'What can I help you research today?',
-  "Let's dive into it. What do you need?",
-  'Curious about something? Ask away!',
-  'Your next big idea starts here.',
-  'What would you like to explore?',
-  "Let's turn your thoughts into action.",
-  'Ready to get started? Tell me more.',
-  "What's your next topic?",
-  "I'm here to help. What's next?",
-];
+import React from 'react';
 
 export default function GreetingMessage() {
-  const [greeting, setGreeting] = useState('');
-
-  useEffect(() => {
-    const randomGreeting = GREETINGS[Math.floor(Math.random() * GREETINGS.length)];
-    setGreeting(randomGreeting);
-  }, []);
-
-  if (!greeting) return <div className="h-[88px]" />; // Prevent layout shift by reserving space
-
   return (
-    <div className="flex flex-col gap-4">
-      {/* Greeting message */}
-      <p className="text-lg font-semibold text-foreground">{greeting}</p>
+    <div className="flex flex-col items-center justify-center pt-8 pb-6">
+      {/* Logo box: 52x52, r14, primary bg, italic "o" */}
+      <div className="w-[52px] h-[52px] rounded-[14px] bg-primary flex items-center justify-center mb-6 shadow-sm">
+        <span className="text-white text-[22px] font-bold italic select-none">o</span>
+      </div>
+
+      {/* Title */}
+      <h1 className="text-[20px] font-bold text-foreground text-center tracking-tight mb-2">
+        What are you researching today?
+      </h1>
+
+      {/* Subtitle */}
+      <p className="text-[13px] text-muted-foreground text-center max-w-[360px] leading-relaxed">
+        I&apos;ll search the web, capture sources and write a structured video script.
+      </p>
     </div>
   );
 }

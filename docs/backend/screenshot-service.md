@@ -25,3 +25,5 @@ A dedicated Node.js worker on Railway responsible for capturing visual evidence 
 - **RAM:** 2GB (required for Chromium overhead).
 - **CPU:** 2 vCPU.
 - **Cleanup:** Storage lifecycle policy deletes PNGs after 30 days.
+
+

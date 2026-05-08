@@ -37,6 +37,14 @@ module.exports = {
       fontSize: {
         '2xs': ['0.65rem', { lineHeight: '1rem' }],
       },
+      keyframes: {
+        shimmer: {
+          '100%': { transform: 'translateX(100%)' },
+        },
+      },
+      animation: {
+        shimmer: 'shimmer 2s infinite',
+      },
     },
   },
   plugins: [
