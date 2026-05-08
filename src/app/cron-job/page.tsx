@@ -76,9 +76,7 @@ export default function CronJobPage() {
     setIsModalOpen(true);
   };
 
-  const filtered = MOCK_SCHEDULES.filter(
-    (j) => activeTab === 'all' || j.type === activeTab
-  );
+  const filtered = MOCK_SCHEDULES.filter((j) => activeTab === 'all' || j.type === activeTab);
 
   return (
     <AppLayout>
@@ -222,7 +220,9 @@ export default function CronJobPage() {
                     <tr>
                       <td colSpan={6} className="px-5 py-14 text-center">
                         <div className="space-y-2">
-                          <p className="text-sm font-semibold text-foreground">No schedules found</p>
+                          <p className="text-sm font-semibold text-foreground">
+                            No schedules found
+                          </p>
                           <p className="text-xs text-muted-foreground">
                             Try a different filter or create a new scheduled job.
                           </p>
@@ -272,12 +272,12 @@ export default function CronJobPage() {
                           <span className="text-xs text-muted-foreground">{job.lastRun}</span>
                         </td>
                         <td className="px-4 py-3.5">
-                            <div className="flex items-center gap-2">
-                                <div
-                                    className={`w-2 h-2 rounded-full ${job.status === 'active' ? 'bg-green-500 animate-pulse' : 'bg-amber-500'}`}
-                                />
-                                <span className="text-xs font-bold capitalize">{job.status}</span>
-                            </div>
+                          <div className="flex items-center gap-2">
+                            <div
+                              className={`w-2 h-2 rounded-full ${job.status === 'active' ? 'bg-green-500 animate-pulse' : 'bg-amber-500'}`}
+                            />
+                            <span className="text-xs font-bold capitalize">{job.status}</span>
+                          </div>
                         </td>
                         <td className="px-4 py-3.5 text-right">
                           <div className="flex items-center gap-1 justify-end opacity-0 group-hover:opacity-100 transition-opacity duration-150">

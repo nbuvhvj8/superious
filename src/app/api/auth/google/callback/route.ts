@@ -15,9 +15,11 @@ export async function GET(request: NextRequest) {
       const state = JSON.parse(decodeURIComponent(stateParam));
       fromPage = state.from || 'onboarding';
     }
-  } catch {}
+  } catch {
+    // Ignore parsing errors, fall back to default fromPage
+  }
 
-  const redirectBase = fromPage === 'settings' ? `${siteUrl}/settings` : `${siteUrl}/onboarding`;
+  const redirectBase = fromPage === 'settings' ? `${siteUrl}/settings` : `${siteUrl}/`;
 
   if (error || !code) {
     const errMsg = error || 'authorization_failed';
@@ -76,7 +78,7 @@ export async function GET(request: NextRequest) {
     if (refresh_token) params.set('refresh_token', refresh_token);
 
     return NextResponse.redirect(`${redirectBase}?${params.toString()}`);
-  } catch (err) {
+  } catch (_err) {
     return NextResponse.redirect(
       `${redirectBase}?google_oauth=error&error=${encodeURIComponent('Unexpected error during authorization')}`
     );

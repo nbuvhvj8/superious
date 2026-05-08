@@ -31,12 +31,18 @@ const STAGE_ORDER: Record<JobStatus, number> = {
   failed: 4,
 };
 
-export default function JobStatusBar({ status, className = '', variant = 'full' }: JobStatusBarProps) {
+export default function JobStatusBar({
+  status,
+  className = '',
+  variant = 'full',
+}: JobStatusBarProps) {
   const currentIdx = STAGE_ORDER[status];
   const isFailed = status === 'failed';
 
   return (
-    <div className={`flex items-start gap-0 ${variant === 'short' ? 'w-fit' : 'w-full'} ${className}`}>
+    <div
+      className={`flex items-start gap-0 ${variant === 'short' ? 'w-fit' : 'w-full'} ${className}`}
+    >
       {STAGES.map((stage, i) => {
         const isCompleted = !isFailed && i < currentIdx;
         const isActive = !isFailed && i === currentIdx;

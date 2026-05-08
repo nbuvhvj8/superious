@@ -5,7 +5,10 @@ import { ArrowUp, Plus } from 'lucide-react';
 
 export default function ChatInput() {
   return (
-    <div className="flex items-end gap-3 rounded-[12px] bg-input border border-border p-3 transition-all duration-200 focus-within:ring-2 focus-within:ring-ring focus-within:border-transparent" style={{ width: '800px' }}>
+    <div
+      className="flex items-end gap-3 rounded-[12px] bg-input border border-border p-3 transition-all duration-200 focus-within:ring-2 focus-within:ring-ring focus-within:border-transparent"
+      style={{ width: '800px' }}
+    >
       {/* Plus icon - left bottom */}
       <button
         className="mb-1 p-1 text-muted-foreground transition-colors duration-150 hover:text-foreground shrink-0"

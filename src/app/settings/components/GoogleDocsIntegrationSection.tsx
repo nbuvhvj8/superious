@@ -159,7 +159,7 @@ export default function GoogleDocsIntegrationSection() {
           <div className="flex items-center gap-3">
             <div className="flex-1 px-3 py-2 rounded-lg bg-primary/10 border border-primary/20">
               <p className="text-xs text-primary font-semibold">
-                ✓ Google Docs export is active. Use the "Docs" button in any script view.
+                ✓ Google Docs export is active. Use the &quot;Docs&quot; button in any script view.
               </p>
             </div>
             <button

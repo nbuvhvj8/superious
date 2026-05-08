@@ -88,8 +88,8 @@ export default function PromptInputCard() {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const SUGGESTED_DRAFT = {
-    text: "Deep dive into the impact of the 1970s energy crisis on global automotive design — focus on the shift from muscle cars to compact efficiency and the rise of Japanese imports.",
-    templateId: 'documentary'
+    text: 'Deep dive into the impact of the 1970s energy crisis on global automotive design — focus on the shift from muscle cars to compact efficiency and the rise of Japanese imports.',
+    templateId: 'documentary',
   };
 
   const charCount = prompt.length;
@@ -173,7 +173,9 @@ export default function PromptInputCard() {
               </div>
               <div className="p-4 space-y-4">
                 <div className="space-y-2">
-                  <span className="text-[10px] font-bold text-muted-foreground uppercase">Recommended Content</span>
+                  <span className="text-[10px] font-bold text-muted-foreground uppercase">
+                    Recommended Content
+                  </span>
                   <div className="bg-muted rounded-lg p-3 border border-border">
                     <p className="text-xs text-foreground/80 leading-relaxed italic">
                       &quot;{SUGGESTED_DRAFT.text}&quot;
@@ -182,12 +184,16 @@ export default function PromptInputCard() {
                 </div>
 
                 <div className="space-y-2">
-                  <span className="text-[10px] font-bold text-muted-foreground uppercase">Target Format</span>
+                  <span className="text-[10px] font-bold text-muted-foreground uppercase">
+                    Target Format
+                  </span>
                   <div className="flex items-center gap-3 px-3 py-2 rounded-lg bg-muted/50 border border-border/50">
                     <span className="text-primary">{suggestedTemplate.icon}</span>
                     <div className="flex-1 min-w-0">
                       <p className="text-xs font-bold text-foreground">{suggestedTemplate.label}</p>
-                      <p className="text-[10px] text-muted-foreground truncate">{suggestedTemplate.description}</p>
+                      <p className="text-[10px] text-muted-foreground truncate">
+                        {suggestedTemplate.description}
+                      </p>
                     </div>
                   </div>
                 </div>

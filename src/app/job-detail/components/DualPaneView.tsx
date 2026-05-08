@@ -136,9 +136,10 @@ CRISPR is not a silver bullet — it is a platform. A set of molecular tools tha
               Settings → Integrations
             </a>{' '}
             or during{' '}
-            <a href="/onboarding" className="underline font-bold">
+            <a href="/" className="underline font-bold">
               onboarding
             </a>
+
             .
           </p>
           <button

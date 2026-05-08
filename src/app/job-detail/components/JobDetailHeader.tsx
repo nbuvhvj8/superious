@@ -16,7 +16,11 @@ export default function JobDetailHeader() {
           className="btn-ghost px-2 py-1.5 shrink-0 -ml-2 text-muted-foreground hover:text-foreground hover:bg-muted rounded-lg transition-colors inline-flex items-center gap-2 group"
           aria-label="Back to workspace"
         >
-          <ArrowLeft size={16} strokeWidth={2.5} className="group-hover:-translate-x-0.5 transition-transform" />
+          <ArrowLeft
+            size={16}
+            strokeWidth={2.5}
+            className="group-hover:-translate-x-0.5 transition-transform"
+          />
           <span className="text-xs font-bold uppercase tracking-widest">Back</span>
         </Link>
       </div>
@@ -30,8 +34,8 @@ export default function JobDetailHeader() {
 
         {/* Title */}
         <h1 className="text-3xl font-extrabold text-foreground leading-tight tracking-tight max-w-4xl">
-          How CRISPR gene editing is revolutionizing cancer treatment and what ethical
-          frameworks are needed
+          How CRISPR gene editing is revolutionizing cancer treatment and what ethical frameworks
+          are needed
         </h1>
 
         {/* Stats and Status Bar Group */}

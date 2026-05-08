@@ -32,7 +32,7 @@ const NAV_ITEMS: NavItem[] = [
   {
     key: 'nav-workspace',
     label: 'Workspace',
-    href: '/',
+    href: '/workspace',
     icon: <Microscope size={16} strokeWidth={2.25} />,
   },
   {
@@ -68,12 +68,8 @@ export default function Sidebar() {
       `}
     >
       {/* Header with Logo and Toggle */}
-      <div
-        className={`flex items-center justify-between h-16 px-4 gap-3 overflow-hidden`}
-      >
-        {!collapsed && (
-          <div className="flex-1" />
-        )}
+      <div className={`flex items-center justify-between h-16 px-4 gap-3 overflow-hidden`}>
+        {!collapsed && <div className="flex-1" />}
         <button
           onClick={() => setCollapsed(!collapsed)}
           className="
