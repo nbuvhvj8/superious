@@ -1,8 +1,21 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { Download, ChevronDown, FileText, Code, Hash, Edit3 } from 'lucide-react';
+import React, { useMemo, useState } from 'react';
+import {
+  Download,
+  ChevronDown,
+  FileText,
+  Code,
+  Hash,
+  Edit3,
+  Sparkles,
+  AlertTriangle,
+  RotateCcw,
+} from 'lucide-react';
 import ScriptEditor from './ScriptEditor';
+import HookVariantsModal from './HookVariantsModal';
+import { VerificationBadge, VerificationLegend } from './VerificationBadge';
+import type { HookVariant, SegmentVerification, VerificationStatus } from '@/server/types';
 
 interface ScriptSegment {
   id: string;
@@ -12,15 +25,18 @@ interface ScriptSegment {
   bRollCues: string[];
   sourceIds: string[];
   durationS: number;
+  verification: SegmentVerification;
 }
 
 interface ScriptData {
   title: string;
   hook: string;
   hookSourceIds: string[];
+  hookVerification: SegmentVerification;
   segments: ScriptSegment[];
   outro: string;
   outroSourceIds: string[];
+  outroVerification: SegmentVerification;
   wordCount: number;
   estimatedDurationS: number;
 }
@@ -44,6 +60,13 @@ const MOCK_SCRIPT: ScriptData = {
       ],
       sourceIds: ['src-001', 'src-003'],
       durationS: 285,
+      verification: {
+        status: 'supported',
+        confidence: 0.94,
+        supportingSourceIds: ['src-001', 'src-003'],
+        contradictingSourceIds: [],
+        notes: 'Mechanism described matches both Nature and NEJM coverage.',
+      },
     },
     {
       id: 'seg-002',
@@ -59,6 +82,13 @@ const MOCK_SCRIPT: ScriptData = {
       ],
       sourceIds: ['src-002', 'src-004', 'src-005'],
       durationS: 310,
+      verification: {
+        status: 'supported',
+        confidence: 0.91,
+        supportingSourceIds: ['src-002', 'src-004', 'src-005'],
+        contradictingSourceIds: [],
+        notes: 'Dates and approval milestones are corroborated by 3 independent sources.',
+      },
     },
     {
       id: 'seg-003',
@@ -74,6 +104,14 @@ const MOCK_SCRIPT: ScriptData = {
       ],
       sourceIds: ['src-003', 'src-005', 'src-006'],
       durationS: 340,
+      verification: {
+        status: 'single-source',
+        confidence: 0.62,
+        supportingSourceIds: ['src-005'],
+        contradictingSourceIds: [],
+        notes:
+          "The '70%+ response rate' claim is sourced only from cancer.gov; recommend a second oncology source.",
+      },
     },
     {
       id: 'seg-004',
@@ -89,6 +127,13 @@ const MOCK_SCRIPT: ScriptData = {
       ],
       sourceIds: ['src-006', 'src-007'],
       durationS: 330,
+      verification: {
+        status: 'supported',
+        confidence: 0.88,
+        supportingSourceIds: ['src-006', 'src-007'],
+        contradictingSourceIds: [],
+        notes: 'WHO and BMJ both confirm the 2018 Jiankui sentencing and the 2021 framework.',
+      },
     },
     {
       id: 'seg-005',
@@ -104,6 +149,14 @@ const MOCK_SCRIPT: ScriptData = {
       ],
       sourceIds: ['src-004', 'src-007', 'src-008'],
       durationS: 295,
+      verification: {
+        status: 'contradicted',
+        confidence: 0.45,
+        supportingSourceIds: ['src-004'],
+        contradictingSourceIds: ['src-008'],
+        notes:
+          'STAT cites $2.2M; the Lancet review cites a manufacturer list price closer to $2.0M-$2.4M depending on region. Resolve before publishing.',
+      },
     },
     {
       id: 'seg-006',
@@ -119,11 +172,35 @@ const MOCK_SCRIPT: ScriptData = {
       ],
       sourceIds: ['src-001', 'src-005', 'src-008'],
       durationS: 310,
+      verification: {
+        status: 'single-source',
+        confidence: 0.55,
+        supportingSourceIds: ['src-008'],
+        contradictingSourceIds: [],
+        notes:
+          'Forward-looking 5-year horizon claims rely heavily on a single Lancet review; mark as speculative on screen.',
+      },
     },
   ],
   outro:
     'CRISPR is not a silver bullet — it is a platform. A set of molecular tools that are improving rapidly, being applied carefully, and generating results that would have been called impossible a decade ago. The ethical and equity challenges are real and urgent. But the trajectory is clear: gene editing is moving from experimental to essential. For video creators, researchers, and anyone tracking the future of medicine, this is the story of our generation. Subscribe for more deep dives into the science reshaping the world.',
   outroSourceIds: ['src-002', 'src-008'],
+  outroVerification: {
+    status: 'supported',
+    confidence: 0.82,
+    supportingSourceIds: ['src-002', 'src-008'],
+    contradictingSourceIds: [],
+    notes:
+      'CTA is editorial; supporting sources back the underlying claim that the field is accelerating.',
+  },
+  hookVerification: {
+    status: 'supported',
+    confidence: 0.86,
+    supportingSourceIds: ['src-001', 'src-002'],
+    contradictingSourceIds: [],
+    notes:
+      'Both opening claims are anchored to Nature and the Doudna-Charpentier foundational paper.',
+  },
   wordCount: 2840,
   estimatedDurationS: 1870,
 };
@@ -132,6 +209,20 @@ function formatDuration(seconds: number) {
   const m = Math.floor(seconds / 60);
   const s = seconds % 60;
   return `${m}m ${s}s`;
+}
+
+/**
+ * Snapshot the writer-node output verbatim. Anything the user types after
+ * mount is compared against this map to detect rewrites that may have
+ * drifted from the captured sources.
+ */
+function buildBaseline(s: ScriptData): Record<string, string> {
+  const out: Record<string, string> = {
+    hook: s.hook,
+    outro: s.outro,
+  };
+  for (const seg of s.segments) out[seg.id] = seg.narration;
+  return out;
 }
 
 interface Props {
@@ -149,6 +240,13 @@ export interface BRollExportItem {
   checked: boolean;
 }
 
+/**
+ * Region keys used by the citation-integrity tracker. The hook + outro live
+ * outside the segments array so we use stable string keys for them; segments
+ * are keyed by their id.
+ */
+type RegionKey = 'hook' | 'outro' | string;
+
 export default function ScriptViewer({
   highlightedSourceId,
   onCitationClick,
@@ -157,6 +255,27 @@ export default function ScriptViewer({
 }: Props) {
   const [exportOpen, setExportOpen] = useState(false);
   const [scriptData, setScriptData] = useState<ScriptData>(MOCK_SCRIPT);
+  const [hookVariantsOpen, setHookVariantsOpen] = useState(false);
+  // Snapshot of the original text so we can detect post-LLM rewrites and
+  // surface them as "uncited until re-anchored" — see Feature 2 spec.
+  const [baselineText] = useState(() => buildBaseline(MOCK_SCRIPT));
+  const [reanchored, setReanchored] = useState<Set<RegionKey>>(new Set());
+
+  /** True iff the region has been edited since baseline AND not re-anchored. */
+  function isUncited(key: RegionKey, currentText: string): boolean {
+    if (reanchored.has(key)) return false;
+    const baseline = baselineText[key];
+    if (baseline === undefined) return false;
+    return baseline.trim() !== currentText.trim();
+  }
+
+  function reanchor(key: RegionKey) {
+    setReanchored((prev) => {
+      const next = new Set(prev);
+      next.add(key);
+      return next;
+    });
+  }
 
   // Notify parent of B-roll data
   React.useEffect(() => {
@@ -174,15 +293,41 @@ export default function ScriptViewer({
     }
   }, [scriptData]);
 
+  /** Aggregate verification counts shown in the header legend. */
+  const verificationCounts = useMemo<Record<VerificationStatus, number>>(() => {
+    const counts: Record<VerificationStatus, number> = {
+      supported: 0,
+      'single-source': 0,
+      contradicted: 0,
+      unverified: 0,
+    };
+    counts[scriptData.hookVerification.status] += 1;
+    counts[scriptData.outroVerification.status] += 1;
+    for (const seg of scriptData.segments) counts[seg.verification.status] += 1;
+    return counts;
+  }, [scriptData]);
+
+  function clearReanchor(key: RegionKey) {
+    setReanchored((prev) => {
+      if (!prev.has(key)) return prev;
+      const next = new Set(prev);
+      next.delete(key);
+      return next;
+    });
+  }
+
   function updateHook(newHook: string) {
+    clearReanchor('hook');
     setScriptData((prev) => ({ ...prev, hook: newHook }));
   }
 
   function updateOutro(newOutro: string) {
+    clearReanchor('outro');
     setScriptData((prev) => ({ ...prev, outro: newOutro }));
   }
 
   function updateSegmentNarration(segId: string, newNarration: string) {
+    clearReanchor(segId);
     setScriptData((prev) => ({
       ...prev,
       segments: prev.segments.map((s) => (s.id === segId ? { ...s, narration: newNarration } : s)),
@@ -193,6 +338,22 @@ export default function ScriptViewer({
     setScriptData((prev) => ({
       ...prev,
       segments: prev.segments.map((s) => (s.id === segId ? { ...s, heading: newHeading } : s)),
+    }));
+  }
+
+  function applyHookVariant(variant: HookVariant) {
+    clearReanchor('hook');
+    setScriptData((prev) => ({
+      ...prev,
+      hook: variant.text,
+      hookSourceIds: variant.sourceIds.length > 0 ? variant.sourceIds : prev.hookSourceIds,
+      hookVerification: {
+        status: variant.sourceIds.length >= 2 ? 'supported' : 'single-source',
+        confidence: variant.sourceIds.length >= 2 ? 0.85 : 0.6,
+        supportingSourceIds: variant.sourceIds,
+        contradictingSourceIds: [],
+        notes: `Applied ${variant.angle} hook variant — verify framing matches source intent.`,
+      },
     }));
   }
 
@@ -235,6 +396,9 @@ export default function ScriptViewer({
             <span className="">{formatDuration(scriptData.estimatedDurationS)} est.</span>
             <span className="text-muted-foreground">&bull;</span>
             <span>{scriptData.segments.length} segments</span>
+          </div>
+          <div className="pt-2">
+            <VerificationLegend counts={verificationCounts} />
           </div>
         </div>
 
@@ -316,26 +480,51 @@ export default function ScriptViewer({
 
       {/* Hook Block */}
       <div className="space-y-2">
-        <div className="flex items-center gap-2">
-          <span className="section-label">Hook</span>
-          <span className="text-2xs font-mono text-muted-foreground">0–30s</span>
+        <div className="flex items-center justify-between gap-2 flex-wrap">
+          <div className="flex items-center gap-2">
+            <span className="section-label">Hook</span>
+            <span className="text-2xs font-mono text-muted-foreground">0–30s</span>
+            <VerificationBadge verification={scriptData.hookVerification} size="sm" />
+          </div>
+          <button
+            onClick={() => setHookVariantsOpen(true)}
+            className="btn-secondary gap-1.5 text-2xs py-1 px-2.5"
+            title="Generate alternative hooks"
+          >
+            <Sparkles size={11} />
+            Hook variants
+          </button>
         </div>
-        <div className="bg-primary/5 border border-primary/20 rounded-xl p-5 space-y-3">
+        <div
+          className={`
+            border rounded-xl p-5 space-y-3 transition-colors
+            ${
+              isUncited('hook', scriptData.hook)
+                ? 'bg-amber-50/40 border-amber-300'
+                : 'bg-primary/5 border-primary/20'
+            }
+          `}
+        >
           <ScriptEditor
             value={scriptData.hook}
             onSave={updateHook}
             className="text-sm font-medium italic"
             label="Hook"
           />
-          <div className="flex items-center gap-1.5 flex-wrap">
-            {scriptData.hookSourceIds.map((sid) => (
-              <CitationBadge
-                key={`hook-cite-${sid}`}
-                sourceId={sid}
-                isHighlighted={highlightedSourceId === sid}
-                onClick={() => onCitationClick(sid)}
-              />
-            ))}
+          <div className="flex items-center justify-between gap-2 flex-wrap">
+            <div className="flex items-center gap-1.5 flex-wrap">
+              {scriptData.hookSourceIds.map((sid) => (
+                <CitationBadge
+                  key={`hook-cite-${sid}`}
+                  sourceId={sid}
+                  isHighlighted={highlightedSourceId === sid}
+                  onClick={() => onCitationClick(sid)}
+                />
+              ))}
+            </div>
+            {isUncited('hook', scriptData.hook) && (
+              <UncitedWarning onReanchor={() => reanchor('hook')} />
+            )}
           </div>
         </div>
       </div>
@@ -351,35 +540,87 @@ export default function ScriptViewer({
             onCitationClick={onCitationClick}
             onUpdateNarration={(val) => updateSegmentNarration(seg.id, val)}
             onUpdateHeading={(val) => updateSegmentHeading(seg.id, val)}
+            isUncited={isUncited(seg.id, seg.narration)}
+            onReanchor={() => reanchor(seg.id)}
           />
         ))}
       </div>
 
       {/* Outro */}
       <div className="space-y-2">
-        <span className="section-label">Outro / Call to Action</span>
-        <div className="bg-secondary/20 border border-secondary/40 rounded-xl p-5 space-y-3">
+        <div className="flex items-center gap-2">
+          <span className="section-label">Outro / Call to Action</span>
+          <VerificationBadge verification={scriptData.outroVerification} size="sm" />
+        </div>
+        <div
+          className={`
+            border rounded-xl p-5 space-y-3 transition-colors
+            ${
+              isUncited('outro', scriptData.outro)
+                ? 'bg-amber-50/40 border-amber-300'
+                : 'bg-secondary/20 border-secondary/40'
+            }
+          `}
+        >
           <ScriptEditor
             value={scriptData.outro}
             onSave={updateOutro}
             className="text-sm"
             label="Outro"
           />
-          <div className="flex items-center gap-1.5 flex-wrap">
-            {scriptData.outroSourceIds.map((sid) => (
-              <CitationBadge
-                key={`outro-cite-${sid}`}
-                sourceId={sid}
-                isHighlighted={highlightedSourceId === sid}
-                onClick={() => onCitationClick(sid)}
-              />
-            ))}
+          <div className="flex items-center justify-between gap-2 flex-wrap">
+            <div className="flex items-center gap-1.5 flex-wrap">
+              {scriptData.outroSourceIds.map((sid) => (
+                <CitationBadge
+                  key={`outro-cite-${sid}`}
+                  sourceId={sid}
+                  isHighlighted={highlightedSourceId === sid}
+                  onClick={() => onCitationClick(sid)}
+                />
+              ))}
+            </div>
+            {isUncited('outro', scriptData.outro) && (
+              <UncitedWarning onReanchor={() => reanchor('outro')} />
+            )}
           </div>
         </div>
       </div>
 
       {/* Bottom spacing */}
       <div className="h-12" />
+
+      <HookVariantsModal
+        open={hookVariantsOpen}
+        jobId="job-1c93be"
+        currentHook={scriptData.hook}
+        onClose={() => setHookVariantsOpen(false)}
+        onApply={applyHookVariant}
+      />
+    </div>
+  );
+}
+
+/**
+ * Inline warning shown next to a region whose text has drifted from the
+ * source-anchored baseline. The user can re-anchor to clear the warning
+ * once they've manually verified the rewrite still matches their sources.
+ */
+function UncitedWarning({ onReanchor }: { onReanchor: () => void }) {
+  return (
+    <div className="flex items-center gap-2 text-2xs">
+      <span className="inline-flex items-center gap-1 text-amber-700 font-bold">
+        <AlertTriangle size={11} />
+        Uncited rewrite
+      </span>
+      <button
+        type="button"
+        onClick={onReanchor}
+        className="inline-flex items-center gap-1 text-primary hover:underline font-semibold"
+        title="Mark this section as re-verified against its sources"
+      >
+        <RotateCcw size={10} />
+        Re-anchor to sources
+      </button>
     </div>
   );
 }
@@ -420,15 +661,24 @@ function ScriptSegmentBlock({
   onCitationClick,
   onUpdateNarration,
   onUpdateHeading,
+  isUncited,
+  onReanchor,
 }: {
   segment: ScriptSegment;
   highlightedSourceId: string | null;
   onCitationClick: (id: string) => void;
   onUpdateNarration: (val: string) => void;
   onUpdateHeading: (val: string) => void;
+  isUncited: boolean;
+  onReanchor: () => void;
 }) {
   return (
-    <div className="card p-5 space-y-4 animate-fade-in">
+    <div
+      className={`
+        card p-5 space-y-4 animate-fade-in
+        ${isUncited ? 'border-amber-300 bg-amber-50/30' : ''}
+      `}
+    >
       {/* Segment Header */}
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-center gap-2.5 flex-1 min-w-0">
@@ -444,9 +694,12 @@ function ScriptSegmentBlock({
             />
           </div>
         </div>
-        <span className="font-mono text-2xs text-muted-foreground whitespace-nowrap shrink-0 mt-0.5">
-          {formatDuration(segment.durationS)}
-        </span>
+        <div className="flex items-center gap-2 shrink-0 mt-0.5">
+          <VerificationBadge verification={segment.verification} size="sm" />
+          <span className="font-mono text-2xs text-muted-foreground whitespace-nowrap">
+            {formatDuration(segment.durationS)}
+          </span>
+        </div>
       </div>
 
       {/* Narration */}
@@ -456,6 +709,13 @@ function ScriptSegmentBlock({
         className="text-sm"
         label="Narration"
       />
+
+      {/* Verification rationale */}
+      {segment.verification.notes && (
+        <p className="text-2xs text-muted-foreground italic leading-relaxed border-l-2 border-border pl-3">
+          {segment.verification.notes}
+        </p>
+      )}
 
       {/* B-Roll Cues */}
       {segment.bRollCues.length > 0 && (
@@ -478,18 +738,37 @@ function ScriptSegmentBlock({
 
       {/* Citations */}
       {segment.sourceIds.length > 0 && (
-        <div className="flex items-center gap-2 pt-1 border-t border-border">
-          <span className="text-2xs font-semibold text-muted-foreground">Sources:</span>
-          <div className="flex items-center gap-1.5">
-            {segment.sourceIds.map((sid) => (
-              <CitationBadge
-                key={`seg-cite-${segment.id}-${sid}`}
-                sourceId={sid}
-                isHighlighted={highlightedSourceId === sid}
-                onClick={() => onCitationClick(sid)}
-              />
-            ))}
+        <div className="flex items-center justify-between gap-2 pt-1 border-t border-border flex-wrap">
+          <div className="flex items-center gap-2">
+            <span className="text-2xs font-semibold text-muted-foreground">Sources:</span>
+            <div className="flex items-center gap-1.5">
+              {segment.sourceIds.map((sid) => (
+                <CitationBadge
+                  key={`seg-cite-${segment.id}-${sid}`}
+                  sourceId={sid}
+                  isHighlighted={highlightedSourceId === sid}
+                  onClick={() => onCitationClick(sid)}
+                />
+              ))}
+            </div>
           </div>
+          {isUncited && (
+            <div className="flex items-center gap-2 text-2xs">
+              <span className="inline-flex items-center gap-1 text-amber-700 font-bold">
+                <AlertTriangle size={11} />
+                Uncited rewrite
+              </span>
+              <button
+                type="button"
+                onClick={onReanchor}
+                className="inline-flex items-center gap-1 text-primary hover:underline font-semibold"
+                title="Mark this section as re-verified against its sources"
+              >
+                <RotateCcw size={10} />
+                Re-anchor
+              </button>
+            </div>
+          )}
         </div>
       )}
     </div>
