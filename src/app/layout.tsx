@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from 'next';
 import { Plus_Jakarta_Sans, IBM_Plex_Mono } from 'next/font/google';
 import Script from 'next/script';
 import '../styles/tailwind.css';
+import ThemeSwitcher from '../components/ThemeSwitcher';
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ['latin'],
@@ -37,6 +38,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en" className={`${plusJakartaSans.variable} ${ibmPlexMono.variable}`}>
       <body className={plusJakartaSans.className}>
         {children}
+
+        <ThemeSwitcher />
 
         <Script
           id="rocket-web"

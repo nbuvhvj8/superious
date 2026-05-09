@@ -23,6 +23,44 @@
   --font-mono: var(--font-ibm-plex-mono), monospace;
 }
 
+/* Theme A — Slate & Indigo (Linear/Vercel-inspired) */
+html.theme-slate-indigo {
+  --background: #ffffff;
+  --foreground: #0f172a;
+  --primary: #4f46e5;
+  --primary-foreground: #ffffff;
+  --secondary: #f1f5f9;
+  --secondary-foreground: #0f172a;
+  --accent: #eef2ff;
+  --accent-foreground: #4338ca;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --border: #e2e8f0;
+  --input: #f8fafc;
+  --ring: #6366f1;
+}
+
+/* Theme B — Warm Paper & Mocha (Anthropic/Stripe-inspired) */
+html.theme-stone-mocha {
+  --background: #fafaf9;
+  --foreground: #1c1917;
+  --primary: #7c2d12;
+  --primary-foreground: #ffffff;
+  --secondary: #f5f5f4;
+  --secondary-foreground: #1c1917;
+  --accent: #fef3c7;
+  --accent-foreground: #92400e;
+  --muted: #f5f5f4;
+  --muted-foreground: #78716c;
+  --card: #ffffff;
+  --card-foreground: #1c1917;
+  --border: #e7e5e4;
+  --input: #fafaf9;
+  --ring: #9a3412;
+}
+
 @layer base {
   * {
     box-sizing: border-box;
