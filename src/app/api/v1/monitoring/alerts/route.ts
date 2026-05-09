@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getBackend } from '@/server/container';
+import { getBackend } from '@/server';
 import { buildRecaptureRun } from '@/server/monitoring/diff-engine';
 
 export async function POST(req: Request) {
@@ -8,7 +8,7 @@ export async function POST(req: Request) {
   const scheduleId = typeof body.scheduleId === 'string' ? body.scheduleId : 'cron-manual';
   if (!jobId) return NextResponse.json({ error: 'jobId is required' }, { status: 400 });
 
-  const backend = getBackend();
+  const backend = await getBackend();
   const currentSources = await backend.repo.listSources(jobId);
   const previousSources = currentSources.slice(0, Math.max(0, currentSources.length - 1));
 

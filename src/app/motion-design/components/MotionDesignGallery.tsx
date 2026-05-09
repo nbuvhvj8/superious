@@ -245,11 +245,9 @@ export default function MotionDesignGallery() {
             <label className="text-xs font-semibold text-foreground block mb-2">
               Speed Multiplier
             </label>
-            <select className="input-field w-full text-sm">
+            <select className="input-field w-full text-sm" defaultValue="1">
               <option value="0.5">Slow (0.5x)</option>
-              <option value="1" selected>
-                Normal (1.0x)
-              </option>
+              <option value="1">Normal (1.0x)</option>
               <option value="1.5">Fast (1.5x)</option>
               <option value="2">Very Fast (2.0x)</option>
             </select>
