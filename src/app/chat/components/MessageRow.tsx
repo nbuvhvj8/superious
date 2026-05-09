@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { Copy, RefreshCw, ThumbsUp, ThumbsDown, Check, Feather, Edit3 } from 'lucide-react';
 import StreamingText from './StreamingText';
+import CommandResponseCard, { type CommandType } from './CommandResponseCard';
 
 export interface Message {
   id: string;
@@ -15,6 +16,8 @@ export interface Message {
    * the user's own bubble, and any UX where instant rendering is desired.
    */
   instant?: boolean;
+  /** When set, renders a CommandResponseCard instead of regular text content. */
+  commandType?: string;
 }
 
 interface MessageRowProps {
@@ -65,11 +68,15 @@ export default function MessageRow({ message, onRegenerate, onEdit }: MessageRow
           `}
           >
             {isAI ? (
-              <StreamingText
-                text={message.content}
-                instant={message.instant ?? !message.streaming}
-                showCaret={message.streaming === true}
-              />
+              message.commandType ? (
+                <CommandResponseCard commandType={message.commandType as CommandType} />
+              ) : (
+                <StreamingText
+                  text={message.content}
+                  instant={message.instant ?? !message.streaming}
+                  showCaret={message.streaming === true}
+                />
+              )
             ) : (
               message.content
             )}

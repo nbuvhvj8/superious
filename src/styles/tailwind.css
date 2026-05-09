@@ -90,6 +90,10 @@
   .animate-pulse-highlight {
     animation: pulseHighlight 1s ease;
   }
+
+  .animate-slide-in-right {
+    animation: slideInRight 0.25s ease forwards;
+  }
 }
 
 @keyframes fadeIn {
@@ -123,6 +127,17 @@
   }
   100% {
     background-color: transparent;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
   }
 }
 
