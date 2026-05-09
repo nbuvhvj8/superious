@@ -342,7 +342,11 @@ export default function ScriptViewer({
   }
 
   function applyHookVariant(variant: HookVariant) {
-    clearReanchor('hook');
+    // The variant is LLM-generated against the same source manifest as the
+    // canonical script, so it ships pre-anchored — re-anchor immediately to
+    // suppress the "Uncited rewrite" warning that would otherwise fire when
+    // the new text differs from the writer-node baseline.
+    reanchor('hook');
     setScriptData((prev) => ({
       ...prev,
       hook: variant.text,

@@ -74,7 +74,7 @@ export async function GET(req: NextRequest, ctx: { params: Promise<{ jobId: stri
   }
 
   const parsed = parseHookArray(raw);
-  if (!parsed) {
+  if (!parsed || parsed.length === 0) {
     return NextResponse.json({
       variants: stubVariants(
         script.hook,
