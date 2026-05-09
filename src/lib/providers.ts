@@ -16,6 +16,7 @@ export interface ProviderDefinition {
   /** Loose regex used purely for client-side prefix validation. */
   keyPattern?: string;
   docsUrl: string;
+  models?: string[];
 }
 
 export const PROVIDERS: ProviderDefinition[] = [
@@ -26,8 +27,9 @@ export const PROVIDERS: ProviderDefinition[] = [
     category: 'llm',
     description: 'GPT-4o, GPT-4.1, o1, o3 and the rest of the OpenAI lineup.',
     keyPlaceholder: 'sk-…',
-    keyPattern: '^sk-',
+    keyPattern: '^sk-(?!ant-|or-)[a-zA-Z0-9-]{20,}$',
     docsUrl: 'https://platform.openai.com/api-keys',
+    models: ['gpt-4o', 'gpt-4o-mini', 'o1', 'o1-mini', 'o3-mini', 'gpt-4-turbo', 'gpt-3.5-turbo'],
   },
   {
     id: 'anthropic',
@@ -37,6 +39,13 @@ export const PROVIDERS: ProviderDefinition[] = [
     keyPlaceholder: 'sk-ant-…',
     keyPattern: '^sk-ant-',
     docsUrl: 'https://console.anthropic.com/settings/keys',
+    models: [
+      'claude-3-5-sonnet-latest',
+      'claude-3-5-haiku-latest',
+      'claude-3-opus-latest',
+      'claude-3-sonnet-20240229',
+      'claude-3-haiku-20240307',
+    ],
   },
   {
     id: 'google',
@@ -44,7 +53,9 @@ export const PROVIDERS: ProviderDefinition[] = [
     category: 'llm',
     description: 'Gemini 1.5/2.0 Pro and Flash via Google AI Studio.',
     keyPlaceholder: 'AIza…',
+    keyPattern: '^AIza[a-zA-Z0-9_-]{35}$',
     docsUrl: 'https://aistudio.google.com/app/apikey',
+    models: ['gemini-1.5-pro', 'gemini-1.5-flash', 'gemini-2.0-flash-exp', 'gemini-1.0-pro'],
   },
   {
     id: 'xai',
@@ -54,6 +65,7 @@ export const PROVIDERS: ProviderDefinition[] = [
     keyPlaceholder: 'xai-…',
     keyPattern: '^xai-',
     docsUrl: 'https://console.x.ai/',
+    models: ['grok-2-latest', 'grok-2-1212', 'grok-beta'],
   },
   {
     id: 'mistral',
@@ -61,7 +73,14 @@ export const PROVIDERS: ProviderDefinition[] = [
     category: 'llm',
     description: 'Mistral Large, Medium and Codestral.',
     keyPlaceholder: 'Your Mistral API key',
+    keyPattern: '^[a-zA-Z0-9]{32}$',
     docsUrl: 'https://console.mistral.ai/api-keys/',
+    models: [
+      'mistral-large-latest',
+      'mistral-medium-latest',
+      'mistral-small-latest',
+      'codestral-latest',
+    ],
   },
   {
     id: 'deepseek',
@@ -69,8 +88,9 @@ export const PROVIDERS: ProviderDefinition[] = [
     category: 'llm',
     description: 'DeepSeek V3 / R1 reasoning models.',
     keyPlaceholder: 'sk-…',
-    keyPattern: '^sk-',
+    keyPattern: '^sk-[a-f0-9]{32}$',
     docsUrl: 'https://platform.deepseek.com/api_keys',
+    models: ['deepseek-chat', 'deepseek-reasoner'],
   },
   {
     id: 'groq',
@@ -80,6 +100,14 @@ export const PROVIDERS: ProviderDefinition[] = [
     keyPlaceholder: 'gsk_…',
     keyPattern: '^gsk_',
     docsUrl: 'https://console.groq.com/keys',
+    models: [
+      'llama-3.3-70b-versatile',
+      'llama-3.1-70b-versatile',
+      'llama3-8b-8192',
+      'llama3-70b-8192',
+      'mixtral-8x7b-32768',
+      'gemma2-9b-it',
+    ],
   },
   {
     id: 'openrouter',
@@ -89,6 +117,12 @@ export const PROVIDERS: ProviderDefinition[] = [
     keyPlaceholder: 'sk-or-…',
     keyPattern: '^sk-or-',
     docsUrl: 'https://openrouter.ai/keys',
+    models: [
+      'openai/gpt-4o',
+      'anthropic/claude-3.5-sonnet',
+      'google/gemini-pro-1.5',
+      'meta-llama/llama-3.1-405b-instruct',
+    ],
   },
   {
     id: 'perplexity',
@@ -98,6 +132,7 @@ export const PROVIDERS: ProviderDefinition[] = [
     keyPlaceholder: 'pplx-…',
     keyPattern: '^pplx-',
     docsUrl: 'https://www.perplexity.ai/settings/api',
+    models: ['sonar', 'sonar-pro', 'sonar-reasoning', 'llama-3.1-70b-instruct'],
   },
   {
     id: 'cohere',
@@ -106,6 +141,7 @@ export const PROVIDERS: ProviderDefinition[] = [
     description: 'Command R+ and embedding models.',
     keyPlaceholder: 'Your Cohere API key',
     docsUrl: 'https://dashboard.cohere.com/api-keys',
+    models: ['command-r-plus', 'command-r', 'command-light', 'command-nightly'],
   },
   {
     id: 'together',
@@ -114,6 +150,11 @@ export const PROVIDERS: ProviderDefinition[] = [
     description: 'Open-weights inference for Llama, Qwen, DeepSeek and more.',
     keyPlaceholder: 'Your Together API key',
     docsUrl: 'https://api.together.xyz/settings/api-keys',
+    models: [
+      'meta-llama/Llama-3.3-70B-Instruct-Turbo',
+      'meta-llama/Meta-Llama-3.1-405B-Instruct-Turbo',
+      'deepseek-ai/deepseek-llm-67b-chat',
+    ],
   },
   {
     id: 'fireworks',
@@ -123,6 +164,10 @@ export const PROVIDERS: ProviderDefinition[] = [
     keyPlaceholder: 'fw_…',
     keyPattern: '^fw_',
     docsUrl: 'https://fireworks.ai/account/api-keys',
+    models: [
+      'accounts/fireworks/models/llama-v3p3-70b-instruct',
+      'accounts/fireworks/models/qwen2p5-72b-instruct',
+    ],
   },
   {
     id: 'cerebras',
@@ -132,6 +177,7 @@ export const PROVIDERS: ProviderDefinition[] = [
     keyPlaceholder: 'csk-…',
     keyPattern: '^csk-',
     docsUrl: 'https://cloud.cerebras.ai',
+    models: ['llama-3.3-70b', 'llama-3.1-8b'],
   },
 
   // ─── Search providers ──────────────────────────────────────────────────

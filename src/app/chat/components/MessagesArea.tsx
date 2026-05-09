@@ -12,7 +12,11 @@ interface MessagesAreaProps {
   isGenerating?: boolean;
 }
 
-export default function MessagesArea({ messages, onSelectSuggestion, isGenerating }: MessagesAreaProps) {
+export default function MessagesArea({
+  messages,
+  onSelectSuggestion,
+  isGenerating,
+}: MessagesAreaProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const isEmpty = messages.length === 0;
 
@@ -23,7 +27,7 @@ export default function MessagesArea({ messages, onSelectSuggestion, isGeneratin
   }, [messages, isGenerating]);
 
   return (
-    <div 
+    <div
       ref={scrollRef}
       className="flex-1 overflow-y-auto scrollbar-thin px-4 py-4"
       role="log"
@@ -40,7 +44,7 @@ export default function MessagesArea({ messages, onSelectSuggestion, isGeneratin
             {messages.map((msg) => (
               <MessageRow key={msg.id} message={msg} />
             ))}
-            
+
             {isGenerating && <ThinkingIndicator />}
           </div>
         )}
