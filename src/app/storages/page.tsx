@@ -8,9 +8,7 @@ import {
   FolderOpen,
   Cloud,
   Network,
-  FileText,
   Image as ImageIcon,
-  FileVideo,
   ExternalLink,
   Plus,
   Search,
@@ -104,6 +102,58 @@ export default function StoragesPage() {
 }
 
 function AssetExplorer() {
+  const [topic, setTopic] = useState('');
+  const [assets, setAssets] = useState<
+    Array<{
+      id: string;
+      title: string;
+      type: string;
+      sourceDomain: string;
+      jobId: string;
+      captureDate: string;
+      confidence: number;
+    }>
+  >([]);
+  const [loading, setLoading] = useState(false);
+
+  async function loadAssets() {
+    setLoading(true);
+    try {
+      const qs = new URLSearchParams();
+      if (topic) qs.set('topic', topic);
+      const res = await fetch(`/api/v1/assets?${qs.toString()}`);
+      const data = (await res.json()) as { assets: typeof assets };
+      setAssets(data.assets ?? []);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function seedAndLoad() {
+    await fetch('/api/v1/assets', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        assets: [
+          {
+            type: 'screenshot',
+            sourceUrl: 'https://www.theverge.com/sample',
+            sourceDomain: 'theverge.com',
+            captureDate: new Date().toISOString(),
+            topicTags: ['streaming'],
+            claimTags: ['ad-tier'],
+            sourceType: 'news',
+            confidence: 0.86,
+            jobId: 'job-1c93be',
+            runId: 'recap-seed',
+            title: 'Ad-tier growth chart',
+          },
+        ],
+      }),
+    });
+    await loadAssets();
+  }
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -115,10 +165,18 @@ function AssetExplorer() {
               className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
             />
             <input
-              placeholder="Search assets..."
+              placeholder="Filter by topic tag (e.g. streaming)"
+              value={topic}
+              onChange={(e) => setTopic(e.target.value)}
               className="pl-9 pr-4 py-1.5 bg-muted/50 border border-border rounded-lg text-sm focus:ring-1 focus:ring-primary outline-none w-64"
             />
           </div>
+          <button className="btn btn-secondary text-xs px-3 py-1.5" onClick={loadAssets}>
+            Search
+          </button>
+          <button className="btn btn-primary text-xs px-3 py-1.5" onClick={seedAndLoad}>
+            Add sample
+          </button>
         </div>
       </div>
       <p className="text-sm text-muted-foreground -mt-4">
@@ -134,34 +192,23 @@ function AssetExplorer() {
           <div className="w-32 text-right">Date Added</div>
         </div>
         <div className="divide-y divide-border">
-          <AssetRow
-            name="Netflix_Competitive_Analysis.pdf"
-            type="PDF Document"
-            jobId="JOB-001"
-            date="2h ago"
-            icon={<FileText size={18} className="text-red-500" />}
-          />
-          <AssetRow
-            name="B-Roll_Scene_1_Prompt.txt"
-            type="Script Version"
-            jobId="JOB-042"
-            date="5h ago"
-            icon={<FileVideo size={18} className="text-blue-500" />}
-          />
-          <AssetRow
-            name="Screenshot_MarketShare_2024.png"
-            type="Screenshot"
-            jobId="JOB-012"
-            date="Yesterday"
-            icon={<ImageIcon size={18} className="text-emerald-500" />}
-          />
-          <AssetRow
-            name="Source_Archive_Snapshot_V2.zip"
-            type="Archive"
-            jobId="JOB-001"
-            date="2 days ago"
-            icon={<FolderOpen size={18} className="text-amber-500" />}
-          />
+          {loading && <div className="px-4 py-3 text-sm text-muted-foreground">Loading…</div>}
+          {!loading && assets.length === 0 && (
+            <div className="px-4 py-3 text-sm text-muted-foreground">
+              No assets yet. Click <strong>Add sample</strong> or ingest via API.
+            </div>
+          )}
+          {assets.map((asset) => (
+            <AssetRow
+              key={asset.id}
+              id={asset.id}
+              name={asset.title}
+              type={asset.type}
+              jobId={asset.jobId}
+              date={new Date(asset.captureDate).toLocaleDateString()}
+              icon={<ImageIcon size={18} className="text-emerald-500" />}
+            />
+          ))}
         </div>
       </div>
     </div>
@@ -169,20 +216,30 @@ function AssetExplorer() {
 }
 
 function AssetRow({
+  id,
   name,
   type,
   jobId,
   date,
   icon,
 }: {
+  id: string;
   name: string;
   type: string;
   jobId: string;
   date: string;
   icon: React.ReactNode;
 }) {
+  const [citation, setCitation] = useState<string | null>(null);
+
+  async function onCite() {
+    const res = await fetch(`/api/v1/assets/${id}/cite`, { method: 'POST' });
+    const data = (await res.json()) as { citation?: string };
+    setCitation(data.citation ?? null);
+  }
+
   return (
-    <div className="flex items-center px-4 py-3 hover:bg-muted/50 transition-colors group cursor-pointer">
+    <div className="flex items-center px-4 py-3 hover:bg-muted/50 transition-colors group">
       <div className="flex-1 flex items-center gap-3">
         {icon}
         <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">
@@ -192,6 +249,12 @@ function AssetRow({
       <div className="w-32 text-sm text-muted-foreground">{type}</div>
       <div className="w-32 text-sm font-mono text-muted-foreground">{jobId}</div>
       <div className="w-32 text-sm text-muted-foreground text-right">{date}</div>
+      <button className="ml-4 text-xs text-primary font-semibold" onClick={onCite}>
+        Cite in script
+      </button>
+      {citation && (
+        <div className="ml-3 text-2xs text-muted-foreground max-w-xs truncate">{citation}</div>
+      )}
     </div>
   );
 }
