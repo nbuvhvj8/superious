@@ -114,9 +114,34 @@ const MOCK_RUNS: RecaptureRun[] = [
 
 interface Props {
   runs?: RecaptureRun[];
+  defaultJobId?: string;
 }
 
-export default function RecaptureDiffTimeline({ runs = MOCK_RUNS }: Props) {
+export default function RecaptureDiffTimeline({
+  runs = MOCK_RUNS,
+  defaultJobId = 'job-1c93be',
+}: Props) {
+  const [items, setItems] = useState<RecaptureRun[]>(runs);
+  const [loading, setLoading] = useState(false);
+
+  async function runNow() {
+    setLoading(true);
+    try {
+      const res = await fetch('/api/v1/monitoring/alerts', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ jobId: defaultJobId, scheduleId: 'cron-1' }),
+      });
+      if (!res.ok) throw new Error('Failed to generate recapture diff');
+      const data = (await res.json()) as { run: RecaptureRun };
+      setItems((prev) => [data.run, ...prev]);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  }
+
   return (
     <section className="space-y-4">
       <div className="flex items-center justify-between flex-wrap gap-2">
@@ -126,13 +151,22 @@ export default function RecaptureDiffTimeline({ runs = MOCK_RUNS }: Props) {
             New
           </span>
         </div>
-        <p className="text-xs text-muted-foreground max-w-md">
-          Per-run diffs showing what new sources, broken links, and contradicted claims surfaced
-          since the previous Recapture.
-        </p>
+        <div className="flex items-center gap-3">
+          <p className="text-xs text-muted-foreground max-w-md">
+            Per-run diffs showing what new sources, broken links, and contradicted claims surfaced
+            since the previous Recapture.
+          </p>
+          <button
+            className="btn btn-primary text-xs px-3 py-1.5"
+            onClick={runNow}
+            disabled={loading}
+          >
+            {loading ? 'Running…' : 'Run recapture now'}
+          </button>
+        </div>
       </div>
 
-      {runs.length === 0 ? (
+      {items.length === 0 ? (
         <div className="card p-10 text-center space-y-1">
           <p className="text-sm font-semibold text-foreground">No Recapture runs yet</p>
           <p className="text-xs text-muted-foreground">
@@ -141,7 +175,7 @@ export default function RecaptureDiffTimeline({ runs = MOCK_RUNS }: Props) {
         </div>
       ) : (
         <ol className="relative border-l border-border ml-3 space-y-4 pl-6">
-          {runs.map((run, idx) => (
+          {items.map((run, idx) => (
             <RunCard key={run.id} run={run} defaultExpanded={idx === 0} />
           ))}
         </ol>
