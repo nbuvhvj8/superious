@@ -9,6 +9,8 @@ interface ChatInputProps {
   onChange: (value: string) => void;
   onSend: () => void;
   isGenerating?: boolean;
+  webSearchEnabled?: boolean;
+  onToggleWebSearch?: () => void;
 }
 
 export interface ChatInputHandle {
@@ -16,7 +18,10 @@ export interface ChatInputHandle {
 }
 
 const ChatInput = forwardRef<ChatInputHandle, ChatInputProps>(
-  ({ value, onChange, onSend, isGenerating = false }, ref) => {
+  (
+    { value, onChange, onSend, isGenerating = false, webSearchEnabled = true, onToggleWebSearch },
+    ref
+  ) => {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const [isFocused, setIsFocused] = useState(false);
 
@@ -51,11 +56,11 @@ const ChatInput = forwardRef<ChatInputHandle, ChatInputProps>(
     };
 
     return (
-      <div className="w-full">
+      <div className="w-full max-w-[720px] mx-auto">
         {/* Input Card */}
         <div
           className={`
-            w-full rounded-[24px] border-[1.5px] transition-all duration-200
+            w-full rounded-[28px] border-[1.5px] transition-all duration-200
             ${getCardStyles()}
           `}
         >
@@ -89,14 +94,28 @@ const ChatInput = forwardRef<ChatInputHandle, ChatInputProps>(
                 <Paperclip size={15} />
                 <span className="text-[12px] font-medium hidden sm:inline">Attach</span>
               </button>
-              
+
               <div className="w-[1px] h-[18px] bg-border mx-1" />
 
-              <button className="tool-btn active flex items-center gap-1.5 px-2.5 h-[30px] rounded-lg bg-[rgba(138,154,107,0.12)] text-[#6B7A52] transition-all">
+              <button
+                type="button"
+                onClick={onToggleWebSearch}
+                aria-pressed={webSearchEnabled}
+                className={`tool-btn flex items-center gap-1.5 px-2.5 h-[30px] rounded-lg transition-all ${
+                  webSearchEnabled
+                    ? 'bg-[rgba(138,154,107,0.12)] text-[#6B7A52]'
+                    : 'text-muted-foreground hover:bg-muted/50 hover:text-foreground'
+                }`}
+                title={
+                  webSearchEnabled
+                    ? 'Web search on — click to disable'
+                    : 'Web search off — click to enable'
+                }
+              >
                 <Globe size={15} />
                 <span className="text-[12px] font-medium hidden sm:inline">Search</span>
               </button>
-              
+
               <button className="tool-btn flex items-center gap-1.5 px-2.5 h-[30px] rounded-lg text-muted-foreground hover:bg-muted/50 hover:text-foreground transition-all">
                 <Camera size={15} />
                 <span className="text-[12px] font-medium hidden sm:inline">Screenshot</span>
@@ -111,7 +130,9 @@ const ChatInput = forwardRef<ChatInputHandle, ChatInputProps>(
             {/* Right Tools & Send */}
             <div className="flex items-center gap-3">
               {value.length > 800 && (
-                <span className={`text-[11px] font-medium tabular-nums ${value.length > 950 ? 'text-amber-600' : 'text-muted-foreground'}`}>
+                <span
+                  className={`text-[11px] font-medium tabular-nums ${value.length > 950 ? 'text-amber-600' : 'text-muted-foreground'}`}
+                >
                   {value.length}/1000
                 </span>
               )}
