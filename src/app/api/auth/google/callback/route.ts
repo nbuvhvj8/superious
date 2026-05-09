@@ -7,11 +7,11 @@ export async function GET(request: NextRequest) {
   const stateParam = searchParams.get('state');
 
   // Derive base URL from the actual incoming request so the same code works
-  // for the web app (NEXT_PUBLIC_SITE_URL) and the desktop sidecar (random
-  // localhost port). Falls back to the build-time env if the origin can't be
-  // computed for some reason.
-  const siteUrl =
-    request.nextUrl.origin || process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+  // for the web app and the desktop sidecar (random localhost port). The
+  // initiating pages (src/app/page.tsx, GoogleDocsIntegrationSection) mirror
+  // this by preferring window.location.origin, which guarantees the
+  // redirect_uri matches on both sides of Google's token exchange.
+  const siteUrl = request.nextUrl.origin;
 
   // Determine where to redirect back to
   let fromPage = 'onboarding';

@@ -54,11 +54,28 @@ async function main() {
   // Boot the server. Next's standalone entry self-listens on PORT.
   require(serverEntry);
 
-  // Give Next a tick to bind, then announce readiness with a deterministic
-  // line Rust can parse.
-  setImmediate(() => {
-    console.log(`READY:http://127.0.0.1:${port}`);
-  });
+  // Poll the port until the server is actually accepting connections, then
+  // announce readiness with a deterministic line Rust can parse. This avoids
+  // a race where Next does async work before .listen() and the webview
+  // navigates to a URL that isn't serving yet.
+  const READY_TIMEOUT_MS = 30_000;
+  const started = Date.now();
+  const waitForServer = () => {
+    if (Date.now() - started > READY_TIMEOUT_MS) {
+      console.error(`[sidecar] gave up waiting for server on :${port}`);
+      process.exit(1);
+    }
+    const sock = net.createConnection({ port, host: '127.0.0.1' });
+    sock.once('connect', () => {
+      sock.destroy();
+      console.log(`READY:http://127.0.0.1:${port}`);
+    });
+    sock.once('error', () => {
+      sock.destroy();
+      setTimeout(waitForServer, 50);
+    });
+  };
+  waitForServer();
 }
 
 main().catch((err) => {

@@ -52,7 +52,14 @@ export default function GoogleDocsIntegrationSection() {
       return;
     }
 
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || window.location?.origin;
+    // Prefer the live origin so dev (localhost:4028) and the desktop sidecar
+    // (localhost:<random>) both work without rebuilding. Mirrors the pattern
+    // used in src/app/page.tsx and the OAuth callback (which derives from
+    // request.nextUrl.origin) so the redirect_uri is identical on both sides
+    // of the token exchange.
+    const siteUrl =
+      (typeof window !== 'undefined' ? window.location.origin : null) ??
+      process.env.NEXT_PUBLIC_SITE_URL;
     const redirectUri = `${siteUrl}/api/auth/google/callback`;
     const scope = encodeURIComponent(
       'https://www.googleapis.com/auth/documents https://www.googleapis.com/auth/drive.file email profile'
