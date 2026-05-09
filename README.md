@@ -107,6 +107,64 @@ outlier/
 
 ---
 
+## 🖥️ Desktop App (Tauri 2.0)
+
+Outlier ships as a desktop application via [Tauri 2.0](https://v2.tauri.app/). The desktop shell wraps the existing Next.js app — frontend, API routes, and the `@/server` orchestrator all run inside a bundled Node.js sidecar at runtime, with Tauri's native webview pointing at it. **No web-side code is duplicated for desktop.**
+
+### Prerequisites
+
+- **Rust toolchain** (>= 1.85): install via [rustup](https://rustup.rs/)
+- **Platform build deps:**
+  - **macOS**: Xcode Command Line Tools (`xcode-select --install`)
+  - **Windows**: [Microsoft Edge WebView2](https://developer.microsoft.com/en-us/microsoft-edge/webview2/) (preinstalled on Win11), MSVC build tools
+  - **Linux** (Ubuntu/Debian):
+    ```bash
+    sudo apt install libwebkit2gtk-4.1-dev libsoup-3.0-dev libjavascriptcoregtk-4.1-dev \
+      build-essential curl wget file libxdo-dev libssl-dev libayatana-appindicator3-dev \
+      librsvg2-dev pkg-config
+    ```
+
+### Run in dev mode
+
+```bash
+npm run tauri:dev
+```
+
+This boots `next dev -p 4028` automatically and points the Tauri webview at `http://localhost:4028`. Hot reload, React DevTools, and all server-side features work exactly as in `npm run dev`.
+
+### Build a production binary
+
+```bash
+npm run tauri:build
+```
+
+Under the hood this:
+
+1. Runs `next build` (produces `.next/standalone`).
+2. Downloads the Node.js binary for your platform into `src-tauri/binaries/outlier-sidecar-<rust-target-triple>` via `scripts/prepare-sidecar.mjs`.
+3. Runs `tauri build`, which bundles the Node sidecar, the standalone Next server, static assets, and the Rust shell into a platform-native installer (`.dmg` / `.msi` + `.exe` / `.deb` + `.AppImage`).
+
+Output lands in `src-tauri/target/release/bundle/`.
+
+### How the sidecar works
+
+- At launch, the Rust shell spawns the bundled Node sidecar with `OUTLIER_NEXT_STANDALONE` pointing at the resolved standalone directory.
+- The sidecar (`src-tauri/sidecar/start-sidecar.js`) picks a free localhost port, boots `server.js`, and prints `READY:http://127.0.0.1:<port>` on stdout.
+- The Rust setup hook listens on stdout, parses the URL, and navigates the main webview (which initially shows `src-tauri/bootstrap/index.html`).
+- On exit Tauri kills the sidecar process to ensure no orphan Node process lingers.
+
+### Cross-platform CI
+
+`.github/workflows/desktop-build.yml` builds the desktop binary on macOS (arm64 + x64), Windows, and Linux for every PR touching desktop-related paths. Builds are unsigned by default; code signing certs (Apple Developer + Windows EV) live in repo secrets and are wired up in a separate workflow once provisioned.
+
+### Known limitations
+
+- **API key vault**: `src/lib/api-keys-store.ts` still uses the existing encrypted-JSON layer. A follow-up will migrate it to the OS keychain via [tauri-plugin-stronghold](https://v2.tauri.app/plugin/stronghold/) for desktop builds.
+- **Auto-update**: not wired up in this initial migration. Plan is to use `tauri-plugin-updater` against a GitHub Releases manifest.
+- **Code signing**: builds are unsigned — first launch on macOS and Windows will surface a Gatekeeper / SmartScreen warning. Signing requires a paid certificate.
+
+---
+
 ## 🗺️ Roadmap
 
 - **Interactive AI Script Refiner**: Dedicated side-panel for iterative script refinement.

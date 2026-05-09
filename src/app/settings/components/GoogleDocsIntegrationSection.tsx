@@ -52,7 +52,13 @@ export default function GoogleDocsIntegrationSection() {
       return;
     }
 
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || window.location?.origin;
+    // Prefer NEXT_PUBLIC_SITE_URL so reverse-proxied web deploys keep a
+    // deterministic redirect_uri (matches the server callback's
+    // `process.env.NEXT_PUBLIC_SITE_URL || request.nextUrl.origin`). The
+    // desktop sidecar build strips this env var so the client falls back
+    // to `window.location.origin`, which matches the random localhost
+    // port the standalone server is listening on.
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || window.location.origin;
     const redirectUri = `${siteUrl}/api/auth/google/callback`;
     const scope = encodeURIComponent(
       'https://www.googleapis.com/auth/documents https://www.googleapis.com/auth/drive.file email profile'

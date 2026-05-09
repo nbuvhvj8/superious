@@ -6,7 +6,16 @@ export async function GET(request: NextRequest) {
   const error = searchParams.get('error');
   const stateParam = searchParams.get('state');
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+  // For the redirect_uri to match on both legs of Google's OAuth flow,
+  // server and client must compute it the same way. The client (page.tsx,
+  // GoogleDocsIntegrationSection) prefers `NEXT_PUBLIC_SITE_URL` so a
+  // reverse-proxied web deploy (where `request.nextUrl.origin` may resolve
+  // to `http://` instead of `https://` without `X-Forwarded-Proto`) still
+  // matches. The desktop sidecar build strips `NEXT_PUBLIC_SITE_URL`
+  // (`scripts/desktop-build-next.mjs` + the launcher's `delete process.env`),
+  // so both sides fall back to the live origin — which is always the
+  // sidecar's random `127.0.0.1:<port>` and therefore matches too.
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || request.nextUrl.origin;
 
   // Determine where to redirect back to
   let fromPage = 'onboarding';

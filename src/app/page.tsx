@@ -73,7 +73,14 @@ export default function OnboardingPage() {
       return;
     }
 
-    const redirectUri = `${process.env.NEXT_PUBLIC_SITE_URL}/api/auth/google/callback`;
+    // Prefer NEXT_PUBLIC_SITE_URL so reverse-proxied web deploys keep a
+    // deterministic redirect_uri (a server-side `request.nextUrl.origin`
+    // can drop `https://` without an `X-Forwarded-Proto` header). The
+    // desktop sidecar build strips this env var so the client falls back
+    // to `window.location.origin`, which matches the random localhost
+    // port the standalone server is listening on.
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || window.location.origin;
+    const redirectUri = `${baseUrl}/api/auth/google/callback`;
     const scope = encodeURIComponent(
       'https://www.googleapis.com/auth/documents https://www.googleapis.com/auth/drive.file email profile'
     );
