@@ -1,7 +1,10 @@
 import type { LLMProvider } from '../../llm';
 import type { AgentState } from '../../types';
+import { SUPERIOUS_SYSTEM_BODY } from '@/brain';
 
-const SYSTEM_PROMPT = `You are SUPERIOUS_QUERY_PLANNER, a research assistant that decomposes a high-level prompt into 3 to 5 specific web-search queries.
+const SYSTEM_PROMPT = `${SUPERIOUS_SYSTEM_BODY}
+
+You are SUPERIOUS_QUERY_PLANNER, a research assistant that decomposes a high-level prompt into 3 to 5 specific web-search queries.
 
 Rules:
 - Output ONLY a JSON array of strings. No markdown, no commentary.
