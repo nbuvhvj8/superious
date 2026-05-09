@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Modal from '@/components/ui/Modal';
 import {
   Upload,
@@ -103,6 +103,27 @@ export default function GoogleDriveBackupModal({ open, onClose }: GoogleDriveBac
   const [targetFolder, setTargetFolder] = useState('/Outlier/Backups/2025');
   const [uploadProgress, setUploadProgress] = useState(0);
   const [error, setError] = useState('');
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    if (open) {
+      setStatus('selecting');
+      setUploadProgress(0);
+      setError('');
+      setItems(MOCK_BACKUP_ITEMS);
+    } else {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+    }
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+    };
+  }, [open]);
 
   const selectedCount = items.filter((i) => i.selected).length;
   const totalSize = items
@@ -134,10 +155,16 @@ export default function GoogleDriveBackupModal({ open, onClose }: GoogleDriveBac
     setStatus('uploading');
     setUploadProgress(0);
 
-    const interval = setInterval(() => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+    intervalRef.current = setInterval(() => {
       setUploadProgress((prev) => {
         if (prev >= 100) {
-          clearInterval(interval);
+          if (intervalRef.current) {
+            clearInterval(intervalRef.current);
+            intervalRef.current = null;
+          }
           setStatus('success');
           return 100;
         }
