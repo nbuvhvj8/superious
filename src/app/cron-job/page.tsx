@@ -9,7 +9,6 @@ import {
   Archive,
   Plus,
   Play,
-  MoreVertical,
   Bell,
   Globe,
   History,
