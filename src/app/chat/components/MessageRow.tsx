@@ -43,13 +43,6 @@ export default function MessageRow({ message, onRegenerate, onEdit }: MessageRow
       <div
         className={`flex items-start gap-3 max-w-[85%] ${isAI ? 'flex-row' : 'flex-row-reverse'}`}
       >
-        {/* Avatar - Only for AI */}
-        {isAI && (
-          <div className="w-[30px] h-[30px] shrink-0 mt-1 flex items-center justify-center text-primary select-none">
-            <Feather size={16} strokeWidth={2.5} />
-          </div>
-        )}
-
         {/* Bubble / Content */}
         <div
           className={`
@@ -63,13 +56,18 @@ export default function MessageRow({ message, onRegenerate, onEdit }: MessageRow
             ${
               isAI
                 ? 'text-foreground pt-1'
-                : 'bg-muted text-foreground px-5 py-2.5 rounded-2xl border border-border'
+                : 'bg-green-600 text-white px-5 py-2.5 rounded-2xl border border-green-600 hover:brightness-105 transition-all'
             }
           `}
           >
             {isAI ? (
               message.commandType ? (
                 <CommandResponseCard commandType={message.commandType as CommandType} />
+              ) : message.streaming && !message.content.trim() ? (
+                <div className="inline-flex items-center gap-2 text-green-700">
+                  <Feather size={15} strokeWidth={2.4} />
+                  <span className="text-[13px] font-medium">Writing response…</span>
+                </div>
               ) : (
                 <StreamingText
                   text={message.content}
@@ -82,13 +80,12 @@ export default function MessageRow({ message, onRegenerate, onEdit }: MessageRow
             )}
           </div>
 
-          {/* Actions - visible on hover */}
-          <div className="flex items-center gap-0.5 mt-1 opacity-0 group-hover/msg:opacity-100 transition-opacity duration-150">
+          <div className="flex items-center gap-0.5 mt-1">
             {isAI ? (
               <>
                 <button
                   onClick={handleCopy}
-                  className="p-1.5 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-all"
+                  className="p-1.5 rounded-md text-muted-foreground"
                   title={copied ? 'Copied!' : 'Copy'}
                 >
                   {copied ? <Check size={14} className="text-primary" /> : <Copy size={14} />}
@@ -96,23 +93,17 @@ export default function MessageRow({ message, onRegenerate, onEdit }: MessageRow
 
                 <button
                   onClick={onRegenerate}
-                  className="p-1.5 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-all"
+                  className="p-1.5 rounded-md text-muted-foreground"
                   title="Regenerate"
                 >
                   <RefreshCw size={14} />
                 </button>
 
-                <button
-                  className="p-1.5 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-all"
-                  title="Thumbs Up"
-                >
+                <button className="p-1.5 rounded-md text-muted-foreground" title="Thumbs Up">
                   <ThumbsUp size={14} />
                 </button>
 
-                <button
-                  className="p-1.5 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-all"
-                  title="Thumbs Down"
-                >
+                <button className="p-1.5 rounded-md text-muted-foreground" title="Thumbs Down">
                   <ThumbsDown size={14} />
                 </button>
               </>

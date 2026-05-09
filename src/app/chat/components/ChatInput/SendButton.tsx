@@ -14,7 +14,7 @@ export default function SendButton({ state, onClick }: SendButtonProps) {
       case 'stop':
         return 'bg-foreground text-background cursor-pointer';
       case 'ready':
-        return 'bg-primary text-primary-foreground cursor-pointer hover:opacity-90 hover:scale-[1.05] active:scale-[0.95]';
+        return 'bg-green-600 text-white cursor-pointer';
       case 'empty':
       default:
         return 'bg-muted text-muted-foreground/60 cursor-default';
@@ -26,8 +26,8 @@ export default function SendButton({ state, onClick }: SendButtonProps) {
       onClick={state !== 'empty' ? onClick : undefined}
       disabled={state === 'empty'}
       className={`
-        w-[34px] h-[34px] rounded-[10px] flex items-center justify-center
-        transition-all duration-150 shrink-0
+        w-[34px] h-[34px] rounded-full flex items-center justify-center
+        transition-none shrink-0
         ${getStyles()}
       `}
       aria-label={state === 'stop' ? 'Stop generation' : 'Send message'}
