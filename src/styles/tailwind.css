@@ -3,24 +3,29 @@
 @tailwind utilities;
 
 :root {
-  --background: #f4f6f9;
-  --foreground: #1a1d23;
-  --primary: #8a9a6b;
+  --background: #ffffff;
+  --foreground: #0a2540;
+  --primary: #14532d;
   --primary-foreground: #ffffff;
-  --secondary: #bfd7e2;
-  --secondary-foreground: #1a1d23;
-  --accent: #8a9a6b;
-  --accent-foreground: #ffffff;
-  --muted: #e8ecf1;
-  --muted-foreground: #5f6775;
+  --secondary: #ffffff;
+  --secondary-foreground: #0a2540;
+  --accent: #dcfce7;
+  --accent-foreground: #14532d;
+  --muted: #f8fafc;
+  --muted-foreground: #475569;
   --card: #ffffff;
-  --card-foreground: #1a1d23;
-  --border: #dce1e8;
-  --input: #eef1f5;
-  --ring: #8a9a6b;
+  --card-foreground: #0a2540;
+  --border: #e5e7eb;
+  --input: #ffffff;
+  --ring: #14532d;
   --radius: 10px;
   --font-sans: var(--font-plus-jakarta-sans), sans-serif;
   --font-mono: var(--font-ibm-plex-mono), monospace;
+  /* Brand gradient stops (forest-green family) */
+  --brand-primary: #14532d;
+  --brand-secondary: #166534;
+  --brand-accent: #16a34a;
+  --brand-success: #22c55e;
 }
 
 @layer base {
@@ -94,6 +99,26 @@
   .animate-slide-in-right {
     animation: slideInRight 0.25s ease forwards;
   }
+
+  /* Brand gradients (forest → mid → emerald) */
+  .bg-gradient-brand {
+    background-image: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-secondary) 100%);
+  }
+
+  .bg-gradient-violet-pink {
+    background-image: linear-gradient(135deg, var(--brand-secondary) 0%, var(--brand-accent) 100%);
+  }
+
+  .bg-gradient-purple-pink {
+    background-image: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-accent) 100%);
+  }
+
+  .text-gradient-brand {
+    background-image: linear-gradient(135deg, var(--brand-primary) 0%, var(--brand-accent) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
 }
 
 @keyframes fadeIn {
@@ -120,10 +145,10 @@
 
 @keyframes pulseHighlight {
   0% {
-    background-color: rgba(138, 154, 107, 0.15);
+    background-color: rgba(20, 83, 45, 0.15);
   }
   50% {
-    background-color: rgba(138, 154, 107, 0.3);
+    background-color: rgba(20, 83, 45, 0.3);
   }
   100% {
     background-color: transparent;

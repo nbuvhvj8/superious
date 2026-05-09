@@ -50,9 +50,9 @@ const ChatInput = forwardRef<ChatInputHandle, ChatInputProps>(
     };
 
     const getCardStyles = () => {
-      if (isGenerating) return 'border-border bg-white opacity-100';
-      if (isFocused) return 'border-[#C5D0A8] shadow-[0_0_0_3px_rgba(138,154,107,0.12)] bg-white';
-      return 'border-border bg-white';
+      if (isGenerating) return 'border-border bg-card opacity-100';
+      if (isFocused) return 'border-primary/40 shadow-[0_0_0_3px_rgba(20,83,45,0.12)] bg-card';
+      return 'border-border bg-card';
     };
 
     return (
@@ -103,7 +103,7 @@ const ChatInput = forwardRef<ChatInputHandle, ChatInputProps>(
                 aria-pressed={webSearchEnabled}
                 className={`tool-btn flex items-center gap-1.5 px-2.5 h-[30px] rounded-lg transition-all ${
                   webSearchEnabled
-                    ? 'bg-[rgba(138,154,107,0.12)] text-[#6B7A52]'
+                    ? 'bg-primary/10 text-primary'
                     : 'text-muted-foreground hover:bg-muted/50 hover:text-foreground'
                 }`}
                 title={

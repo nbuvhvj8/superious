@@ -62,8 +62,8 @@ export default function MessageRow({ message, onRegenerate, onEdit }: MessageRow
             text-[14px] leading-[1.65] 
             ${
               isAI
-                ? 'text-foreground pt-1' // Bubbleless AI response
-                : 'bg-primary text-white px-5 py-2.5 rounded-[24px] shadow-sm' // Pill-like user bubble
+                ? 'text-foreground pt-1'
+                : 'bg-muted text-foreground px-5 py-2.5 rounded-2xl border border-border'
             }
           `}
           >

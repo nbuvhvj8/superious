@@ -24,18 +24,18 @@ export default function ChatTopBar({
   onToggleActivity,
   onOpenBackup,
 }: ChatTopBarProps) {
-  const getModelDotColor = (m: string) => {
+  const getModelDotClass = (m: string) => {
     switch (m) {
       case 'claude-sonnet':
-        return '#8A9A6B';
+        return 'bg-primary';
       case 'claude-haiku':
-        return '#7BAFC7';
+        return 'bg-blue-500';
       case 'gemini-flash':
-        return '#9B8EC4';
+        return 'bg-violet-500';
       case 'gpt-4o':
-        return '#74B07A';
+        return 'bg-emerald-500';
       default:
-        return '#8A9A6B';
+        return 'bg-primary';
     }
   };
 
@@ -55,7 +55,7 @@ export default function ChatTopBar({
   };
 
   return (
-    <header className="h-[56px] flex-shrink-0 flex items-center justify-between px-4 border-b border-border/40 bg-background">
+    <header className="h-[56px] flex-shrink-0 flex items-center justify-between px-4 border-b border-border bg-background">
       {/* Left Group */}
       <div className="flex items-center gap-3">
         <button
@@ -67,10 +67,7 @@ export default function ChatTopBar({
         </button>
 
         <button className="h-[30px] rounded-full border border-border px-2 flex items-center gap-1.5 hover:bg-muted/50 transition-colors">
-          <span
-            className="w-2 h-2 rounded-full"
-            style={{ backgroundColor: getModelDotColor(model) }}
-          />
+          <span className={`w-2 h-2 rounded-full ${getModelDotClass(model)}`} />
           <span className="text-[12.5px] font-medium text-foreground">{getModelLabel(model)}</span>
           <ChevronDown size={14} className="text-muted-foreground" />
         </button>

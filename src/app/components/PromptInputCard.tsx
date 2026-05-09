@@ -152,14 +152,14 @@ export default function PromptInputCard() {
             `}
           >
             <BetweenHorizontalStart size={18} strokeWidth={2.25} />
-            <span className="absolute top-1.5 right-1.5 w-3 h-3 bg-[#22c55e] rounded-full border border-background animate-pulse" />
+            <span className="absolute top-1.5 right-1.5 w-3 h-3 bg-green-500 rounded-full border border-background animate-pulse" />
           </button>
 
           {sidePopOpen && (
             <div className="absolute right-0 top-full mt-2 w-[340px] bg-card border border-border rounded-xl shadow-2xl z-30 overflow-hidden animate-fade-in">
               <div className="bg-primary/5 px-4 py-3 border-b border-border flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 bg-[#22c55e] rounded-full animate-pulse" />
+                  <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
                   <span className="text-[10px] font-bold text-primary uppercase tracking-widest">
                     Optimized Research Draft
                   </span>
