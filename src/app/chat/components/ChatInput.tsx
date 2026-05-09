@@ -50,9 +50,10 @@ const ChatInput = forwardRef<ChatInputHandle, ChatInputProps>(
     };
 
     const getCardStyles = () => {
-      if (isGenerating) return 'border-border bg-card opacity-100';
-      if (isFocused) return 'border-primary/40 shadow-[0_0_0_3px_rgba(20,83,45,0.12)] bg-card';
-      return 'border-border bg-card';
+      if (isGenerating)
+        return 'border-[#d8d8d8] bg-white opacity-100 shadow-[0_1px_2px_rgba(0,0,0,0.05)]';
+      if (isFocused) return 'border-[#d8d8d8] bg-white shadow-[0_1px_2px_rgba(0,0,0,0.05)]';
+      return 'border-[#d8d8d8] bg-white shadow-[0_1px_2px_rgba(0,0,0,0.05)]';
     };
 
     return (
@@ -60,7 +61,7 @@ const ChatInput = forwardRef<ChatInputHandle, ChatInputProps>(
         {/* Input Card */}
         <div
           className={`
-            w-full rounded-[28px] border-[1.5px] transition-all duration-200
+            w-full rounded-[12px] border transition-none
             ${getCardStyles()}
           `}
         >
@@ -76,7 +77,7 @@ const ChatInput = forwardRef<ChatInputHandle, ChatInputProps>(
               onKeyDown={handleKeyDown}
               disabled={isGenerating}
               className={`
-                w-full bg-transparent border-none outline-none resize-none
+                w-full bg-white border-none outline-none resize-none
                 text-[15px] leading-relaxed text-foreground placeholder:text-muted-foreground/60
                 min-h-[44px] max-h-[180px] scrollbar-thin
                 ${isGenerating ? 'opacity-60 pointer-events-none' : ''}

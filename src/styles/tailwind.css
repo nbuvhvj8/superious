@@ -5,26 +5,26 @@
 :root {
   --background: #ffffff;
   --foreground: #0a2540;
-  --primary: #14532d;
+  --primary: #16a34a;
   --primary-foreground: #ffffff;
   --secondary: #ffffff;
   --secondary-foreground: #0a2540;
   --accent: #dcfce7;
-  --accent-foreground: #14532d;
+  --accent-foreground: #166534;
   --muted: #f8fafc;
   --muted-foreground: #475569;
   --card: #ffffff;
   --card-foreground: #0a2540;
   --border: #e5e7eb;
   --input: #ffffff;
-  --ring: #14532d;
+  --ring: #16a34a;
   --radius: 10px;
   --font-sans: var(--font-plus-jakarta-sans), sans-serif;
   --font-mono: var(--font-ibm-plex-mono), monospace;
   /* Brand gradient stops (forest-green family) */
-  --brand-primary: #14532d;
-  --brand-secondary: #166534;
-  --brand-accent: #16a34a;
+  --brand-primary: #16a34a;
+  --brand-secondary: #22c55e;
+  --brand-accent: #4ade80;
   --brand-success: #22c55e;
 }
 
@@ -145,10 +145,10 @@
 
 @keyframes pulseHighlight {
   0% {
-    background-color: rgba(20, 83, 45, 0.15);
+    background-color: rgba(22, 163, 74, 0.15);
   }
   50% {
-    background-color: rgba(20, 83, 45, 0.3);
+    background-color: rgba(22, 163, 74, 0.3);
   }
   100% {
     background-color: transparent;
