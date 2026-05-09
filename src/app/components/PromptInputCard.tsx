@@ -152,7 +152,7 @@ export default function PromptInputCard() {
             `}
           >
             <BetweenHorizontalStart size={18} strokeWidth={2.25} />
-            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[#22c55e] rounded-full border border-background animate-pulse" />
+            <span className="absolute top-1.5 right-1.5 w-3 h-3 bg-[#22c55e] rounded-full border border-background animate-pulse" />
           </button>
 
           {sidePopOpen && (
@@ -176,10 +176,19 @@ export default function PromptInputCard() {
                   <span className="text-[10px] font-bold text-muted-foreground uppercase">
                     Recommended Content
                   </span>
-                  <div className="bg-muted rounded-lg p-3 border border-border">
-                    <p className="text-xs text-foreground/80 leading-relaxed italic">
-                      &quot;{SUGGESTED_DRAFT.text}&quot;
-                    </p>
+                  <div className="relative group/draft">
+                    <textarea
+                      readOnly
+                      value={SUGGESTED_DRAFT.text}
+                      className="w-full bg-input rounded-lg p-3 border border-border text-xs text-foreground/80 leading-relaxed resize-none h-24 focus:outline-none"
+                    />
+                    <button
+                      onClick={handleInsert}
+                      title="Send to prompt"
+                      className="absolute bottom-2 right-2 p-1.5 bg-primary text-primary-foreground rounded-md opacity-0 group-hover/draft:opacity-100 transition-opacity shadow-sm hover:scale-105 active:scale-95"
+                    >
+                      <PlusCircle size={14} strokeWidth={2.5} />
+                    </button>
                   </div>
                 </div>
 

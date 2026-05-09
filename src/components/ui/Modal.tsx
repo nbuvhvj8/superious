@@ -17,7 +17,7 @@ const SIZE_MAP = {
   lg: 'max-w-lg',
   xl: 'max-w-2xl',
   full: 'max-w-5xl',
-  notification: 'max-w-[600px]',
+  notification: 'max-w-[700px]',
 };
 
 export default function Modal({ open, onClose, title, children, size = 'md' }: ModalProps) {
@@ -51,7 +51,7 @@ export default function Modal({ open, onClose, title, children, size = 'md' }: M
     >
       <div
         className={`
-          relative w-full ${SIZE_MAP[size]} bg-card rounded-2xl border border-border
+          relative w-full ${SIZE_MAP[size]} ${size === 'notification' ? 'bg-background' : 'bg-card'} rounded-2xl border border-border
           shadow-2xl animate-slide-up overflow-hidden
         `}
       >
