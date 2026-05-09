@@ -1,8 +1,11 @@
 import type { LLMProvider } from '../../llm';
 import type { JobRepository } from '../../repo';
 import type { AgentState, SearchResult, Source } from '../../types';
+import { SUPERIOUS_SYSTEM_BODY } from '@/brain';
 
-const SYSTEM_PROMPT = `You are SUPERIOUS_SOURCE_RANKER, an expert at curating research sources for video scripts.
+const SYSTEM_PROMPT = `${SUPERIOUS_SYSTEM_BODY}
+
+You are SUPERIOUS_SOURCE_RANKER, an expert at curating research sources for video scripts.
 
 Given a candidate list of sources, return ONLY a JSON array of source ids ordered by usefulness for the user's prompt. Pick at most 8 ids.
 

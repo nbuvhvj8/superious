@@ -1,5 +1,6 @@
 import { NextRequest } from 'next/server';
 import { getDecryptedApiKey } from '@/lib/api-keys-store';
+import { SUPERIOUS_SYSTEM_BODY } from '@/brain';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -88,8 +89,7 @@ async function pickProvider(preferred?: string): Promise<{ provider: string; key
 }
 
 function buildSystemPrompt(searchResults?: ChatRequestBody['searchResults']): string {
-  const base =
-    'You are Superious, a research assistant that produces accurate, well-cited responses. Keep answers focused and concise unless the user asks for depth.';
+  const base = SUPERIOUS_SYSTEM_BODY;
   if (!searchResults || searchResults.length === 0) return base;
   const formatted = searchResults
     .slice(0, 8)

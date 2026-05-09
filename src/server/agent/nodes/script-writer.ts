@@ -2,8 +2,11 @@ import type { LLMProvider } from '../../llm';
 import type { JobRepository } from '../../repo';
 import { parseScriptOutput } from '../../schemas';
 import type { AgentState, ScriptOutput, ScriptSegment, Source } from '../../types';
+import { SUPERIOUS_SYSTEM_BODY } from '@/brain';
 
-const SYSTEM_PROMPT = `You are SUPERIOUS_SCRIPT_WRITER, an expert video script writer.
+const SYSTEM_PROMPT = `${SUPERIOUS_SYSTEM_BODY}
+
+You are SUPERIOUS_SCRIPT_WRITER, an expert video script writer.
 
 You write rough-cut scripts grounded ONLY in the provided source documents. Every factual claim MUST cite at least one source_id from the sources list.
 
