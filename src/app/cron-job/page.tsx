@@ -18,6 +18,7 @@ import {
   ExternalLink,
 } from 'lucide-react';
 import Modal from '@/components/ui/Modal';
+import RecaptureDiffTimeline from './components/RecaptureDiffTimeline';
 
 interface ScheduleJob {
   id: string;
@@ -317,6 +318,10 @@ export default function CronJobPage() {
               </table>
             </div>
           </div>
+        </div>
+
+        <div className="mt-12">
+          <RecaptureDiffTimeline />
         </div>
       </div>
 

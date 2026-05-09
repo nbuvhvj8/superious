@@ -5,9 +5,18 @@ import Link from 'next/link';
 import ScriptViewer, { type BRollExportItem } from './ScriptViewer';
 import SourcePanel from './SourcePanel';
 import BRollPanel from './BRollPanel';
-import { Camera, BookOpen, ExternalLink, Loader2, CheckCircle2, AlertCircle } from 'lucide-react';
+import TitleThumbnailPack from './TitleThumbnailPack';
+import {
+  Camera,
+  BookOpen,
+  ExternalLink,
+  Loader2,
+  CheckCircle2,
+  AlertCircle,
+  Sparkles,
+} from 'lucide-react';
 
-type RightTab = 'sources' | 'broll';
+type RightTab = 'sources' | 'broll' | 'pack';
 
 export default function DualPaneView() {
   const [highlightedSourceId, setHighlightedSourceId] = useState<string | null>(null);
@@ -239,6 +248,21 @@ CRISPR is not a silver bullet — it is a platform. A set of molecular tools tha
                 </span>
               )}
             </button>
+            <button
+              onClick={() => setRightTab('pack')}
+              className={`
+                flex items-center gap-1.5 px-4 py-3 text-xs font-semibold border-b-2 transition-all duration-150
+                ${
+                  rightTab === 'pack'
+                    ? 'border-primary text-primary'
+                    : 'border-transparent text-muted-foreground hover:text-foreground'
+                }
+              `}
+              title="YouTube title + thumbnail concept pack"
+            >
+              <Sparkles size={13} />
+              Pack
+            </button>
           </div>
 
           {/* Tab Content */}
@@ -250,6 +274,7 @@ CRISPR is not a silver bullet — it is a platform. A set of molecular tools tha
               />
             )}
             {rightTab === 'broll' && <BRollPanel items={bRollItems} />}
+            {rightTab === 'pack' && <TitleThumbnailPack />}
           </div>
         </div>
       </div>
