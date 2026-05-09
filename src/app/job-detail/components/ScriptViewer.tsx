@@ -347,18 +347,34 @@ export default function ScriptViewer({
     // suppress the "Uncited rewrite" warning that would otherwise fire when
     // the new text differs from the writer-node baseline.
     reanchor('hook');
-    setScriptData((prev) => ({
-      ...prev,
-      hook: variant.text,
-      hookSourceIds: variant.sourceIds.length > 0 ? variant.sourceIds : prev.hookSourceIds,
-      hookVerification: {
-        status: variant.sourceIds.length >= 2 ? 'supported' : 'single-source',
-        confidence: variant.sourceIds.length >= 2 ? 0.85 : 0.6,
-        supportingSourceIds: variant.sourceIds,
-        contradictingSourceIds: [],
-        notes: `Applied ${variant.angle} hook variant — verify framing matches source intent.`,
-      },
-    }));
+    setScriptData((prev) => {
+      const variantHasSources = variant.sourceIds.length > 0;
+      const status =
+        variant.sourceIds.length >= 2
+          ? 'supported'
+          : variant.sourceIds.length === 1
+            ? 'single-source'
+            : 'unverified';
+      const confidence =
+        variant.sourceIds.length >= 2 ? 0.85 : variant.sourceIds.length === 1 ? 0.6 : 0;
+      return {
+        ...prev,
+        hook: variant.text,
+        hookSourceIds: variantHasSources ? variant.sourceIds : prev.hookSourceIds,
+        hookVerification: {
+          status,
+          confidence,
+          // Keep verification metadata in sync with the displayed citation
+          // badges: when the variant has no sources we fall back to the
+          // previous citations rather than orphaning the badges.
+          supportingSourceIds: variantHasSources
+            ? variant.sourceIds
+            : prev.hookVerification.supportingSourceIds,
+          contradictingSourceIds: [],
+          notes: `Applied ${variant.angle} hook variant — verify framing matches source intent.`,
+        },
+      };
+    });
   }
 
   function handleExport(format: 'txt' | 'md' | 'json') {

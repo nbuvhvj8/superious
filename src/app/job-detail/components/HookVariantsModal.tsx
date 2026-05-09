@@ -97,6 +97,10 @@ export default function HookVariantsModal({ open, jobId, currentHook, onClose, o
   async function fetchVariants(force = false) {
     setLoading(true);
     setError(null);
+    // Clear any prior selection — the new variant set may use a different id
+    // scheme (e.g. fallback ids vs. API-generated ids), and a stale selection
+    // would leave "Use This Hook" enabled but silently no-op on click.
+    setSelectedId(null);
     try {
       const res = await fetch(`/api/v1/scripts/${jobId}/hook-variants${force ? '?force=1' : ''}`);
       if (!res.ok) throw new Error(`Request failed (${res.status})`);
