@@ -19,7 +19,6 @@ on:
       - 'scripts/prepare-sidecar.mjs'
       - 'next.config.mjs'
       - 'package.json'
-      - 'package-lock.json'
       - '.github/workflows/desktop-build.yml'
   workflow_dispatch:
 
@@ -72,10 +71,12 @@ jobs:
             pkg-config
 
       - name: Setup Node.js
+        # The repo intentionally `.gitignore`s package-lock.json, so we can't
+        # use setup-node's npm cache (which requires a lockfile) and the
+        # install step has to be `npm install`, not `npm ci`.
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
 
       - name: Setup Rust toolchain
         uses: dtolnay/rust-toolchain@stable
@@ -94,7 +95,7 @@ jobs:
             ${{ runner.os }}-${{ matrix.target }}-cargo-
 
       - name: Install npm deps
-        run: npm ci
+        run: npm install --no-audit --no-fund
 
       - name: Build the Next.js app + sidecar
         run: npm run desktop:prebuild
