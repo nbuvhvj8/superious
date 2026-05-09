@@ -73,7 +73,13 @@ export default function OnboardingPage() {
       return;
     }
 
-    const redirectUri = `${process.env.NEXT_PUBLIC_SITE_URL}/api/auth/google/callback`;
+    // Prefer the live origin so dev (localhost:4028) and the desktop sidecar
+    // (localhost:<random>) both work without rebuilding. Falls back to
+    // NEXT_PUBLIC_SITE_URL only when window is unavailable (SSR safety).
+    const baseUrl =
+      (typeof window !== 'undefined' ? window.location.origin : null) ??
+      process.env.NEXT_PUBLIC_SITE_URL;
+    const redirectUri = `${baseUrl}/api/auth/google/callback`;
     const scope = encodeURIComponent(
       'https://www.googleapis.com/auth/documents https://www.googleapis.com/auth/drive.file email profile'
     );

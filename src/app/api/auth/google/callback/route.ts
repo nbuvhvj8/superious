@@ -6,7 +6,12 @@ export async function GET(request: NextRequest) {
   const error = searchParams.get('error');
   const stateParam = searchParams.get('state');
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+  // Derive base URL from the actual incoming request so the same code works
+  // for the web app (NEXT_PUBLIC_SITE_URL) and the desktop sidecar (random
+  // localhost port). Falls back to the build-time env if the origin can't be
+  // computed for some reason.
+  const siteUrl =
+    request.nextUrl.origin || process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
 
   // Determine where to redirect back to
   let fromPage = 'onboarding';

@@ -1,0 +1,57 @@
+{
+  "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
+  "productName": "Outlier",
+  "version": "0.1.0",
+  "identifier": "ai.outlier.desktop",
+  "build": {
+    "frontendDist": "../src-tauri/bootstrap",
+    "devUrl": "http://localhost:4028",
+    "beforeDevCommand": "npm run dev",
+    "beforeBuildCommand": "npm run desktop:prebuild"
+  },
+  "app": {
+    "windows": [
+      {
+        "label": "main",
+        "title": "Outlier",
+        "width": 1280,
+        "height": 820,
+        "minWidth": 960,
+        "minHeight": 600,
+        "resizable": true,
+        "fullscreen": false,
+        "decorations": true,
+        "transparent": false,
+        "url": "index.html"
+      }
+    ],
+    "security": {
+      "csp": null,
+      "dangerousDisableAssetCspModification": true
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["app", "dmg", "deb", "appimage", "rpm", "msi", "nsis"],
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.ico"
+    ],
+    "externalBin": ["binaries/outlier-sidecar"],
+    "resources": {
+      "../.next/standalone": "next-standalone",
+      "../.next/static": "next-standalone/.next/static",
+      "../public": "next-standalone/public",
+      "sidecar/start-sidecar.js": "sidecar/start-sidecar.js"
+    },
+    "category": "Productivity",
+    "shortDescription": "Autonomous research workstation for video script production",
+    "longDescription": "Outlier is an autonomous research and content generation desktop application that captures verified web sources, generates structured video scripts, and manages recurring research jobs.",
+    "android": {
+      "debugApplicationIdSuffix": ".debug"
+    }
+  }
+}

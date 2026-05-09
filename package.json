@@ -48,13 +48,19 @@
     "serve": "next start",
     "type-check": "tsc --noEmit",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "tauri": "tauri",
+    "tauri:dev": "tauri dev",
+    "tauri:build": "tauri build",
+    "desktop:prepare-sidecar": "node scripts/prepare-sidecar.mjs",
+    "desktop:prebuild": "next build && node scripts/prepare-sidecar.mjs"
   },
   "dependencies": {
     "@dhiwise/component-tagger": "^1.0.15",
     "@heroicons/react": "^2.2.0",
     "@tailwindcss/forms": "^0.5.10",
     "@tailwindcss/typography": "^0.5.16",
+    "@tauri-apps/api": "^2.11.0",
     "lucide-react": "^1.7.0",
     "next": "15.1.11",
     "react": "19.0.3",
@@ -66,6 +72,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@netlify/plugin-nextjs": "^5.11.1",
+    "@tauri-apps/cli": "^2.11.1",
     "@types/node": "^20",
     "@types/react": "19.0.3",
     "@types/react-dom": "19.0.3",
