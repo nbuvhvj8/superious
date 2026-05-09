@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import ScriptViewer, { type BRollExportItem } from './ScriptViewer';
 import SourcePanel from './SourcePanel';
 import BRollPanel from './BRollPanel';
@@ -132,13 +133,13 @@ CRISPR is not a silver bullet — it is a platform. A set of molecular tools tha
           <AlertCircle size={14} strokeWidth={2.25} className="text-amber-600 shrink-0" />
           <p className="text-xs text-amber-700 font-medium flex-1">
             Google Docs is not connected. Connect your account in{' '}
-            <a href="/settings" className="underline font-bold">
+            <Link href="/settings" className="underline font-bold">
               Settings → Integrations
-            </a>{' '}
+            </Link>{' '}
             or during{' '}
-            <a href="/" className="underline font-bold">
+            <Link href="/" className="underline font-bold">
               onboarding
-            </a>
+            </Link>
             .
           </p>
           <button
