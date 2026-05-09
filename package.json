@@ -53,7 +53,8 @@
     "tauri:dev": "tauri dev",
     "tauri:build": "tauri build",
     "desktop:prepare-sidecar": "node scripts/prepare-sidecar.mjs",
-    "desktop:prebuild": "next build && node scripts/prepare-sidecar.mjs"
+    "desktop:build-next": "node scripts/desktop-build-next.mjs",
+    "desktop:prebuild": "npm run desktop:build-next && node scripts/prepare-sidecar.mjs"
   },
   "dependencies": {
     "@dhiwise/component-tagger": "^1.0.15",

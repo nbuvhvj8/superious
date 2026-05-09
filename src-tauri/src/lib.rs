@@ -42,7 +42,11 @@ pub fn run() {
         .build(tauri::generate_context!())
         .expect("error while building tauri application")
         .run(|_handle, event| {
-            if let RunEvent::ExitRequested { .. } = event {
+            // Use Exit (fires unconditionally just before process termination)
+            // rather than ExitRequested (cancellable, may not fire on
+            // programmatic app.exit() or signal paths) so the Node sidecar
+            // is always reaped and never leaked as an orphan.
+            if let RunEvent::Exit = event {
                 shutdown_sidecar();
             }
         });

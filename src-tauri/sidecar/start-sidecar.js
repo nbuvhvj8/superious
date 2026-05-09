@@ -40,6 +40,12 @@ async function main() {
   process.env.PORT = String(port);
   process.env.HOSTNAME = '127.0.0.1';
   process.env.OUTLIER_DESKTOP = '1';
+  // Strip any inherited NEXT_PUBLIC_SITE_URL — for desktop the redirect_uri
+  // must derive from the random localhost origin, not whatever URL the
+  // host machine happens to have set in its global env. The build-time
+  // wrapper (scripts/desktop-build-next.mjs) does the same for the client
+  // bundle.
+  delete process.env.NEXT_PUBLIC_SITE_URL;
 
   // The standalone server resolves modules relative to its own directory.
   process.chdir(standaloneDir);
