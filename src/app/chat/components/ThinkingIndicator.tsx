@@ -17,7 +17,7 @@ export default function ThinkingIndicator() {
         <div className="absolute inset-0 z-0">
           <div className="h-full w-full bg-gradient-to-r from-transparent via-primary/5 to-transparent -translate-x-full animate-[shimmer_2s_infinite]" />
         </div>
-        
+
         <div className="relative z-10 flex items-center gap-2.5">
           {/* Pulsing Dots */}
           <div className="flex gap-1">
@@ -25,7 +25,7 @@ export default function ThinkingIndicator() {
             <div className="w-1.5 h-1.5 rounded-full bg-primary/40 animate-pulse [animation-delay:-0.15s]" />
             <div className="w-1.5 h-1.5 rounded-full bg-primary/40 animate-pulse" />
           </div>
-          
+
           <span className="text-[13px] font-medium text-muted-foreground/80 italic">
             Superious is thinking...
           </span>

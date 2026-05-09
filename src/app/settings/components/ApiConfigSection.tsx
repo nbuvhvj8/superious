@@ -13,6 +13,7 @@ import {
   ShieldCheck,
   Trash2,
 } from 'lucide-react';
+import SmartKeyInput from './SmartKeyInput';
 
 interface ProviderInfo {
   id: string;
@@ -295,7 +296,7 @@ export default function ApiConfigSection() {
   const totalConfigured = providers?.filter((p) => p.configured).length ?? 0;
 
   return (
-    <section id="api-config" className="card p-6 space-y-5">
+    <section id="api-config" className="card p-6 space-y-8">
       <div className="flex items-center gap-2.5 pb-1 border-b border-border">
         <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
           <Key size={15} className="text-primary" />
@@ -314,56 +315,75 @@ export default function ApiConfigSection() {
         )}
       </div>
 
-      {loadError && (
-        <div className="rounded-lg bg-red-50 border border-red-200 p-3 text-xs text-red-600">
-          {loadError}
+      <div className="space-y-4">
+        <div className="space-y-1">
+          <h3 className="text-sm font-bold text-foreground">Smart Key Input</h3>
+          <p className="text-[11px] text-muted-foreground">
+            Paste your API key here, and we&apos;ll automatically detect the provider.
+          </p>
         </div>
-      )}
+        <SmartKeyInput onSave={handleSave} />
+      </div>
 
-      {!providers ? (
-        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-          <Loader2 size={14} className="animate-spin" /> Loading providers…
+      <div className="border-t border-border pt-6">
+        <div className="space-y-1 mb-4">
+          <h3 className="text-sm font-bold text-foreground">Manage Providers</h3>
+          <p className="text-[11px] text-muted-foreground">
+            View and manage your connected AI and search services.
+          </p>
         </div>
-      ) : (
-        <div className="space-y-5">
-          {CATEGORY_ORDER.map((category) => {
-            const list = grouped[category];
-            if (list.length === 0) return null;
-            return (
-              <div key={category} className="space-y-2.5">
-                <button
-                  type="button"
-                  onClick={() => setExpanded((e) => ({ ...e, [category]: !e[category] }))}
-                  className="flex items-center gap-1.5 w-full text-left"
-                >
-                  <ChevronDown
-                    size={14}
-                    className={`text-muted-foreground transition-transform ${
-                      expanded[category] ? '' : '-rotate-90'
-                    }`}
-                  />
-                  <span className="section-label">{CATEGORY_LABEL[category]}</span>
-                  <span className="text-[11px] text-muted-foreground font-medium">
-                    ({list.filter((p) => p.configured).length}/{list.length})
-                  </span>
-                </button>
-                {expanded[category] && (
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-                    {list.map((p) => (
-                      <ProviderCard
-                        key={p.id}
-                        provider={p}
-                        onSave={handleSave}
-                        onDelete={handleDelete}
-                      />
-                    ))}
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
-      )}
+
+        {loadError && (
+          <div className="rounded-lg bg-red-50 border border-red-200 p-3 text-xs text-red-600">
+            {loadError}
+          </div>
+        )}
+
+        {!providers ? (
+          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+            <Loader2 size={14} className="animate-spin" /> Loading providers…
+          </div>
+        ) : (
+          <div className="space-y-5">
+            {CATEGORY_ORDER.map((category) => {
+              const list = grouped[category];
+              if (list.length === 0) return null;
+              return (
+                <div key={category} className="space-y-2.5">
+                  <button
+                    type="button"
+                    onClick={() => setExpanded((e) => ({ ...e, [category]: !e[category] }))}
+                    className="flex items-center gap-1.5 w-full text-left"
+                  >
+                    <ChevronDown
+                      size={14}
+                      className={`text-muted-foreground transition-transform ${
+                        expanded[category] ? '' : '-rotate-90'
+                      }`}
+                    />
+                    <span className="section-label">{CATEGORY_LABEL[category]}</span>
+                    <span className="text-[11px] text-muted-foreground font-medium">
+                      ({list.filter((p) => p.configured).length}/{list.length})
+                    </span>
+                  </button>
+                  {expanded[category] && (
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+                      {list.map((p) => (
+                        <ProviderCard
+                          key={p.id}
+                          provider={p}
+                          onSave={handleSave}
+                          onDelete={handleDelete}
+                        />
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
     </section>
   );
 }

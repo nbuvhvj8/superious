@@ -139,7 +139,6 @@ CRISPR is not a silver bullet — it is a platform. A set of molecular tools tha
             <a href="/" className="underline font-bold">
               onboarding
             </a>
-
             .
           </p>
           <button
