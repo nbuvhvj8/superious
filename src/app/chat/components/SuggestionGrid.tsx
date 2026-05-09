@@ -43,14 +43,14 @@ export default function SuggestionGrid({ onSelect }: SuggestionGridProps) {
           onClick={() => onSelect(s.topic)}
           className="
             flex flex-col items-start text-left p-[12px] px-[14px] rounded-[10px]
-            bg-white border border-border shadow-sm
-            hover:border-[#C5D0A8] hover:bg-[#FDFCF8]
+            bg-card border border-border shadow-sm
+            hover:border-primary/40 hover:bg-muted/40
             transition-all duration-150 group
           "
         >
           <span className="flex items-center gap-1.5 mb-0.5">
-            <span className="text-[#6B7A52]">{s.icon}</span>
-            <span className="text-[12px] font-semibold text-[#6B7A52]">{s.label}</span>
+            <span className="text-primary">{s.icon}</span>
+            <span className="text-[12px] font-semibold text-primary">{s.label}</span>
           </span>
           <span className="text-[12.5px] text-muted-foreground leading-[1.5] group-hover:text-foreground/80 transition-colors block">
             {s.topic}

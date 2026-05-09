@@ -50,17 +50,17 @@ const STEP_ICONS: Record<ActivityStepType, React.ReactNode> = {
   complete: <CheckCircle2 size={14} />,
 };
 
-const STEP_COLORS: Record<ActivityStepType, string> = {
-  thinking: 'text-violet-500 bg-violet-50 border-violet-200',
-  tool_call: 'text-orange-500 bg-orange-50 border-orange-200',
-  research: 'text-blue-500 bg-blue-50 border-blue-200',
-  web_search: 'text-cyan-500 bg-cyan-50 border-cyan-200',
-  data_gathering: 'text-teal-500 bg-teal-50 border-teal-200',
-  screenshot: 'text-pink-500 bg-pink-50 border-pink-200',
-  writing: 'text-emerald-500 bg-emerald-50 border-emerald-200',
-  source_ranking: 'text-amber-500 bg-amber-50 border-amber-200',
-  complete: 'text-green-500 bg-green-50 border-green-200',
-};
+const NEUTRAL_STEP_CLASSES = 'text-muted-foreground bg-muted border-border';
+const ACTIVE_STEP_CLASSES = 'text-primary bg-accent border-primary/30';
+const DONE_STEP_CLASSES = 'text-green-600 bg-green-50 border-green-200';
+
+function getStepClasses(type: ActivityStepType, status: ActivityStep['status']) {
+  if (status === 'running') return ACTIVE_STEP_CLASSES;
+  if (type === 'complete' || status === 'done') {
+    return type === 'complete' ? DONE_STEP_CLASSES : NEUTRAL_STEP_CLASSES;
+  }
+  return NEUTRAL_STEP_CLASSES;
+}
 
 const DEMO_STEPS: ActivityStep[] = [
   {
@@ -286,7 +286,7 @@ export default function AgentActivityPanel({
               <div className="space-y-1">
                 {steps.map((step, i) => {
                   const isExpanded = expandedSteps.has(step.id);
-                  const colorClasses = STEP_COLORS[step.type];
+                  const colorClasses = getStepClasses(step.type, step.status);
                   const isLast = i === steps.length - 1;
                   const isRunning = step.status === 'running';
 
@@ -309,8 +309,8 @@ export default function AgentActivityPanel({
                           onClick={() => step.substeps && toggleExpand(step.id)}
                           className={`w-full text-left p-3 rounded-xl border transition-all duration-150 ${
                             isRunning
-                              ? 'border-primary/30 bg-primary/5 shadow-sm'
-                              : 'border-border bg-white hover:border-primary/20'
+                              ? 'border-primary/30 bg-accent shadow-sm'
+                              : 'border-border bg-card hover:border-primary/30'
                           } ${step.substeps ? 'cursor-pointer' : 'cursor-default'}`}
                         >
                           <div className="flex items-start justify-between gap-2">

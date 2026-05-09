@@ -12,12 +12,12 @@ export default function SendButton({ state, onClick }: SendButtonProps) {
   const getStyles = () => {
     switch (state) {
       case 'stop':
-        return 'bg-[#1A1A1A] text-white cursor-pointer';
+        return 'bg-foreground text-background cursor-pointer';
       case 'ready':
-        return 'bg-[#8A9A6B] text-white cursor-pointer hover:opacity-90 hover:scale-[1.05] active:scale-[0.95]';
+        return 'bg-primary text-primary-foreground cursor-pointer hover:opacity-90 hover:scale-[1.05] active:scale-[0.95]';
       case 'empty':
       default:
-        return 'bg-[#E0E0E0] text-[#94a3b8] cursor-default';
+        return 'bg-muted text-muted-foreground/60 cursor-default';
     }
   };
 

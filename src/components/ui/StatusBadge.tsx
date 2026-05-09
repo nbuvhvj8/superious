@@ -11,47 +11,47 @@ const JOB_STATUS_CONFIG: Record<
   queued: {
     label: 'Queued',
     icon: <Clock size={11} strokeWidth={2.25} />,
-    className: 'bg-amber-500/10 text-[#f59e0b] border border-[#f59e0b]/20',
+    className: 'bg-amber-500/10 text-amber-600 border border-amber-500/20',
   },
   researching: {
     label: 'Researching',
     icon: <Search size={11} strokeWidth={2.25} className="status-pulse" />,
-    className: 'bg-blue-500/10 text-blue-500 border border-blue-500/20',
+    className: 'bg-primary/10 text-primary border border-primary/20',
   },
   screenshotting: {
     label: 'Capturing',
     icon: <Camera size={11} strokeWidth={2.25} className="status-pulse" />,
-    className: 'bg-purple-500/10 text-purple-500 border border-purple-500/20',
+    className: 'bg-violet-500/10 text-violet-600 border border-violet-500/20',
   },
   writing: {
     label: 'Writing',
     icon: <PenLine size={11} strokeWidth={2.25} className="status-pulse" />,
-    className: 'bg-indigo-500/10 text-indigo-500 border border-indigo-500/20',
+    className: 'bg-blue-500/10 text-blue-600 border border-blue-500/20',
   },
   done: {
     label: 'Done',
     icon: <CheckCircle2 size={11} strokeWidth={2.25} />,
-    className: 'bg-[#22c55e]/10 text-[#22c55e] border border-[#22c55e]/20',
+    className: 'bg-green-500/10 text-green-700 border border-green-500/20',
   },
   failed: {
     label: 'Failed',
     icon: <XCircle size={11} strokeWidth={2.25} />,
-    className: 'bg-[#ef4444]/10 text-[#ef4444] border border-[#ef4444]/20',
+    className: 'bg-red-500/10 text-red-600 border border-red-500/20',
   },
 };
 
 const SOURCE_STATUS_CONFIG: Record<SourceStatus, { label: string; className: string }> = {
   pending: {
     label: 'Pending',
-    className: 'bg-[#f59e0b]/10 text-[#f59e0b] border border-[#f59e0b]/20',
+    className: 'bg-amber-500/10 text-amber-600 border border-amber-500/20',
   },
   done: {
     label: 'Captured',
-    className: 'bg-[#22c55e]/10 text-[#22c55e] border border-[#22c55e]/20',
+    className: 'bg-green-500/10 text-green-700 border border-green-500/20',
   },
   failed: {
     label: 'Failed',
-    className: 'bg-[#ef4444]/10 text-[#ef4444] border border-[#ef4444]/20',
+    className: 'bg-red-500/10 text-red-600 border border-red-500/20',
   },
 };
 

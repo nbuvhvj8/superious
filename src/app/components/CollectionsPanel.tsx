@@ -20,24 +20,24 @@ interface Collection {
 }
 
 const COLLECTION_COLORS = [
-  '#8A9A6B',
-  '#BFD7E2',
-  '#E8A87C',
-  '#9B8EC4',
-  '#E87C8A',
-  '#7CB8E8',
-  '#8AE8B8',
+  '#635BFF',
+  '#8B5CF6',
+  '#FF5996',
+  '#0EA5E9',
+  '#F59E0B',
+  '#10B981',
+  '#EF4444',
 ];
 
 const DEFAULT_COLLECTIONS: Collection[] = [
-  { id: 'col-1', name: 'Finance Series', color: '#8A9A6B', jobIds: ['job-5e41df', 'job-2d87bc'] },
+  { id: 'col-1', name: 'Finance Series', color: '#635BFF', jobIds: ['job-5e41df', 'job-2d87bc'] },
   {
     id: 'col-2',
     name: 'Science & Tech',
-    color: '#BFD7E2',
+    color: '#0EA5E9',
     jobIds: ['job-1c93be', 'job-8d72ac', 'job-6e13fa'],
   },
-  { id: 'col-3', name: 'Client Work', color: '#E8A87C', jobIds: ['job-7f64aa'] },
+  { id: 'col-3', name: 'Client Work', color: '#F59E0B', jobIds: ['job-7f64aa'] },
 ];
 
 interface Props {

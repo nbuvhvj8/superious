@@ -5,9 +5,9 @@ import React from 'react';
 export default function GreetingMessage() {
   return (
     <div className="flex flex-col items-center justify-center pt-8 pb-6">
-      {/* Logo box: 52x52, r14, primary bg, italic "o" */}
-      <div className="w-[52px] h-[52px] rounded-[14px] bg-primary flex items-center justify-center mb-6 shadow-sm">
-        <span className="text-white text-[22px] font-bold italic select-none">o</span>
+      {/* Brand mark */}
+      <div className="w-[52px] h-[52px] rounded-[14px] bg-gradient-brand flex items-center justify-center mb-6 shadow-sm">
+        <span className="text-white text-[22px] font-bold select-none">o</span>
       </div>
 
       {/* Title */}

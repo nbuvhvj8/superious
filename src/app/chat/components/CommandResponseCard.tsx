@@ -105,8 +105,8 @@ function CronListCard() {
   return (
     <div className="space-y-2">
       <div className="flex items-center gap-2 mb-3">
-        <Clock size={14} className="text-blue-500" />
-        <span className="text-xs font-bold text-blue-600 uppercase tracking-widest">
+        <Clock size={14} className="text-primary" />
+        <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest">
           Active Schedules
         </span>
         <span className="ml-auto text-[10px] font-bold text-muted-foreground bg-muted px-2 py-0.5 rounded-full">
@@ -116,7 +116,7 @@ function CronListCard() {
       {MOCK_CRON_JOBS.map((job) => (
         <div
           key={job.id}
-          className="flex items-center gap-3 p-2.5 rounded-lg border border-border bg-white hover:border-blue-200 transition-colors group"
+          className="flex items-center gap-3 p-2.5 rounded-lg border border-border bg-card hover:border-primary/30 transition-colors group"
         >
           <div
             className={`w-2 h-2 rounded-full shrink-0 ${job.status === 'active' ? 'bg-green-500 animate-pulse' : 'bg-amber-500'}`}
@@ -125,15 +125,7 @@ function CronListCard() {
             <p className="text-[12px] font-bold text-foreground truncate">{job.title}</p>
             <p className="text-[10px] text-muted-foreground">{job.schedule}</p>
           </div>
-          <span
-            className={`text-[9px] px-1.5 py-0.5 rounded-full font-extrabold uppercase tracking-wider ${
-              job.type === 'Recapture'
-                ? 'bg-blue-100 text-blue-600'
-                : job.type === 'Automated Research'
-                  ? 'bg-purple-100 text-purple-600'
-                  : 'bg-emerald-100 text-emerald-600'
-            }`}
-          >
+          <span className="text-[9px] px-1.5 py-0.5 rounded-full font-extrabold uppercase tracking-wider bg-muted text-muted-foreground">
             {job.type}
           </span>
         </div>
@@ -153,9 +145,11 @@ function CronRunCard() {
     <div className="space-y-2">
       <div className="flex items-center gap-2 mb-1">
         <Play size={14} className="text-green-500" fill="currentColor" />
-        <span className="text-xs font-bold text-green-600">Job Triggered</span>
+        <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest">
+          Job Triggered
+        </span>
       </div>
-      <div className="p-2.5 rounded-lg border border-green-200 bg-green-50">
+      <div className="p-2.5 rounded-lg border border-border bg-card">
         <p className="text-[12px] font-bold text-foreground">Netflix Streaming Trends</p>
         <p className="text-[10px] text-muted-foreground mt-0.5">
           Recapture job triggered successfully. You will be notified when results are ready.
@@ -170,9 +164,11 @@ function CronPauseCard() {
     <div className="space-y-2">
       <div className="flex items-center gap-2 mb-1">
         <Pause size={14} className="text-amber-500" />
-        <span className="text-xs font-bold text-amber-600">Schedule Paused</span>
+        <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest">
+          Schedule Paused
+        </span>
       </div>
-      <div className="p-2.5 rounded-lg border border-amber-200 bg-amber-50">
+      <div className="p-2.5 rounded-lg border border-border bg-card">
         <p className="text-[12px] font-bold text-foreground">Weekly Tech News Roundup</p>
         <p className="text-[10px] text-muted-foreground mt-0.5">
           This schedule has been paused. No further runs will execute until resumed.
@@ -187,9 +183,11 @@ function CronDeleteCard() {
     <div className="space-y-2">
       <div className="flex items-center gap-2 mb-1">
         <AlertCircle size={14} className="text-red-500" />
-        <span className="text-xs font-bold text-red-600">Schedule Deleted</span>
+        <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest">
+          Schedule Deleted
+        </span>
       </div>
-      <div className="p-2.5 rounded-lg border border-red-200 bg-red-50">
+      <div className="p-2.5 rounded-lg border border-border bg-card">
         <p className="text-[12px] font-bold text-foreground">Source Archive: AI Ethics</p>
         <p className="text-[10px] text-muted-foreground mt-0.5">
           Schedule permanently removed. Historical run data has been retained.
@@ -203,15 +201,15 @@ function WorkspaceSearchCard() {
   return (
     <div className="space-y-2">
       <div className="flex items-center gap-2 mb-3">
-        <Search size={14} className="text-purple-500" />
-        <span className="text-xs font-bold text-purple-600 uppercase tracking-widest">
+        <Search size={14} className="text-primary" />
+        <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest">
           Search Results
         </span>
       </div>
       {MOCK_RECENT_JOBS.map((job) => (
         <div
           key={job.id}
-          className="flex items-center gap-3 p-2.5 rounded-lg border border-border bg-white"
+          className="flex items-center gap-3 p-2.5 rounded-lg border border-border bg-card"
         >
           <div className="flex-1 min-w-0">
             <p className="text-[12px] font-bold text-foreground truncate">{job.title}</p>
@@ -234,15 +232,15 @@ function WorkspaceRecentCard() {
   return (
     <div className="space-y-2">
       <div className="flex items-center gap-2 mb-3">
-        <Microscope size={14} className="text-purple-500" />
-        <span className="text-xs font-bold text-purple-600 uppercase tracking-widest">
+        <Microscope size={14} className="text-primary" />
+        <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest">
           Recent Research
         </span>
       </div>
       {MOCK_RECENT_JOBS.map((job) => (
         <div
           key={job.id}
-          className="flex items-center gap-3 p-2.5 rounded-lg border border-border bg-white hover:border-purple-200 transition-colors"
+          className="flex items-center gap-3 p-2.5 rounded-lg border border-border bg-card hover:border-primary/30 transition-colors"
         >
           <CheckCircle2 size={14} className="text-green-500 shrink-0" />
           <div className="flex-1 min-w-0">
@@ -269,40 +267,40 @@ function WorkspaceStatsCard() {
   return (
     <div className="space-y-3">
       <div className="flex items-center gap-2 mb-1">
-        <BarChart3 size={14} className="text-purple-500" />
-        <span className="text-xs font-bold text-purple-600 uppercase tracking-widest">
+        <BarChart3 size={14} className="text-primary" />
+        <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest">
           Workspace Stats
         </span>
       </div>
       <div className="grid grid-cols-3 gap-2">
-        <div className="p-3 rounded-lg border border-border bg-white text-center">
+        <div className="p-3 rounded-lg border border-border bg-card text-center">
           <p className="text-lg font-extrabold text-foreground">42</p>
           <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
             Total Jobs
           </p>
         </div>
-        <div className="p-3 rounded-lg border border-border bg-white text-center">
+        <div className="p-3 rounded-lg border border-border bg-card text-center">
           <p className="text-lg font-extrabold text-primary">284</p>
           <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
             Sources
           </p>
         </div>
-        <div className="p-3 rounded-lg border border-border bg-white text-center">
-          <p className="text-lg font-extrabold text-emerald-600">38</p>
+        <div className="p-3 rounded-lg border border-border bg-card text-center">
+          <p className="text-lg font-extrabold text-foreground">38</p>
           <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
             Scripts
           </p>
         </div>
       </div>
       <div className="grid grid-cols-2 gap-2">
-        <div className="p-3 rounded-lg border border-border bg-white text-center">
+        <div className="p-3 rounded-lg border border-border bg-card text-center">
           <p className="text-lg font-extrabold text-foreground">5</p>
           <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
             Collections
           </p>
         </div>
-        <div className="p-3 rounded-lg border border-border bg-white text-center">
-          <p className="text-lg font-extrabold text-amber-600">3</p>
+        <div className="p-3 rounded-lg border border-border bg-card text-center">
+          <p className="text-lg font-extrabold text-foreground">3</p>
           <p className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
             Active Crons
           </p>
@@ -316,17 +314,17 @@ function JobStatusCard() {
   return (
     <div className="space-y-2">
       <div className="flex items-center gap-2 mb-1">
-        <BookOpenText size={14} className="text-emerald-500" />
-        <span className="text-xs font-bold text-emerald-600 uppercase tracking-widest">
+        <BookOpenText size={14} className="text-primary" />
+        <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest">
           Job Status
         </span>
       </div>
-      <div className="p-3 rounded-lg border border-border bg-white space-y-2">
+      <div className="p-3 rounded-lg border border-border bg-card space-y-2">
         <div className="flex items-center justify-between">
           <span className="text-[12px] font-bold text-foreground">
             CRISPR Gene Editing Revolution
           </span>
-          <span className="text-[9px] px-2 py-0.5 rounded-full font-extrabold uppercase bg-green-100 text-green-600">
+          <span className="text-[9px] px-2 py-0.5 rounded-full font-extrabold uppercase bg-green-100 text-green-700">
             Done
           </span>
         </div>
@@ -372,8 +370,8 @@ function JobSourcesCard() {
   return (
     <div className="space-y-2">
       <div className="flex items-center gap-2 mb-3">
-        <BookOpenText size={14} className="text-emerald-500" />
-        <span className="text-xs font-bold text-emerald-600 uppercase tracking-widest">
+        <BookOpenText size={14} className="text-primary" />
+        <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest">
           Job Sources
         </span>
         <span className="ml-auto text-[10px] font-bold text-muted-foreground bg-muted px-2 py-0.5 rounded-full">
@@ -383,7 +381,7 @@ function JobSourcesCard() {
       {sources.map((src) => (
         <div
           key={src.id}
-          className="flex items-center gap-2.5 p-2 rounded-lg border border-border bg-white"
+          className="flex items-center gap-2.5 p-2 rounded-lg border border-border bg-card"
         >
           <CheckCircle2 size={12} className="text-green-500 shrink-0" />
           <div className="flex-1 min-w-0">
@@ -406,12 +404,12 @@ function JobScriptCard() {
   return (
     <div className="space-y-2">
       <div className="flex items-center gap-2 mb-1">
-        <FileText size={14} className="text-emerald-500" />
-        <span className="text-xs font-bold text-emerald-600 uppercase tracking-widest">
+        <FileText size={14} className="text-primary" />
+        <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest">
           Script Preview
         </span>
       </div>
-      <div className="p-3 rounded-lg border border-border bg-white space-y-2">
+      <div className="p-3 rounded-lg border border-border bg-card space-y-2">
         <p className="text-[13px] font-bold text-foreground">
           CRISPR & Cancer: The Gene Editing Revolution
         </p>
@@ -440,12 +438,12 @@ function GDriveBackupCard() {
   return (
     <div className="space-y-2">
       <div className="flex items-center gap-2 mb-1">
-        <Upload size={14} className="text-amber-500" />
-        <span className="text-xs font-bold text-amber-600 uppercase tracking-widest">
+        <Upload size={14} className="text-primary" />
+        <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest">
           Backup to Google Drive
         </span>
       </div>
-      <div className="p-3 rounded-lg border border-amber-200 bg-amber-50 space-y-2">
+      <div className="p-3 rounded-lg border border-border bg-card space-y-2">
         <div className="flex items-center gap-2">
           <CheckCircle2 size={14} className="text-green-500" />
           <span className="text-[12px] font-bold text-foreground">Backup initiated</span>
