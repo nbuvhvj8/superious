@@ -47,7 +47,9 @@
     "node_modules/",
     ".next/",
     "out/",
-    "public/"
+    "public/",
+    "tests/",
+    "vitest.config.ts"
   ],
   "env": {
     "browser": true,
