@@ -20,7 +20,7 @@
   --ring: #16a34a;
   --radius: 10px;
   --font-sans: var(--font-outfit), sans-serif;
-  --font-mono: var(--font-ibm-plex-mono), monospace;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   /* Brand gradient stops (forest-green family) */
   --brand-primary: #16a34a;
   --brand-secondary: #22c55e;

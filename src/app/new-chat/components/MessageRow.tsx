@@ -43,23 +43,10 @@ export default function MessageRow({ message, onRegenerate, onEdit }: MessageRow
   return (
     <div className="group/msg w-full flex flex-col items-start mb-10 animate-fade-in px-4 md:px-0">
       <div className="flex flex-col items-start w-full max-w-[720px] mx-auto gap-3">
-        {/* Avatar/Label Row */}
-        <div className="flex items-center gap-2 mb-1">
-          <div className={`
-            w-6 h-6 rounded-md flex items-center justify-center
-            ${isAI ? 'bg-primary/10 text-primary' : 'bg-muted text-muted-foreground'}
-          `}>
-            {isAI ? <Feather size={14} /> : <User size={14} />}
-          </div>
-          <span className="text-[12px] font-bold text-foreground/80 tracking-tight">
-            {isAI ? 'Superious' : 'You'}
-          </span>
-        </div>
-
         {/* Bubble */}
         <div className={`
           relative w-full text-[15px] leading-relaxed
-          ${isAI ? 'text-foreground' : 'bg-muted/30 text-foreground border border-border/50 rounded-[8px] px-4 py-3'}
+          ${isAI ? 'text-foreground' : 'bg-[#f4f4f4] text-foreground border border-border/40 rounded-[8px] px-4 py-3'}
           ${!isAI && !isExpanded && isLongMessage ? 'max-h-[80px] overflow-hidden' : ''}
           transition-all duration-300
         `}>

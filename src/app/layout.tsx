@@ -1,20 +1,12 @@
 import React from 'react';
 import type { Metadata, Viewport } from 'next';
 import localFont from 'next/font/local';
-import { IBM_Plex_Mono } from 'next/font/google';
 import Script from 'next/script';
 import '../styles/tailwind.css';
 
 const outfit = localFont({
-  src: '../../public/fonts/Outfit-VariableFont_wght.ttf',
+  src: '../public/fonts/Outfit-VariableFont_wght.ttf',
   variable: '--font-outfit',
-  display: 'swap',
-});
-
-const ibmPlexMono = IBM_Plex_Mono({
-  subsets: ['latin'],
-  weight: ['400', '500', '600'],
-  variable: '--font-ibm-plex-mono',
   display: 'swap',
 });
 
@@ -34,7 +26,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${outfit.variable} ${ibmPlexMono.variable}`}>
+    <html lang="en" className={`${outfit.variable}`}>
       <body className={outfit.className}>
         {children}
 
