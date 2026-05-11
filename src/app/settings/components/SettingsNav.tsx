@@ -5,29 +5,36 @@ import { Key, Sliders, Download, Trash2, Link2 } from 'lucide-react';
 
 export const SETTINGS_TABS = [
   {
+    key: 'general',
+    label: 'General',
+  },
+  {
+    key: 'account',
+    label: 'Account',
+  },
+  {
     key: 'api',
     label: 'API Configuration',
-    icon: <Key size={15} strokeWidth={2.25} />,
   },
   {
     key: 'integrations',
     label: 'Integrations',
-    icon: <Link2 size={15} strokeWidth={2.25} />,
   },
   {
     key: 'research',
     label: 'Research Preferences',
-    icon: <Sliders size={15} strokeWidth={2.25} />,
   },
   {
     key: 'export',
     label: 'Export & Storage',
-    icon: <Download size={15} strokeWidth={2.25} />,
+  },
+  {
+    key: 'privacy',
+    label: 'Privacy',
   },
   {
     key: 'danger',
     label: 'Danger Zone',
-    icon: <Trash2 size={15} strokeWidth={2.25} />,
   },
 ] as const;
 
@@ -40,21 +47,21 @@ interface SettingsNavProps {
 
 export default function SettingsNav({ activeTab, onTabChange }: SettingsNavProps) {
   return (
-    <nav className="space-y-1">
+    <nav className="flex flex-col gap-0.5 p-1">
       {SETTINGS_TABS.map((item) => (
         <button
           key={item.key}
           onClick={() => onTabChange(item.key)}
           className={`
-            w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-sm font-bold
-            transition-all duration-150
+            flex items-center px-3 py-[9px] rounded-[6px] text-[13px] font-semibold
+            transition-all duration-150 group relative
+            active:scale-[0.98]
             ${activeTab === item.key 
-              ? 'bg-muted text-foreground border border-border/50 shadow-sm' 
-              : 'text-muted-foreground hover:bg-muted/60 hover:text-foreground border border-transparent'}
+              ? 'bg-[#f2f3f6] text-foreground' 
+              : 'text-muted-foreground hover:bg-[#f9f9f9]/60 hover:text-foreground'}
           `}
         >
-          {item.icon}
-          {item.label}
+          <span className="truncate">{item.label}</span>
         </button>
       ))}
     </nav>

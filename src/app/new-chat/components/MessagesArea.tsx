@@ -17,11 +17,12 @@ export default function MessagesArea({
   inputComponent,
 }: MessagesAreaProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const bottomRef = useRef<HTMLDivElement>(null);
   const isEmpty = messages.length === 0;
 
   useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+    if (bottomRef.current) {
+      bottomRef.current.scrollIntoView({ behavior: 'smooth', block: 'end' });
     }
   }, [messages, isGenerating]);
 
@@ -34,9 +35,9 @@ export default function MessagesArea({
     >
       <div className="max-w-[760px] mx-auto w-full h-full flex flex-col">
         {isEmpty ? (
-          <div className="flex-1 flex flex-col items-center justify-center animate-fade-in">
+          <div className="flex-1 flex flex-col items-center justify-start pt-[12vh] animate-fade-in">
             <GreetingMessage />
-            <div className="w-full mt-2">
+            <div className="w-full">
               {inputComponent}
             </div>
           </div>
@@ -47,6 +48,9 @@ export default function MessagesArea({
             ))}
 
             {isGenerating && <ThinkingIndicator />}
+            
+            {/* Scroll Anchor */}
+            <div ref={bottomRef} className="h-4 w-full shrink-0" />
           </div>
         )}
       </div>

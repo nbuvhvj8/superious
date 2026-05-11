@@ -32,8 +32,8 @@ export default function DangerZoneSection() {
 
   return (
     <>
-      <section id="danger-zone" className="card p-6 space-y-5 border-red-200">
-        <div className="flex items-center gap-2.5 pb-1 border-b border-red-200">
+      <section id="danger-zone" className="space-y-8">
+        <div className="flex items-center gap-2.5 pb-1 border-b border-red-200/60">
           <div className="w-8 h-8 rounded-lg bg-red-100 flex items-center justify-center">
             <AlertTriangle size={15} className="text-red-600" />
           </div>

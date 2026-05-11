@@ -83,13 +83,13 @@ export default function Sidebar() {
   return (
     <aside
       className={`
-        relative flex flex-col h-full border-r border-border bg-background
+        relative flex flex-col h-full border-r border-border bg-[fdfdfe]
         transition-all duration-300 ease-in-out shrink-0
         ${collapsed ? 'w-14' : 'w-[280px]'}
       `}
     >
       {/* Header with Logo and Toggle */}
-      <div className={`flex items-center justify-between h-16 px-4 gap-3 overflow-hidden`}>
+      <div className={`flex items-center justify-between h-12 px-4 gap-3 overflow-hidden`}>
         {!collapsed && <div className="flex-1" />}
         <button
           onClick={() => setCollapsed(!collapsed)}
@@ -108,22 +108,32 @@ export default function Sidebar() {
       </div>
 
       {/* Nav Items */}
-      <nav className="flex-1 py-4 px-2 space-y-1 overflow-hidden">
+      <nav className="flex-1 pt-2 pb-4 px-2 space-y-1 overflow-hidden">
         {NAV_ITEMS.map((item) => {
           const isActive =
             pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href));
+          
+          const isNewChat = item.key === 'nav-chat';
+
           return (
             <Link
               key={item.key}
               href={item.href}
+              onClick={(e) => {
+                if (isNewChat && pathname === '/new-chat') {
+                  e.preventDefault();
+                  window.location.href = '/new-chat';
+                }
+              }}
               title={collapsed ? item.label : undefined}
               className={`
-                flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-semibold
+                flex items-center gap-3 px-3 py-2 rounded-[6px] text-sm font-semibold
                 transition-all duration-150 group relative
+                active:scale-[0.97] active:duration-75
                 ${
                   isActive
-                    ? 'bg-muted text-foreground'
-                    : 'text-muted-foreground hover:bg-muted/60 hover:text-foreground'
+                    ? 'bg-[#f2f3f6] text-foreground shadow-sm'
+                    : 'text-muted-foreground hover:bg-[#f9f9f9] hover:text-foreground'
                 }
                 ${collapsed ? 'justify-center' : ''}
               `}
@@ -164,12 +174,13 @@ export default function Sidebar() {
           href="/settings"
           title={collapsed ? 'Settings' : undefined}
           className={`
-            flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-semibold
+            flex items-center gap-3 px-3 py-1.5 rounded-[6px] text-sm font-semibold
             transition-all duration-150 group relative
+            active:scale-[0.97] active:duration-75
             ${
               pathname === '/settings'
-                ? 'bg-muted text-foreground'
-                : 'text-muted-foreground hover:bg-muted/60 hover:text-foreground'
+                ? 'bg-[#f2f3f6] text-foreground shadow-sm'
+                : 'text-muted-foreground hover:bg-[#f9f9f9] hover:text-foreground'
             }
             ${collapsed ? 'justify-center' : ''}
           `}

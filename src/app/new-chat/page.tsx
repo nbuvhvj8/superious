@@ -219,6 +219,7 @@ export default function ChatPage() {
                 onChange={handleInputChange}
                 onSend={isGenerating ? handleStop : handleSend}
                 isGenerating={isGenerating}
+                showDisclaimer={messages.length > 0}
               />
             ) : undefined
           }
@@ -226,7 +227,7 @@ export default function ChatPage() {
 
         {/* Input Zone - only visible when not empty */}
         {messages.length > 0 && (
-          <div className="flex-shrink-0 w-full px-4 pb-4 md:px-6 md:pb-6">
+          <div className="flex-shrink-0 w-full px-4 pb-2 md:px-6 md:pb-3">
             <div className="max-w-[720px] mx-auto w-full relative">
               {/* Slash Command Menu */}
               <SlashCommandMenu
@@ -241,6 +242,7 @@ export default function ChatPage() {
                 onChange={handleInputChange}
                 onSend={isGenerating ? handleStop : handleSend}
                 isGenerating={isGenerating}
+                showDisclaimer={messages.length > 0}
               />
             </div>
           </div>

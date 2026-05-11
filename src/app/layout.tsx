@@ -5,7 +5,7 @@ import Script from 'next/script';
 import '../styles/tailwind.css';
 
 const outfit = localFont({
-  src: '../public/fonts/Outfit-VariableFont_wght.ttf',
+  src: '../../public/fonts/Outfit-VariableFont_wght.ttf',
   variable: '--font-outfit',
   display: 'swap',
 });

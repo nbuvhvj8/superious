@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import SmartKeyInput from './SmartKeyInput';
 import { PROVIDERS } from '@/lib/providers';
+import { broadcastModelsUpdate, syncModelsToStorage } from '@/lib/use-chat-models';
 
 interface ProviderInfo {
   id: string;
@@ -91,6 +92,7 @@ function ProviderCard({
       globalModels = globalModels.filter(m => m !== model);
     }
     localStorage.setItem('chat_models', JSON.stringify(globalModels));
+    broadcastModelsUpdate();
   };
 
   const providerModels = PROVIDERS.find(p => p.id === provider.id)?.models || [];
@@ -126,6 +128,7 @@ function ProviderCard({
       // Also clear models
       setSelectedModels([]);
       localStorage.removeItem(`selected_models_${provider.id}`);
+      broadcastModelsUpdate();
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Failed to delete key');
     } finally {
@@ -285,6 +288,17 @@ export default function ApiConfigSection() {
       const text = await res.text().catch(() => '');
       throw new Error(text || `Save failed (${res.status})`);
     }
+
+    // Automatically select all models for this provider if it's an LLM and none are selected
+    const provider = PROVIDERS.find(p => p.id === providerId);
+    if (provider && provider.category === 'llm' && provider.models && provider.models.length > 0) {
+      const existing = localStorage.getItem(`selected_models_${providerId}`);
+      if (!existing) {
+        localStorage.setItem(`selected_models_${providerId}`, JSON.stringify(provider.models));
+        syncModelsToStorage(provider.models);
+      }
+    }
+
     await refresh();
   }
 
@@ -314,16 +328,13 @@ export default function ApiConfigSection() {
   const totalConfigured = providers?.filter((p) => p.configured).length ?? 0;
 
   return (
-    <section id="api-config" className="card p-6 space-y-8">
-      <div className="flex items-center gap-2.5 pb-1 border-b border-border">
+    <section id="api-config" className="space-y-8">
+      <div className="flex items-center gap-2.5 pb-1 border-b border-border/60">
         <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
           <Key size={15} className="text-primary" />
         </div>
         <div className="flex-1 min-w-0">
           <h2 className="text-base font-bold text-foreground">API Configuration</h2>
-          <p className="text-xs text-muted-foreground font-medium">
-            Bring your own keys for any provider. All keys are encrypted at rest using AES-256-GCM.
-          </p>
         </div>
         {providers && (
           <span className="status-badge bg-secondary/40 text-foreground hidden sm:inline-flex">

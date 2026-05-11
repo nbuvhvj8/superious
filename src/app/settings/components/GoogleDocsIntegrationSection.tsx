@@ -87,8 +87,8 @@ export default function GoogleDocsIntegrationSection() {
   }
 
   return (
-    <section id="integrations" className="card p-6 space-y-5">
-      <div className="flex items-center gap-2.5 pb-1 border-b border-border">
+    <section id="google-docs-integration" className="space-y-8">
+      <div className="flex items-center gap-2.5 pb-1 border-b border-border/60">
         <div className="w-8 h-8 rounded-lg bg-white border border-border flex items-center justify-center shadow-sm">
           <svg viewBox="0 0 24 24" width="16" height="16">
             <path

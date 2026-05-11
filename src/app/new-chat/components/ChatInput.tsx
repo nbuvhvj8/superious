@@ -1,14 +1,16 @@
 'use client';
 
 import React, { useRef, useState, useEffect, forwardRef, useImperativeHandle } from 'react';
-import { Paperclip, ChevronDown, Sparkles } from 'lucide-react';
+import { Plus, ChevronDown } from 'lucide-react';
 import SendButton from './ChatInput/SendButton';
+import { useChatModels } from '@/lib/use-chat-models';
 
 interface ChatInputProps {
   value: string;
   onChange: (value: string) => void;
   onSend: () => void;
   isGenerating?: boolean;
+  showDisclaimer?: boolean;
 }
 
 export interface ChatInputHandle {
@@ -17,25 +19,20 @@ export interface ChatInputHandle {
 
 const ChatInput = forwardRef<ChatInputHandle, ChatInputProps>(
   (
-    { value, onChange, onSend, isGenerating = false },
+    { value, onChange, onSend, isGenerating = false, showDisclaimer = false },
     ref
   ) => {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const [isFocused, setIsFocused] = useState(false);
     const [selectedModel, setSelectedModel] = useState('Select Model');
     const [showModels, setShowModels] = useState(false);
-    const [availableModels, setAvailableModels] = useState<string[]>([]);
+    const availableModels = useChatModels();
 
     useEffect(() => {
-      const stored = localStorage.getItem('chat_models');
-      if (stored) {
-        const models = JSON.parse(stored) as string[];
-        setAvailableModels(models);
-        if (models.length > 0 && selectedModel === 'Select Model') {
-          setSelectedModel(models[0]);
-        }
+      if (availableModels.length > 0 && selectedModel === 'Select Model') {
+        setSelectedModel(availableModels[0]);
       }
-    }, [selectedModel]);
+    }, [availableModels, selectedModel]);
 
     useImperativeHandle(ref, () => ({
       focus: () => {
@@ -62,12 +59,12 @@ const ChatInput = forwardRef<ChatInputHandle, ChatInputProps>(
     };
 
     return (
-      <div className="w-full max-w-[720px] mx-auto flex flex-col group/input">
+      <div className="w-full max-w-[720px] mx-auto flex flex-col relative">
         {/* Main Input Area */}
         <div
           className={`
-            w-full rounded-t-[12px] border border-border bg-white transition-all duration-200
-            ${isFocused ? 'border-[#d8d8d8] shadow-[0_1px_2px_rgba(0,0,0,0.03)]' : 'border-[#e5e5e5] shadow-[0_1px_2px_rgba(0,0,0,0.02)]'}
+            w-full rounded-[12px] border border-border bg-white transition-all duration-200 relative z-10
+            ${isFocused ? 'border-[#d8d8d8] shadow-[0_2px_4px_rgba(0,0,0,0.03)]' : 'border-[#e5e5e5] shadow-[0_1px_2px_rgba(0,0,0,0.02)]'}
             ${isGenerating ? 'opacity-90' : ''}
           `}
         >
@@ -75,7 +72,7 @@ const ChatInput = forwardRef<ChatInputHandle, ChatInputProps>(
           <div className="px-[14px] pt-[12px] pb-[4px]">
             <textarea
               ref={textareaRef}
-              placeholder="Message Superious..."
+              placeholder="Ask anything or start a research..."
               value={value}
               onChange={(e) => onChange(e.target.value)}
               onFocus={() => setIsFocused(true)}
@@ -97,14 +94,23 @@ const ChatInput = forwardRef<ChatInputHandle, ChatInputProps>(
           <div className="flex items-center justify-between px-[10px] pt-[2px] pb-[8px]">
             {/* Left Tools */}
             <div className="flex items-center gap-1">
-              <button className="flex items-center gap-1.5 px-2.5 h-[30px] rounded-lg text-muted-foreground hover:bg-muted/60 hover:text-foreground transition-all">
-                <Paperclip size={15} />
-                <span className="text-[12px] font-medium hidden sm:inline">Attach</span>
+              <button 
+                type="button"
+                className="flex items-center justify-center w-[32px] h-[32px] rounded-full text-foreground/70 hover:bg-[#0000000d] transition-all"
+              >
+                <Plus size={20} />
               </button>
             </div>
 
             {/* Right Tools & Send */}
             <div className="flex items-center gap-3">
+              {showDisclaimer && (
+                <div
+                  className="h-[24px] px-2 bg-[#f2f3f6] rounded-[6px] text-[11px] font-bold text-muted-foreground flex items-center justify-center"
+                >
+                  <span className="leading-none">{selectedModel}</span>
+                </div>
+              )}
               {value.length > 1500 && (
                 <span
                   className={`text-[10px] font-medium tabular-nums ${value.length > 1800 ? 'text-amber-600' : 'text-muted-foreground'}`}
@@ -120,62 +126,65 @@ const ChatInput = forwardRef<ChatInputHandle, ChatInputProps>(
           </div>
         </div>
 
-        {/* Gray Bottom Section */}
-        <div 
-          className={`
-            h-[45px] w-full bg-[#f9f9f9] border border-t-0 border-border rounded-b-[12px] 
-            flex items-center justify-end px-3 transition-colors duration-200
-            ${isFocused ? 'border-[#d8d8d8]' : 'border-[#e5e5e5]'}
-          `}
-        >
-          {/* Model Selection Dropdown */}
-          <div className="relative">
-            <button
-              onClick={() => setShowModels(!showModels)}
-              className="
-                flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg
-                text-[12px] font-semibold text-muted-foreground hover:bg-muted/80 hover:text-foreground
-                transition-all duration-150
-              "
-            >
-              <Sparkles size={13} className="text-primary/70" />
-              <span>{selectedModel}</span>
-              <ChevronDown size={13} className={`transition-transform duration-200 ${showModels ? 'rotate-180' : ''}`} />
-            </button>
+        {/* Attachment Section (Slid below) - Only in empty state */}
+        {!showDisclaimer && (
+          <div 
+            className={`
+              h-[45px] w-full bg-[#f9f9f9] border border-t-0 border-border rounded-b-[12px] 
+              flex items-center justify-end px-3 transition-all duration-300 -mt-2 pt-2 relative z-0
+              ${isFocused ? 'border-[#d8d8d8]' : 'border-[#e5e5e5]'}
+            `}
+          >
+            {/* Model Selection Dropdown */}
+            <div className="relative">
+              <button
+                onClick={() => setShowModels(!showModels)}
+                className="
+                  flex items-center gap-1.5 px-2.5 py-1 rounded-lg
+                  text-[12px] font-bold text-muted-foreground/80 hover:bg-muted/80 hover:text-foreground
+                  transition-all duration-150
+                "
+              >
+                <span>{selectedModel}</span>
+                <ChevronDown size={13} className={`transition-transform duration-200 ${showModels ? 'rotate-180' : ''}`} />
+              </button>
 
-            {showModels && (
-              <div className="absolute bottom-full right-0 mb-2 w-48 bg-white border border-border rounded-xl shadow-xl py-1.5 z-50 animate-slide-up">
-                <div className="px-3 py-1.5 border-b border-border/50 mb-1">
-                  <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Available Models</span>
+              {showModels && (
+                <div className="absolute top-full right-0 mt-2 w-52 bg-white border border-border rounded-xl shadow-xl py-1.5 z-50 animate-slide-up">
+                  <div className="px-3 py-1.5 border-b border-border/50 mb-1">
+                    <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Models</span>
+                  </div>
+                  {availableModels.length > 0 ? (
+                    availableModels.map((model) => (
+                      <button
+                        key={model}
+                        onClick={() => {
+                          setSelectedModel(model);
+                          setShowModels(false);
+                        }}
+                        className={`
+                          w-full text-left px-3 py-2 text-xs flex items-center justify-between transition-colors
+                          ${selectedModel === model ? 'bg-primary/5 text-primary font-bold' : 'text-foreground hover:bg-muted'}
+                        `}
+                      >
+                        {model}
+                      </button>
+                    ))
+                  ) : (
+                    <div className="px-3 py-2 text-[11px] text-muted-foreground italic">No models selected in settings</div>
+                  )}
                 </div>
-                {availableModels.length > 0 ? (
-                  availableModels.map((model) => (
-                    <button
-                      key={model}
-                      onClick={() => {
-                        setSelectedModel(model);
-                        setShowModels(false);
-                      }}
-                      className={`
-                        w-full text-left px-3 py-2 text-sm transition-colors
-                        ${selectedModel === model ? 'bg-primary/5 text-primary font-bold' : 'text-foreground hover:bg-muted'}
-                      `}
-                    >
-                      {model}
-                    </button>
-                  ))
-                ) : (
-                  <div className="px-3 py-2 text-xs text-muted-foreground italic">No models detected</div>
-                )}
-              </div>
-            )}
+              )}
+            </div>
           </div>
-        </div>
+        )}
 
         {/* Disclaimer */}
-        <p className="text-[11px] text-muted-foreground/60 text-center mt-[8px] select-none font-medium">
-          outlier can make mistakes. Review important sources before publishing.
-        </p>
+        {showDisclaimer && (
+          <p className="text-[11px] text-muted-foreground/60 text-center mt-[8px] select-none font-medium">
+            outlier can make mistakes. Review important sources before publishing.
+          </p>
+        )}
       </div>
     );
   }

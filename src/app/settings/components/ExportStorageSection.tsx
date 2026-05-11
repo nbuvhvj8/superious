@@ -39,8 +39,8 @@ export default function ExportStorageSection() {
   }
 
   return (
-    <section id="export-storage" className="card p-6 space-y-5">
-      <div className="flex items-center gap-2.5 pb-1 border-b border-border">
+    <section id="export-storage" className="space-y-8">
+      <div className="flex items-center gap-2.5 pb-1 border-b border-border/60">
         <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center">
           <Download size={15} className="text-foreground" />
         </div>

@@ -46,3 +46,12 @@ Done" should be reduced too that is in the job-details page
 - i want you to replace all the fonts in my app with the font ou will find in this main app directory named outfit-variablefont... and use it as the default font for my app all-round
 - in the sidebar section, the tab are having a green tab active effect when they are active and i ont like that, so i would like to switch to that hover effect tab show on their bg when my mouse hove them to be their default active tab effect and should be light-gray not too mush gray though. also, i would like to add more tabs in the sidebar, there is this code folder in my ./src/app named "motio-design", i would like to have that page added to the sidebar but renamed as studio without disrupting the whole code insisde the folder - please be carful on this. the other tab that will be added will be artifact, session "this tab page will be a page that user can inspect what the ai does and how it does it, so i dont know any tab name i can give it - any advice or replacement is allowed but not generic named", each with it icon and page routes. change the storage icon to something more aesthetic.
 - on teh settings page, i want the settings header text to be unmovable/stick to the same place without moving the rest of the page will have to scroll below it ""you know what i mean". you know on the settings page, there are some tab on the left side like "api configuration, research prefernce, integrations, ..." and the have their section come up to them as the user clicked them, well i cont like that function - i want the section for all of them to not be on the smae page that will just keep forcing me to scroll down, i want the section for each of the tab to only show on their right to the respected tab active only if the user click that tab to view it section, hence i want the scrooling to be remove and the rect of the scroll section to be removed so that their will be no scroll and only section for resected tab will only be show to it only.
+
+
+# phase 3
+app bg - #fefefe 
+sidebar bg - #eceef2
+active sidebar tab hover - #e0e2e6
+user bubble without any borderline or anything - #e0e2e6
+attachment below the chatinput bg - #c9cace
+chatinput bg - #e0e2e6

@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
+  --background: #fefefe;
   --foreground: #0a2540;
   --primary: #16a34a;
   --primary-foreground: #ffffff;
@@ -139,7 +139,16 @@
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    animation: shimmer 2s infinite linear;
+    animation: shimmer-text-flow 2s infinite linear;
+  }
+}
+
+@keyframes shimmer-text-flow {
+  0% {
+    background-position: 100% 0;
+  }
+  100% {
+    background-position: -100% 0;
   }
 }
 
