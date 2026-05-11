@@ -14,8 +14,6 @@ const nextConfig = {
     remotePatterns: imageHosts,
     minimumCacheTTL: 3600, // Increase cache TTL for better performance
   },
-  // Optimize package imports to reduce bundle size and improve navigation speed
-  optimizePackageImports: ['lucide-react', '@heroicons/react'],
   
   // Standalone output for efficient deployment
   output: 'standalone',

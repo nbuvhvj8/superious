@@ -35,7 +35,7 @@ export default function SendButton({ state, onClick }: SendButtonProps) {
       {state === 'stop' ? (
         <Square size={16} fill="currentColor" strokeWidth={0} />
       ) : (
-        <ArrowUp size={20} strokeWidth={2.5} />
+        <ArrowUp size={16} strokeWidth={2.5} />
       )}
     </button>
   );

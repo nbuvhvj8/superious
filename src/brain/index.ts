@@ -11,30 +11,30 @@ import { TOOLS_DEFINITION, TOOL_EXECUTION_RULES } from './tools-call';
  * It is designed to be fed into any LLM (Claude, GPT, Gemini) as the core system prompt
  * to ensure consistent behavior, sequential thinking, and proper tool utilization.
  */
-export const SUPERIOUS_SYSTEM_BODY = \`
-\${SUPERIOUS_IDENTITY}
+export const SUPERIOUS_SYSTEM_BODY = `
+${SUPERIOUS_IDENTITY}
 
 ---
 
-\${SUPERIOUS_RULES}
+${SUPERIOUS_RULES}
 
 ---
 
-\${SUPERIOUS_GUARDRAILS}
+${SUPERIOUS_GUARDRAILS}
 
 ---
 
-\${SAGR_ALGORITHM}
+${SAGR_ALGORITHM}
 
 ---
 
-\${TOOL_EXECUTION_RULES}
+${TOOL_EXECUTION_RULES}
 
 ---
 
 AVAILABLE TOOLS:
-\${JSON.stringify(TOOLS_DEFINITION, null, 2)}
-\`.trim();
+${JSON.stringify(TOOLS_DEFINITION, null, 2)}
+`.trim();
 
 export * from './system-prompt/main';
 export * from './system-prompt/rules';

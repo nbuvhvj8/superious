@@ -7,8 +7,6 @@ import MessagesArea from './components/MessagesArea';
 import ChatInput from './components/ChatInput';
 import { Message } from './components/MessageRow';
 import SlashCommandMenu, { type SlashCommand } from './components/SlashCommandMenu';
-import AgentActivityPanel from './components/AgentActivityPanel';
-import GoogleDriveBackupModal from './components/GoogleDriveBackupModal';
 
 interface SearchHit {
   title: string;
@@ -26,12 +24,6 @@ export default function ChatPage() {
   // Slash command state
   const [showSlashMenu, setShowSlashMenu] = useState(false);
   const [slashQuery, setSlashQuery] = useState('');
-
-  // Agent activity panel state
-  const [showActivityPanel, setShowActivityPanel] = useState(false);
-
-  // Google Drive backup modal state
-  const [showGDriveModal, setShowGDriveModal] = useState(false);
 
   const updateMessage = useCallback((id: string, patch: Partial<Message>) => {
     setMessages((prev) => prev.map((m) => (m.id === id ? { ...m, ...patch } : m)));
@@ -72,10 +64,6 @@ export default function ChatPage() {
     };
 
     setMessages((prev) => [...prev, userMsg, aiMsg]);
-
-    if (command.action === 'gdrive_backup') {
-      setShowGDriveModal(true);
-    }
   }, []);
 
   const handleInputChange = useCallback((value: string) => {
@@ -203,10 +191,6 @@ export default function ChatPage() {
     abortRef.current?.abort();
   }, []);
 
-  const handleSelectSuggestion = (topic: string) => {
-    setInputValue(topic);
-  };
-
   const handleNewChat = () => {
     abortRef.current?.abort();
     setMessages([]);
@@ -220,51 +204,48 @@ export default function ChatPage() {
         {/* Top Bar */}
         <ChatTopBar
           onNewChat={handleNewChat}
-          onToggleActivity={() => setShowActivityPanel((v) => !v)}
-          onOpenBackup={() => setShowGDriveModal(true)}
         />
 
         {/* Messages Area */}
         <MessagesArea
           messages={messages}
-          onSelectSuggestion={handleSelectSuggestion}
           isGenerating={
             isGenerating && !messages.some((m) => m.role === 'assistant' && m.streaming)
           }
+          inputComponent={
+            messages.length === 0 ? (
+              <ChatInput
+                value={inputValue}
+                onChange={handleInputChange}
+                onSend={isGenerating ? handleStop : handleSend}
+                isGenerating={isGenerating}
+              />
+            ) : undefined
+          }
         />
 
-        {/* Input Zone */}
-        <div className="flex-shrink-0 w-full px-4 pb-4 md:px-6 md:pb-6">
-          <div className="max-w-[720px] mx-auto w-full relative">
-            {/* Slash Command Menu */}
-            <SlashCommandMenu
-              query={slashQuery}
-              visible={showSlashMenu}
-              onSelect={handleSlashCommand}
-              onClose={() => setShowSlashMenu(false)}
-            />
+        {/* Input Zone - only visible when not empty */}
+        {messages.length > 0 && (
+          <div className="flex-shrink-0 w-full px-4 pb-4 md:px-6 md:pb-6">
+            <div className="max-w-[720px] mx-auto w-full relative">
+              {/* Slash Command Menu */}
+              <SlashCommandMenu
+                query={slashQuery}
+                visible={showSlashMenu}
+                onSelect={handleSlashCommand}
+                onClose={() => setShowSlashMenu(false)}
+              />
 
-            <ChatInput
-              value={inputValue}
-              onChange={handleInputChange}
-              onSend={isGenerating ? handleStop : handleSend}
-              isGenerating={isGenerating}
-              webSearchEnabled={webSearchEnabled}
-              onToggleWebSearch={() => setWebSearchEnabled((v) => !v)}
-            />
+              <ChatInput
+                value={inputValue}
+                onChange={handleInputChange}
+                onSend={isGenerating ? handleStop : handleSend}
+                isGenerating={isGenerating}
+              />
+            </div>
           </div>
-        </div>
+        )}
       </div>
-
-      {/* Agent Activity Panel */}
-      <AgentActivityPanel
-        open={showActivityPanel}
-        onClose={() => setShowActivityPanel(false)}
-        isActive={isGenerating}
-      />
-
-      {/* Google Drive Backup Modal */}
-      <GoogleDriveBackupModal open={showGDriveModal} onClose={() => setShowGDriveModal(false)} />
     </AppLayout>
   );
 }

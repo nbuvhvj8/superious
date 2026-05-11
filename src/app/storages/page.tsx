@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import AppLayout from '@/components/AppLayout';
 import Image from 'next/image';
+import GoogleDriveBackupModal from './components/GoogleDriveBackupModal';
 import {
   Database,
   FolderOpen,
@@ -15,12 +16,14 @@ import {
   Tag,
   Link as LinkIcon,
   ChevronRight,
+  HardDrive,
 } from 'lucide-react';
 
 type TabType = 'assets' | 'cloud' | 'knowledge';
 
 export default function StoragesPage() {
   const [activeTab, setActiveTab] = useState<TabType>('assets');
+  const [showBackupModal, setShowBackupModal] = useState(false);
 
   return (
     <AppLayout>
@@ -34,10 +37,21 @@ export default function StoragesPage() {
               Storage & Assets
             </span>
           </div>
-          <h1 className="text-3xl font-bold tracking-tight text-foreground">Storages</h1>
-          <p className="text-muted-foreground mt-2 text-lg max-w-2xl">
-            Manage your research assets, cloud integrations, and semantic knowledge base.
-          </p>
+          <div className="flex items-start justify-between">
+            <div>
+              <h1 className="text-3xl font-bold tracking-tight text-foreground">Storages</h1>
+              <p className="text-muted-foreground mt-2 text-lg max-w-2xl">
+                Manage your research assets, cloud integrations, and semantic knowledge base.
+              </p>
+            </div>
+            <button
+              onClick={() => setShowBackupModal(true)}
+              className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg text-sm font-bold shadow-lg shadow-primary/20 hover:opacity-90 transition-opacity"
+            >
+              <HardDrive size={18} />
+              Backup to Drive
+            </button>
+          </div>
         </header>
 
         {/* Tab Navigation */}
@@ -93,10 +107,15 @@ export default function StoragesPage() {
         {/* Tab Content */}
         <div className="min-h-[400px]">
           {activeTab === 'assets' && <AssetExplorer />}
-          {activeTab === 'cloud' && <CloudSync />}
+          {activeTab === 'cloud' && <CloudSync onOpenBackup={() => setShowBackupModal(true)} />}
           {activeTab === 'knowledge' && <KnowledgeBase />}
         </div>
       </div>
+
+      <GoogleDriveBackupModal
+        open={showBackupModal}
+        onClose={() => setShowBackupModal(false)}
+      />
     </AppLayout>
   );
 }
@@ -259,7 +278,7 @@ function AssetRow({
   );
 }
 
-function CloudSync() {
+function CloudSync({ onOpenBackup }: { onOpenBackup?: () => void }) {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -275,6 +294,7 @@ function CloudSync() {
           icon="https://upload.wikimedia.org/wikipedia/commons/1/12/Google_Drive_icon_%282020%29.svg"
           connected={true}
           folder="/Outlier/Research/2024"
+          onOpenBackup={onOpenBackup}
         />
         <CloudCard
           name="Notion"
@@ -304,11 +324,13 @@ function CloudCard({
   icon,
   connected,
   folder,
+  onOpenBackup,
 }: {
   name: string;
   icon: string;
   connected: boolean;
   folder?: string;
+  onOpenBackup?: () => void;
 }) {
   return (
     <div className="bg-card border border-border rounded-xl p-6 shadow-sm">
@@ -335,11 +357,21 @@ function CloudCard({
             </div>
           </div>
         </div>
-        <button
-          className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${connected ? 'bg-muted text-foreground hover:bg-muted/80' : 'bg-primary text-primary-foreground'}`}
-        >
-          {connected ? 'Settings' : 'Connect'}
-        </button>
+        <div className="flex items-center gap-2">
+          {name === 'Google Drive' && connected && (
+            <button
+              onClick={onOpenBackup}
+              className="px-3 py-1.5 bg-primary/10 text-primary rounded-lg text-xs font-bold hover:bg-primary/20 transition-all"
+            >
+              Backup Now
+            </button>
+          )}
+          <button
+            className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${connected ? 'bg-muted text-foreground hover:bg-muted/80' : 'bg-primary text-primary-foreground'}`}
+          >
+            {connected ? 'Settings' : 'Connect'}
+          </button>
+        </div>
       </div>
 
       {connected && (

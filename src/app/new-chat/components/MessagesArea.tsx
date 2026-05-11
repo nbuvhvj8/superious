@@ -2,20 +2,19 @@
 
 import React, { useRef, useEffect } from 'react';
 import GreetingMessage from './GreetingMessage';
-import SuggestionGrid from './SuggestionGrid';
 import MessageRow, { Message } from './MessageRow';
 import ThinkingIndicator from './ThinkingIndicator';
 
 interface MessagesAreaProps {
   messages: Message[];
-  onSelectSuggestion: (topic: string) => void;
   isGenerating?: boolean;
+  inputComponent?: React.ReactNode;
 }
 
 export default function MessagesArea({
   messages,
-  onSelectSuggestion,
   isGenerating,
+  inputComponent,
 }: MessagesAreaProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const isEmpty = messages.length === 0;
@@ -37,7 +36,9 @@ export default function MessagesArea({
         {isEmpty ? (
           <div className="flex-1 flex flex-col items-center justify-center animate-fade-in">
             <GreetingMessage />
-            <SuggestionGrid onSelect={onSelectSuggestion} />
+            <div className="w-full mt-2">
+              {inputComponent}
+            </div>
           </div>
         ) : (
           <div className="flex flex-col">

@@ -11,7 +11,10 @@ import {
   PanelRight,
   SquarePen,
   Clock,
-  Database,
+  HardDrive,
+  Video,
+  Box,
+  Activity,
 } from 'lucide-react';
 
 interface NavItem {
@@ -25,8 +28,8 @@ interface NavItem {
 const NAV_ITEMS: NavItem[] = [
   {
     key: 'nav-chat',
-    label: 'Chat',
-    href: '/chat',
+    label: 'New Chat',
+    href: '/new-chat',
     icon: <SquarePen size={16} strokeWidth={2.25} />,
   },
   {
@@ -34,6 +37,24 @@ const NAV_ITEMS: NavItem[] = [
     label: 'Workspace',
     href: '/workspace',
     icon: <Microscope size={16} strokeWidth={2.25} />,
+  },
+  {
+    key: 'nav-studio',
+    label: 'Studio',
+    href: '/motion-design',
+    icon: <Video size={16} strokeWidth={2.25} />,
+  },
+  {
+    key: 'nav-artifact',
+    label: 'Artifact',
+    href: '/artifact',
+    icon: <Box size={16} strokeWidth={2.25} />,
+  },
+  {
+    key: 'nav-session',
+    label: 'Session',
+    href: '/session',
+    icon: <Activity size={16} strokeWidth={2.25} />,
   },
   {
     key: 'nav-jobs',
@@ -51,7 +72,7 @@ const NAV_ITEMS: NavItem[] = [
     key: 'nav-storages',
     label: 'Storages',
     href: '/storages',
-    icon: <Database size={16} strokeWidth={2.25} />,
+    icon: <HardDrive size={16} strokeWidth={2.25} />,
   },
 ];
 
@@ -64,7 +85,7 @@ export default function Sidebar() {
       className={`
         relative flex flex-col h-full border-r border-border bg-background
         transition-all duration-300 ease-in-out shrink-0
-        ${collapsed ? 'w-14' : 'w-[340px]'}
+        ${collapsed ? 'w-14' : 'w-[280px]'}
       `}
     >
       {/* Header with Logo and Toggle */}
@@ -101,8 +122,8 @@ export default function Sidebar() {
                 transition-all duration-150 group relative
                 ${
                   isActive
-                    ? 'bg-primary/10 text-primary'
-                    : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+                    ? 'bg-muted text-foreground'
+                    : 'text-muted-foreground hover:bg-muted/60 hover:text-foreground'
                 }
                 ${collapsed ? 'justify-center' : ''}
               `}
@@ -147,8 +168,8 @@ export default function Sidebar() {
             transition-all duration-150 group relative
             ${
               pathname === '/settings'
-                ? 'bg-primary/10 text-primary'
-                : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+                ? 'bg-muted text-foreground'
+                : 'text-muted-foreground hover:bg-muted/60 hover:text-foreground'
             }
             ${collapsed ? 'justify-center' : ''}
           `}

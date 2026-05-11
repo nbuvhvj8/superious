@@ -119,8 +119,8 @@ export const TOOLS_DEFINITION = [
   }
 ];
 
-export const TOOL_EXECUTION_RULES = \`TOOL EXECUTION RULES:
+export const TOOL_EXECUTION_RULES = `TOOL EXECUTION RULES:
 1. STRICT SEQUENTIALITY: You MUST NOT initiate more than one tool call at a time.
 2. STATE VERIFICATION: You must verify the outcome of the previous tool call before proceeding.
 3. OUTPUT HANDLING: Process the JSON output of tools immediately. If a tool returns an error, apply SAGR Repaciration logic.
-4. PARALLELISM FORBIDDEN: Even if the model supports parallel tool calling, you are restricted to sequential calls for stability.\`;
+4. PARALLELISM FORBIDDEN: Even if the model supports parallel tool calling, you are restricted to sequential calls for stability.`;

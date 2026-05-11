@@ -12,8 +12,10 @@ import {
   Plus,
   ShieldCheck,
   Trash2,
+  Edit3,
 } from 'lucide-react';
 import SmartKeyInput from './SmartKeyInput';
+import { PROVIDERS } from '@/lib/providers';
 
 interface ProviderInfo {
   id: string;
@@ -61,19 +63,37 @@ function ProviderCard({
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [selectedModels, setSelectedModels] = useState<string[]>([]);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   useEffect(() => {
     setEditing(!provider.configured);
-  }, [provider.configured]);
-
-  const patternMatches = useMemo(() => {
-    if (!provider.keyPattern || !keyValue) return true;
-    try {
-      return new RegExp(provider.keyPattern).test(keyValue.trim());
-    } catch {
-      return true;
+    const stored = localStorage.getItem(`selected_models_${provider.id}`);
+    if (stored) {
+      setSelectedModels(JSON.parse(stored));
     }
-  }, [provider.keyPattern, keyValue]);
+  }, [provider.configured, provider.id]);
+
+  const toggleModel = (model: string) => {
+    const updated = selectedModels.includes(model)
+      ? selectedModels.filter((m) => m !== model)
+      : [...selectedModels, model];
+    setSelectedModels(updated);
+    localStorage.setItem(`selected_models_${provider.id}`, JSON.stringify(updated));
+    
+    // Update global list for chat input
+    const globalStored = localStorage.getItem('chat_models') || '[]';
+    let globalModels = JSON.parse(globalStored) as string[];
+    
+    if (updated.includes(model)) {
+      if (!globalModels.includes(model)) globalModels.push(model);
+    } else {
+      globalModels = globalModels.filter(m => m !== model);
+    }
+    localStorage.setItem('chat_models', JSON.stringify(globalModels));
+  };
+
+  const providerModels = PROVIDERS.find(p => p.id === provider.id)?.models || [];
 
   async function handleSave() {
     setError(null);
@@ -103,6 +123,9 @@ function ProviderCard({
       await onDelete(provider.id);
       setKeyValue('');
       setEditing(true);
+      // Also clear models
+      setSelectedModels([]);
+      localStorage.removeItem(`selected_models_${provider.id}`);
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Failed to delete key');
     } finally {
@@ -111,13 +134,13 @@ function ProviderCard({
   }
 
   return (
-    <div className="rounded-xl border border-border bg-white p-4 space-y-3">
+    <div className="rounded-xl border border-border bg-white p-5 space-y-4 shadow-sm hover:shadow-md transition-shadow duration-200">
       <div className="flex items-start justify-between gap-3">
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2 flex-wrap">
             <h3 className="text-sm font-bold text-foreground">{provider.name}</h3>
             {provider.configured && (
-              <span className="status-badge bg-primary/10 text-primary">
+              <span className="status-badge bg-primary/10 text-primary border border-primary/20">
                 <CheckCircle2 size={11} /> Connected
               </span>
             )}
@@ -125,22 +148,17 @@ function ProviderCard({
               href={provider.docsUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-[11px] text-muted-foreground hover:text-foreground inline-flex items-center gap-1"
+              className="text-[10px] font-bold text-muted-foreground hover:text-primary inline-flex items-center gap-1 uppercase tracking-wider"
             >
               Get key <ExternalLink size={10} />
             </a>
           </div>
-          <p className="text-xs text-muted-foreground mt-0.5">{provider.description}</p>
-          {provider.configured && !editing && (
-            <p className="text-[11px] text-muted-foreground mt-1.5 font-mono">
-              {provider.preview} · updated {formatRelative(provider.updatedAt)}
-            </p>
-          )}
+          <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{provider.description}</p>
         </div>
       </div>
 
       {editing ? (
-        <div className="space-y-2">
+        <div className="space-y-3">
           <div className="relative">
             <input
               type={show ? 'text' : 'password'}
@@ -149,84 +167,84 @@ function ProviderCard({
               placeholder={provider.keyPlaceholder}
               autoComplete="off"
               spellCheck={false}
-              className="input-field pr-10 font-mono text-sm"
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  e.preventDefault();
-                  void handleSave();
-                }
-              }}
+              className="input-field pr-10 font-mono text-sm h-11"
             />
             <button
               type="button"
               onClick={() => setShow((s) => !s)}
-              aria-label={show ? 'Hide key' : 'Show key'}
               className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
             >
               {show ? <EyeOff size={14} /> : <Eye size={14} />}
             </button>
           </div>
-          {provider.keyPattern && keyValue && !patternMatches && (
-            <p className="text-[11px] text-amber-600">
-              Heads up — keys for {provider.name} usually start with{' '}
-              <code className="font-mono">{provider.keyPlaceholder}</code>.
-            </p>
-          )}
           {error && <p className="text-[11px] text-red-500 font-medium">{error}</p>}
-
           <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={handleSave}
-              disabled={saving || !keyValue.trim()}
-              className="btn-primary text-xs h-8 px-3"
-            >
-              {saving ? (
-                <>
-                  <Loader2 size={12} className="animate-spin" /> Saving…
-                </>
-              ) : saved ? (
-                <>
-                  <CheckCircle2 size={12} /> Saved
-                </>
-              ) : (
-                <>
-                  <ShieldCheck size={12} /> Encrypt &amp; save
-                </>
-              )}
+            <button type="button" onClick={handleSave} disabled={saving || !keyValue.trim()} className="btn-primary text-xs h-9 px-4">
+              {saving ? <Loader2 size={12} className="animate-spin" /> : 'Save Key'}
             </button>
             {provider.configured && (
-              <button
-                type="button"
-                onClick={() => {
-                  setEditing(false);
-                  setKeyValue('');
-                  setError(null);
-                }}
-                className="btn-ghost text-xs h-8 px-3"
-              >
-                Cancel
-              </button>
+              <button type="button" onClick={() => setEditing(false)} className="btn-ghost text-xs h-9 px-4">Cancel</button>
             )}
           </div>
         </div>
       ) : (
-        <div className="flex items-center gap-2">
-          <button
-            type="button"
-            onClick={() => setEditing(true)}
-            className="btn-secondary text-xs h-8 px-3"
-          >
-            Replace key
-          </button>
-          <button
-            type="button"
-            onClick={handleDelete}
-            disabled={saving}
-            className="btn-ghost text-xs h-8 px-3 text-red-500 hover:bg-red-50 hover:text-red-600"
-          >
-            <Trash2 size={12} /> Remove
-          </button>
+        <div className="space-y-4">
+          <div className="flex items-center justify-between py-2 border-y border-border/50">
+             <div className="flex flex-col gap-0.5">
+               <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Status</span>
+               <span className="text-xs font-semibold text-foreground font-mono">{provider.preview}</span>
+             </div>
+             <div className="flex items-center gap-2">
+                <button onClick={() => setEditing(true)} className="p-1.5 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-all">
+                  <Edit3 size={14} />
+                </button>
+                <button onClick={handleDelete} className="p-1.5 rounded-md text-muted-foreground hover:bg-red-50 hover:text-red-500 transition-all">
+                  <Trash2 size={14} />
+                </button>
+             </div>
+          </div>
+
+          {provider.category === 'llm' && providerModels.length > 0 && (
+            <div className="space-y-2">
+              <div className="flex items-center justify-between relative">
+                <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Model Selection</span>
+                <button 
+                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                  className="flex items-center gap-1.5 px-2 py-1 rounded bg-muted hover:bg-muted/80 text-[11px] font-bold text-foreground transition-all"
+                >
+                  Pick Models <ChevronDown size={12} className={`transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} />
+                </button>
+
+                {isDropdownOpen && (
+                  <div className="absolute top-full right-0 mt-1 w-56 bg-white border border-border rounded-lg shadow-xl z-30 py-1 max-h-48 overflow-y-auto scrollbar-thin">
+                    {providerModels.map(model => (
+                      <button
+                        key={model}
+                        onClick={() => toggleModel(model)}
+                        className={`
+                          w-full text-left px-3 py-1.5 text-xs flex items-center justify-between transition-colors
+                          ${selectedModels.includes(model) ? 'bg-primary/5 text-primary font-bold' : 'text-foreground hover:bg-muted'}
+                        `}
+                      >
+                        {model}
+                        {selectedModels.includes(model) && <CheckCircle2 size={10} />}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+              
+              {selectedModels.length > 0 && (
+                <div className="flex flex-wrap gap-1">
+                  {selectedModels.map(model => (
+                    <span key={model} className="px-1.5 py-0.5 rounded bg-primary/10 text-primary text-[10px] font-bold border border-primary/20">
+                      {model}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
         </div>
       )}
     </div>
@@ -303,9 +321,8 @@ export default function ApiConfigSection() {
         </div>
         <div className="flex-1 min-w-0">
           <h2 className="text-base font-bold text-foreground">API Configuration</h2>
-          <p className="text-xs text-muted-foreground">
-            Bring your own keys for any provider. All keys are encrypted at rest using AES-256-GCM
-            and never sent back to the browser in plaintext.
+          <p className="text-xs text-muted-foreground font-medium">
+            Bring your own keys for any provider. All keys are encrypted at rest using AES-256-GCM.
           </p>
         </div>
         {providers && (
@@ -318,7 +335,7 @@ export default function ApiConfigSection() {
       <div className="space-y-4">
         <div className="space-y-1">
           <h3 className="text-sm font-bold text-foreground">Smart Key Input</h3>
-          <p className="text-[11px] text-muted-foreground">
+          <p className="text-[11px] text-muted-foreground font-medium">
             Paste your API key here, and we&apos;ll automatically detect the provider.
           </p>
         </div>
@@ -328,19 +345,19 @@ export default function ApiConfigSection() {
       <div className="border-t border-border pt-6">
         <div className="space-y-1 mb-4">
           <h3 className="text-sm font-bold text-foreground">Manage Providers</h3>
-          <p className="text-[11px] text-muted-foreground">
+          <p className="text-[11px] text-muted-foreground font-medium">
             View and manage your connected AI and search services.
           </p>
         </div>
 
         {loadError && (
-          <div className="rounded-lg bg-red-50 border border-red-200 p-3 text-xs text-red-600">
+          <div className="rounded-lg bg-red-50 border border-red-200 p-3 text-xs text-red-600 font-medium">
             {loadError}
           </div>
         )}
 
         {!providers ? (
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <div className="flex items-center gap-2 text-sm text-muted-foreground font-medium">
             <Loader2 size={14} className="animate-spin" /> Loading providers…
           </div>
         ) : (
@@ -362,7 +379,7 @@ export default function ApiConfigSection() {
                       }`}
                     />
                     <span className="section-label">{CATEGORY_LABEL[category]}</span>
-                    <span className="text-[11px] text-muted-foreground font-medium">
+                    <span className="text-[11px] text-muted-foreground font-bold ml-1">
                       ({list.filter((p) => p.configured).length}/{list.length})
                     </span>
                   </button>
