@@ -112,10 +112,7 @@ export default function StoragesPage() {
         </div>
       </div>
 
-      <GoogleDriveBackupModal
-        open={showBackupModal}
-        onClose={() => setShowBackupModal(false)}
-      />
+      <GoogleDriveBackupModal open={showBackupModal} onClose={() => setShowBackupModal(false)} />
     </AppLayout>
   );
 }

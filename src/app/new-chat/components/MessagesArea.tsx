@@ -37,9 +37,7 @@ export default function MessagesArea({
         {isEmpty ? (
           <div className="flex-1 flex flex-col items-center justify-start pt-[12vh] animate-fade-in">
             <GreetingMessage />
-            <div className="w-full">
-              {inputComponent}
-            </div>
+            <div className="w-full">{inputComponent}</div>
           </div>
         ) : (
           <div className="flex flex-col">
@@ -48,7 +46,7 @@ export default function MessagesArea({
             ))}
 
             {isGenerating && <ThinkingIndicator />}
-            
+
             {/* Scroll Anchor */}
             <div ref={bottomRef} className="h-4 w-full shrink-0" />
           </div>

@@ -81,21 +81,21 @@ function ProviderCard({
       : [...selectedModels, model];
     setSelectedModels(updated);
     localStorage.setItem(`selected_models_${provider.id}`, JSON.stringify(updated));
-    
+
     // Update global list for chat input
     const globalStored = localStorage.getItem('chat_models') || '[]';
     let globalModels = JSON.parse(globalStored) as string[];
-    
+
     if (updated.includes(model)) {
       if (!globalModels.includes(model)) globalModels.push(model);
     } else {
-      globalModels = globalModels.filter(m => m !== model);
+      globalModels = globalModels.filter((m) => m !== model);
     }
     localStorage.setItem('chat_models', JSON.stringify(globalModels));
     broadcastModelsUpdate();
   };
 
-  const providerModels = PROVIDERS.find(p => p.id === provider.id)?.models || [];
+  const providerModels = PROVIDERS.find((p) => p.id === provider.id)?.models || [];
 
   async function handleSave() {
     setError(null);
@@ -156,7 +156,9 @@ function ProviderCard({
               Get key <ExternalLink size={10} />
             </a>
           </div>
-          <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{provider.description}</p>
+          <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
+            {provider.description}
+          </p>
         </div>
       </div>
 
@@ -182,45 +184,72 @@ function ProviderCard({
           </div>
           {error && <p className="text-[11px] text-red-500 font-medium">{error}</p>}
           <div className="flex items-center gap-2">
-            <button type="button" onClick={handleSave} disabled={saving || !keyValue.trim()} className="btn-primary text-xs h-9 px-4">
+            <button
+              type="button"
+              onClick={handleSave}
+              disabled={saving || !keyValue.trim()}
+              className="btn-primary text-xs h-9 px-4"
+            >
               {saving ? <Loader2 size={12} className="animate-spin" /> : 'Save Key'}
             </button>
             {provider.configured && (
-              <button type="button" onClick={() => setEditing(false)} className="btn-ghost text-xs h-9 px-4">Cancel</button>
+              <button
+                type="button"
+                onClick={() => setEditing(false)}
+                className="btn-ghost text-xs h-9 px-4"
+              >
+                Cancel
+              </button>
             )}
           </div>
         </div>
       ) : (
         <div className="space-y-4">
           <div className="flex items-center justify-between py-2 border-y border-border/50">
-             <div className="flex flex-col gap-0.5">
-               <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Status</span>
-               <span className="text-xs font-semibold text-foreground font-mono">{provider.preview}</span>
-             </div>
-             <div className="flex items-center gap-2">
-                <button onClick={() => setEditing(true)} className="p-1.5 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-all">
-                  <Edit3 size={14} />
-                </button>
-                <button onClick={handleDelete} className="p-1.5 rounded-md text-muted-foreground hover:bg-red-50 hover:text-red-500 transition-all">
-                  <Trash2 size={14} />
-                </button>
-             </div>
+            <div className="flex flex-col gap-0.5">
+              <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
+                Status
+              </span>
+              <span className="text-xs font-semibold text-foreground font-mono">
+                {provider.preview}
+              </span>
+            </div>
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setEditing(true)}
+                className="p-1.5 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-all"
+              >
+                <Edit3 size={14} />
+              </button>
+              <button
+                onClick={handleDelete}
+                className="p-1.5 rounded-md text-muted-foreground hover:bg-red-50 hover:text-red-500 transition-all"
+              >
+                <Trash2 size={14} />
+              </button>
+            </div>
           </div>
 
           {provider.category === 'llm' && providerModels.length > 0 && (
             <div className="space-y-2">
               <div className="flex items-center justify-between relative">
-                <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Model Selection</span>
-                <button 
+                <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
+                  Model Selection
+                </span>
+                <button
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                   className="flex items-center gap-1.5 px-2 py-1 rounded bg-muted hover:bg-muted/80 text-[11px] font-bold text-foreground transition-all"
                 >
-                  Pick Models <ChevronDown size={12} className={`transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} />
+                  Pick Models{' '}
+                  <ChevronDown
+                    size={12}
+                    className={`transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`}
+                  />
                 </button>
 
                 {isDropdownOpen && (
                   <div className="absolute top-full right-0 mt-1 w-56 bg-white border border-border rounded-lg shadow-xl z-30 py-1 max-h-48 overflow-y-auto scrollbar-thin">
-                    {providerModels.map(model => (
+                    {providerModels.map((model) => (
                       <button
                         key={model}
                         onClick={() => toggleModel(model)}
@@ -236,11 +265,14 @@ function ProviderCard({
                   </div>
                 )}
               </div>
-              
+
               {selectedModels.length > 0 && (
                 <div className="flex flex-wrap gap-1">
-                  {selectedModels.map(model => (
-                    <span key={model} className="px-1.5 py-0.5 rounded bg-primary/10 text-primary text-[10px] font-bold border border-primary/20">
+                  {selectedModels.map((model) => (
+                    <span
+                      key={model}
+                      className="px-1.5 py-0.5 rounded bg-primary/10 text-primary text-[10px] font-bold border border-primary/20"
+                    >
                       {model}
                     </span>
                   ))}
@@ -290,7 +322,7 @@ export default function ApiConfigSection() {
     }
 
     // Automatically select all models for this provider if it's an LLM and none are selected
-    const provider = PROVIDERS.find(p => p.id === providerId);
+    const provider = PROVIDERS.find((p) => p.id === providerId);
     if (provider && provider.category === 'llm' && provider.models && provider.models.length > 0) {
       const existing = localStorage.getItem(`selected_models_${providerId}`);
       if (!existing) {

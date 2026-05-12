@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Download, CheckCircle2 } from 'lucide-react';
+import { Download, CheckCircle2, Loader2, ChevronDown } from 'lucide-react';
 import Toggle from '@/components/ui/Toggle';
 
 interface ExportFormData {
@@ -39,128 +39,123 @@ export default function ExportStorageSection() {
   }
 
   return (
-    <section id="export-storage" className="space-y-8">
+    <section id="export-storage" className="space-y-12">
       <div className="flex items-center gap-2.5 pb-1 border-b border-border/60">
-        <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center">
+        <div className="w-8 h-8 rounded-lg bg-[#f2f3f6] flex items-center justify-center">
           <Download size={15} className="text-foreground" />
         </div>
         <div>
           <h2 className="text-base font-bold text-foreground">Export & Storage</h2>
-          <p className="text-xs text-muted-foreground">
-            Configure default export format and screenshot storage lifecycle policy.
-          </p>
         </div>
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-12">
+        <div className="space-y-8">
           {/* Default Export Format */}
-          <div className="space-y-1.5">
-            <label htmlFor="export-format" className="text-sm font-semibold text-foreground">
-              Default Export Format
-            </label>
-            <p className="text-xs text-muted-foreground">
-              Used when clicking the Export button on a completed script. Can be overridden per
-              export.
-            </p>
-            <select
-              id="export-format"
-              {...register('defaultExportFormat')}
-              className="input-field font-medium"
-            >
-              <option value="md">Markdown (.md)</option>
-              <option value="txt">Plain Text (.txt)</option>
-              <option value="json">JSON (.json)</option>
-            </select>
+          <div className="flex items-start justify-between gap-8">
+            <div className="space-y-1 flex-1">
+              <h3 className="text-sm font-medium text-foreground">Default Export Format</h3>
+              <p className="text-xs text-muted-foreground leading-relaxed max-w-md">
+                Used when clicking the Export button on a completed script.
+              </p>
+            </div>
+            <div className="relative w-full max-w-[240px]">
+              <select
+                id="export-format"
+                {...register('defaultExportFormat')}
+                className="appearance-none h-9 px-3 text-sm w-full text-left bg-[#f2f3f6] rounded-[8px] border-0 outline-none focus:outline-none focus:ring-0 placeholder:text-muted-foreground/40 transition-all hover:bg-[#ebecef] font-bold text-foreground"
+              >
+                <option value="md">Markdown (.md)</option>
+                <option value="txt">Plain Text (.txt)</option>
+                <option value="json">JSON (.json)</option>
+              </select>
+              <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
+                <ChevronDown size={14} className="text-muted-foreground" />
+              </div>
+            </div>
           </div>
 
           {/* Screenshot Retention */}
-          <div className="space-y-1.5">
-            <label htmlFor="retention" className="text-sm font-semibold text-foreground">
-              Screenshot Retention Period
-            </label>
-            <p className="text-xs text-muted-foreground">
-              Screenshots are automatically deleted from Supabase Storage after this many days.
-              Range: 7–90.
-            </p>
+          <div className="flex items-start justify-between gap-8">
+            <div className="space-y-1 flex-1">
+              <h3 className="text-sm font-medium text-foreground">Screenshot Retention Period</h3>
+              <p className="text-xs text-muted-foreground leading-relaxed max-w-md">
+                Screenshots are automatically deleted after this many days. Range: 7–90.
+              </p>
+            </div>
             <div className="flex items-center gap-2">
               <input
-                id="retention"
                 type="number"
                 min={7}
                 max={90}
                 {...register('screenshotRetentionDays', {
                   valueAsNumber: true,
-                  min: { value: 7, message: 'Minimum 7 days' },
-                  max: { value: 90, message: 'Maximum 90 days' },
+                  min: { value: 7, message: 'Min 7 days' },
+                  max: { value: 90, message: 'Max 90 days' },
                 })}
-                className="input-field w-24 font-mono text-sm"
+                className="h-9 px-3 text-sm w-24 text-left bg-[#f2f3f6] rounded-[8px] border-0 outline-none focus:outline-none focus:ring-0 placeholder:text-muted-foreground/40 transition-all hover:bg-[#ebecef] font-mono"
               />
-              <span className="text-sm text-muted-foreground font-medium">
-                day{retentionDays !== 1 ? 's' : ''}
-              </span>
+              <span className="text-[12px] font-bold text-muted-foreground">days</span>
             </div>
-            {errors.screenshotRetentionDays && (
-              <p className="text-xs text-red-500">{errors.screenshotRetentionDays.message}</p>
-            )}
           </div>
-        </div>
 
-        {/* Auto Cleanup Toggle */}
-        <div className="pt-2 border-t border-border">
-          <div className="flex items-start justify-between gap-4">
-            <div className="space-y-0.5">
-              <p className="text-sm font-semibold text-foreground">Automatic Storage Cleanup</p>
-              <p className="text-xs text-muted-foreground">
-                Run a daily cleanup job that removes screenshots older than the retention period
-                from Supabase Storage. Disabling this means screenshots accumulate indefinitely.
+          {/* Auto Cleanup Toggle */}
+          <div className="flex items-start justify-between gap-8 pt-4 border-t border-border/40">
+            <div className="space-y-1 flex-1">
+              <h3 className="text-sm font-medium text-foreground">Automatic Storage Cleanup</h3>
+              <p className="text-xs text-muted-foreground leading-relaxed max-w-md">
+                Run a daily cleanup job that removes screenshots older than the retention period.
               </p>
             </div>
-            <Toggle checked={autoCleanup} onChange={setAutoCleanup} id="cleanup-toggle" />
+            <Toggle checked={autoCleanup} onChange={setAutoCleanup} />
+          </div>
+
+          {/* Storage Usage Row */}
+          <div className="flex items-start justify-between gap-8">
+            <div className="space-y-1 flex-1">
+              <h3 className="text-sm font-medium text-foreground">Current Storage Usage</h3>
+              <p className="text-xs text-muted-foreground leading-relaxed max-w-md">
+                Total space occupied by screenshots in Supabase Storage.
+              </p>
+            </div>
+            <div className="w-full max-w-[240px] space-y-2">
+              <div className="h-2 w-full rounded-full bg-[#f2f3f6] overflow-hidden">
+                <div className="h-full rounded-full bg-primary" style={{ width: '34%' }} />
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="font-mono text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
+                  340 MB / 1 GB
+                </span>
+                <span className="text-[10px] font-bold text-primary">34% used</span>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Storage Usage Info */}
-        <div className="flex items-start gap-3 px-4 py-3 rounded-lg bg-secondary/20 border border-secondary/40">
-          <div className="space-y-1 flex-1">
-            <p className="text-xs font-bold text-foreground">Current Storage Usage</p>
-            <div className="h-1.5 w-full rounded-full bg-border overflow-hidden">
-              <div className="h-full rounded-full bg-primary" style={{ width: '34%' }} />
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="font-mono text-2xs text-muted-foreground">340 MB used</span>
-              <span className="font-mono text-2xs text-muted-foreground">1 GB limit</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="flex items-center gap-3 pt-1">
-          <button type="submit" disabled={saving} className="btn-primary min-w-[160px]">
+        <div className="flex items-center gap-3 pt-6 border-t border-border/40">
+          <button
+            type="submit"
+            disabled={saving}
+            className="h-9 px-6 bg-[#f2f3f6] rounded-[8px] text-[12px] font-bold text-foreground hover:bg-[#ebecef] transition-all disabled:opacity-50 min-w-[140px]"
+          >
             {saving ? (
-              <span className="flex items-center gap-2">
-                <svg className="animate-spin h-3.5 w-3.5" viewBox="0 0 24 24" fill="none">
-                  <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                  />
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
-                </svg>
-                Saving…
+              <span className="flex items-center justify-center gap-2">
+                <Loader2 size={14} className="animate-spin" />
+                Saving...
               </span>
             ) : saved ? (
-              <span className="flex items-center gap-2">
-                <CheckCircle2 size={14} /> Saved
+              <span className="flex items-center justify-center gap-2">
+                <CheckCircle2 size={14} className="text-primary" />
+                Saved
               </span>
             ) : (
               'Save Storage Settings'
             )}
           </button>
           {isDirty && !saving && !saved && (
-            <span className="text-xs text-amber-600 font-medium">Unsaved changes</span>
+            <span className="text-[11px] text-amber-600 font-bold uppercase tracking-wider">
+              Unsaved changes
+            </span>
           )}
         </div>
       </form>

@@ -1,7 +1,17 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Copy, RefreshCw, ThumbsUp, ThumbsDown, Check, Feather, Edit3, ChevronDown, User } from 'lucide-react';
+import {
+  Copy,
+  RefreshCw,
+  ThumbsUp,
+  ThumbsDown,
+  Check,
+  Feather,
+  Edit3,
+  ChevronDown,
+  User,
+} from 'lucide-react';
 import StreamingText from './StreamingText';
 import CommandResponseCard, { type CommandType } from './CommandResponseCard';
 
@@ -38,19 +48,23 @@ export default function MessageRow({ message, onRegenerate, onEdit }: MessageRow
   };
 
   // Determine if content needs expansion
-  const isLongMessage = !isAI && message.content.length > 300; 
+  const isLongMessage = !isAI && message.content.length > 300;
 
   return (
-    <div className={`group/msg w-full flex flex-col items-start ${isAI ? 'mb-8' : 'mb-1'} animate-fade-in px-4 md:px-0`}>
+    <div
+      className={`group/msg w-full flex flex-col items-start ${isAI ? 'mb-8' : 'mb-1'} animate-fade-in px-4 md:px-0`}
+    >
       <div className="flex items-start w-full max-w-[720px] mx-auto gap-2">
         <div className="flex-1 flex flex-col gap-1 min-w-0">
           {/* Bubble */}
-          <div className={`
+          <div
+            className={`
             relative w-full text-[15px] leading-relaxed
             ${isAI ? 'text-foreground px-0 py-1' : 'bg-[#f9f9f9] text-foreground rounded-[8px] px-4 py-3 max-w-[720px]'}
             ${!isAI && !isExpanded && isLongMessage ? 'max-h-[160px] overflow-hidden' : ''}
             transition-all duration-300
-          `}>
+          `}
+          >
             {isAI ? (
               message.commandType ? (
                 <CommandResponseCard commandType={message.commandType as CommandType} />
@@ -66,12 +80,14 @@ export default function MessageRow({ message, onRegenerate, onEdit }: MessageRow
                 />
               )
             ) : (
-              <div className="whitespace-pre-wrap max-w-[720px] w-full break-words">{message.content}</div>
+              <div className="whitespace-pre-wrap max-w-[720px] w-full break-words">
+                {message.content}
+              </div>
             )}
 
             {/* Expand Chevron for User Bubble */}
             {!isAI && isLongMessage && (
-              <button 
+              <button
                 onClick={() => setIsExpanded(!isExpanded)}
                 className={`
                   absolute bottom-0 left-0 w-full h-10 flex items-center justify-center
@@ -80,7 +96,10 @@ export default function MessageRow({ message, onRegenerate, onEdit }: MessageRow
                   hover:text-primary transition-colors z-10
                 `}
               >
-                <ChevronDown size={14} className={`transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
+                <ChevronDown
+                  size={14}
+                  className={`transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}
+                />
               </button>
             )}
           </div>
@@ -88,26 +107,32 @@ export default function MessageRow({ message, onRegenerate, onEdit }: MessageRow
           {/* AI Icons Below Bubble */}
           {isAI && !message.streaming && (
             <div className="flex items-center gap-1 mt-2 transition-opacity">
-                <button
-                  onClick={handleCopy}
-                  className="p-1.5 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-all"
-                  title={copied ? 'Copied!' : 'Copy'}
-                >
-                  {copied ? <Check size={14} className="text-primary" /> : <Copy size={14} />}
-                </button>
-                <button
-                  onClick={onRegenerate}
-                  className="p-1.5 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-all"
-                  title="Regenerate"
-                >
-                  <RefreshCw size={14} />
-                </button>
-                <button className="p-1.5 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-all" title="Good Response">
-                  <ThumbsUp size={14} />
-                </button>
-                <button className="p-1.5 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-all" title="Bad Response">
-                  <ThumbsDown size={14} />
-                </button>
+              <button
+                onClick={handleCopy}
+                className="p-1.5 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-all"
+                title={copied ? 'Copied!' : 'Copy'}
+              >
+                {copied ? <Check size={14} className="text-primary" /> : <Copy size={14} />}
+              </button>
+              <button
+                onClick={onRegenerate}
+                className="p-1.5 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-all"
+                title="Regenerate"
+              >
+                <RefreshCw size={14} />
+              </button>
+              <button
+                className="p-1.5 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-all"
+                title="Good Response"
+              >
+                <ThumbsUp size={14} />
+              </button>
+              <button
+                className="p-1.5 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-all"
+                title="Bad Response"
+              >
+                <ThumbsDown size={14} />
+              </button>
             </div>
           )}
         </div>
@@ -115,20 +140,20 @@ export default function MessageRow({ message, onRegenerate, onEdit }: MessageRow
         {/* User Icons in behind bubble */}
         {!isAI && (
           <div className="flex flex-col gap-1 mt-3 opacity-0 group-hover/msg:opacity-100 transition-opacity shrink-0">
-             <button
-                onClick={onEdit}
-                className="p-1 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-all"
-                title="Edit"
-              >
-                <Edit3 size={13} />
-              </button>
-              <button
-                onClick={handleCopy}
-                className="p-1 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-all"
-                title={copied ? 'Copied!' : 'Copy'}
-              >
-                {copied ? <Check size={13} className="text-primary" /> : <Copy size={13} />}
-              </button>
+            <button
+              onClick={onEdit}
+              className="p-1 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-all"
+              title="Edit"
+            >
+              <Edit3 size={13} />
+            </button>
+            <button
+              onClick={handleCopy}
+              className="p-1 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-all"
+              title={copied ? 'Copied!' : 'Copy'}
+            >
+              {copied ? <Check size={13} className="text-primary" /> : <Copy size={13} />}
+            </button>
           </div>
         )}
       </div>
