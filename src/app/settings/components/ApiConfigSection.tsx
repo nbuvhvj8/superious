@@ -58,7 +58,6 @@ function ProviderRow({
     setSelectedModels(updated);
     localStorage.setItem(`selected_models_${provider.id}`, JSON.stringify(updated));
 
-    // Update global list for chat input
     const globalStored = localStorage.getItem('chat_models') || '[]';
     let globalModels = JSON.parse(globalStored) as string[];
 
@@ -102,31 +101,99 @@ function ProviderRow({
               {provider.description}
             </p>
           </div>
-          {provider.configured && (
-            <span className="flex items-center gap-1 text-[10px] font-bold text-primary bg-primary/5 px-2 py-0.5 rounded-full uppercase tracking-wider">
-              Connected
-            </span>
-          )}
+          <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
+            {provider.description}
+          </p>
         </div>
 
-        <div className="flex items-center gap-3">
-          {provider.category === 'llm' && provider.configured && providerModels.length > 0 && (
+        {editing ? (
+          <div className="space-y-3">
             <div className="relative">
+              <input
+                type={show ? 'text' : 'password'}
+                value={keyValue}
+                onChange={(e) => setKeyValue(e.target.value)}
+                placeholder={provider.keyPlaceholder}
+                autoComplete="off"
+                spellCheck={false}
+                className="input-field pr-10 font-mono text-sm h-11"
+              />
               <button
-                onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                className="flex items-center gap-2 px-2.5 py-1.5 bg-[#f2f3f6] rounded-[8px] text-[11px] font-bold text-foreground hover:bg-[#ebecef] transition-all"
+                type="button"
+                onClick={() => setShow((s) => !s)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
               >
-                <span>{selectedModels.length} Models</span>
-                <ChevronDown
-                  size={12}
-                  className={`text-muted-foreground transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`}
-                />
+                {show ? <EyeOff size={14} /> : <Eye size={14} />}
               </button>
+            </div>
+            {error && <p className="text-[11px] text-red-500 font-medium">{error}</p>}
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={handleSave}
+                disabled={saving || !keyValue.trim()}
+                className="btn-primary text-xs h-9 px-4"
+              >
+                {saving ? <Loader2 size={12} className="animate-spin" /> : 'Save Key'}
+              </button>
+              {provider.configured && (
+                <button
+                  type="button"
+                  onClick={() => setEditing(false)}
+                  className="btn-ghost text-xs h-9 px-4"
+                >
+                  Cancel
+                </button>
+              )}
+            </div>
+          </div>
+        ) : (
+          <div className="space-y-4">
+            <div className="flex items-center justify-between py-2 border-y border-border/50">
+              <div className="flex flex-col gap-0.5">
+                <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
+                  Status
+                </span>
+                <span className="text-xs font-semibold text-foreground font-mono">
+                  {provider.preview}
+                </span>
+              </div>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setEditing(true)}
+                  className="p-1.5 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-all"
+                >
+                  <Edit3 size={14} />
+                </button>
+                <button
+                  onClick={() => onDelete(provider.id)}
+                  className="p-1.5 rounded-md text-muted-foreground hover:bg-red-50 hover:text-red-500 transition-all"
+                >
+                  <Trash2 size={14} />
+                </button>
+              </div>
+            </div>
 
-              {isDropdownOpen && (
-                <>
-                  <div className="fixed inset-0 z-40" onClick={() => setIsDropdownOpen(false)} />
-                  <div className="absolute top-full right-0 mt-1 w-52 bg-white border border-border/60 rounded-[8px] shadow-xl z-50 py-1 max-h-60 overflow-y-auto scrollbar-thin">
+            {provider.category === 'llm' && providerModels.length > 0 && (
+              <div className="space-y-2">
+                <div className="flex items-center justify-between relative">
+                  <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
+                    Model Selection
+                  </span>
+                  <button
+                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                    className="flex items-center gap-1.5 px-2 py-1 rounded bg-muted hover:bg-muted/80 text-[11px] font-bold text-foreground transition-all"
+                  >
+                    Pick Models{' '}
+                    <ChevronDown
+                      size={12}
+                      className={`transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`}
+                    />
+                  </button>
+                </div>
+
+                {isDropdownOpen && (
+                  <div className="absolute top-full right-0 mt-1 w-56 bg-white border border-border rounded-lg shadow-xl z-30 py-1 max-h-48 overflow-y-auto scrollbar-thin">
                     {providerModels.map((model) => (
                       <button
                         key={model}
@@ -140,65 +207,24 @@ function ProviderRow({
                       </button>
                     ))}
                   </div>
-                </>
-              )}
-            </div>
-          )}
+                )}
 
-          {!editing ? (
-            <div className="flex items-center gap-1">
-              <span className="text-[11.5px] font-mono text-muted-foreground mr-2">
-                {provider.preview}
-              </span>
-              <button
-                onClick={() => setEditing(true)}
-                className="p-1.5 rounded-md text-muted-foreground hover:bg-[#f2f3f6] hover:text-foreground transition-all"
-              >
-                <Edit3 size={14} />
-              </button>
-              <button
-                onClick={() => onDelete(provider.id)}
-                className="p-1.5 rounded-md text-muted-foreground hover:bg-red-50 hover:text-red-500 transition-all"
-              >
-                <Trash2 size={14} />
-              </button>
-            </div>
-          ) : (
-            <div className="flex items-center gap-2">
-              <div className="relative">
-                <input
-                  type={show ? 'text' : 'password'}
-                  value={keyValue}
-                  onChange={(e) => setKeyValue(e.target.value)}
-                  placeholder="Paste API Key"
-                  className="h-8 px-3 pr-8 text-[11.5px] font-mono w-[180px] bg-[#f2f3f6] rounded-[6px] border-none focus:ring-0 placeholder:text-muted-foreground/40"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShow(!show)}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground/60 hover:text-foreground"
-                >
-                  {show ? <EyeOff size={12} /> : <Eye size={12} />}
-                </button>
+                {selectedModels.length > 0 && (
+                  <div className="flex flex-wrap gap-1">
+                    {selectedModels.map((model) => (
+                      <span
+                        key={model}
+                        className="px-1.5 py-0.5 rounded bg-primary/10 text-primary text-[10px] font-bold border border-primary/20"
+                      >
+                        {model}
+                      </span>
+                    ))}
+                  </div>
+                )}
               </div>
-              <button
-                onClick={handleSave}
-                disabled={saving || !keyValue.trim()}
-                className="h-8 px-3 bg-primary text-white rounded-[6px] text-[11px] font-bold hover:opacity-90 disabled:opacity-50 transition-all flex items-center gap-2"
-              >
-                {saving ? <Loader2 size={11} className="animate-spin" /> : 'Save'}
-              </button>
-              {provider.configured && (
-                <button
-                  onClick={() => setEditing(false)}
-                  className="text-[11px] font-bold text-muted-foreground hover:text-foreground px-2"
-                >
-                  Cancel
-                </button>
-              )}
-            </div>
-          )}
-        </div>
+            )}
+          </div>
+        )}
       </div>
       {error && <p className="text-[10px] text-red-500 font-bold ml-0.5">{error}</p>}
     </div>
@@ -236,7 +262,6 @@ export default function ApiConfigSection() {
       throw new Error(text || `Save failed (${res.status})`);
     }
 
-    // Automatically select all models for this provider if it's an LLM and none are selected
     const provider = PROVIDERS.find((p) => p.id === providerId);
     if (provider && provider.category === 'llm' && provider.models && provider.models.length > 0) {
       const existing = localStorage.getItem(`selected_models_${providerId}`);
@@ -274,7 +299,6 @@ export default function ApiConfigSection() {
 
   return (
     <div className="space-y-16">
-      {/* Header & Smart Input */}
       <section className="space-y-8">
         <h2 className="text-[16px] font-bold text-foreground">API Configuration</h2>
 
@@ -294,7 +318,6 @@ export default function ApiConfigSection() {
         </div>
       </section>
 
-      {/* Provider List Section */}
       <section className="space-y-8">
         <div className="space-y-2 border-b border-border/60 pb-4">
           <h2 className="text-[16px] font-bold text-foreground">Providers</h2>
