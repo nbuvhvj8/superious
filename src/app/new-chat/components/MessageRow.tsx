@@ -1,17 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import {
-  Copy,
-  RefreshCw,
-  ThumbsUp,
-  ThumbsDown,
-  Check,
-  Feather,
-  Edit3,
-  ChevronDown,
-  User,
-} from 'lucide-react';
+import { Copy, RefreshCw, ThumbsUp, ThumbsDown, Check, Edit3, ChevronDown } from 'lucide-react';
 import StreamingText from './StreamingText';
 import CommandResponseCard, { type CommandType } from './CommandResponseCard';
 

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
-import { Check, X, Edit3, RotateCcw } from 'lucide-react';
+import { Check, Edit3, RotateCcw } from 'lucide-react';
 
 interface Props {
   value: string;
@@ -49,11 +49,6 @@ export default function ScriptEditor({
     setEditing(false);
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
-  }
-
-  function handleCancel() {
-    setDraft(value);
-    setEditing(false);
   }
 
   function handleReset() {

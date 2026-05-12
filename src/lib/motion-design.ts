@@ -20,7 +20,7 @@ export interface AnimationPreset {
   name: string;
   description: string;
   duration: number;
-  keyframes: Record<string, any>;
+  keyframes: Record<string, Record<string, string | number>>;
   easing: 'ease-in' | 'ease-out' | 'ease-in-out' | 'linear' | 'custom';
 }
 
@@ -159,7 +159,7 @@ export function validateAnimationConfig(config: Partial<AnimationConfig>): boole
 export function createAnimationPayload(
   assetId: string,
   config: AnimationConfig
-): Record<string, any> {
+): Record<string, unknown> {
   return {
     assetId,
     animation: {

@@ -19,8 +19,8 @@ export function useChatModels() {
     if (stored) {
       try {
         setModels(JSON.parse(stored) as string[]);
-      } catch (e) {
-        console.error('Failed to parse chat models from storage', e);
+      } catch (_e) {
+        console.error('Failed to parse chat models from storage', _e);
         setModels([]);
       }
     } else {
@@ -83,7 +83,7 @@ export function syncModelsToStorage(newModels: string[]) {
       localStorage.setItem('chat_models', JSON.stringify(currentModels));
       broadcastModelsUpdate();
     }
-  } catch (e) {
+  } catch (_e) {
     localStorage.setItem('chat_models', JSON.stringify(newModels));
     broadcastModelsUpdate();
   }

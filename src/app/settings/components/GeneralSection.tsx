@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { User, Sun, Moon, Monitor, Bell, Palette, Camera, ChevronDown, Check } from 'lucide-react';
+import { User, Sun, Moon, Monitor, Camera, ChevronDown, Check } from 'lucide-react';
 import Toggle from '@/components/ui/Toggle';
 
 const APP_COLORS = [
@@ -89,7 +89,7 @@ export default function GeneralSection() {
               ].map((mode) => (
                 <button
                   key={mode.id}
-                  onClick={() => setAppearance(mode.id as any)}
+                  onClick={() => setAppearance(mode.id as typeof appearance)}
                   className={`flex items-center gap-1.5 px-3 py-1.5 text-[11.5px] font-bold rounded-[6px] transition-all ${
                     appearance === mode.id
                       ? 'bg-white text-foreground shadow-sm'
