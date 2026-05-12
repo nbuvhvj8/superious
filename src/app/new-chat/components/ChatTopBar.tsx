@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Edit3, ChevronDown } from 'lucide-react';
+import { Edit3 } from 'lucide-react';
 
 interface ChatTopBarProps {
   onNewChat?: () => void;

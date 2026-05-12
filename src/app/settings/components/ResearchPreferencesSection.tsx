@@ -23,7 +23,7 @@ export default function ResearchPreferencesSection() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isDirty },
+    formState: { isDirty },
     watch,
   } = useForm<ResearchFormData>({
     defaultValues: {

@@ -18,16 +18,13 @@ export default function ExportStorageSection() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isDirty },
-    watch,
+    formState: { isDirty },
   } = useForm<ExportFormData>({
     defaultValues: {
       defaultExportFormat: 'md',
       screenshotRetentionDays: 30,
     },
   });
-
-  const retentionDays = watch('screenshotRetentionDays');
 
   async function onSubmit() {
     setSaving(true);

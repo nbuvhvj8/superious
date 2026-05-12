@@ -1,20 +1,7 @@
 'use client';
 
 import React, { useEffect, useMemo, useState } from 'react';
-import {
-  CheckCircle2,
-  ChevronDown,
-  Eye,
-  EyeOff,
-  ExternalLink,
-  Key,
-  Loader2,
-  Plus,
-  ShieldCheck,
-  Trash2,
-  Edit3,
-  Check,
-} from 'lucide-react';
+import { ChevronDown, Eye, EyeOff, Loader2, Trash2, Edit3, Check } from 'lucide-react';
 import SmartKeyInput from './SmartKeyInput';
 import { PROVIDERS } from '@/lib/providers';
 import { broadcastModelsUpdate, syncModelsToStorage } from '@/lib/use-chat-models';
@@ -111,135 +98,45 @@ function ProviderRow({
         <div className="flex items-center gap-3">
           <div className="space-y-0.5">
             <h3 className="text-sm font-bold text-foreground">{provider.name}</h3>
-            <p className="text-[11.5px] text-muted-foreground leading-none">{provider.description}</p>
+            <p className="text-[11.5px] text-muted-foreground leading-none">
+              {provider.description}
+            </p>
           </div>
-<<<<<<< Updated upstream
-          <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
-            {provider.description}
-          </p>
-=======
           {provider.configured && (
             <span className="flex items-center gap-1 text-[10px] font-bold text-primary bg-primary/5 px-2 py-0.5 rounded-full uppercase tracking-wider">
               Connected
             </span>
           )}
->>>>>>> Stashed changes
         </div>
 
-<<<<<<< Updated upstream
-      {editing ? (
-        <div className="space-y-3">
-          <div className="relative">
-            <input
-              type={show ? 'text' : 'password'}
-              value={keyValue}
-              onChange={(e) => setKeyValue(e.target.value)}
-              placeholder={provider.keyPlaceholder}
-              autoComplete="off"
-              spellCheck={false}
-              className="input-field pr-10 font-mono text-sm h-11"
-            />
-            <button
-              type="button"
-              onClick={() => setShow((s) => !s)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
-            >
-              {show ? <EyeOff size={14} /> : <Eye size={14} />}
-            </button>
-          </div>
-          {error && <p className="text-[11px] text-red-500 font-medium">{error}</p>}
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={handleSave}
-              disabled={saving || !keyValue.trim()}
-              className="btn-primary text-xs h-9 px-4"
-            >
-              {saving ? <Loader2 size={12} className="animate-spin" /> : 'Save Key'}
-            </button>
-            {provider.configured && (
-              <button
-                type="button"
-                onClick={() => setEditing(false)}
-                className="btn-ghost text-xs h-9 px-4"
-              >
-                Cancel
-              </button>
-            )}
-          </div>
-        </div>
-      ) : (
-        <div className="space-y-4">
-          <div className="flex items-center justify-between py-2 border-y border-border/50">
-            <div className="flex flex-col gap-0.5">
-              <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
-                Status
-              </span>
-              <span className="text-xs font-semibold text-foreground font-mono">
-                {provider.preview}
-              </span>
-            </div>
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => setEditing(true)}
-                className="p-1.5 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-all"
-              >
-                <Edit3 size={14} />
-              </button>
-              <button
-                onClick={handleDelete}
-                className="p-1.5 rounded-md text-muted-foreground hover:bg-red-50 hover:text-red-500 transition-all"
-              >
-                <Trash2 size={14} />
-              </button>
-            </div>
-          </div>
-
-          {provider.category === 'llm' && providerModels.length > 0 && (
-            <div className="space-y-2">
-              <div className="flex items-center justify-between relative">
-                <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
-                  Model Selection
-                </span>
-                <button
-                  onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                  className="flex items-center gap-1.5 px-2 py-1 rounded bg-muted hover:bg-muted/80 text-[11px] font-bold text-foreground transition-all"
-                >
-                  Pick Models{' '}
-                  <ChevronDown
-                    size={12}
-                    className={`transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`}
-                  />
-                </button>
-
-                {isDropdownOpen && (
-                  <div className="absolute top-full right-0 mt-1 w-56 bg-white border border-border rounded-lg shadow-xl z-30 py-1 max-h-48 overflow-y-auto scrollbar-thin">
-                    {providerModels.map((model) => (
-=======
         <div className="flex items-center gap-3">
           {provider.category === 'llm' && provider.configured && providerModels.length > 0 && (
             <div className="relative">
-              <button 
+              <button
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                 className="flex items-center gap-2 px-2.5 py-1.5 bg-[#f2f3f6] rounded-[8px] text-[11px] font-bold text-foreground hover:bg-[#ebecef] transition-all"
               >
                 <span>{selectedModels.length} Models</span>
-                <ChevronDown size={12} className={`text-muted-foreground transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} />
+                <ChevronDown
+                  size={12}
+                  className={`text-muted-foreground transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`}
+                />
               </button>
-              
+
               {isDropdownOpen && (
                 <>
                   <div className="fixed inset-0 z-40" onClick={() => setIsDropdownOpen(false)} />
                   <div className="absolute top-full right-0 mt-1 w-52 bg-white border border-border/60 rounded-[8px] shadow-xl z-50 py-1 max-h-60 overflow-y-auto scrollbar-thin">
-                    {providerModels.map(model => (
->>>>>>> Stashed changes
+                    {providerModels.map((model) => (
                       <button
                         key={model}
                         onClick={() => toggleModel(model)}
                         className="w-full flex items-center gap-2.5 px-3 py-2 text-[11px] font-semibold hover:bg-[#f9f9f9] transition-colors text-left"
                       >
                         <span className="flex-1 truncate">{model}</span>
-                        {selectedModels.includes(model) && <Check className="text-primary" size={12} />}
+                        {selectedModels.includes(model) && (
+                          <Check className="text-primary" size={12} />
+                        )}
                       </button>
                     ))}
                   </div>
@@ -250,11 +147,19 @@ function ProviderRow({
 
           {!editing ? (
             <div className="flex items-center gap-1">
-              <span className="text-[11.5px] font-mono text-muted-foreground mr-2">{provider.preview}</span>
-              <button onClick={() => setEditing(true)} className="p-1.5 rounded-md text-muted-foreground hover:bg-[#f2f3f6] hover:text-foreground transition-all">
+              <span className="text-[11.5px] font-mono text-muted-foreground mr-2">
+                {provider.preview}
+              </span>
+              <button
+                onClick={() => setEditing(true)}
+                className="p-1.5 rounded-md text-muted-foreground hover:bg-[#f2f3f6] hover:text-foreground transition-all"
+              >
                 <Edit3 size={14} />
               </button>
-              <button onClick={() => onDelete(provider.id)} className="p-1.5 rounded-md text-muted-foreground hover:bg-red-50 hover:text-red-500 transition-all">
+              <button
+                onClick={() => onDelete(provider.id)}
+                className="p-1.5 rounded-md text-muted-foreground hover:bg-red-50 hover:text-red-500 transition-all"
+              >
                 <Trash2 size={14} />
               </button>
             </div>
@@ -276,30 +181,20 @@ function ProviderRow({
                   {show ? <EyeOff size={12} /> : <Eye size={12} />}
                 </button>
               </div>
-<<<<<<< Updated upstream
-
-              {selectedModels.length > 0 && (
-                <div className="flex flex-wrap gap-1">
-                  {selectedModels.map((model) => (
-                    <span
-                      key={model}
-                      className="px-1.5 py-0.5 rounded bg-primary/10 text-primary text-[10px] font-bold border border-primary/20"
-                    >
-                      {model}
-                    </span>
-                  ))}
-                </div>
-=======
-              <button 
-                onClick={handleSave} 
-                disabled={saving || !keyValue.trim()} 
+              <button
+                onClick={handleSave}
+                disabled={saving || !keyValue.trim()}
                 className="h-8 px-3 bg-primary text-white rounded-[6px] text-[11px] font-bold hover:opacity-90 disabled:opacity-50 transition-all flex items-center gap-2"
               >
                 {saving ? <Loader2 size={11} className="animate-spin" /> : 'Save'}
               </button>
               {provider.configured && (
-                <button onClick={() => setEditing(false)} className="text-[11px] font-bold text-muted-foreground hover:text-foreground px-2">Cancel</button>
->>>>>>> Stashed changes
+                <button
+                  onClick={() => setEditing(false)}
+                  className="text-[11px] font-bold text-muted-foreground hover:text-foreground px-2"
+                >
+                  Cancel
+                </button>
               )}
             </div>
           )}
@@ -382,13 +277,14 @@ export default function ApiConfigSection() {
       {/* Header & Smart Input */}
       <section className="space-y-8">
         <h2 className="text-[16px] font-bold text-foreground">API Configuration</h2>
-        
+
         <div className="flex flex-col gap-6">
           <div className="flex items-start justify-between gap-8">
             <div className="space-y-1">
               <h3 className="text-sm font-medium text-foreground">Smart Key Input</h3>
               <p className="text-xs text-muted-foreground leading-relaxed max-w-md">
-                Paste your API key here, and outlier will automatically detect and configure the provider for you.
+                Paste your API key here, and outlier will automatically detect and configure the
+                provider for you.
               </p>
             </div>
             <div className="flex-1 max-w-[400px]">
@@ -402,7 +298,9 @@ export default function ApiConfigSection() {
       <section className="space-y-8">
         <div className="space-y-2 border-b border-border/60 pb-4">
           <h2 className="text-[16px] font-bold text-foreground">Providers</h2>
-          <p className="text-xs text-muted-foreground">Manage your individual AI and search provider credentials.</p>
+          <p className="text-xs text-muted-foreground">
+            Manage your individual AI and search provider credentials.
+          </p>
         </div>
 
         {loadError && (

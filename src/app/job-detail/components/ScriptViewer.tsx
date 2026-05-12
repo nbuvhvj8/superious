@@ -291,7 +291,7 @@ export default function ScriptViewer({
       );
       onBRollDataReady(items);
     }
-  }, [scriptData]);
+  }, [scriptData, onBRollDataReady]);
 
   /** Aggregate verification counts shown in the header legend. */
   const verificationCounts = useMemo<Record<VerificationStatus, number>>(() => {

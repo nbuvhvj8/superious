@@ -64,11 +64,9 @@ export default function AnimationSection() {
     },
   });
 
-  const selectedStyle = watch('animationStyle');
   const speed = watch('animationSpeed');
-  const duration = watch('transitionDuration');
 
-  async function onSubmit(data: AnimationFormData) {
+  async function onSubmit(_data: AnimationFormData) {
     setSaving(true);
     // TODO: Connect to PATCH /api/v1/settings/animation
     await new Promise((r) => setTimeout(r, 1100));

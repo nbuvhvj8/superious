@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import { Key, Sliders, Download, Trash2, Link2 } from 'lucide-react';
 
 export const SETTINGS_TABS = [
   {

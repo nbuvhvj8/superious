@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { RotateCcw, Download, Play, Pause } from 'lucide-react';
+import Image from 'next/image';
 
 interface CapturedAsset {
   id: string;
@@ -99,7 +100,6 @@ export default function MotionDesignGallery() {
 
   const handleDownload = () => {
     // TODO: Implement export with animation applied
-    console.log('Downloading animated asset...');
   };
 
   return (
@@ -119,10 +119,11 @@ export default function MotionDesignGallery() {
             {/* Animation Preview */}
             <div className="aspect-video w-full rounded-lg bg-gradient-to-br from-muted to-muted/50 border-2 border-border flex items-center justify-center overflow-hidden relative">
               {selectedAsset && (
-                <img
+                <Image
                   src={selectedAsset.thumbnail}
                   alt={selectedAsset.name}
-                  className={`w-full h-full object-cover ${isPlaying ? 'animate-pulse' : ''}`}
+                  fill
+                  className={`object-cover ${isPlaying ? 'animate-pulse' : ''}`}
                 />
               )}
 
@@ -197,10 +198,11 @@ export default function MotionDesignGallery() {
                     : 'border-border hover:border-primary/50'
                 }`}
               >
-                <img
+                <Image
                   src={asset.thumbnail}
                   alt={asset.name}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-200"
+                  fill
+                  className="object-cover group-hover:scale-110 transition-transform duration-200"
                 />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
                   <span className="text-xs font-medium text-white opacity-0 group-hover:opacity-100 transition-opacity">

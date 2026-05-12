@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Trash2, AlertTriangle, ImageOff, Loader2 } from 'lucide-react';
+import { Trash2, AlertTriangle, ImageOff } from 'lucide-react';
 import ConfirmModal from '@/components/ui/ConfirmModal';
 
 export default function DangerZoneSection() {
