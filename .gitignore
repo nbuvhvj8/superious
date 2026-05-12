@@ -38,3 +38,4 @@ turbo/
 
 # Encrypted user secrets store (per-deployment, never commit)
 .data/
+.env
