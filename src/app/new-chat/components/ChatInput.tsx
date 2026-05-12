@@ -18,10 +18,7 @@ export interface ChatInputHandle {
 }
 
 const ChatInput = forwardRef<ChatInputHandle, ChatInputProps>(
-  (
-    { value, onChange, onSend, isGenerating = false, showDisclaimer = false },
-    ref
-  ) => {
+  ({ value, onChange, onSend, isGenerating = false, showDisclaimer = false }, ref) => {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const [isFocused, setIsFocused] = useState(false);
     const [selectedModel, setSelectedModel] = useState('Select Model');
@@ -94,7 +91,7 @@ const ChatInput = forwardRef<ChatInputHandle, ChatInputProps>(
           <div className="flex items-center justify-between px-[10px] pt-[2px] pb-[8px]">
             {/* Left Tools */}
             <div className="flex items-center gap-1">
-              <button 
+              <button
                 type="button"
                 className="flex items-center justify-center w-[32px] h-[32px] rounded-full text-foreground/70 hover:bg-[#0000000d] transition-all"
               >
@@ -105,9 +102,7 @@ const ChatInput = forwardRef<ChatInputHandle, ChatInputProps>(
             {/* Right Tools & Send */}
             <div className="flex items-center gap-3">
               {showDisclaimer && (
-                <div
-                  className="h-[24px] px-2 bg-[#f2f3f6] rounded-[6px] text-[11px] font-bold text-muted-foreground flex items-center justify-center"
-                >
+                <div className="h-[24px] px-2 bg-[#f2f3f6] rounded-[6px] text-[11px] font-bold text-muted-foreground flex items-center justify-center">
                   <span className="leading-none">{selectedModel}</span>
                 </div>
               )}
@@ -128,7 +123,7 @@ const ChatInput = forwardRef<ChatInputHandle, ChatInputProps>(
 
         {/* Attachment Section (Slid below) - Only in empty state */}
         {!showDisclaimer && (
-          <div 
+          <div
             className={`
               h-[45px] w-full bg-[#f9f9f9] border border-t-0 border-border rounded-b-[12px] 
               flex items-center justify-end px-3 transition-all duration-300 -mt-2 pt-2 relative z-0
@@ -146,13 +141,18 @@ const ChatInput = forwardRef<ChatInputHandle, ChatInputProps>(
                 "
               >
                 <span>{selectedModel}</span>
-                <ChevronDown size={13} className={`transition-transform duration-200 ${showModels ? 'rotate-180' : ''}`} />
+                <ChevronDown
+                  size={13}
+                  className={`transition-transform duration-200 ${showModels ? 'rotate-180' : ''}`}
+                />
               </button>
 
               {showModels && (
                 <div className="absolute top-full right-0 mt-2 w-52 bg-white border border-border rounded-xl shadow-xl py-1.5 z-50 animate-slide-up">
                   <div className="px-3 py-1.5 border-b border-border/50 mb-1">
-                    <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">Models</span>
+                    <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
+                      Models
+                    </span>
                   </div>
                   {availableModels.length > 0 ? (
                     availableModels.map((model) => (
@@ -171,7 +171,9 @@ const ChatInput = forwardRef<ChatInputHandle, ChatInputProps>(
                       </button>
                     ))
                   ) : (
-                    <div className="px-3 py-2 text-[11px] text-muted-foreground italic">No models selected in settings</div>
+                    <div className="px-3 py-2 text-[11px] text-muted-foreground italic">
+                      No models selected in settings
+                    </div>
                   )}
                 </div>
               )}

@@ -38,7 +38,7 @@ export const SETTINGS_TABS = [
   },
 ] as const;
 
-export type SettingsTabKey = typeof SETTINGS_TABS[number]['key'];
+export type SettingsTabKey = (typeof SETTINGS_TABS)[number]['key'];
 
 interface SettingsNavProps {
   activeTab: SettingsTabKey;
@@ -56,9 +56,11 @@ export default function SettingsNav({ activeTab, onTabChange }: SettingsNavProps
             flex items-center px-3 py-[9px] rounded-[6px] text-[13px] font-semibold
             transition-all duration-150 group relative
             active:scale-[0.98]
-            ${activeTab === item.key 
-              ? 'bg-[#f2f3f6] text-foreground' 
-              : 'text-muted-foreground hover:bg-[#f9f9f9]/60 hover:text-foreground'}
+            ${
+              activeTab === item.key
+                ? 'bg-[#f2f3f6] text-foreground'
+                : 'text-muted-foreground hover:bg-[#f9f9f9]/60 hover:text-foreground'
+            }
           `}
         >
           <span className="truncate">{item.label}</span>

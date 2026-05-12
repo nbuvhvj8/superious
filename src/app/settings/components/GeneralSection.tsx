@@ -25,13 +25,15 @@ export default function GeneralSection() {
       {/* Profile Section */}
       <section className="space-y-6">
         <h2 className="text-[16px] font-bold text-foreground">Profile</h2>
-        
+
         <div className="space-y-6">
           {/* Avatar Row */}
           <div className="flex items-center justify-between gap-4">
             <div className="space-y-1">
               <h3 className="text-sm font-medium text-foreground">Avatar</h3>
-              <p className="text-xs text-muted-foreground">Click to upload a new profile picture.</p>
+              <p className="text-xs text-muted-foreground">
+                Click to upload a new profile picture.
+              </p>
             </div>
             <div className="relative group cursor-pointer shrink-0">
               <div className="w-12 h-12 rounded-full bg-[#f2f3f6] border border-border/40 flex items-center justify-center overflow-hidden">
@@ -48,8 +50,8 @@ export default function GeneralSection() {
             <div className="space-y-1">
               <h3 className="text-sm font-medium text-foreground">Full Name</h3>
             </div>
-            <input 
-              type="text" 
+            <input
+              type="text"
               placeholder="Your full name"
               className="h-9 px-3 text-sm w-full max-w-[240px] text-left bg-[#f2f3f6] rounded-[8px] border-0 outline-none focus:outline-none focus:ring-0 placeholder:text-muted-foreground/40 transition-all hover:bg-[#ebecef]"
             />
@@ -60,8 +62,8 @@ export default function GeneralSection() {
             <div className="space-y-1">
               <h3 className="text-sm font-medium text-foreground">What should outlier call you?</h3>
             </div>
-            <input 
-              type="text" 
+            <input
+              type="text"
               placeholder="Preferred name"
               className="h-9 px-3 text-sm w-full max-w-[240px] text-left bg-[#f2f3f6] rounded-[8px] border-0 outline-none focus:outline-none focus:ring-0 placeholder:text-muted-foreground/40 transition-all hover:bg-[#ebecef]"
             />
@@ -83,14 +85,14 @@ export default function GeneralSection() {
               {[
                 { id: 'light', label: 'White', icon: <Sun size={14} /> },
                 { id: 'dark', label: 'Black', icon: <Moon size={14} /> },
-                { id: 'system', label: 'System', icon: <Monitor size={14} /> }
+                { id: 'system', label: 'System', icon: <Monitor size={14} /> },
               ].map((mode) => (
                 <button
                   key={mode.id}
                   onClick={() => setAppearance(mode.id as any)}
                   className={`flex items-center gap-1.5 px-3 py-1.5 text-[11.5px] font-bold rounded-[6px] transition-all ${
-                    appearance === mode.id 
-                      ? 'bg-white text-foreground shadow-sm' 
+                    appearance === mode.id
+                      ? 'bg-white text-foreground shadow-sm'
                       : 'text-muted-foreground hover:text-foreground'
                   }`}
                 >
@@ -107,22 +109,28 @@ export default function GeneralSection() {
               <h3 className="text-sm font-medium text-foreground">App Color</h3>
             </div>
             <div className="relative">
-              <button 
+              <button
                 onClick={() => setShowColorDropdown(!showColorDropdown)}
                 className="flex items-center gap-2 px-3 py-1.5 bg-[#f2f3f6] rounded-[8px] border-none text-[12px] font-bold text-foreground hover:bg-[#ebecef] transition-all min-w-[120px] justify-between"
               >
                 <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full shadow-sm" style={{ backgroundColor: appColor }} />
-                  <span>{APP_COLORS.find(c => c.value === appColor)?.name}</span>
+                  <div
+                    className="w-3 h-3 rounded-full shadow-sm"
+                    style={{ backgroundColor: appColor }}
+                  />
+                  <span>{APP_COLORS.find((c) => c.value === appColor)?.name}</span>
                 </div>
-                <ChevronDown size={14} className={`text-muted-foreground transition-transform ${showColorDropdown ? 'rotate-180' : ''}`} />
+                <ChevronDown
+                  size={14}
+                  className={`text-muted-foreground transition-transform ${showColorDropdown ? 'rotate-180' : ''}`}
+                />
               </button>
-              
+
               {showColorDropdown && (
                 <>
                   <div className="fixed inset-0 z-40" onClick={() => setShowColorDropdown(false)} />
                   <div className="absolute top-full right-0 mt-1 w-44 bg-white border border-border/60 rounded-[8px] shadow-xl z-50 py-1 overflow-hidden animate-in fade-in slide-in-from-top-1">
-                    {APP_COLORS.map(color => (
+                    {APP_COLORS.map((color) => (
                       <button
                         key={color.value}
                         onClick={() => {
@@ -131,7 +139,10 @@ export default function GeneralSection() {
                         }}
                         className="w-full flex items-center gap-2.5 px-3 py-2 text-[12px] font-semibold hover:bg-[#f9f9f9] transition-colors text-left"
                       >
-                        <div className="w-3.5 h-3.5 rounded-full shadow-sm shrink-0" style={{ backgroundColor: color.value }} />
+                        <div
+                          className="w-3.5 h-3.5 rounded-full shadow-sm shrink-0"
+                          style={{ backgroundColor: color.value }}
+                        />
                         <span className="flex-1">{color.name}</span>
                         {appColor === color.value && <Check className="text-primary" size={13} />}
                       </button>

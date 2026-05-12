@@ -69,10 +69,10 @@ export function syncModelsToStorage(newModels: string[]) {
 
   const stored = localStorage.getItem('chat_models') || '[]';
   try {
-    let currentModels = JSON.parse(stored) as string[];
+    const currentModels = JSON.parse(stored) as string[];
     let changed = false;
 
-    newModels.forEach(m => {
+    newModels.forEach((m) => {
       if (!currentModels.includes(m)) {
         currentModels.push(m);
         changed = true;

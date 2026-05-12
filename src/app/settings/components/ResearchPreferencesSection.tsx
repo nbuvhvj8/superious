@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Sliders, CheckCircle2 } from 'lucide-react';
+import { Sliders, CheckCircle2, Loader2 } from 'lucide-react';
 import Toggle from '@/components/ui/Toggle';
 
 interface ResearchFormData {
@@ -49,170 +49,151 @@ export default function ResearchPreferencesSection() {
   }
 
   return (
-    <section id="research-preferences" className="space-y-8">
+    <section id="research-preferences" className="space-y-12">
       <div className="flex items-center gap-2.5 pb-1 border-b border-border/60">
-        <div className="w-8 h-8 rounded-lg bg-secondary/60 flex items-center justify-center">
+        <div className="w-8 h-8 rounded-lg bg-[#f2f3f6] flex items-center justify-center">
           <Sliders size={15} className="text-foreground" />
         </div>
         <div>
           <h2 className="text-base font-bold text-foreground">Research Preferences</h2>
-          <p className="text-xs text-muted-foreground">
-            Control how the research agent and screenshot service behave per job.
-          </p>
         </div>
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-12">
+        <div className="space-y-8">
           {/* Max Sources */}
-          <div className="space-y-1.5">
-            <label htmlFor="max-sources" className="text-sm font-semibold text-foreground">
-              Max Sources Per Job
-            </label>
-            <p className="text-xs text-muted-foreground">
-              The source_ranker node selects up to this many high-quality sources. Range: 3–10.
-            </p>
-            <div className="flex items-center gap-3">
+          <div className="flex items-start justify-between gap-8">
+            <div className="space-y-1 flex-1">
+              <h3 className="text-sm font-medium text-foreground">Max Sources Per Job</h3>
+              <p className="text-xs text-muted-foreground leading-relaxed max-w-md">
+                The source_ranker node selects up to this many high-quality sources. Range: 3–10.
+              </p>
+            </div>
+            <div className="flex items-center gap-3 w-full max-w-[240px]">
               <input
-                id="max-sources"
                 type="range"
                 min={3}
                 max={10}
                 step={1}
                 {...register('maxSources', { valueAsNumber: true })}
-                className="flex-1 h-1.5 rounded-full accent-primary cursor-pointer"
+                className="flex-1 h-1.5 rounded-full accent-primary cursor-pointer bg-[#f2f3f6]"
               />
-              <span className="font-mono text-sm font-bold text-foreground tabular-nums w-6 text-center">
+              <span className="font-mono text-[12px] font-bold text-foreground bg-[#f2f3f6] px-2 py-1 rounded-[6px] min-w-[28px] text-center">
                 {maxSources}
               </span>
             </div>
-            {errors.maxSources && (
-              <p className="text-xs text-red-500">{errors.maxSources.message}</p>
-            )}
           </div>
 
           {/* Screenshot Concurrency */}
-          <div className="space-y-1.5">
-            <label htmlFor="concurrency" className="text-sm font-semibold text-foreground">
-              Screenshot Concurrency
-            </label>
-            <p className="text-xs text-muted-foreground">
-              Max simultaneous Chromium instances. Higher values use more RAM. Range: 1–5.
-            </p>
-            <div className="flex items-center gap-3">
+          <div className="flex items-start justify-between gap-8">
+            <div className="space-y-1 flex-1">
+              <h3 className="text-sm font-medium text-foreground">Screenshot Concurrency</h3>
+              <p className="text-xs text-muted-foreground leading-relaxed max-w-md">
+                Max simultaneous Chromium instances. Higher values use more RAM. Range: 1–5.
+              </p>
+            </div>
+            <div className="flex items-center gap-3 w-full max-w-[240px]">
               <input
-                id="concurrency"
                 type="range"
                 min={1}
                 max={5}
                 step={1}
                 {...register('screenshotConcurrency', { valueAsNumber: true })}
-                className="flex-1 h-1.5 rounded-full accent-primary cursor-pointer"
+                className="flex-1 h-1.5 rounded-full accent-primary cursor-pointer bg-[#f2f3f6]"
               />
-              <span className="font-mono text-sm font-bold text-foreground tabular-nums w-6 text-center">
+              <span className="font-mono text-[12px] font-bold text-foreground bg-[#f2f3f6] px-2 py-1 rounded-[6px] min-w-[28px] text-center">
                 {concurrency}
               </span>
             </div>
           </div>
 
           {/* Source Timeout */}
-          <div className="space-y-1.5">
-            <label htmlFor="timeout" className="text-sm font-semibold text-foreground">
-              Per-Source Screenshot Timeout
-            </label>
-            <p className="text-xs text-muted-foreground">
-              Seconds before a screenshot attempt is marked failed. Minimum 15s, maximum 60s.
-            </p>
+          <div className="flex items-start justify-between gap-8">
+            <div className="space-y-1 flex-1">
+              <h3 className="text-sm font-medium text-foreground">Per-Source Timeout</h3>
+              <p className="text-xs text-muted-foreground leading-relaxed max-w-md">
+                Seconds before a screenshot attempt is marked failed. Minimum 15s, maximum 60s.
+              </p>
+            </div>
             <div className="flex items-center gap-2">
               <input
-                id="timeout"
                 type="number"
                 min={15}
                 max={60}
                 {...register('sourceTimeoutS', {
                   valueAsNumber: true,
-                  min: { value: 15, message: 'Minimum 15 seconds' },
-                  max: { value: 60, message: 'Maximum 60 seconds' },
+                  min: { value: 15, message: 'Min 15s' },
+                  max: { value: 60, message: 'Max 60s' },
                 })}
-                className="input-field w-24 font-mono text-sm"
+                className="h-9 px-3 text-sm w-24 text-left bg-[#f2f3f6] rounded-[8px] border-0 outline-none focus:outline-none focus:ring-0 placeholder:text-muted-foreground/40 transition-all hover:bg-[#ebecef] font-mono"
               />
-              <span className="text-sm text-muted-foreground font-medium">seconds</span>
+              <span className="text-[12px] font-bold text-muted-foreground">s</span>
             </div>
-            {errors.sourceTimeoutS && (
-              <p className="text-xs text-red-500">{errors.sourceTimeoutS.message}</p>
-            )}
           </div>
 
           {/* Proxy URL */}
-          <div className="space-y-1.5">
-            <label htmlFor="proxy-url" className="text-sm font-semibold text-foreground">
-              Screenshot Proxy URL
-            </label>
-            <p className="text-xs text-muted-foreground">
-              Optional HTTP/HTTPS proxy for blocked domains. Format: http://user:pass@host:port
-            </p>
+          <div className="flex items-start justify-between gap-8">
+            <div className="space-y-1 flex-1">
+              <h3 className="text-sm font-medium text-foreground">Screenshot Proxy URL</h3>
+              <p className="text-xs text-muted-foreground leading-relaxed max-w-md">
+                Optional HTTP/HTTPS proxy for blocked domains.
+              </p>
+            </div>
             <input
-              id="proxy-url"
               type="url"
               placeholder="http://proxy.example.com:8080"
               {...register('proxyUrl')}
-              className="input-field font-mono text-sm"
+              className="h-9 px-3 text-sm w-full max-w-[240px] text-left bg-[#f2f3f6] rounded-[8px] border-0 outline-none focus:outline-none focus:ring-0 placeholder:text-muted-foreground/40 transition-all hover:bg-[#ebecef]"
               autoComplete="off"
             />
           </div>
-        </div>
 
-        {/* Toggle Options */}
-        <div className="space-y-3 pt-2 border-t border-border">
-          <div className="flex items-start justify-between gap-4">
-            <div className="space-y-0.5">
-              <p className="text-sm font-semibold text-foreground">Retry Failed Screenshots</p>
-              <p className="text-xs text-muted-foreground">
-                Automatically retry screenshot capture once if the first attempt fails. Uses
-                exponential back-off (1s, 4s, 16s).
+          {/* Toggle Options */}
+          <div className="flex items-start justify-between gap-8 pt-4 border-t border-border/40">
+            <div className="space-y-1 flex-1">
+              <h3 className="text-sm font-medium text-foreground">Retry Failed Screenshots</h3>
+              <p className="text-xs text-muted-foreground leading-relaxed max-w-md">
+                Automatically retry screenshot capture once if the first attempt fails.
               </p>
             </div>
-            <Toggle checked={retryFailed} onChange={setRetryFailed} id="retry-toggle" />
+            <Toggle checked={retryFailed} onChange={setRetryFailed} />
           </div>
-          <div className="flex items-start justify-between gap-4">
-            <div className="space-y-0.5">
-              <p className="text-sm font-semibold text-foreground">Wayback Machine Fallback</p>
-              <p className="text-xs text-muted-foreground">
-                If a URL is blocked or unavailable, attempt to capture the most recent archive.org
-                snapshot instead.
+
+          <div className="flex items-start justify-between gap-8">
+            <div className="space-y-1 flex-1">
+              <h3 className="text-sm font-medium text-foreground">Wayback Machine Fallback</h3>
+              <p className="text-xs text-muted-foreground leading-relaxed max-w-md">
+                If a URL is blocked, attempt to capture the most recent archive.org snapshot.
               </p>
             </div>
-            <Toggle checked={archiveFallback} onChange={setArchiveFallback} id="archive-toggle" />
+            <Toggle checked={archiveFallback} onChange={setArchiveFallback} />
           </div>
         </div>
 
-        <div className="flex items-center gap-3 pt-1">
-          <button type="submit" disabled={saving} className="btn-primary min-w-[160px]">
+        <div className="flex items-center gap-3 pt-6 border-t border-border/40">
+          <button
+            type="submit"
+            disabled={saving}
+            className="h-9 px-6 bg-[#f2f3f6] rounded-[8px] text-[12px] font-bold text-foreground hover:bg-[#ebecef] transition-all disabled:opacity-50 min-w-[140px]"
+          >
             {saving ? (
-              <span className="flex items-center gap-2">
-                <svg className="animate-spin h-3.5 w-3.5" viewBox="0 0 24 24" fill="none">
-                  <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                  />
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
-                </svg>
-                Saving…
+              <span className="flex items-center justify-center gap-2">
+                <Loader2 size={14} className="animate-spin" />
+                Saving...
               </span>
             ) : saved ? (
-              <span className="flex items-center gap-2">
-                <CheckCircle2 size={14} /> Saved
+              <span className="flex items-center justify-center gap-2">
+                <CheckCircle2 size={14} className="text-primary" />
+                Saved
               </span>
             ) : (
               'Save Preferences'
             )}
           </button>
           {isDirty && !saving && !saved && (
-            <span className="text-xs text-amber-600 font-medium">Unsaved changes</span>
+            <span className="text-[11px] text-amber-600 font-bold uppercase tracking-wider">
+              Unsaved changes
+            </span>
           )}
         </div>
       </form>

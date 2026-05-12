@@ -1,6 +1,6 @@
 /**
  * Gemini Rate Limit Monitor
- * 
+ *
  * This utility tracks model usage against the limits defined in docs/GOOGLE_GEMINI_MODELS.md.
  * It provides a way to check if a model is currently exhausted before making an API call.
  */
@@ -66,31 +66,31 @@ class GeminiRateLimitTracker {
     }
 
     // 2. Filter Minute Window (60s)
-    stats.requests = stats.requests.filter(t => now - t < 60_000);
-    stats.tokens = stats.tokens.filter(t => now - t.timestamp < 60_000);
+    stats.requests = stats.requests.filter((t) => now - t < 60_000);
+    stats.tokens = stats.tokens.filter((t) => now - t.timestamp < 60_000);
 
     // 3. Check RPM
     if (stats.requests.length >= limits.rpm) {
-      return { 
-        canProceed: false, 
-        reason: `RPM limit reached (${limits.rpm} req/min). Try again in ${Math.ceil((60_000 - (now - stats.requests[0])) / 1000)}s.` 
+      return {
+        canProceed: false,
+        reason: `RPM limit reached (${limits.rpm} req/min). Try again in ${Math.ceil((60_000 - (now - stats.requests[0])) / 1000)}s.`,
       };
     }
 
     // 4. Check TPM
     const currentTokens = stats.tokens.reduce((acc, t) => acc + t.count, 0);
     if (currentTokens >= limits.tpm) {
-      return { 
-        canProceed: false, 
-        reason: `TPM limit reached (${limits.tpm} tokens/min).` 
+      return {
+        canProceed: false,
+        reason: `TPM limit reached (${limits.tpm} tokens/min).`,
       };
     }
 
     // 5. Check RPD
     if (stats.dailyCount >= limits.rpd) {
-      return { 
-        canProceed: false, 
-        reason: `Daily limit reached (${limits.rpd} req/day).` 
+      return {
+        canProceed: false,
+        reason: `Daily limit reached (${limits.rpd} req/day).`,
       };
     }
 

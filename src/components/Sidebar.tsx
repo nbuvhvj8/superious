@@ -112,7 +112,7 @@ export default function Sidebar() {
         {NAV_ITEMS.map((item) => {
           const isActive =
             pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href));
-          
+
           const isNewChat = item.key === 'nav-chat';
 
           return (

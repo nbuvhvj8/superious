@@ -16,7 +16,9 @@ export default function AccountSection() {
       </div>
 
       <div className="space-y-4">
-        <p className="text-sm text-muted-foreground">Manage your account profile and credentials.</p>
+        <p className="text-sm text-muted-foreground">
+          Manage your account profile and credentials.
+        </p>
         <div className="p-4 rounded-xl border border-border bg-muted/20 italic text-xs text-muted-foreground">
           Placeholder for account settings: profile info, email preferences, etc.
         </div>

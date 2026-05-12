@@ -202,9 +202,7 @@ export default function ChatPage() {
     <AppLayout>
       <div className="flex flex-col h-[100dvh] bg-background">
         {/* Top Bar */}
-        <ChatTopBar
-          onNewChat={handleNewChat}
-        />
+        <ChatTopBar onNewChat={handleNewChat} />
 
         {/* Messages Area */}
         <MessagesArea
