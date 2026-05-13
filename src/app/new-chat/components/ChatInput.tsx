@@ -148,12 +148,7 @@ const ChatInput = forwardRef<ChatInputHandle, ChatInputProps>(
               </button>
 
               {showModels && (
-                <div className="absolute top-full right-0 mt-2 w-52 bg-white border border-border rounded-xl shadow-xl py-1.5 z-50 animate-slide-up">
-                  <div className="px-3 py-1.5 border-b border-border/50 mb-1">
-                    <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
-                      Models
-                    </span>
-                  </div>
+                <div className="absolute top-full right-0 mt-2 w-52 bg-white border border-border rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.2)] py-1.5 z-50 animate-slide-up max-h-[120px] overflow-y-auto scrollbar-thin">
                   {availableModels.length > 0 ? (
                     availableModels.map((model) => (
                       <button

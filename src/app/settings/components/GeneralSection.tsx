@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { User, Sun, Moon, Monitor, Camera, ChevronDown, Check } from 'lucide-react';
 import Toggle from '@/components/ui/Toggle';
 
@@ -19,6 +19,21 @@ export default function GeneralSection() {
   const [notifyCompletions, setNotifyCompletions] = useState(true);
   const [notifyDispatch, setNotifyDispatch] = useState(true);
   const [showColorDropdown, setShowColorDropdown] = useState(false);
+
+  useEffect(() => {
+    const savedColor = localStorage.getItem('app_color');
+    if (savedColor) {
+      setAppColor(savedColor);
+      document.documentElement.style.setProperty('--primary', savedColor);
+    }
+  }, []);
+
+  const handleColorChange = (color: string) => {
+    setAppColor(color);
+    localStorage.setItem('app_color', color);
+    document.documentElement.style.setProperty('--primary', color);
+    setShowColorDropdown(false);
+  };
 
   return (
     <div className="space-y-16">
@@ -133,10 +148,7 @@ export default function GeneralSection() {
                     {APP_COLORS.map((color) => (
                       <button
                         key={color.value}
-                        onClick={() => {
-                          setAppColor(color.value);
-                          setShowColorDropdown(false);
-                        }}
+                        onClick={() => handleColorChange(color.value)}
                         className="w-full flex items-center gap-2.5 px-3 py-2 text-[12px] font-semibold hover:bg-[#f9f9f9] transition-colors text-left"
                       >
                         <div
@@ -163,9 +175,6 @@ export default function GeneralSection() {
           <div className="flex items-start justify-between gap-8">
             <div className="space-y-1">
               <h3 className="text-sm font-medium text-foreground">Response completions</h3>
-              <p className="text-xs text-muted-foreground leading-relaxed max-w-md">
-                Get notified when outlier has finished a response. Useful for long-running tasks.
-              </p>
             </div>
             <div className="pt-1">
               <Toggle checked={notifyCompletions} onChange={setNotifyCompletions} />
@@ -175,9 +184,6 @@ export default function GeneralSection() {
           <div className="flex items-start justify-between gap-8">
             <div className="space-y-1">
               <h3 className="text-sm font-medium text-foreground">Dispatch messages</h3>
-              <p className="text-xs text-muted-foreground leading-relaxed max-w-md">
-                Get a push notification on your phone when outlier messages you in Dispatch.
-              </p>
             </div>
             <div className="pt-1">
               <Toggle checked={notifyDispatch} onChange={setNotifyDispatch} />

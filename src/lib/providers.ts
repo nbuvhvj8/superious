@@ -56,12 +56,6 @@ export const PROVIDERS: ProviderDefinition[] = [
     keyPattern: '^AIza[a-zA-Z0-9_-]{35}$',
     docsUrl: 'https://aistudio.google.com/app/apikey',
     models: [
-      'gemini-3-flash',
-      'gemini-2.5-flash',
-      'gemini-2.5-flash-lite',
-      'gemini-3.1-flash-lite',
-      'gemini-2.5-pro',
-      'gemini-3.1-pro',
       'gemma-4-26b',
       'gemma-4-31b',
     ],
@@ -129,7 +123,6 @@ export const PROVIDERS: ProviderDefinition[] = [
     models: [
       'openai/gpt-4o',
       'anthropic/claude-3.5-sonnet',
-      'google/gemini-pro-1.5',
       'meta-llama/llama-3.1-405b-instruct',
     ],
   },
