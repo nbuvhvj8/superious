@@ -1,0 +1,51 @@
+
+> outlier@0.1.0 dev
+> next dev -p 4028
+
+   ▲ Next.js 15.1.11
+   - Local:        http://localhost:4028
+   - Network:      http://192.168.0.2:4028
+
+ ✓ Starting...
+ ✓ Ready in 2.6s
+ ○ Compiling /settings ...
+ ✓ Compiled /settings in 5.2s (2075 modules)
+ GET /settings 200 in 5969ms
+ GET /settings 200 in 100ms
+ ○ Compiling /new-chat ...
+ ✓ Compiled /new-chat in 1233ms (2142 modules)
+ GET /new-chat 200 in 1470ms
+ ○ Compiling /cron-job ...
+ ✓ Compiled /cron-job in 600ms (2167 modules)
+ GET /cron-job 200 in 785ms
+ ○ Compiling /storages ...
+ ✓ Compiled /storages in 525ms (2226 modules)
+ GET /storages 200 in 911ms
+ ✓ Compiled /artifact in 455ms (2235 modules)
+ GET /artifact 200 in 635ms
+ ✓ Compiled /session in 411ms (2244 modules)
+ GET /session 200 in 521ms
+ GET /settings 200 in 137ms
+ GET /settings 200 in 55ms
+ GET /new-chat 200 in 81ms
+ GET /cron-job 200 in 88ms
+ GET /storages 200 in 86ms
+ GET /artifact 200 in 68ms
+ GET /session 200 in 44ms
+ ○ Compiling / ...
+ ✓ Compiled / in 1618ms (2231 modules)
+ GET / 200 in 1821ms
+ GET /settings 200 in 138ms
+ ○ Compiling /onboarding ...
+ ✓ Compiled /onboarding in 1924ms (2250 modules)
+ ○ Compiling /api/v1/settings/api-keys ...
+ ✓ Compiled /api/v1/settings/api-keys in 1098ms (2270 modules)
+ GET /api/v1/settings/api-keys 200 in 1499ms
+ GET /api/v1/settings/api-keys 200 in 1504ms
+ GET /new-chat 200 in 266ms
+ ✓ Compiled /cron-job in 350ms (1171 modules)
+ GET /cron-job 200 in 566ms
+ GET /storages 200 in 107ms
+ GET /artifact 200 in 57ms
+ ✓ Compiled /session in 355ms (1177 modules)
+ GET /session 200 in 483ms

@@ -19,6 +19,7 @@ export default function ChatPage() {
   const [inputValue, setInputValue] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
   const [webSearchEnabled] = useState(true);
+  const [selectedModel, setSelectedModel] = useState('Select Model');
   const abortRef = useRef<AbortController | null>(null);
 
   // Slash command state
@@ -122,6 +123,7 @@ export default function ChatPage() {
           messages: history,
           useWebSearch: webSearchEnabled,
           searchResults,
+          model: selectedModel !== 'Select Model' ? selectedModel : undefined,
         }),
         signal: controller.signal,
       });
@@ -185,7 +187,7 @@ export default function ChatPage() {
       abortRef.current = null;
       setIsGenerating(false);
     }
-  }, [inputValue, isGenerating, messages, webSearchEnabled, fetchWebSearch, updateMessage]);
+  }, [inputValue, isGenerating, messages, webSearchEnabled, fetchWebSearch, updateMessage, selectedModel]);
 
   const handleStop = useCallback(() => {
     abortRef.current?.abort();
@@ -218,6 +220,8 @@ export default function ChatPage() {
                 onSend={isGenerating ? handleStop : handleSend}
                 isGenerating={isGenerating}
                 showDisclaimer={messages.length > 0}
+                selectedModel={selectedModel}
+                onModelChange={setSelectedModel}
               />
             ) : undefined
           }
@@ -241,6 +245,8 @@ export default function ChatPage() {
                 onSend={isGenerating ? handleStop : handleSend}
                 isGenerating={isGenerating}
                 showDisclaimer={messages.length > 0}
+                selectedModel={selectedModel}
+                onModelChange={setSelectedModel}
               />
             </div>
           </div>

@@ -11,6 +11,8 @@ interface ChatInputProps {
   onSend: () => void;
   isGenerating?: boolean;
   showDisclaimer?: boolean;
+  selectedModel: string;
+  onModelChange: (model: string) => void;
 }
 
 export interface ChatInputHandle {
@@ -18,18 +20,17 @@ export interface ChatInputHandle {
 }
 
 const ChatInput = forwardRef<ChatInputHandle, ChatInputProps>(
-  ({ value, onChange, onSend, isGenerating = false, showDisclaimer = false }, ref) => {
+  ({ value, onChange, onSend, isGenerating = false, showDisclaimer = false, selectedModel, onModelChange }, ref) => {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const [isFocused, setIsFocused] = useState(false);
-    const [selectedModel, setSelectedModel] = useState('Select Model');
     const [showModels, setShowModels] = useState(false);
     const availableModels = useChatModels();
 
     useEffect(() => {
       if (availableModels.length > 0 && selectedModel === 'Select Model') {
-        setSelectedModel(availableModels[0]);
+        onModelChange(availableModels[0]);
       }
-    }, [availableModels, selectedModel]);
+    }, [availableModels, selectedModel, onModelChange]);
 
     useImperativeHandle(ref, () => ({
       focus: () => {
@@ -154,7 +155,7 @@ const ChatInput = forwardRef<ChatInputHandle, ChatInputProps>(
                       <button
                         key={model}
                         onClick={() => {
-                          setSelectedModel(model);
+                          onModelChange(model);
                           setShowModels(false);
                         }}
                         className={`
