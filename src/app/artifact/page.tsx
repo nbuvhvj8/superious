@@ -2,7 +2,7 @@
 
 import React from 'react';
 import AppLayout from '@/components/AppLayout';
-import { FileText, Clock, ChevronRight } from 'lucide-react';
+import { FileText, Clock } from 'lucide-react';
 
 const MOCK_ARTIFACTS = [
   { id: 'art-1', title: 'Netflix Streaming Trends 2024', type: 'Script Draft', date: '2024-03-20' },
@@ -22,10 +22,10 @@ export default function ArtifactPage() {
           {MOCK_ARTIFACTS.map((artifact) => (
             <div
               key={artifact.id}
-              className="group flex items-center justify-between p-4 bg-card border border-border rounded-xl hover:border-primary/50 transition-all cursor-pointer"
+              className="group flex items-center justify-between p-4 bg-card border border-border rounded-xl transition-all"
             >
               <div className="flex items-center gap-4">
-                <div className="p-2 bg-muted rounded-lg text-muted-foreground group-hover:text-primary transition-colors">
+                <div className="p-2 bg-muted rounded-lg text-muted-foreground transition-colors">
                   <FileText size={20} />
                 </div>
                 <div>
@@ -40,7 +40,6 @@ export default function ArtifactPage() {
                   </div>
                 </div>
               </div>
-              <ChevronRight size={18} className="text-muted-foreground opacity-0 group-hover:opacity-100 transition-all" />
             </div>
           ))}
         </div>
