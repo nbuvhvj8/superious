@@ -5,7 +5,6 @@ import AppLayout from '@/components/AppLayout';
 import Image from 'next/image';
 import GoogleDriveBackupModal from './components/GoogleDriveBackupModal';
 import {
-  Database,
   FolderOpen,
   Cloud,
   Network,
@@ -30,9 +29,6 @@ export default function StoragesPage() {
       <div className="p-8 max-w-7xl mx-auto">
         <header className="mb-10">
           <div className="flex items-center gap-2 mb-2">
-            <div className="p-2 bg-primary/10 rounded-lg text-primary">
-              <Database size={20} />
-            </div>
             <span className="text-sm font-bold text-primary uppercase tracking-widest">
               Storage & Assets
             </span>
@@ -40,9 +36,6 @@ export default function StoragesPage() {
           <div className="flex items-start justify-between">
             <div>
               <h1 className="text-3xl font-bold tracking-tight text-foreground">Storages</h1>
-              <p className="text-muted-foreground mt-2 text-lg max-w-2xl">
-                Manage your research assets, cloud integrations, and semantic knowledge base.
-              </p>
             </div>
             <button
               onClick={() => setShowBackupModal(true)}
@@ -195,10 +188,6 @@ function AssetExplorer() {
           </button>
         </div>
       </div>
-      <p className="text-sm text-muted-foreground -mt-4">
-        A file-explorer style view that organizes all captured screenshots, exported PDFs, and
-        generated script versions.
-      </p>
 
       <div className="bg-card border border-border rounded-xl overflow-hidden">
         <div className="bg-muted/30 px-4 py-2 border-b border-border flex items-center text-xs font-bold text-muted-foreground uppercase tracking-wider">
@@ -281,9 +270,6 @@ function CloudSync({ onOpenBackup }: { onOpenBackup?: () => void }) {
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-bold text-foreground">Multi-Platform Export Sync</h2>
       </div>
-      <p className="text-sm text-muted-foreground -mt-4">
-        Map your research collections to specific folders in Google Drive, Notion, or Dropbox.
-      </p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <CloudCard
@@ -397,9 +383,6 @@ function KnowledgeBase() {
           Graph View
         </button>
       </div>
-      <p className="text-sm text-muted-foreground -mt-4">
-        Cross-reference sources across multiple jobs using semantic tags and AI-driven linking.
-      </p>
 
       <div className="grid gap-4">
         <KnowledgeSource

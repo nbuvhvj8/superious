@@ -19,11 +19,6 @@ interface ProviderInfo {
   updatedAt: string | null;
 }
 
-const CATEGORY_LABEL: Record<ProviderInfo['category'], string> = {
-  llm: 'AI / LLM Providers',
-  search: 'Web Search Providers',
-};
-
 const CATEGORY_ORDER: ProviderInfo['category'][] = ['llm', 'search'];
 
 function ProviderRow({
@@ -91,24 +86,24 @@ function ProviderRow({
     }
   }
 
-  return (
-    <div className="flex flex-col gap-3 py-4 border-b border-border/40 last:border-0">
-      <div className="flex items-center justify-between gap-4">
-        <div className="flex items-center gap-3">
-          <div className="space-y-0.5">
-            <h3 className="text-sm font-bold text-foreground">{provider.name}</h3>
-            <p className="text-[11.5px] text-muted-foreground leading-none">
-              {provider.description}
-            </p>
-          </div>
-          <p className="text-xs text-muted-foreground mt-1 leading-relaxed">
-            {provider.description}
-          </p>
-        </div>
+  const maskedKey = useMemo(() => {
+    if (!provider.preview) return '';
+    const start = provider.preview.slice(0, 3);
+    return `${start}${'*'.repeat(20)}`;
+  }, [provider.preview]);
 
+  return (
+    <div className="flex items-center justify-between py-4 border-b border-border/40 last:border-0 group relative">
+      {/* Left: Name */}
+      <div className="w-[180px] shrink-0">
+        <h3 className="text-sm font-bold text-foreground">{provider.name}</h3>
+      </div>
+
+      {/* Center: Key */}
+      <div className="flex-1 flex justify-center">
         {editing ? (
-          <div className="space-y-3">
-            <div className="relative">
+          <div className="flex items-center gap-2 w-full max-w-[300px]">
+            <div className="relative flex-1">
               <input
                 type={show ? 'text' : 'password'}
                 value={keyValue}
@@ -116,117 +111,95 @@ function ProviderRow({
                 placeholder={provider.keyPlaceholder}
                 autoComplete="off"
                 spellCheck={false}
-                className="input-field pr-10 font-mono text-sm h-11"
+                className="input-field pr-10 font-mono text-xs h-9"
               />
               <button
                 type="button"
                 onClick={() => setShow((s) => !s)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
               >
-                {show ? <EyeOff size={14} /> : <Eye size={14} />}
+                {show ? <EyeOff size={13} /> : <Eye size={13} />}
               </button>
             </div>
-            {error && <p className="text-[11px] text-red-500 font-medium">{error}</p>}
-            <div className="flex items-center gap-2">
+            <button
+              type="button"
+              onClick={handleSave}
+              disabled={saving || !keyValue.trim()}
+              className="btn-primary text-[11px] h-8 px-3"
+            >
+              {saving ? <Loader2 size={12} className="animate-spin" /> : 'Save'}
+            </button>
+            {provider.configured && (
               <button
                 type="button"
-                onClick={handleSave}
-                disabled={saving || !keyValue.trim()}
-                className="btn-primary text-xs h-9 px-4"
+                onClick={() => setEditing(false)}
+                className="btn-ghost text-[11px] h-8 px-2"
               >
-                {saving ? <Loader2 size={12} className="animate-spin" /> : 'Save Key'}
+                Cancel
               </button>
-              {provider.configured && (
-                <button
-                  type="button"
-                  onClick={() => setEditing(false)}
-                  className="btn-ghost text-xs h-9 px-4"
-                >
-                  Cancel
-                </button>
-              )}
-            </div>
+            )}
           </div>
         ) : (
-          <div className="space-y-4">
-            <div className="flex items-center justify-between py-2 border-y border-border/50">
-              <div className="flex flex-col gap-0.5">
-                <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
-                  Status
-                </span>
-                <span className="text-xs font-semibold text-foreground font-mono">
-                  {provider.preview}
-                </span>
-              </div>
-              <div className="flex items-center gap-2">
-                <button
-                  onClick={() => setEditing(true)}
-                  className="p-1.5 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-all"
-                >
-                  <Edit3 size={14} />
-                </button>
-                <button
-                  onClick={() => onDelete(provider.id)}
-                  className="p-1.5 rounded-md text-muted-foreground hover:bg-red-50 hover:text-red-500 transition-all"
-                >
-                  <Trash2 size={14} />
-                </button>
-              </div>
+          <div className="flex items-center gap-4">
+            <span className="text-xs font-mono text-muted-foreground/60 tracking-wider">
+              {maskedKey}
+            </span>
+            <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+              <button
+                onClick={() => setEditing(true)}
+                className="p-1 rounded hover:bg-muted text-muted-foreground transition-colors"
+              >
+                <Edit3 size={13} />
+              </button>
+              <button
+                onClick={() => onDelete(provider.id)}
+                className="p-1 rounded hover:bg-red-50 hover:text-red-500 text-muted-foreground transition-colors"
+              >
+                <Trash2 size={13} />
+              </button>
             </div>
+          </div>
+        )}
+      </div>
 
-            {provider.category === 'llm' && providerModels.length > 0 && (
-              <div className="space-y-2">
-                <div className="flex items-center justify-between relative">
-                  <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider">
-                    Model Selection
-                  </span>
-                  <button
-                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                    className="flex items-center gap-1.5 px-2 py-1 rounded bg-muted hover:bg-muted/80 text-[11px] font-bold text-foreground transition-all"
-                  >
-                    Pick Models{' '}
-                    <ChevronDown
-                      size={12}
-                      className={`transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`}
-                    />
-                  </button>
+      {/* Right: Models */}
+      <div className="w-[180px] shrink-0 flex justify-end">
+        {provider.category === 'llm' && providerModels.length > 0 && (
+          <div className="relative">
+            <button
+              onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-muted/50 hover:bg-muted text-[11px] font-bold text-foreground transition-all"
+            >
+              {selectedModels.length > 0 ? `${selectedModels.length} Models` : 'Select Models'}
+              <ChevronDown
+                size={12}
+                className={`transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`}
+              />
+            </button>
+
+            {isDropdownOpen && (
+              <>
+                <div className="fixed inset-0 z-20" onClick={() => setIsDropdownOpen(false)} />
+                <div className="absolute top-full right-0 mt-1 w-56 bg-white border border-border rounded-lg shadow-xl z-30 py-1 max-h-48 overflow-y-auto scrollbar-thin">
+                  {providerModels.map((model) => (
+                    <button
+                      key={model}
+                      onClick={() => toggleModel(model)}
+                      className="w-full flex items-center gap-2.5 px-3 py-2 text-[11px] font-semibold hover:bg-[#f9f9f9] transition-colors text-left"
+                    >
+                      <span className="flex-1 truncate">{model}</span>
+                      {selectedModels.includes(model) && (
+                        <Check className="text-primary" size={12} />
+                      )}
+                    </button>
+                  ))}
                 </div>
-
-                {isDropdownOpen && (
-                  <div className="absolute top-full right-0 mt-1 w-56 bg-white border border-border rounded-lg shadow-xl z-30 py-1 max-h-48 overflow-y-auto scrollbar-thin">
-                    {providerModels.map((model) => (
-                      <button
-                        key={model}
-                        onClick={() => toggleModel(model)}
-                        className="w-full flex items-center gap-2.5 px-3 py-2 text-[11px] font-semibold hover:bg-[#f9f9f9] transition-colors text-left"
-                      >
-                        <span className="flex-1 truncate">{model}</span>
-                        {selectedModels.includes(model) && (
-                          <Check className="text-primary" size={12} />
-                        )}
-                      </button>
-                    ))}
-                  </div>
-                )}
-
-                {selectedModels.length > 0 && (
-                  <div className="flex flex-wrap gap-1">
-                    {selectedModels.map((model) => (
-                      <span
-                        key={model}
-                        className="px-1.5 py-0.5 rounded bg-primary/10 text-primary text-[10px] font-bold border border-primary/20"
-                      >
-                        {model}
-                      </span>
-                    ))}
-                  </div>
-                )}
-              </div>
+              </>
             )}
           </div>
         )}
       </div>
-      {error && <p className="text-[10px] text-red-500 font-bold ml-0.5">{error}</p>}
+      {error && <p className="text-[10px] text-red-500 font-bold absolute -bottom-1 left-1/2 -translate-x-1/2">{error}</p>}
     </div>
   );
 }
@@ -286,15 +259,11 @@ export default function ApiConfigSection() {
     await refresh();
   }
 
-  const grouped = useMemo(() => {
-    const acc: Record<ProviderInfo['category'], ProviderInfo[]> = {
-      llm: [],
-      search: [],
-    };
-    for (const p of providers ?? []) {
-      acc[p.category]?.push(p);
-    }
-    return acc;
+  const configuredProviders = useMemo(() => {
+    if (!providers) return [];
+    return CATEGORY_ORDER.flatMap(cat =>
+      providers.filter(p => p.category === cat && p.configured)
+    );
   }, [providers]);
 
   return (
@@ -306,10 +275,6 @@ export default function ApiConfigSection() {
           <div className="flex items-start justify-between gap-8">
             <div className="space-y-1">
               <h3 className="text-sm font-medium text-foreground">Smart Key Input</h3>
-              <p className="text-xs text-muted-foreground leading-relaxed max-w-md">
-                Paste your API key here, and outlier will automatically detect and configure the
-                provider for you.
-              </p>
             </div>
             <div className="flex-1 max-w-[400px]">
               <SmartKeyInput onSave={handleSave} />
@@ -322,7 +287,7 @@ export default function ApiConfigSection() {
         <div className="space-y-2 border-b border-border/60 pb-4">
           <h2 className="text-[16px] font-bold text-foreground">Providers</h2>
           <p className="text-xs text-muted-foreground">
-            Manage your individual AI and search provider credentials.
+            Manage your individual AI and search (Tavily, Serper, Brave, Exa) provider credentials.
           </p>
         </div>
 
@@ -337,29 +302,18 @@ export default function ApiConfigSection() {
             <Loader2 size={14} className="animate-spin text-primary" />
             <span>Loading providers...</span>
           </div>
-        ) : (
-          <div className="space-y-12">
-            {CATEGORY_ORDER.map((category) => {
-              const list = grouped[category];
-              if (list.length === 0) return null;
-              return (
-                <div key={category} className="space-y-2">
-                  <h3 className="text-[11px] font-bold text-muted-foreground uppercase tracking-widest px-0.5">
-                    {CATEGORY_LABEL[category]}
-                  </h3>
-                  <div className="flex flex-col">
-                    {list.map((p) => (
-                      <ProviderRow
-                        key={p.id}
-                        provider={p}
-                        onSave={handleSave}
-                        onDelete={handleDelete}
-                      />
-                    ))}
-                  </div>
-                </div>
-              );
-            })}
+        ) : configuredProviders.length > 0 && (
+          <div className="space-y-2">
+            <div className="flex flex-col">
+              {configuredProviders.map((p) => (
+                <ProviderRow
+                  key={p.id}
+                  provider={p}
+                  onSave={handleSave}
+                  onDelete={handleDelete}
+                />
+              ))}
+            </div>
           </div>
         )}
       </section>

@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from 'next';
 import localFont from 'next/font/local';
 import Script from 'next/script';
 import '../styles/tailwind.css';
+import { ColorManager } from '@/components/ColorManager';
 
 const outfit = localFont({
   src: '../../public/fonts/Outfit-VariableFont_wght.ttf',
@@ -28,6 +29,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" className={`${outfit.variable}`}>
       <body className={outfit.className}>
+        <ColorManager />
         {children}
 
         <Script

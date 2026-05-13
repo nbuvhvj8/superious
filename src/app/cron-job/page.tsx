@@ -4,9 +4,6 @@ import React, { useState } from 'react';
 import AppLayout from '@/components/AppLayout';
 import {
   Clock,
-  Zap,
-  FileSearch,
-  Archive,
   Plus,
   Play,
   Bell,
@@ -82,28 +79,13 @@ export default function CronJobPage() {
     <AppLayout>
       <div className="p-8 max-w-7xl mx-auto">
         <header className="mb-10">
-          <div className="flex items-center gap-2 mb-2">
-            <div className="p-2 bg-primary/10 rounded-lg text-primary">
-              <Clock size={20} />
-            </div>
-            <span className="text-sm font-bold text-primary uppercase tracking-widest">
-              Automation
-            </span>
-          </div>
           <h1 className="text-3xl font-bold tracking-tight text-foreground">Cron Jobs</h1>
-          <p className="text-muted-foreground mt-2 text-lg max-w-2xl">
-            Automate your research workflow with scheduled tasks, competitive intelligence, and
-            archival snapshots.
-          </p>
         </header>
 
         {/* Quick Actions / Options Sections */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
           {/* Option 1: Competitive Intelligence */}
           <div className="bg-card border border-border rounded-xl p-6 shadow-sm hover:shadow-md transition-all group border-l-4 border-l-blue-500">
-            <div className="w-12 h-12 bg-blue-500/10 rounded-lg flex items-center justify-center mb-4 text-blue-500">
-              <Zap size={24} />
-            </div>
             <h3 className="text-lg font-bold mb-2">Competitive Intel</h3>
             <p className="text-sm text-muted-foreground mb-6 leading-relaxed">
               Rescan the web for your research topics. Get notified if major new sources or
@@ -119,9 +101,6 @@ export default function CronJobPage() {
 
           {/* Option 2: Automated Research */}
           <div className="bg-card border border-border rounded-xl p-6 shadow-sm hover:shadow-md transition-all group border-l-4 border-l-purple-500">
-            <div className="w-12 h-12 bg-purple-500/10 rounded-lg flex items-center justify-center mb-4 text-purple-500">
-              <FileSearch size={24} />
-            </div>
             <h3 className="text-lg font-bold mb-2">Automated Research</h3>
             <p className="text-sm text-muted-foreground mb-6 leading-relaxed">
               Schedule entire research jobs in advance. Perfect for recurring news or fixed posting
@@ -137,9 +116,6 @@ export default function CronJobPage() {
 
           {/* Option 3: Archive Snapshots */}
           <div className="bg-card border border-border rounded-xl p-6 shadow-sm hover:shadow-md transition-all group border-l-4 border-l-emerald-500">
-            <div className="w-12 h-12 bg-emerald-500/10 rounded-lg flex items-center justify-center mb-4 text-emerald-500">
-              <Archive size={24} />
-            </div>
             <h3 className="text-lg font-bold mb-2">Archive Snapshots</h3>
             <p className="text-sm text-muted-foreground mb-6 leading-relaxed">
               Create recurring snapshots of URL lists to ensure evidence remains accessible even if
