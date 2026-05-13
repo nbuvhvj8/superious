@@ -116,7 +116,8 @@ function ProviderRow({
               <button
                 type="button"
                 onClick={() => setShow((s) => !s)}
-                className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
+                aria-label={show ? 'Hide API key' : 'Show API key'}
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground focus:outline-none focus:ring-2 focus:ring-primary rounded-sm"
               >
                 {show ? <EyeOff size={13} /> : <Eye size={13} />}
               </button>
@@ -144,16 +145,25 @@ function ProviderRow({
             <span className="text-xs font-mono text-muted-foreground/60 tracking-wider">
               {maskedKey}
             </span>
-            <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+            <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity">
               <button
                 onClick={() => setEditing(true)}
-                className="p-1 rounded hover:bg-muted text-muted-foreground transition-colors"
+                aria-label="Edit API key"
+                className="p-1 rounded hover:bg-muted text-muted-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
               >
                 <Edit3 size={13} />
               </button>
               <button
-                onClick={() => onDelete(provider.id)}
-                className="p-1 rounded hover:bg-red-50 hover:text-red-500 text-muted-foreground transition-colors"
+                onClick={async () => {
+                  try {
+                    setError(null);
+                    await onDelete(provider.id);
+                  } catch (err: unknown) {
+                    setError(err instanceof Error ? err.message : 'Delete failed');
+                  }
+                }}
+                aria-label="Delete API key"
+                className="p-1 rounded hover:bg-red-50 hover:text-red-500 text-muted-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-red-500"
               >
                 <Trash2 size={13} />
               </button>
@@ -199,7 +209,11 @@ function ProviderRow({
           </div>
         )}
       </div>
-      {error && <p className="text-[10px] text-red-500 font-bold absolute -bottom-1 left-1/2 -translate-x-1/2">{error}</p>}
+      {error && (
+        <p className="text-[10px] text-red-500 font-bold absolute -bottom-1 left-1/2 -translate-x-1/2">
+          {error}
+        </p>
+      )}
     </div>
   );
 }
@@ -261,8 +275,8 @@ export default function ApiConfigSection() {
 
   const configuredProviders = useMemo(() => {
     if (!providers) return [];
-    return CATEGORY_ORDER.flatMap(cat =>
-      providers.filter(p => p.category === cat && p.configured)
+    return CATEGORY_ORDER.flatMap((cat) =>
+      providers.filter((p) => p.category === cat && p.configured)
     );
   }, [providers]);
 
@@ -302,19 +316,21 @@ export default function ApiConfigSection() {
             <Loader2 size={14} className="animate-spin text-primary" />
             <span>Loading providers...</span>
           </div>
-        ) : configuredProviders.length > 0 && (
-          <div className="space-y-2">
-            <div className="flex flex-col">
-              {configuredProviders.map((p) => (
-                <ProviderRow
-                  key={p.id}
-                  provider={p}
-                  onSave={handleSave}
-                  onDelete={handleDelete}
-                />
-              ))}
+        ) : (
+          configuredProviders.length > 0 && (
+            <div className="space-y-2">
+              <div className="flex flex-col">
+                {configuredProviders.map((p) => (
+                  <ProviderRow
+                    key={p.id}
+                    provider={p}
+                    onSave={handleSave}
+                    onDelete={handleDelete}
+                  />
+                ))}
+              </div>
             </div>
-          </div>
+          )
         )}
       </section>
     </div>

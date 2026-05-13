@@ -22,10 +22,11 @@ export default function GeneralSection() {
 
   useEffect(() => {
     const savedColor = localStorage.getItem('app_color');
-    if (savedColor) {
-      setAppColor(savedColor);
-      document.documentElement.style.setProperty('--primary', savedColor);
-    }
+    const isValidColor = APP_COLORS.some((c) => c.value === savedColor);
+    const colorToApply = isValidColor ? (savedColor as string) : '#16a34a';
+
+    setAppColor(colorToApply);
+    document.documentElement.style.setProperty('--primary', colorToApply);
   }, []);
 
   const handleColorChange = (color: string) => {

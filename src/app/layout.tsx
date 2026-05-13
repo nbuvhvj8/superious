@@ -28,6 +28,25 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${outfit.variable}`}>
+      <head>
+        <Script
+          id="theme-initializer"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var color = localStorage.getItem('app_color');
+                  var supported = ['#16a34a', '#2563eb', '#9333ea', '#e11d48', '#ea580c', '#334155'];
+                  if (color && supported.indexOf(color) > -1) {
+                    document.documentElement.style.setProperty('--primary', color);
+                  }
+                } catch (e) {}
+              })();
+            `,
+          }}
+        />
+      </head>
       <body className={outfit.className}>
         <ColorManager />
         {children}
