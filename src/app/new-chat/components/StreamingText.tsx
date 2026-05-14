@@ -32,9 +32,43 @@ export default function StreamingText({
   className = '',
 }: StreamingTextProps) {
   const { displayed, isTyping } = useTypewriter(text, { cps, instant });
+
+  const renderInline = (line: string) => {
+    const nodes: React.ReactNode[] = [];
+    const tokenRegex = /(\*\*[^*]+\*\*|\*[^*]+\*)/g;
+    let lastIndex = 0;
+    let match: RegExpExecArray | null;
+
+    while ((match = tokenRegex.exec(line)) !== null) {
+      if (match.index > lastIndex) nodes.push(line.slice(lastIndex, match.index));
+      const token = match[0];
+      if (token.startsWith('**') && token.endsWith('**')) {
+        nodes.push(<strong key={`${match.index}-bold`}>{token.slice(2, -2)}</strong>);
+      } else if (token.startsWith('*') && token.endsWith('*')) {
+        nodes.push(<em key={`${match.index}-italic`}>{token.slice(1, -1)}</em>);
+      }
+      lastIndex = match.index + token.length;
+    }
+    if (lastIndex < line.length) nodes.push(line.slice(lastIndex));
+    return nodes;
+  };
+
+  const renderedLines = displayed.split('\n').map((line, index) => {
+    const headingMatch = line.match(/^(#{1,3})\s+(.+)$/);
+    if (!headingMatch) return <p key={index}>{renderInline(line)}</p>;
+    const level = headingMatch[1].length;
+    const textValue = headingMatch[2];
+    const headingClass = level === 1 ? 'text-[1.2em] font-semibold' : level === 2 ? 'text-[1.1em] font-semibold' : 'font-semibold';
+    return (
+      <p key={index} className={headingClass}>
+        {renderInline(textValue)}
+      </p>
+    );
+  });
+
   return (
     <span className={`whitespace-pre-wrap ${className}`}>
-      {displayed}
+      {renderedLines}
       {showCaret && isTyping && (
         <span
           aria-hidden="true"

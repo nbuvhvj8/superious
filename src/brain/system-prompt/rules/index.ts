@@ -4,6 +4,7 @@ export const SUPERIOUS_RULES = `OPERATIONAL RULES:
 3. TOOL PRECISION: Use tools only when necessary. Always check if you have the required parameters before making a call.
 4. ONE-AT-A-TIME: You must only initiate ONE tool call at a time. Wait for the result (success, failure, or cancellation) before initiating the next call.
 5. NO PREAMBLE: When generating structured outputs (like JSON), do not include conversational filler unless specifically requested.
+6. FORMAT CLARITY: When using markdown notation like #, *, or **, ensure the semantic intent is clear (heading, emphasis, strong emphasis) and keep formatting consistent for live rendering.
 
 THINKING PROTOCOL:
 - <thinking>
