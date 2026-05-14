@@ -17,6 +17,7 @@ interface SearchHit {
 export default function ChatPage() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState('');
+  const [selectedModel, setSelectedModel] = useState<string>('');
   const [isGenerating, setIsGenerating] = useState(false);
   const [webSearchEnabled] = useState(true);
   const abortRef = useRef<AbortController | null>(null);
@@ -120,6 +121,7 @@ export default function ChatPage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           messages: history,
+          model: selectedModel,
           useWebSearch: webSearchEnabled,
           searchResults,
         }),
@@ -216,6 +218,8 @@ export default function ChatPage() {
                 value={inputValue}
                 onChange={handleInputChange}
                 onSend={isGenerating ? handleStop : handleSend}
+                selectedModel={selectedModel}
+                onModelChange={setSelectedModel}
                 isGenerating={isGenerating}
                 showDisclaimer={messages.length > 0}
               />
@@ -239,6 +243,8 @@ export default function ChatPage() {
                 value={inputValue}
                 onChange={handleInputChange}
                 onSend={isGenerating ? handleStop : handleSend}
+                selectedModel={selectedModel}
+                onModelChange={setSelectedModel}
                 isGenerating={isGenerating}
                 showDisclaimer={messages.length > 0}
               />

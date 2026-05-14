@@ -56,10 +56,6 @@ export const PROVIDERS: ProviderDefinition[] = [
     keyPattern: '^AIza[a-zA-Z0-9_-]{35}$',
     docsUrl: 'https://aistudio.google.com/app/apikey',
     models: [
-      'gemini-3-flash',
-      'gemini-2.5-flash',
-      'gemini-2.5-flash-lite',
-      'gemini-3.1-flash-lite',
       'gemma-4-26b',
       'gemma-4-31b',
     ],

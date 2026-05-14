@@ -39,3 +39,6 @@ turbo/
 # Encrypted user secrets store (per-deployment, never commit)
 .data/
 .env
+
+.gemini/
+gha-creds-*.json

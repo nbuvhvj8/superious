@@ -13,10 +13,10 @@ export interface ModelLimit {
 
 // Limits based on docs/GOOGLE_GEMINI_MODELS.md
 export const GEMINI_LIMITS: Record<string, ModelLimit> = {
-  'gemini-3-flash': { rpm: 5, tpm: 250_000, rpd: 20 },
-  'gemini-2.5-flash': { rpm: 5, tpm: 250_000, rpd: 20 },
-  'gemini-2.5-flash-lite': { rpm: 10, tpm: 250_000, rpd: 20 },
-  'gemini-3.1-flash-lite': { rpm: 15, tpm: 250_000, rpd: 500 },
+  'gemini-2.0-flash': { rpm: 10, tpm: 1_000_000, rpd: 2000 },
+  'gemini-1.5-pro': { rpm: 2, tpm: 32000, rpd: 50 },
+  'gemini-1.5-flash': { rpm: 15, tpm: 1_000_000, rpd: 1500 },
+  'gemini-1.5-flash-8b': { rpm: 15, tpm: 1_000_000, rpd: 1500 },
   'gemma-4-26b': { rpm: 15, tpm: 1_000_000, rpd: 1_500 },
   'gemma-4-31b': { rpm: 15, tpm: 1_000_000, rpd: 1_500 },
   'gemma-3-1b': { rpm: 30, tpm: 15_000, rpd: 14_400 },

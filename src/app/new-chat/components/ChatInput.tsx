@@ -9,6 +9,8 @@ interface ChatInputProps {
   value: string;
   onChange: (value: string) => void;
   onSend: () => void;
+  selectedModel?: string;
+  onModelChange?: (model: string) => void;
   isGenerating?: boolean;
   showDisclaimer?: boolean;
 }
@@ -18,18 +20,27 @@ export interface ChatInputHandle {
 }
 
 const ChatInput = forwardRef<ChatInputHandle, ChatInputProps>(
-  ({ value, onChange, onSend, isGenerating = false, showDisclaimer = false }, ref) => {
+  ({ value, onChange, onSend, selectedModel: propSelectedModel, onModelChange, isGenerating = false, showDisclaimer = false }, ref) => {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const [isFocused, setIsFocused] = useState(false);
-    const [selectedModel, setSelectedModel] = useState('Select Model');
+    const [localSelectedModel, setLocalSelectedModel] = useState('Select Model');
     const [showModels, setShowModels] = useState(false);
     const availableModels = useChatModels();
 
-    useEffect(() => {
-      if (availableModels.length > 0 && selectedModel === 'Select Model') {
-        setSelectedModel(availableModels[0]);
+    const currentModel = propSelectedModel || localSelectedModel;
+    const setCurrentModel = (model: string) => {
+      if (onModelChange) {
+        onModelChange(model);
+      } else {
+        setLocalSelectedModel(model);
       }
-    }, [availableModels, selectedModel]);
+    };
+
+    useEffect(() => {
+      if (availableModels.length > 0 && currentModel === 'Select Model') {
+        setCurrentModel(availableModels[0]);
+      }
+    }, [availableModels, currentModel]);
 
     useImperativeHandle(ref, () => ({
       focus: () => {
@@ -103,7 +114,7 @@ const ChatInput = forwardRef<ChatInputHandle, ChatInputProps>(
             <div className="flex items-center gap-3">
               {showDisclaimer && (
                 <div className="h-[24px] px-2 bg-[#f2f3f6] rounded-[6px] text-[11px] font-bold text-muted-foreground flex items-center justify-center">
-                  <span className="leading-none">{selectedModel}</span>
+                  <span className="leading-none">{currentModel}</span>
                 </div>
               )}
               {value.length > 1500 && (
@@ -140,7 +151,7 @@ const ChatInput = forwardRef<ChatInputHandle, ChatInputProps>(
                   transition-all duration-150
                 "
               >
-                <span>{selectedModel}</span>
+                <span>{currentModel}</span>
                 <ChevronDown
                   size={13}
                   className={`transition-transform duration-200 ${showModels ? 'rotate-180' : ''}`}
@@ -154,12 +165,12 @@ const ChatInput = forwardRef<ChatInputHandle, ChatInputProps>(
                       <button
                         key={model}
                         onClick={() => {
-                          setSelectedModel(model);
+                          setCurrentModel(model);
                           setShowModels(false);
                         }}
                         className={`
                           w-full text-left px-3 py-2 text-xs flex items-center justify-between transition-colors
-                          ${selectedModel === model ? 'bg-primary/5 text-primary font-bold' : 'text-foreground hover:bg-muted'}
+                          ${currentModel === model ? 'bg-primary/5 text-primary font-bold' : 'text-foreground hover:bg-muted'}
                         `}
                       >
                         {model}

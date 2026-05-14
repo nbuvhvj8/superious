@@ -51,6 +51,8 @@ export default function Sidebar() {
   const [collapsed, setCollapsed] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
 
+  const [openMenuId, setOpenMenuId] = useState<string | null>(null);
+
   const sessions = useMemo(() => mockSessions, []);
 
   const renderNavLink = (item: NavItem) => {
@@ -112,13 +114,29 @@ export default function Sidebar() {
           <div className="px-3 pb-2 text-[11px] font-bold tracking-[0.12em] text-muted-foreground">recents</div>
           <div className="space-y-1">
             {sessions.map((session) => (
-              <div key={session.id} className="flex items-center gap-1 rounded-[6px] px-2 py-1 hover:bg-[#f9f9f9] transition-colors group">
+              <div key={session.id} className="relative flex items-center gap-1 rounded-[6px] px-2 py-1 hover:bg-[#f9f9f9] transition-colors group">
                 <Link href={session.href} className="block min-w-0 flex-1 rounded-[6px] px-1 py-1 text-[13px] text-muted-foreground hover:text-foreground">
                   <span className="line-clamp-1">{session.title}</span>
                 </Link>
-                <button className="p-1.5 rounded-[6px] text-muted-foreground hover:bg-[#f2f3f6] hover:text-foreground opacity-0 group-hover:opacity-100 transition-all" aria-label={`Open options for ${session.title}`}>
+                <button 
+                  onClick={() => setOpenMenuId(openMenuId === session.id ? null : session.id)}
+                  className={`p-1.5 rounded-[6px] text-muted-foreground hover:bg-[#f2f3f6] hover:text-foreground transition-all ${openMenuId === session.id ? 'opacity-100 bg-[#f2f3f6]' : 'opacity-0 group-hover:opacity-100'}`} 
+                  aria-label={`Open options for ${session.title}`}
+                >
                   <MoreHorizontal size={14} />
                 </button>
+
+                {openMenuId === session.id && (
+                  <>
+                    <div className="fixed inset-0 z-30" onClick={() => setOpenMenuId(null)} />
+                    <div className="absolute top-full right-0 mt-1 w-36 bg-white border border-border rounded-lg shadow-xl z-40 py-1.5 animate-slide-up">
+                      <button className="w-full text-left px-3 py-1.5 text-[12px] font-medium text-muted-foreground hover:bg-[#f9f9f9] hover:text-foreground transition-colors">Archive</button>
+                      <button className="w-full text-left px-3 py-1.5 text-[12px] font-medium text-muted-foreground hover:bg-[#f9f9f9] hover:text-foreground transition-colors">Rename</button>
+                      <div className="h-px bg-border/50 my-1" />
+                      <button className="w-full text-left px-3 py-1.5 text-[12px] font-medium text-red-500 hover:bg-red-50 transition-colors">Delete</button>
+                    </div>
+                  </>
+                )}
               </div>
             ))}
           </div>
@@ -139,14 +157,53 @@ export default function Sidebar() {
       </div>
     </aside>
 
-    <Modal open={searchOpen} onClose={() => setSearchOpen(false)} title="Search" size="full">
-      <div className="w-[min(84vw,820px)] space-y-4">
-        <input
-          type="text"
-          placeholder="Search chats, prompts, notes, files, and more..."
-          className="w-full rounded-[8px] border border-[#dfe3ea] bg-white px-4 py-3 text-[14px] outline-none focus:border-primary"
-        />
-        <p className="text-xs text-muted-foreground">Start typing to quickly find chats or anything else in the app.</p>
+    <Modal open={searchOpen} onClose={() => setSearchOpen(false)} size="xl">
+      <div className="p-4 space-y-6">
+        <div className="relative group">
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground group-focus-within:text-primary transition-colors" size={18} />
+          <input
+            type="text"
+            autoFocus
+            placeholder="Search chats, prompts, notes..."
+            className="w-full h-12 pl-12 pr-4 rounded-[10px] bg-[#f2f3f6] border-0 text-[15px] outline-none focus:ring-2 focus:ring-primary/10 transition-all placeholder:text-muted-foreground/60"
+          />
+        </div>
+
+        <div className="space-y-4">
+          <div className="flex items-center justify-between px-1">
+            <h4 className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground/80">Recent Searches</h4>
+            <button className="text-[11px] font-medium text-muted-foreground hover:text-foreground transition-colors">Clear all</button>
+          </div>
+          
+          <div className="grid gap-1">
+            {[
+              { title: 'Q2 Product Strategy', category: 'Chat', time: '2h ago' },
+              { title: 'Market Analysis - AI Tools', category: 'Research', time: '5h ago' },
+              { title: 'Video Script: Future of SaaS', category: 'Script', time: 'Yesterday' },
+            ].map((item, i) => (
+              <button key={i} className="flex items-center justify-between w-full p-2.5 rounded-[8px] hover:bg-[#f2f3f6] transition-all group active:scale-[0.99]">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-[6px] bg-white border border-border/50 flex items-center justify-center text-muted-foreground group-hover:text-primary transition-colors">
+                    <Clock size={14} />
+                  </div>
+                  <div className="text-left">
+                    <div className="text-[13px] font-medium text-foreground">{item.title}</div>
+                    <div className="text-[11px] text-muted-foreground">{item.category}</div>
+                  </div>
+                </div>
+                <div className="text-[11px] text-muted-foreground">{item.time}</div>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="pt-2 border-t border-border/50 flex items-center justify-between px-1 text-[11px] text-muted-foreground">
+          <div className="flex gap-4">
+            <span className="flex items-center gap-1"><kbd className="px-1.5 py-0.5 rounded border border-border bg-muted font-sans text-[10px]">↵</kbd> to select</span>
+            <span className="flex items-center gap-1"><kbd className="px-1.5 py-0.5 rounded border border-border bg-muted font-sans text-[10px]">↑↓</kbd> to navigate</span>
+          </div>
+          <span className="flex items-center gap-1"><kbd className="px-1.5 py-0.5 rounded border border-border bg-muted font-sans text-[10px]">ESC</kbd> to close</span>
+        </div>
       </div>
     </Modal>
     </>
