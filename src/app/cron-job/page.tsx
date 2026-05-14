@@ -208,7 +208,7 @@ export default function CronJobPage() {
       </div>
 
       <Modal
-        isOpen={isModalOpen}
+        open={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         title={
           modalType === 'recapture'
