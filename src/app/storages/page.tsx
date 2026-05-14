@@ -26,82 +26,77 @@ export default function StoragesPage() {
 
   return (
     <AppLayout>
-      <div className="p-8 max-w-7xl mx-auto">
-        <header className="mb-10">
-          <div className="flex items-center gap-2 mb-2">
-            <span className="text-sm font-bold text-primary uppercase tracking-widest">
-              Storage & Assets
-            </span>
-          </div>
-          <div className="flex items-start justify-between">
-            <div>
-              <h1 className="text-3xl font-bold tracking-tight text-foreground">Storages</h1>
+      <div className="mx-auto w-full max-w-[1300px] px-8 py-8">
+        <div className="min-h-[600px] overflow-hidden rounded-[12px] border border-[#ebedf2] bg-white p-10 pt-6">
+          <header className="mb-8">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-sm font-bold text-primary uppercase tracking-widest">
+                Storage & Assets
+              </span>
             </div>
+            <div className="flex items-start justify-between">
+              <div>
+                <h1 className="text-3xl font-bold tracking-tight text-foreground">Storages</h1>
+              </div>
+              <button
+                onClick={() => setShowBackupModal(true)}
+                className="flex h-9 items-center gap-2 rounded-[8px] bg-[#f2f3f6] px-3 text-[12px] font-semibold text-foreground transition-colors hover:bg-[#e8eaf0]"
+              >
+                <HardDrive size={18} />
+                Backup to Drive
+              </button>
+            </div>
+          </header>
+
+          {/* Tab Navigation */}
+          <div className="mb-8 inline-flex rounded-[8px] bg-[#f2f3f6] p-1">
             <button
-              onClick={() => setShowBackupModal(true)}
-              className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-lg text-sm font-bold shadow-lg shadow-primary/20 hover:opacity-90 transition-opacity"
+              onClick={() => setActiveTab('assets')}
+              className={`rounded-[6px] px-3 py-2 text-[13px] font-semibold transition-all duration-150 relative ${
+                activeTab === 'assets'
+                  ? 'bg-white text-foreground shadow-sm'
+                  : 'text-muted-foreground hover:bg-[#f9f9f9]/60 hover:text-foreground'
+              }`}
             >
-              <HardDrive size={18} />
-              Backup to Drive
+              <div className="flex items-center gap-2">
+                <FolderOpen size={16} />
+                Asset Explorer
+              </div>
+            </button>
+            <button
+              onClick={() => setActiveTab('cloud')}
+              className={`rounded-[6px] px-3 py-2 text-[13px] font-semibold transition-all duration-150 relative ${
+                activeTab === 'cloud'
+                  ? 'bg-white text-foreground shadow-sm'
+                  : 'text-muted-foreground hover:bg-[#f9f9f9]/60 hover:text-foreground'
+              }`}
+            >
+              <div className="flex items-center gap-2">
+                <Cloud size={16} />
+                Cloud Sync
+              </div>
+            </button>
+            <button
+              onClick={() => setActiveTab('knowledge')}
+              className={`rounded-[6px] px-3 py-2 text-[13px] font-semibold transition-all duration-150 relative ${
+                activeTab === 'knowledge'
+                  ? 'bg-white text-foreground shadow-sm'
+                  : 'text-muted-foreground hover:bg-[#f9f9f9]/60 hover:text-foreground'
+              }`}
+            >
+              <div className="flex items-center gap-2">
+                <Network size={16} />
+                Knowledge Base
+              </div>
             </button>
           </div>
-        </header>
 
-        {/* Tab Navigation */}
-        <div className="flex border-b border-border mb-8">
-          <button
-            onClick={() => setActiveTab('assets')}
-            className={`px-4 py-3 text-sm font-bold transition-colors relative ${
-              activeTab === 'assets'
-                ? 'text-primary'
-                : 'text-muted-foreground hover:text-foreground'
-            }`}
-          >
-            <div className="flex items-center gap-2">
-              <FolderOpen size={16} />
-              Asset Explorer
-            </div>
-            {activeTab === 'assets' && (
-              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary" />
-            )}
-          </button>
-          <button
-            onClick={() => setActiveTab('cloud')}
-            className={`px-4 py-3 text-sm font-bold transition-colors relative ${
-              activeTab === 'cloud' ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
-            }`}
-          >
-            <div className="flex items-center gap-2">
-              <Cloud size={16} />
-              Cloud Sync
-            </div>
-            {activeTab === 'cloud' && (
-              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary" />
-            )}
-          </button>
-          <button
-            onClick={() => setActiveTab('knowledge')}
-            className={`px-4 py-3 text-sm font-bold transition-colors relative ${
-              activeTab === 'knowledge'
-                ? 'text-primary'
-                : 'text-muted-foreground hover:text-foreground'
-            }`}
-          >
-            <div className="flex items-center gap-2">
-              <Network size={16} />
-              Knowledge Base
-            </div>
-            {activeTab === 'knowledge' && (
-              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary" />
-            )}
-          </button>
-        </div>
-
-        {/* Tab Content */}
-        <div className="min-h-[400px]">
-          {activeTab === 'assets' && <AssetExplorer />}
-          {activeTab === 'cloud' && <CloudSync onOpenBackup={() => setShowBackupModal(true)} />}
-          {activeTab === 'knowledge' && <KnowledgeBase />}
+          {/* Tab Content */}
+          <div className="min-h-[400px]">
+            {activeTab === 'assets' && <AssetExplorer />}
+            {activeTab === 'cloud' && <CloudSync onOpenBackup={() => setShowBackupModal(true)} />}
+            {activeTab === 'knowledge' && <KnowledgeBase />}
+          </div>
         </div>
       </div>
 
