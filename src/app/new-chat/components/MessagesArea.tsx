@@ -3,7 +3,6 @@
 import React, { useRef, useEffect } from 'react';
 import GreetingMessage from './GreetingMessage';
 import MessageRow, { Message } from './MessageRow';
-import ThinkingIndicator from './ThinkingIndicator';
 
 interface MessagesAreaProps {
   messages: Message[];
@@ -44,8 +43,6 @@ export default function MessagesArea({
             {messages.map((msg) => (
               <MessageRow key={msg.id} message={msg} />
             ))}
-
-            {isGenerating && <ThinkingIndicator />}
 
             {/* Scroll Anchor */}
             <div ref={bottomRef} className="h-4 w-full shrink-0" />
