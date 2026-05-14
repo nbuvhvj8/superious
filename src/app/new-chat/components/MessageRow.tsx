@@ -42,7 +42,8 @@ export default function MessageRow({ message, onRegenerate, onEdit }: MessageRow
   const isLongMessage = !isAI && message.content.length > 300;
 
   const parsedThinking = React.useMemo(() => {
-    if (!isAI) return { responseText: message.content, thoughts: [] as string[], isThinking: false };
+    if (!isAI)
+      return { responseText: message.content, thoughts: [] as string[], isThinking: false, toolCalls: [] as Array<{ tool: string; query: string }> };
 
     const thinkingRegex = /<thinking>([\s\S]*?)(?:<\/thinking>|$)/gi;
     const thoughts: string[] = [];
@@ -55,6 +56,17 @@ export default function MessageRow({ message, onRegenerate, onEdit }: MessageRow
 
     const openTagCount = (message.content.match(/<thinking>/gi) ?? []).length;
     const closeTagCount = (message.content.match(/<\/thinking>/gi) ?? []).length;
+
+    const toolCalls: Array<{ tool: string; query: string }> = [];
+    const toolTagRegex = /<tool(?:_call)?\s+[^>]*?(?:name|tool)=['"]([^'"]+)['"][^>]*?(?:query=['"]([^'"]*)['"])?[^>]*\/?>(?:([^<]*)<\/tool(?:_call)?>)?/gi;
+    while ((match = toolTagRegex.exec(message.content)) !== null) {
+      toolCalls.push({ tool: match[1], query: (match[2] || match[3] || '').trim() || 'Running tool' });
+    }
+
+    const bracketToolRegex = /\[tool:([^\]]+)]\s*([^\n]*)/gi;
+    while ((match = bracketToolRegex.exec(message.content)) !== null) {
+      toolCalls.push({ tool: match[1].trim(), query: match[2].trim() || 'Running tool' });
+    }
 
     let responseText = message.content.replace(/<thinking>[\s\S]*?<\/thinking>/gi, '');
     if (openTagCount > closeTagCount) {
@@ -69,6 +81,7 @@ export default function MessageRow({ message, onRegenerate, onEdit }: MessageRow
       responseText,
       thoughts,
       isThinking: message.streaming === true && openTagCount > closeTagCount,
+      toolCalls,
     };
   }, [isAI, message.content, message.streaming]);
 
@@ -95,11 +108,12 @@ export default function MessageRow({ message, onRegenerate, onEdit }: MessageRow
                   <span className="text-[14px] font-semibold shimmer-text">Thinking...</span>
                 </div>
               ) : (
-                <div className="space-y-2">
-                  {(parsedThinking.thoughts.length > 0 || parsedThinking.isThinking) && (
+                <div className="space-y-1">
+                  {(parsedThinking.thoughts.length > 0 || parsedThinking.isThinking || parsedThinking.toolCalls.length > 0) && (
                     <ThinkingIndicator
                       thinkingSteps={parsedThinking.thoughts}
                       isThinking={parsedThinking.isThinking}
+                      toolCalls={parsedThinking.toolCalls}
                     />
                   )}
                   <StreamingText
