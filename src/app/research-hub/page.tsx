@@ -1,26 +1,32 @@
 'use client';
 
 import AppLayout from '@/components/AppLayout';
-import { BriefcaseBusiness, FileText, SearchCheck, Sparkles } from 'lucide-react';
+import { ArrowUpDown, Clock3, Search, Sparkles } from 'lucide-react';
 
-const WORKSTREAMS = [
+const SESSIONS = [
   {
-    title: 'Research Pipeline',
-    description: 'Query planning, source discovery, ranking, and evidence capture in one flow.',
-    points: ['Unified search queue', 'Citations + screenshot tracking', 'Signal confidence scoring'],
-    icon: <SearchCheck size={16} className="text-foreground" />,
+    id: 'chat-2026-031',
+    title: 'AI chips weekly watch',
+    updated: '5 minutes ago',
+    tags: ['Market', 'Fast moving'],
   },
   {
-    title: 'Job Execution',
-    description: 'Script generation, revisions, and run-level audit details in the same workspace.',
-    points: ['Timeline by run', 'Draft and hook variants', 'Delivery status + logs'],
-    icon: <FileText size={16} className="text-foreground" />,
+    id: 'chat-2026-018',
+    title: 'Healthcare policy monitoring',
+    updated: '32 minutes ago',
+    tags: ['Policy', 'Long-term'],
   },
   {
-    title: 'Operator Controls',
-    description: 'Settings-aware controls for provider keys, model routing, and safety rules.',
-    points: ['Profile-linked configs', 'Policy guardrails', 'One-click mode switching'],
-    icon: <Sparkles size={16} className="text-foreground" />,
+    id: 'chat-2026-011',
+    title: 'Competitor launch claims audit',
+    updated: '2 hours ago',
+    tags: ['Verification', 'Sources'],
+  },
+  {
+    id: 'chat-2025-122',
+    title: 'Creator economy trendline',
+    updated: 'Yesterday',
+    tags: ['Signals', 'Content'],
   },
 ];
 
@@ -30,27 +36,56 @@ export default function ResearchHubPage() {
       <div className="mx-auto w-full max-w-[1300px] px-8 py-8">
         <div className="min-h-[600px] overflow-hidden rounded-[12px] border border-[#ebedf2] bg-white p-10 pt-6">
           <header className="mb-8">
-            <div className="inline-flex items-center gap-2 rounded-[8px] bg-[#f2f3f6] px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.12em] text-muted-foreground">
-              <BriefcaseBusiness size={14} />
-              Operations Hub
-            </div>
-            <h1 className="mt-4 text-[28px] font-bold tracking-tight text-foreground">One-page research + job control center</h1>
+            <h1 className="text-[28px] font-bold tracking-tight text-foreground">
+              Unified session search
+            </h1>
             <p className="mt-2 max-w-[760px] text-sm text-muted-foreground">
-              Consolidated workspace designed from the settings/chat pattern language: soft surfaces, compact controls, and unified execution context.
+              Search, sort, and continue any chat session from one index view.
             </p>
           </header>
 
-          <section className="grid gap-4 md:grid-cols-3">
-            {WORKSTREAMS.map((item) => (
-              <article key={item.title} className="rounded-[10px] border border-[#ebedf2] bg-[#fafafa] p-5">
-                <div className="mb-3 inline-flex h-8 w-8 items-center justify-center rounded-[8px] bg-white border border-[#ebedf2]">{item.icon}</div>
-                <h2 className="text-base font-semibold text-foreground">{item.title}</h2>
-                <p className="mt-1 text-xs text-muted-foreground">{item.description}</p>
-                <ul className="mt-4 space-y-1.5">
-                  {item.points.map((point) => (
-                    <li key={point} className="text-xs text-foreground">• {point}</li>
+          <section className="mb-6 flex flex-wrap items-center gap-3">
+            <div className="flex h-10 min-w-[320px] flex-1 items-center gap-2 rounded-[8px] bg-[#f2f3f6] px-3">
+              <Search size={15} className="text-muted-foreground" />
+              <input
+                placeholder="Search sessions, topics, tags, or source URLs..."
+                className="h-full w-full bg-transparent text-sm outline-none"
+              />
+            </div>
+            <button className="inline-flex h-10 items-center gap-2 rounded-[8px] bg-[#f2f3f6] px-3 text-[13px] font-semibold">
+              <ArrowUpDown size={14} /> Sort by recent activity
+            </button>
+          </section>
+
+          <section className="space-y-3">
+            {SESSIONS.map((session) => (
+              <article
+                key={session.id}
+                className="group rounded-[10px] border border-[#ebedf2] bg-[#fafafa] p-4 transition-colors hover:bg-white"
+              >
+                <div className="flex items-start justify-between gap-3">
+                  <div>
+                    <h2 className="text-sm font-bold text-foreground">{session.title}</h2>
+                    <p className="mt-1 font-mono text-[11px] text-muted-foreground">{session.id}</p>
+                  </div>
+                  <div className="inline-flex items-center gap-1 rounded-full bg-white px-2 py-1 text-[11px] font-semibold text-muted-foreground">
+                    <Clock3 size={12} />
+                    {session.updated}
+                  </div>
+                </div>
+                <div className="mt-3 flex flex-wrap gap-1.5">
+                  {session.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="rounded-full bg-white px-2 py-1 text-[11px] font-semibold"
+                    >
+                      {tag}
+                    </span>
                   ))}
-                </ul>
+                </div>
+                <button className="mt-3 inline-flex items-center gap-2 text-[12px] font-bold text-muted-foreground group-hover:text-foreground">
+                  <Sparkles size={13} /> Resume session
+                </button>
               </article>
             ))}
           </section>
