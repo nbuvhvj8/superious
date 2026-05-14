@@ -96,7 +96,7 @@ export default function SmartKeyInput({ onSave }: SmartKeyInputProps) {
           type="password"
           value={apiKey}
           onChange={(e) => setApiKey(e.target.value)}
-          placeholder="Paste any AI API key (OpenAI, Anthropic, Gemini, etc.)"
+          placeholder="Paste any AI API key"
           className="input-field pl-10 h-12 text-base font-mono"
           autoComplete="off"
         />

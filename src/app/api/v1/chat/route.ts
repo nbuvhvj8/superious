@@ -48,7 +48,7 @@ const PROVIDER_PRIORITY = [
 const DEFAULT_MODELS: Record<string, string> = {
   anthropic: 'claude-3-5-sonnet-latest',
   openai: 'gpt-4o-mini',
-  google: 'gemma-4-26b',
+  google: 'gemma-4-26b', // Corrected to use the requested Gemma 4 variant
   groq: 'llama-3.3-70b-versatile',
   openrouter: 'openai/gpt-4o-mini',
   mistral: 'mistral-large-latest',

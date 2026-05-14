@@ -20,7 +20,22 @@ export default function GeneralSection() {
   const [notifyDispatch, setNotifyDispatch] = useState(true);
   const [showColorDropdown, setShowColorDropdown] = useState(false);
 
+  const handleAppearanceChange = (mode: 'light' | 'dark' | 'system') => {
+    setAppearance(mode);
+    localStorage.setItem('appearance', mode);
+    
+    if (mode === 'system') {
+      const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+    } else {
+      document.documentElement.setAttribute('data-theme', mode === 'dark' ? 'dark' : 'light');
+    }
+  };
+
   useEffect(() => {
+    const savedAppearance = localStorage.getItem('appearance') as 'light' | 'dark' | 'system' || 'system';
+    setAppearance(savedAppearance);
+
     const savedColor = localStorage.getItem('app_color');
     const isValidColor = APP_COLORS.some((c) => c.value === savedColor);
     const colorToApply = isValidColor ? (savedColor as string) : '#16a34a';
@@ -105,7 +120,7 @@ export default function GeneralSection() {
               ].map((mode) => (
                 <button
                   key={mode.id}
-                  onClick={() => setAppearance(mode.id as typeof appearance)}
+                  onClick={() => handleAppearanceChange(mode.id as 'light' | 'dark' | 'system')}
                   className={`flex items-center gap-1.5 px-3 py-1.5 text-[11.5px] font-bold rounded-[6px] transition-all ${
                     appearance === mode.id
                       ? 'bg-white text-foreground shadow-sm'
@@ -115,8 +130,7 @@ export default function GeneralSection() {
                   {mode.icon}
                   {mode.label}
                 </button>
-              ))}
-            </div>
+              ))}            </div>
           </div>
 
           {/* App Color Row */}

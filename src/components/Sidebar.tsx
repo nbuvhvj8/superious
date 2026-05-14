@@ -101,7 +101,7 @@ export default function Sidebar() {
   return (
     <>
     <aside className={`relative flex flex-col h-full border-r border-border bg-[fdfdfe] transition-all duration-300 ease-in-out shrink-0 ${collapsed ? 'w-14' : 'w-[280px]'}`}>
-      <div className="flex items-center justify-between h-12 px-4 gap-3 overflow-hidden">
+      <div className="flex items-center justify-end h-12 px-4 gap-3 overflow-hidden">
         <button onClick={() => setCollapsed(!collapsed)} className="p-1.5 rounded-md text-foreground hover:bg-muted transition-all duration-150" aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}>
           {collapsed ? <PanelRight size={18} strokeWidth={2.25} /> : <PanelLeft size={18} strokeWidth={2.25} />}
         </button>

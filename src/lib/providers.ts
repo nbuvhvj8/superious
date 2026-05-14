@@ -49,9 +49,9 @@ export const PROVIDERS: ProviderDefinition[] = [
   },
   {
     id: 'google',
-    name: 'Google Gemini',
+    name: 'Google Gemma',
     category: 'llm',
-    description: 'Gemini and Gemma models via Google AI Studio.',
+    description: 'Gemma 4 models via Google AI Studio.',
     keyPlaceholder: 'AIza…',
     keyPattern: '^AIza[a-zA-Z0-9_-]{35}$',
     docsUrl: 'https://aistudio.google.com/app/apikey',

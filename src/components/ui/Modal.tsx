@@ -8,7 +8,7 @@ interface ModalProps {
   onClose: () => void;
   title?: string;
   children: React.ReactNode;
-  size?: 'sm' | 'md' | 'lg' | 'xl' | 'full' | 'notification';
+  size?: 'sm' | 'md' | 'lg' | 'xl' | 'full' | 'notification' | 'notification-lg';
 }
 
 const SIZE_MAP = {
@@ -18,6 +18,7 @@ const SIZE_MAP = {
   xl: 'max-w-2xl',
   full: 'max-w-5xl',
   notification: 'max-w-[700px]',
+  'notification-lg': 'max-w-[800px]',
 };
 
 export default function Modal({ open, onClose, title, children, size = 'md' }: ModalProps) {
@@ -51,7 +52,7 @@ export default function Modal({ open, onClose, title, children, size = 'md' }: M
     >
       <div
         className={`
-          relative w-full ${SIZE_MAP[size]} ${size === 'notification' ? 'bg-background' : 'bg-card'} rounded-2xl border border-border
+          relative w-full ${SIZE_MAP[size]} ${(size === 'notification' || size === 'notification-lg') ? 'bg-background' : 'bg-card'} rounded-2xl border border-border
           shadow-2xl animate-slide-up overflow-hidden
         `}
       >
