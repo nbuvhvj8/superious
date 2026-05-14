@@ -19,17 +19,17 @@ export default function ThinkingIndicator({
   const hasToolCalls = toolCalls.length > 0;
 
   return (
-    <div className="mb-2 animate-fade-in">
+    <div className="mb-2 animate-fade-in inline-block rounded-[8px] bg-[#f2f3f6] px-2.5 py-2">
       <button
         type="button"
         onClick={() => setIsOpen((prev) => !prev)}
-        className="inline-flex items-center gap-1 text-[14px] font-semibold tracking-tight"
+        className="inline-flex items-center gap-1 text-[12px] font-normal tracking-tight text-muted-foreground"
       >
         <ChevronRight
           size={14}
           className={`text-muted-foreground transition-transform ${isOpen ? 'rotate-90' : ''}`}
         />
-        <span className={isThinking ? 'shimmer-text' : ''}>Thinking</span>
+        <span className={isThinking ? 'shimmer-text opacity-70' : ''}>Thinking</span>
       </button>
       {isOpen && (hasSteps || hasToolCalls) && (
         <div className="mt-1.5 pl-1 text-[12px] text-muted-foreground/80 space-y-1.5 whitespace-pre-wrap">

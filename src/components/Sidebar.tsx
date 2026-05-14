@@ -15,6 +15,7 @@ import {
   MoreHorizontal,
   Settings,
 } from 'lucide-react';
+import Modal from './ui/Modal';
 
 interface NavItem {
   key: string;
@@ -24,10 +25,10 @@ interface NavItem {
 }
 
 const TOP_NAV_ITEMS: NavItem[] = [
+  { key: 'nav-search', label: 'Search', href: '#search', icon: <Search size={16} strokeWidth={2.25} /> },
   { key: 'nav-chat', label: 'New Chat', href: '/new-chat', icon: <SquarePen size={16} strokeWidth={2.25} /> },
-  { key: 'nav-search', label: 'Search', href: '/session', icon: <Search size={16} strokeWidth={2.25} /> },
-  { key: 'nav-plugins', label: 'Plugins & Extensions', href: '/plugins', icon: <Puzzle size={16} strokeWidth={2.25} /> },
-  { key: 'nav-cron', label: 'Cron Jobs', href: '/cron-job', icon: <Clock size={16} strokeWidth={2.25} /> },
+  { key: 'nav-plugins', label: 'Extensions', href: '/plugins', icon: <Puzzle size={16} strokeWidth={2.25} /> },
+  { key: 'nav-cron', label: 'Scheduled', href: '/cron-job', icon: <Clock size={16} strokeWidth={2.25} /> },
 ];
 
 const BOTTOM_NAV_ITEMS: NavItem[] = [
@@ -48,11 +49,33 @@ const mockSessions = [
 export default function Sidebar() {
   const pathname = usePathname();
   const [collapsed, setCollapsed] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
 
   const sessions = useMemo(() => mockSessions, []);
 
   const renderNavLink = (item: NavItem) => {
     const isActive = pathname === item.href || (item.href !== '/' && pathname.startsWith(item.href));
+
+    if (item.key === 'nav-search') {
+      return (
+        <button
+          key={item.key}
+          type="button"
+          onClick={() => setSearchOpen(true)}
+          title={collapsed ? item.label : undefined}
+          className={`
+            flex w-full items-center gap-3 px-3 py-2 rounded-[6px] text-sm font-semibold
+            transition-all duration-150 group relative
+            active:scale-[0.97] active:duration-75
+            text-muted-foreground hover:bg-[#f9f9f9] hover:text-foreground
+            ${collapsed ? 'justify-center' : ''}
+          `}
+        >
+          <span className="shrink-0">{item.icon}</span>
+          {!collapsed && <span className="truncate">{item.label}</span>}
+        </button>
+      );
+    }
 
     return (
       <Link
@@ -74,9 +97,9 @@ export default function Sidebar() {
   };
 
   return (
+    <>
     <aside className={`relative flex flex-col h-full border-r border-border bg-[fdfdfe] transition-all duration-300 ease-in-out shrink-0 ${collapsed ? 'w-14' : 'w-[280px]'}`}>
       <div className="flex items-center justify-between h-12 px-4 gap-3 overflow-hidden">
-        {!collapsed && <div className="text-xs font-semibold text-muted-foreground tracking-wide">Superious</div>}
         <button onClick={() => setCollapsed(!collapsed)} className="p-1.5 rounded-md text-foreground hover:bg-muted transition-all duration-150" aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}>
           {collapsed ? <PanelRight size={18} strokeWidth={2.25} /> : <PanelLeft size={18} strokeWidth={2.25} />}
         </button>
@@ -86,7 +109,7 @@ export default function Sidebar() {
 
       {!collapsed && (
         <div className="mt-4 px-2 min-h-0">
-          <div className="px-3 pb-2 text-[11px] font-bold uppercase tracking-[0.12em] text-muted-foreground">recents</div>
+          <div className="px-3 pb-2 text-[11px] font-bold tracking-[0.12em] text-muted-foreground">recents</div>
           <div className="space-y-1">
             {sessions.map((session) => (
               <div key={session.id} className="flex items-center gap-1 rounded-[6px] px-2 py-1 hover:bg-[#f9f9f9] transition-colors group">
@@ -115,5 +138,17 @@ export default function Sidebar() {
         )}
       </div>
     </aside>
+
+    <Modal open={searchOpen} onClose={() => setSearchOpen(false)} title="Search" size="full">
+      <div className="w-[min(84vw,820px)] space-y-4">
+        <input
+          type="text"
+          placeholder="Search chats, prompts, notes, files, and more..."
+          className="w-full rounded-[8px] border border-[#dfe3ea] bg-white px-4 py-3 text-[14px] outline-none focus:border-primary"
+        />
+        <p className="text-xs text-muted-foreground">Start typing to quickly find chats or anything else in the app.</p>
+      </div>
+    </Modal>
+    </>
   );
 }

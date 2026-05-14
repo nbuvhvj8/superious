@@ -105,7 +105,7 @@ export default function MessageRow({ message, onRegenerate, onEdit }: MessageRow
                 <CommandResponseCard commandType={message.commandType as CommandType} />
               ) : message.streaming && !message.content.trim() ? (
                 <div className="inline-flex items-center gap-2">
-                  <span className="text-[14px] font-semibold shimmer-text">Thinking...</span>
+                  <span className="text-[12px] font-normal shimmer-text opacity-70">Thinking...</span>
                 </div>
               ) : (
                 <div className="space-y-1">
