@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Copy, RefreshCw, ThumbsUp, ThumbsDown, Check, Edit3, ChevronDown } from 'lucide-react';
 import StreamingText from './StreamingText';
 import CommandResponseCard, { type CommandType } from './CommandResponseCard';
+import ThinkingIndicator from './ThinkingIndicator';
 
 export interface Message {
   id: string;
@@ -40,6 +41,37 @@ export default function MessageRow({ message, onRegenerate, onEdit }: MessageRow
   // Determine if content needs expansion
   const isLongMessage = !isAI && message.content.length > 300;
 
+  const parsedThinking = React.useMemo(() => {
+    if (!isAI) return { responseText: message.content, thoughts: [] as string[], isThinking: false };
+
+    const thinkingRegex = /<thinking>([\s\S]*?)(?:<\/thinking>|$)/gi;
+    const thoughts: string[] = [];
+    let match: RegExpExecArray | null;
+
+    while ((match = thinkingRegex.exec(message.content)) !== null) {
+      const value = match[1]?.trim();
+      if (value) thoughts.push(value);
+    }
+
+    const openTagCount = (message.content.match(/<thinking>/gi) ?? []).length;
+    const closeTagCount = (message.content.match(/<\/thinking>/gi) ?? []).length;
+
+    let responseText = message.content.replace(/<thinking>[\s\S]*?<\/thinking>/gi, '');
+    if (openTagCount > closeTagCount) {
+      const lastOpenTagIndex = responseText.toLowerCase().lastIndexOf('<thinking>');
+      if (lastOpenTagIndex >= 0) {
+        responseText = responseText.slice(0, lastOpenTagIndex);
+      }
+    }
+    responseText = responseText.trimStart();
+
+    return {
+      responseText,
+      thoughts,
+      isThinking: message.streaming === true && openTagCount > closeTagCount,
+    };
+  }, [isAI, message.content, message.streaming]);
+
   return (
     <div
       className={`group/msg w-full flex flex-col items-start ${isAI ? 'mb-8' : 'mb-1'} animate-fade-in px-4 md:px-0`}
@@ -63,11 +95,19 @@ export default function MessageRow({ message, onRegenerate, onEdit }: MessageRow
                   <span className="text-[14px] font-semibold shimmer-text">Thinking...</span>
                 </div>
               ) : (
-                <StreamingText
-                  text={message.content}
-                  instant={message.instant ?? !message.streaming}
-                  showCaret={message.streaming === true}
-                />
+                <div className="space-y-2">
+                  {(parsedThinking.thoughts.length > 0 || parsedThinking.isThinking) && (
+                    <ThinkingIndicator
+                      thinkingSteps={parsedThinking.thoughts}
+                      isThinking={parsedThinking.isThinking}
+                    />
+                  )}
+                  <StreamingText
+                    text={parsedThinking.responseText}
+                    instant={message.instant ?? !message.streaming}
+                    showCaret={message.streaming === true}
+                  />
+                </div>
               )
             ) : (
               <div className="whitespace-pre-wrap max-w-[720px] w-full break-words">
