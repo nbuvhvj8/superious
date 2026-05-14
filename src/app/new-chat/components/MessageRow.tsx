@@ -53,9 +53,17 @@ export default function MessageRow({ message, onRegenerate, onEdit }: MessageRow
       if (value) thoughts.push(value);
     }
 
-    const responseText = message.content.replace(/<thinking>[\s\S]*?<\/thinking>/gi, '').trimStart();
     const openTagCount = (message.content.match(/<thinking>/gi) ?? []).length;
     const closeTagCount = (message.content.match(/<\/thinking>/gi) ?? []).length;
+
+    let responseText = message.content.replace(/<thinking>[\s\S]*?<\/thinking>/gi, '');
+    if (openTagCount > closeTagCount) {
+      const lastOpenTagIndex = responseText.toLowerCase().lastIndexOf('<thinking>');
+      if (lastOpenTagIndex >= 0) {
+        responseText = responseText.slice(0, lastOpenTagIndex);
+      }
+    }
+    responseText = responseText.trimStart();
 
     return {
       responseText,
