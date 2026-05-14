@@ -89,13 +89,13 @@ export default function MessageRow({ message, onRegenerate, onEdit }: MessageRow
     <div
       className={`group/msg w-full flex flex-col items-start ${isAI ? 'mb-8' : 'mb-1'} animate-fade-in px-4 md:px-0`}
     >
-      <div className="flex items-start w-full max-w-[720px] mx-auto gap-2">
+      <div className={`flex items-start w-full max-w-[720px] mx-auto gap-2 ${!isAI ? 'justify-end' : ''}`}>
         <div className="flex-1 flex flex-col gap-1 min-w-0">
           {/* Bubble */}
           <div
             className={`
             relative w-full text-[15px] leading-relaxed
-            ${isAI ? 'text-foreground px-0 py-1' : 'bg-[#f9f9f9] text-foreground rounded-[8px] px-4 py-3 max-w-[720px]'}
+            ${isAI ? 'text-foreground px-0 py-1' : 'bg-[#f0f0f0] text-foreground rounded-[8px] px-4 py-3 w-fit max-w-[min(720px,88%)]'}
             ${!isAI && !isExpanded && isLongMessage ? 'max-h-[160px] overflow-hidden' : ''}
             transition-all duration-300
           `}
@@ -124,7 +124,7 @@ export default function MessageRow({ message, onRegenerate, onEdit }: MessageRow
                 </div>
               )
             ) : (
-              <div className="whitespace-pre-wrap max-w-[720px] w-full break-words">
+              <div className="whitespace-pre-wrap break-words">
                 {message.content}
               </div>
             )}
@@ -135,7 +135,7 @@ export default function MessageRow({ message, onRegenerate, onEdit }: MessageRow
                 onClick={() => setIsExpanded(!isExpanded)}
                 className={`
                   absolute bottom-0 left-0 w-full h-10 flex items-center justify-center
-                  bg-gradient-to-t from-[#f9f9f9] via-[#f9f9f9]/90 to-transparent pt-4
+                  bg-gradient-to-t from-[#f0f0f0] via-[#f0f0f0]/90 to-transparent pt-4
                   ${isExpanded ? 'relative bg-none h-6 mt-1' : ''}
                   hover:text-primary transition-colors z-10
                 `}
@@ -147,6 +147,28 @@ export default function MessageRow({ message, onRegenerate, onEdit }: MessageRow
               </button>
             )}
           </div>
+
+
+
+          {/* User Icons Below Bubble */}
+          {!isAI && (
+            <div className="flex items-center justify-end gap-1 mt-1 opacity-0 group-hover/msg:opacity-100 transition-opacity">
+              <button
+                onClick={onEdit}
+                className="p-1 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-all"
+                title="Edit"
+              >
+                <Edit3 size={13} />
+              </button>
+              <button
+                onClick={handleCopy}
+                className="p-1 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-all"
+                title={copied ? 'Copied!' : 'Copy'}
+              >
+                {copied ? <Check size={13} className="text-primary" /> : <Copy size={13} />}
+              </button>
+            </div>
+          )}
 
           {/* AI Icons Below Bubble */}
           {isAI && !message.streaming && (
@@ -181,25 +203,7 @@ export default function MessageRow({ message, onRegenerate, onEdit }: MessageRow
           )}
         </div>
 
-        {/* User Icons in behind bubble */}
-        {!isAI && (
-          <div className="flex flex-col gap-1 mt-3 opacity-0 group-hover/msg:opacity-100 transition-opacity shrink-0">
-            <button
-              onClick={onEdit}
-              className="p-1 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-all"
-              title="Edit"
-            >
-              <Edit3 size={13} />
-            </button>
-            <button
-              onClick={handleCopy}
-              className="p-1 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-all"
-              title={copied ? 'Copied!' : 'Copy'}
-            >
-              {copied ? <Check size={13} className="text-primary" /> : <Copy size={13} />}
-            </button>
-          </div>
-        )}
+
       </div>
     </div>
   );
