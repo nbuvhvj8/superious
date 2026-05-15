@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useMemo, useState } from 'react';
+import AppLogo from './ui/AppLogo';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
@@ -101,7 +102,8 @@ export default function Sidebar() {
   return (
     <>
     <aside className={`relative flex flex-col h-full border-r border-border bg-[fdfdfe] transition-all duration-300 ease-in-out shrink-0 ${collapsed ? 'w-14' : 'w-[280px]'}`}>
-      <div className="flex items-center justify-center h-12 px-4 gap-3 overflow-hidden">
+      <div className={`flex items-center h-12 px-4 gap-3 overflow-hidden ${collapsed ? 'justify-center' : 'justify-between'}`}>
+        {!collapsed && <AppLogo size={32} />}
         <button onClick={() => setCollapsed(!collapsed)} className="p-1.5 rounded-md text-foreground hover:bg-muted transition-all duration-150" aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}>
           {collapsed ? <PanelRight size={18} strokeWidth={2.25} /> : <PanelLeft size={18} strokeWidth={2.25} />}
         </button>

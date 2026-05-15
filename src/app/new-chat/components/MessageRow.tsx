@@ -90,12 +90,12 @@ export default function MessageRow({ message, onRegenerate, onEdit }: MessageRow
       className={`group/msg w-full flex flex-col ${isAI ? 'items-start' : 'items-end'} mb-4 animate-fade-in px-4 md:px-0`}
     >
       <div className={`flex items-start w-full max-w-[720px] mx-auto gap-2 ${isAI ? 'justify-start' : 'justify-end'}`}>
-        <div className="flex-1 flex flex-col gap-1 min-w-0 items-end">
+        <div className={`flex-1 flex flex-col gap-1 min-w-0 ${isAI ? 'items-start' : 'items-end'}`}>
           {/* Bubble */}
           <div
             className={`
             relative w-fit text-[15px] leading-relaxed
-            ${isAI ? 'text-foreground px-0 py-1' : 'bg-primary text-primary-foreground rounded-[16px] px-4 py-2.5 max-w-[85%]'}
+            ${isAI ? 'text-foreground px-0 py-1' : 'bg-[#e5e7eb] text-foreground rounded-full px-4 py-2.5 max-w-[85%]'}
             ${!isAI && !isExpanded && isLongMessage ? 'max-h-[160px] overflow-hidden' : ''}
             transition-all duration-300
           `}
@@ -110,17 +110,51 @@ export default function MessageRow({ message, onRegenerate, onEdit }: MessageRow
               ) : (
                 <div className="space-y-1">
                   {(parsedThinking.thoughts.length > 0 || parsedThinking.isThinking || parsedThinking.toolCalls.length > 0) && (
-                    <ThinkingIndicator
-                      thinkingSteps={parsedThinking.thoughts}
-                      isThinking={parsedThinking.isThinking}
-                      toolCalls={parsedThinking.toolCalls}
-                    />
+                    <div className="flex justify-start w-full">
+                      <ThinkingIndicator
+                        thinkingSteps={parsedThinking.thoughts}
+                        isThinking={parsedThinking.isThinking}
+                        toolCalls={parsedThinking.toolCalls}
+                      />
+                    </div>
                   )}
                   <StreamingText
                     text={parsedThinking.responseText}
                     instant={message.instant ?? !message.streaming}
                     showCaret={message.streaming === true}
                   />
+                  
+                  {/* AI Icons Below AI Text */}
+                  {!message.streaming && (
+                    <div className="flex items-center justify-start gap-1 mt-2 transition-opacity">
+                      <button
+                        onClick={handleCopy}
+                        className="p-1.5 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-all"
+                        title={copied ? 'Copied!' : 'Copy'}
+                      >
+                        {copied ? <Check size={14} className="text-primary" /> : <Copy size={14} />}
+                      </button>
+                      <button
+                        onClick={onRegenerate}
+                        className="p-1.5 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-all"
+                        title="Regenerate"
+                      >
+                        <RefreshCw size={14} />
+                      </button>
+                      <button
+                        className="p-1.5 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-all"
+                        title="Good Response"
+                      >
+                        <ThumbsUp size={14} />
+                      </button>
+                      <button
+                        className="p-1.5 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-all"
+                        title="Bad Response"
+                      >
+                        <ThumbsDown size={14} />
+                      </button>
+                    </div>
+                  )}
                 </div>
               )
             ) : (
@@ -135,9 +169,9 @@ export default function MessageRow({ message, onRegenerate, onEdit }: MessageRow
                 onClick={() => setIsExpanded(!isExpanded)}
                 className={`
                   absolute bottom-0 left-0 w-full h-10 flex items-center justify-center
-                  bg-gradient-to-t from-primary via-primary/90 to-transparent pt-4
+                  bg-gradient-to-t from-[#e5e7eb] via-[#e5e7eb]/90 to-transparent pt-4
                   ${isExpanded ? 'relative bg-none h-6 mt-1' : ''}
-                  hover:text-primary-foreground/80 transition-colors z-10
+                  hover:text-foreground/80 transition-colors z-10
                 `}
               >
                 <ChevronDown
@@ -164,38 +198,6 @@ export default function MessageRow({ message, onRegenerate, onEdit }: MessageRow
                 title={copied ? 'Copied!' : 'Copy'}
               >
                 {copied ? <Check size={13} className="text-primary" /> : <Copy size={13} />}
-              </button>
-            </div>
-          )}
-          
-          {/* AI Icons Below Bubble */}
-          {isAI && !message.streaming && (
-            <div className="flex items-center justify-start gap-1 mt-2 transition-opacity">
-              <button
-                onClick={handleCopy}
-                className="p-1.5 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-all"
-                title={copied ? 'Copied!' : 'Copy'}
-              >
-                {copied ? <Check size={14} className="text-primary" /> : <Copy size={14} />}
-              </button>
-              <button
-                onClick={onRegenerate}
-                className="p-1.5 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-all"
-                title="Regenerate"
-              >
-                <RefreshCw size={14} />
-              </button>
-              <button
-                className="p-1.5 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-all"
-                title="Good Response"
-              >
-                <ThumbsUp size={14} />
-              </button>
-              <button
-                className="p-1.5 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-all"
-                title="Bad Response"
-              >
-                <ThumbsDown size={14} />
               </button>
             </div>
           )}
