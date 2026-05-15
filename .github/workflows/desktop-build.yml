@@ -26,6 +26,9 @@ concurrency:
   group: desktop-build-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   build:
     strategy:
