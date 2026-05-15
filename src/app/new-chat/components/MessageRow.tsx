@@ -87,15 +87,15 @@ export default function MessageRow({ message, onRegenerate, onEdit }: MessageRow
 
   return (
     <div
-      className={`group/msg w-full flex flex-col items-start ${isAI ? 'mb-8' : 'mb-1'} animate-fade-in px-4 md:px-0`}
+      className={`group/msg w-full flex flex-col ${isAI ? 'items-start' : 'items-end'} mb-4 animate-fade-in px-4 md:px-0`}
     >
-      <div className={`flex items-start w-full max-w-[720px] mx-auto gap-2 ${!isAI ? 'justify-end' : ''}`}>
-        <div className="flex-1 flex flex-col gap-1 min-w-0">
+      <div className={`flex items-start w-full max-w-[720px] mx-auto gap-2 ${isAI ? 'justify-start' : 'justify-end'}`}>
+        <div className="flex-1 flex flex-col gap-1 min-w-0 items-end">
           {/* Bubble */}
           <div
             className={`
-            relative w-full text-[15px] leading-relaxed
-            ${isAI ? 'text-foreground px-0 py-1' : 'bg-[#f0f0f0] text-foreground rounded-[8px] px-4 py-3 w-fit max-w-[min(720px,88%)]'}
+            relative w-fit text-[15px] leading-relaxed
+            ${isAI ? 'text-foreground px-0 py-1' : 'bg-primary text-primary-foreground rounded-[16px] px-4 py-2.5 max-w-[85%]'}
             ${!isAI && !isExpanded && isLongMessage ? 'max-h-[160px] overflow-hidden' : ''}
             transition-all duration-300
           `}
@@ -128,16 +128,16 @@ export default function MessageRow({ message, onRegenerate, onEdit }: MessageRow
                 {message.content}
               </div>
             )}
-
+            
             {/* Expand Chevron for User Bubble */}
             {!isAI && isLongMessage && (
               <button
                 onClick={() => setIsExpanded(!isExpanded)}
                 className={`
                   absolute bottom-0 left-0 w-full h-10 flex items-center justify-center
-                  bg-gradient-to-t from-[#f0f0f0] via-[#f0f0f0]/90 to-transparent pt-4
+                  bg-gradient-to-t from-primary via-primary/90 to-transparent pt-4
                   ${isExpanded ? 'relative bg-none h-6 mt-1' : ''}
-                  hover:text-primary transition-colors z-10
+                  hover:text-primary-foreground/80 transition-colors z-10
                 `}
               >
                 <ChevronDown
@@ -147,9 +147,7 @@ export default function MessageRow({ message, onRegenerate, onEdit }: MessageRow
               </button>
             )}
           </div>
-
-
-
+          
           {/* User Icons Below Bubble */}
           {!isAI && (
             <div className="flex items-center justify-end gap-1 mt-1 opacity-0 group-hover/msg:opacity-100 transition-opacity">
@@ -169,7 +167,7 @@ export default function MessageRow({ message, onRegenerate, onEdit }: MessageRow
               </button>
             </div>
           )}
-
+          
           {/* AI Icons Below Bubble */}
           {isAI && !message.streaming && (
             <div className="flex items-center gap-1 mt-2 transition-opacity">
@@ -202,8 +200,6 @@ export default function MessageRow({ message, onRegenerate, onEdit }: MessageRow
             </div>
           )}
         </div>
-
-
       </div>
     </div>
   );
