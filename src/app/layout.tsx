@@ -5,6 +5,7 @@ import Script from 'next/script';
 import '../styles/tailwind.css';
 import { ColorManager } from '@/components/ColorManager';
 import ZoomManager from '@/components/ZoomManager';
+import UpdaterManager from '@/components/UpdaterManager';
 
 const outfit = localFont({
   src: '../../public/fonts/Outfit-VariableFont_wght.ttf',
@@ -49,6 +50,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         />
       </head>
       <body className={outfit.className}>
+        <UpdaterManager />
         <ZoomManager />
         <ColorManager />
         {children}
