@@ -50,6 +50,9 @@
     "category": "Productivity",
     "shortDescription": "Autonomous research workstation for video script production",
     "longDescription": "Outlier is an autonomous research and content generation desktop application that captures verified web sources, generates structured video scripts, and manages recurring research jobs.",
+    "updater": {
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEI4NzBGNTdCMDZERUJEMzcKUldRM3ZkNEdlL1Z3dUxzaTBXY2pZb0VDSmxxSTBSUHdVUkJJUGgwYkdFR013dlNyT2NxVmJyYmkK"
+    },
     "android": {
       "debugApplicationIdSuffix": ".debug"
     }
