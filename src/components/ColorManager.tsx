@@ -10,19 +10,9 @@ export function ColorManager() {
       document.documentElement.style.setProperty('--primary', savedColor);
     }
 
-    // Apply saved theme
-    const savedTheme = localStorage.getItem('appearance') || 'system';
-    applyTheme(savedTheme);
+    // Force light theme
+    document.documentElement.setAttribute('data-theme', 'light');
   }, []);
-
-  const applyTheme = (theme: string) => {
-    if (theme === 'system') {
-      const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
-    } else {
-      document.documentElement.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
-    }
-  };
 
   return null;
 }
