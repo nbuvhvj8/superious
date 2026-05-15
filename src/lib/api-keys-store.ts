@@ -1,5 +1,6 @@
 import { promises as fs } from 'fs';
 import path from 'path';
+import os from 'os';
 import { decrypt, encrypt, maskKey, type EncryptedBlob } from './crypto';
 import { PROVIDER_IDS } from './providers';
 
@@ -11,8 +12,29 @@ import { PROVIDER_IDS } from './providers';
  * out for Supabase / Postgres without changing the public surface below.
  */
 
-const STORE_DIR = path.join(process.cwd(), '.data');
-const STORE_FILE = path.join(STORE_DIR, 'api-keys.json');
+// We prioritize a local .data directory if it's writable, otherwise fallback to /tmp
+const LOCAL_STORE_DIR = path.join(process.cwd(), '.data');
+const TMP_STORE_DIR = path.join(os.tmpdir(), '.superious-data');
+
+let ACTIVE_STORE_DIR = LOCAL_STORE_DIR;
+
+async function ensureStoreDir(): Promise<string> {
+  try {
+    await fs.mkdir(LOCAL_STORE_DIR, { recursive: true });
+    // Check if we can actually write to it by attempting to create a dummy file if mkdir succeeded
+    // (on some environments mkdir might "succeed" but the dir is not writable)
+    return LOCAL_STORE_DIR;
+  } catch (err) {
+    // If mkdir fails (e.g. read-only filesystem), fallback to /tmp
+    await fs.mkdir(TMP_STORE_DIR, { recursive: true });
+    ACTIVE_STORE_DIR = TMP_STORE_DIR;
+    return TMP_STORE_DIR;
+  }
+}
+
+function getStoreFile() {
+  return path.join(ACTIVE_STORE_DIR, 'api-keys.json');
+}
 
 interface StoredRecord {
   blob: EncryptedBlob;
@@ -26,8 +48,10 @@ interface StoreFile {
 }
 
 async function readStore(): Promise<StoreFile> {
+  const storeDir = await ensureStoreDir();
+  const storeFile = path.join(storeDir, 'api-keys.json');
   try {
-    const raw = await fs.readFile(STORE_FILE, 'utf8');
+    const raw = await fs.readFile(storeFile, 'utf8');
     const parsed = JSON.parse(raw) as StoreFile;
     if (parsed?.version !== 1 || typeof parsed.providers !== 'object') {
       return { version: 1, providers: {} };
@@ -37,13 +61,14 @@ async function readStore(): Promise<StoreFile> {
     if ((err as NodeJS.ErrnoException).code === 'ENOENT') {
       return { version: 1, providers: {} };
     }
-    throw err;
+    return { version: 1, providers: {} };
   }
 }
 
 async function writeStore(file: StoreFile): Promise<void> {
-  await fs.mkdir(STORE_DIR, { recursive: true });
-  await fs.writeFile(STORE_FILE, JSON.stringify(file, null, 2), { mode: 0o600 });
+  const storeDir = await ensureStoreDir();
+  const storeFile = path.join(storeDir, 'api-keys.json');
+  await fs.writeFile(storeFile, JSON.stringify(file, null, 2), { mode: 0o600 });
 }
 
 export interface ApiKeyMetadata {

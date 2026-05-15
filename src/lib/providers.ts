@@ -59,7 +59,7 @@ export const PROVIDERS: ProviderDefinition[] = [
       'gemma-4-26b',
       'gemma-4-31b',
     ],
-  },
+    },
   {
     id: 'xai',
     name: 'xAI (Grok)',

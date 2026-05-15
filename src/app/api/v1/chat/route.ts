@@ -216,8 +216,10 @@ async function* streamGoogle(
   messages: ChatMessage[],
   systemPrompt: string
 ): AsyncGenerator<string> {
-  const url = `https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(
-    model
+  // Ensure the model identifier has the 'models/' prefix if it doesn't already
+  const modelId = model.startsWith('models/') ? model : `models/${model}`;
+  const url = `https://generativelanguage.googleapis.com/v1beta/${encodeURIComponent(
+    modelId
   )}:streamGenerateContent?alt=sse&key=${encodeURIComponent(apiKey)}`;
   const res = await fetch(url, {
     method: 'POST',
