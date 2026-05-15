@@ -17,6 +17,7 @@ const nextConfig = {
   
   // Standalone output for efficient deployment
   output: 'standalone',
+  outputFileTracingRoot: process.cwd(),
 
   webpack(config, { dev, isServer }) {
     // Only use component-tagger in development to avoid production overhead
