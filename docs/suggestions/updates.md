@@ -55,3 +55,23 @@ active sidebar tab hover - #e0e2e6
 user bubble without any borderline or anything - #e0e2e6
 attachment below the chatinput bg - #c9cace
 chatinput bg - #e0e2e6
+
+
+
+# phase 4 
+Feature for later adaptations 
+1. Skills
+2. Plugins
+3. Extensions
+4. Computer use
+5. Browser use
+6. Web searching
+7. Deep searching 
+8. Remote control
+9. Able to use and deploy parallel agents
+10. Local installed cli options
+11. Use cli tools call
+12. Able to use local model
+13. Add ability to create real professional motion graphics design using open-sourced plugin project
+14. Ability to connect and chat on it remotely through social chatting app like WhatsApp, slack, telegram, discord so on.
+15. Able to use multi-modal modelslike gemini family, rag embedding model like gemini embedding. 
