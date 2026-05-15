@@ -11,6 +11,21 @@ export default function UpdaterManager() {
           const update = await check();
           if (update) {
             console.log(`Update available: ${update.version}`);
+            console.log('Downloading and installing update...');
+            await update.downloadAndInstall((event) => {
+              switch (event.event) {
+                case 'Started':
+                  console.log(`Update download started. Content length: ${event.data.contentLength}`);
+                  break;
+                case 'Progress':
+                  console.log(`Update download progress: ${event.data.chunkLength} bytes received`);
+                  break;
+                case 'Finished':
+                  console.log('Update download finished.');
+                  break;
+              }
+            });
+            console.log('Update installed successfully. Please restart the app.');
           }
         }
       } catch (err) {
