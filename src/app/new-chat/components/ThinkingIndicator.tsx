@@ -23,7 +23,7 @@ export default function ThinkingIndicator({
       <button
         type="button"
         onClick={() => setIsOpen((prev) => !prev)}
-        className="inline-flex items-center gap-1 text-[12px] font-normal tracking-tight text-muted-foreground"
+        className="inline-flex items-center gap-1 text-[14px] font-normal tracking-tight text-muted-foreground"
       >
         <ChevronRight
           size={14}

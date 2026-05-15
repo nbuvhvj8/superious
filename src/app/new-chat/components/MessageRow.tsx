@@ -170,7 +170,7 @@ export default function MessageRow({ message, onRegenerate, onEdit }: MessageRow
           
           {/* AI Icons Below Bubble */}
           {isAI && !message.streaming && (
-            <div className="flex items-center gap-1 mt-2 transition-opacity">
+            <div className="flex items-center justify-start gap-1 mt-2 transition-opacity">
               <button
                 onClick={handleCopy}
                 className="p-1.5 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-all"
