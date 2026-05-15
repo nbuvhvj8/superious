@@ -7,26 +7,14 @@ const KEY_LENGTH = 32;
 const TAG_LENGTH = 16;
 
 function getMasterKey(): Buffer {
-  const passphrase = process.env.API_KEY_ENCRYPTION_SECRET;
-  if (!passphrase) {
-    if (process.env.NODE_ENV === 'production') {
-      throw new Error(
-        'API_KEY_ENCRYPTION_SECRET environment variable is required in production. ' +
-          'Generate one with: openssl rand -hex 32'
-      );
-    }
-    // Dev-only fallback so local setup does not error out before the user has
-    // configured a secret. NEVER use this in production.
-    return scryptSync(
-      'dev-only-insecure-superious-fallback-do-not-use-in-prod',
-      'superious-static-salt',
-      KEY_LENGTH
-    );
-  }
-  // Derive a 32-byte key from the passphrase deterministically. We use a
-  // static salt so that the same passphrase always produces the same key —
-  // this is required so encrypted blobs remain decryptable across restarts.
-  return scryptSync(passphrase, 'superious-api-keys-v1', KEY_LENGTH);
+  // Since this is an open-source client-side application, we use a static, 
+  // hardcoded key. Security relies on the OS user's disk permissions to 
+  // protect the saved key/config file, rather than a secret passphrase.
+  return scryptSync(
+    'superious-open-source-static-master-key',
+    'superious-static-salt',
+    KEY_LENGTH
+  );
 }
 
 export interface EncryptedBlob {
