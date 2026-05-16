@@ -32,19 +32,19 @@ However, several **critical production risks** exist that would block enterprise
 *   **System:** `src/server/repo/memory-repository.ts`, `src/server/queue/memory-queue.ts`
 *   **Issue:** All research jobs, source captures, and generated scripts are stored in RAM.
 *   **Consequence:** A single app crash or system reboot results in total data loss for the user. In a production research tool, this is unacceptable.
-*   **Solution:** Replace `MemoryJobRepository` with a SQLite implementation (using `better-sqlite3` or similar) to ensure local durability.
+*   **Professional Fix:** Implement a `SqliteJobRepository` using `better-sqlite3`. Define a migration strategy for schema updates and use a local database file in the user's `app_data_dir`. This ensures data survives app restarts and provides a structured way to handle large research sets without memory exhaustion.
 
 ### [CRITICAL-02] Cryptographic Theater: Hardcoded Master Key
 *   **System:** `src/lib/crypto.ts`
 *   **Issue:** The "encryption" of API keys uses a static, hardcoded salt and master key: `superious-open-source-static-master-key`.
 *   **Consequence:** The encryption provides zero protection against anyone who has the codebase. It is effectively "obfuscation," not security.
-*   **Solution:** Use the Tauri `stronghold` plugin or the OS-native keychain (via Rust `keyring`) to manage a unique encryption key for the user.
+*   **Professional Fix:** Integrate the `tauri-plugin-stronghold` for secret management. Stronghold provides an encrypted, snapshot-based vault. Alternatively, use the Rust `keyring` crate to store a unique master password in the OS Keychain/Credential Manager, then use that password to derive a unique key for the AES-256-GCM encryption.
 
 ### [CRITICAL-03] Runtime Bloat: Next.js Standalone Sidecar
 *   **System:** `src-tauri/src/lib.rs`, `scripts/prepare-sidecar.mjs`
 *   **Issue:** The app bundles a full Node.js binary and runs a Next.js server as a sidecar to serve the UI and API.
 *   **Consequence:** High baseline RAM usage (~150MB+ just for the sidecar) and a large installer size. It complicates the security boundary as the IPC is essentially open HTTP on localhost.
-*   **Solution:** For a true desktop app, migrate the backend logic to Rust (Tauri commands) or use a lightweight Node runtime if absolutely necessary, avoiding the full Next.js server overhead in production.
+*   **Professional Fix:** Use Tauri's native asset serving for the frontend (SSG build of Next.js). Port the API logic and Agent orchestration into a dedicated, lightweight Rust backend or a minimal Node.js sidecar that only handles the LLM orchestration via IPC commands, rather than a full web server. This reduces the attack surface and RAM footprint.
 
 ---
 
@@ -53,21 +53,29 @@ However, several **critical production risks** exist that would block enterprise
 ### ARCHITECTURE & BACKEND
 *   **The Good:** The "Node" pattern for agents (`web-researcher.ts`, `script-writer.ts`) is exemplary. Dependency injection in `getBackend` makes the system highly testable.
 *   **The Bad:** `registerResearchWorker` is called inside an API route (`src/app/api/v1/jobs/route.ts`). This is a "Hidden Singleton" pattern that relies on Next.js module caching. If the worker crashes, there is no automatic supervisor to restart it.
+    *   **Professional Fix:** Move worker registration to a dedicated bootstrap sequence that runs once when the sidecar starts. Implement a basic supervisor loop or use a library like `BullMQ` (with Redis) or a native Rust queue that can handle worker persistence and auto-restarts.
 *   **Risk:** Race conditions in the `MemoryJobQueue` during `drain()` could lead to orphaned jobs if the process shuts down mid-execution.
+    *   **Professional Fix:** Implement a "Graceful Shutdown" handler that catches `SIGTERM/SIGINT` and waits for `queue.drain()` to complete before allowing the process to exit. Use a persistent queue (SQLite-backed) so that if a hard crash occurs, the job can be recovered on the next boot.
 
 ### FRONTEND & NEXT.JS
 *   **The Good:** High-quality Tailwind usage and clean component boundaries in `src/app/new-chat`.
 *   **The Bad:** Heavy use of `use client` on pages that could be server-rendered (or pre-rendered for desktop).
-*   **technical Debt:** The `MessagesArea` and `ChatInput` components in `src/app/new-chat` are starting to become "God Components" with too many responsibilities (search fetching, streaming logic, state management).
+    *   **Professional Fix:** Refactor components to use Server Components for static layouts (like headers and sidebars) and pass data down to Client Components only where interactivity is required. This improves hydration speed and reduces the initial JS bundle size.
+*   **Technical Debt:** The `MessagesArea` and `ChatInput` components in `src/app/new-chat` are starting to become "God Components" with too many responsibilities (search fetching, streaming logic, state management).
+    *   **Professional Fix:** Extract the search logic into a custom hook (`useWebSearch`) and the streaming chat logic into a dedicated store or hook (`useStreamingChat`). Use the "Compound Component" pattern for the message area to separate the rendering of different message types from the orchestration of the list.
 
 ### AI SYSTEM & ORCHESTRATION
 *   **The Good:** Excellent use of `Promise.allSettled` for research fanout and robust fallback logic in `script-writer.ts`.
 *   **The Bad:** No token counting or cost estimation. A user running 50 parallel research jobs could unknowingly burn through significant API credits.
+    *   **Professional Fix:** Integrate a library like `js-tiktoken` to calculate token usage before and after API calls. Store this usage in the database for every job and provide a "Usage Dashboard" in settings so users can track their spend across different providers.
 *   **Risk:** The "Query Planner" (indirectly observed via agent graph) doesn't seem to have a depth limit for nested research, risking runaway loops if the LLM hallucinating new queries.
+    *   **Professional Fix:** Implement a hard `MAX_DEPTH` (e.g., 2 levels) and `MAX_TOTAL_QUERIES` (e.g., 20) in the `AgentState`. The `web_researcher` should check these counters before every fanout to prevent exponential growth of the research tree.
 
 ### SECURITY
 *   **The Bad:** `SSRF Guard` is present but basic. While it checks for local IPs, it doesn't handle DNS rebinding attacks which could allow the screenshotter to probe internal network services.
+    *   **Professional Fix:** Perform DNS resolution *before* the SSRF check and then use the resolved IP address for the connection, pinning the IP to prevent rebinding during the request. Ideally, run the screenshotter in a strictly sandboxed container or use a service that specializes in safe web rendering.
 *   **Risk:** API keys are stored in `.data/api-keys.json` with `0o600` permissions. While restricted, a malicious local process can still read this file and use the hardcoded key to decrypt everything.
+    *   **Professional Fix:** (See [CRITICAL-02]). Moving the keys into the OS-native secure enclave or using a user-provided passphrase for derivation is the only way to mitigate local privilege escalation risks.
 
 ---
 
