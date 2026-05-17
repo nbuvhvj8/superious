@@ -97,6 +97,7 @@ export default function MessageRow({ message, onRegenerate, onEdit }: MessageRow
             className={`
             relative w-fit text-[15px] leading-relaxed
             ${isAI ? 'text-foreground px-0 py-1' : 'bg-[#e5e7eb] text-foreground rounded-full px-4 py-2.5 max-w-[85%]'}
+            ${!isAI && isLongMessage ? '!rounded-xl' : ''}
             ${!isAI && !isExpanded && isLongMessage ? 'max-h-[160px] overflow-hidden' : ''}
             transition-all duration-300
           `}
