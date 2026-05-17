@@ -2,7 +2,8 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { Trash2, ExternalLink, ChevronLeft, ChevronRight, Filter } from 'lucide-react';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { ArrowLeft01Icon, ArrowRight01Icon, ArrowUpRight01Icon, Delete02Icon, FilterIcon } from '@hugeicons/core-free-icons';
 import { JobStatusBadge, type JobStatus } from '@/components/ui/StatusBadge';
 import ConfirmModal from '@/components/ui/ConfirmModal';
 
@@ -187,7 +188,7 @@ export default function JobHistoryTable() {
         {/* Table Toolbar */}
         <div className="flex items-center justify-between px-5 py-3 border-b border-border gap-3 flex-wrap">
           <div className="flex items-center gap-1.5">
-            <Filter size={13} className="text-muted-foreground" />
+            <HugeiconsIcon icon={FilterIcon} size={13} className="text-muted-foreground" />
             <span className="text-xs font-semibold text-muted-foreground mr-2">Status</span>
             {STATUS_FILTERS.map((f) => (
               <button
@@ -308,7 +309,7 @@ export default function JobHistoryTable() {
                           className="btn-ghost p-1.5 relative group/btn text-foreground"
                           aria-label="View job detail"
                         >
-                          <ExternalLink size={14} strokeWidth={2.25} />
+                          <HugeiconsIcon icon={ArrowUpRight01Icon} size={14} strokeWidth={2.25} />
                           <span
                             className="
                             absolute bottom-full mb-1.5 left-1/2 -translate-x-1/2
@@ -325,7 +326,7 @@ export default function JobHistoryTable() {
                           className="btn-ghost p-1.5 text-foreground hover:text-red-500 relative group/btn"
                           aria-label="Delete job"
                         >
-                          <Trash2 size={14} strokeWidth={2.25} />
+                          <HugeiconsIcon icon={Delete02Icon} size={14} strokeWidth={2.25} />
                           <span
                             className="
                             absolute bottom-full mb-1.5 left-1/2 -translate-x-1/2
@@ -359,7 +360,7 @@ export default function JobHistoryTable() {
                 className="btn-ghost p-1.5 disabled:opacity-40"
                 aria-label="Previous page"
               >
-                <ChevronLeft size={14} />
+                <HugeiconsIcon icon={ArrowLeft01Icon} size={14} />
               </button>
               {Array.from({ length: totalPages }).map((_, i) => (
                 <button
@@ -383,7 +384,7 @@ export default function JobHistoryTable() {
                 className="btn-ghost p-1.5 disabled:opacity-40"
                 aria-label="Next page"
               >
-                <ChevronRight size={14} />
+                <HugeiconsIcon icon={ArrowRight01Icon} size={14} />
               </button>
             </div>
           </div>

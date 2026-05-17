@@ -1,16 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import {
-  FolderOpen,
-  FolderPlus,
-  Folder,
-  ChevronDown,
-  ChevronRight,
-  X,
-  Check,
-  Edit2,
-} from 'lucide-react';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { ArrowDown01Icon, ArrowRight01Icon, Cancel01Icon, Edit01Icon, FolderIcon, FolderOpenIcon, FolderAddIcon, Tick01Icon } from '@hugeicons/core-free-icons';
 
 interface Collection {
   id: string;
@@ -92,16 +84,16 @@ export default function CollectionsPanel({ selectedCollection, onSelectCollectio
         className="w-full flex items-center justify-between px-4 py-2 hover:bg-muted/40 transition-colors"
       >
         <div className="flex items-center gap-2.5">
-          <FolderOpen size={16} strokeWidth={2.25} className="text-primary" />
+          <HugeiconsIcon icon={FolderOpenIcon} size={16} strokeWidth={2.25} className="text-primary" />
           <span className="text-sm font-bold text-foreground">Collections</span>
           <span className="bg-muted px-1.5 py-0.5 rounded text-2xs font-bold text-muted-foreground">
             {collections.length}
           </span>
         </div>
         {expanded ? (
-          <ChevronDown size={14} strokeWidth={2.25} className="text-foreground" />
+          <HugeiconsIcon icon={ArrowDown01Icon} size={14} strokeWidth={2.25} className="text-foreground" />
         ) : (
-          <ChevronRight size={14} strokeWidth={2.25} className="text-foreground" />
+          <HugeiconsIcon icon={ArrowRight01Icon} size={14} strokeWidth={2.25} className="text-foreground" />
         )}
       </button>
 
@@ -115,7 +107,7 @@ export default function CollectionsPanel({ selectedCollection, onSelectCollectio
               ${selectedCollection === null ? 'bg-primary/5 text-primary' : 'text-muted-foreground hover:bg-muted/40 hover:text-foreground'}
             `}
           >
-            <Folder size={13} className={selectedCollection === null ? 'text-primary' : ''} />
+            <HugeiconsIcon icon={FolderIcon} size={13} className={selectedCollection === null ? 'text-primary' : ''} />
             <span className="text-xs font-semibold">All Jobs</span>
           </button>
 
@@ -142,13 +134,13 @@ export default function CollectionsPanel({ selectedCollection, onSelectCollectio
                     onClick={() => handleSaveEdit(col.id)}
                     className="text-primary hover:opacity-80"
                   >
-                    <Check size={12} />
+                    <HugeiconsIcon icon={Tick01Icon} size={12} />
                   </button>
                   <button
                     onClick={() => setEditingId(null)}
                     className="text-muted-foreground hover:text-foreground"
                   >
-                    <X size={12} />
+                    <HugeiconsIcon icon={Cancel01Icon} size={12} />
                   </button>
                 </div>
               ) : (
@@ -183,7 +175,7 @@ export default function CollectionsPanel({ selectedCollection, onSelectCollectio
                     }}
                     className="w-5 h-5 rounded flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
                   >
-                    <Edit2 size={10} />
+                    <HugeiconsIcon icon={Edit01Icon} size={10} />
                   </button>
                   <button
                     onClick={(e) => {
@@ -192,7 +184,7 @@ export default function CollectionsPanel({ selectedCollection, onSelectCollectio
                     }}
                     className="w-5 h-5 rounded flex items-center justify-center text-muted-foreground hover:text-red-500 hover:bg-red-50 transition-colors"
                   >
-                    <X size={10} />
+                    <HugeiconsIcon icon={Cancel01Icon} size={10} />
                   </button>
                 </div>
               )}
@@ -244,7 +236,7 @@ export default function CollectionsPanel({ selectedCollection, onSelectCollectio
               onClick={() => setCreating(true)}
               className="w-full flex items-center gap-2 px-4 py-2.5 text-xs font-semibold text-muted-foreground hover:text-primary hover:bg-muted/40 transition-colors border-t border-border"
             >
-              <FolderPlus size={13} />
+              <HugeiconsIcon icon={FolderAddIcon} size={13} />
               New Collection
             </button>
           )}

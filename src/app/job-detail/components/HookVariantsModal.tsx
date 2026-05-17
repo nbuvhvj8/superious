@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { Loader2, Sparkles, Check, RefreshCw } from 'lucide-react';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { Loading03Icon, RefreshIcon, SparklesIcon, Tick01Icon } from '@hugeicons/core-free-icons';
 import Modal from '@/components/ui/Modal';
 import type { HookAngle, HookVariant } from '@/server/types';
 
@@ -138,7 +139,7 @@ export default function HookVariantsModal({ open, jobId, currentHook, onClose, o
             className="btn-secondary gap-1.5 text-xs py-1.5 px-3"
             disabled={loading}
           >
-            <RefreshCw size={12} className={loading ? 'animate-spin' : ''} />
+            <HugeiconsIcon icon={RefreshIcon} size={12} className={loading ? 'animate-spin' : ''} />
             Regenerate
           </button>
         </div>
@@ -154,7 +155,7 @@ export default function HookVariantsModal({ open, jobId, currentHook, onClose, o
 
         {loading && variants === null ? (
           <div className="flex items-center justify-center py-12 text-muted-foreground gap-2">
-            <Loader2 size={16} className="animate-spin" />
+            <HugeiconsIcon icon={Loading03Icon} size={16} className="animate-spin" />
             <span className="text-sm font-medium">Generating five variants…</span>
           </div>
         ) : (
@@ -220,13 +221,13 @@ export default function HookVariantsModal({ open, jobId, currentHook, onClose, o
             disabled={!selectedId}
             className="btn-primary gap-1.5 text-xs py-1.5 px-4 disabled:opacity-40 disabled:pointer-events-none"
           >
-            <Check size={12} />
+            <HugeiconsIcon icon={Tick01Icon} size={12} />
             Use This Hook
           </button>
         </div>
 
         <p className="text-2xs text-muted-foreground flex items-center gap-1.5">
-          <Sparkles size={11} className="text-primary" />
+          <HugeiconsIcon icon={SparklesIcon} size={11} className="text-primary" />
           Variants are grounded in the same captured sources — every claim stays cite-able.
         </p>
       </div>

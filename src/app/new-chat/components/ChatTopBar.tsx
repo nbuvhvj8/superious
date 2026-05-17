@@ -1,7 +1,8 @@
 'use client';
 
 import React from 'react';
-import { Edit3 } from 'lucide-react';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { PencilEdit01Icon } from '@hugeicons/core-free-icons';
 
 interface ChatTopBarProps {
   onNewChat?: () => void;
@@ -18,7 +19,7 @@ export default function ChatTopBar({ onNewChat, showNewChat = false }: ChatTopBa
             onClick={onNewChat}
             className="flex items-center gap-1 group hover:opacity-80 transition-opacity"
           >
-            <Edit3 size={15} className="text-primary" />
+            <HugeiconsIcon icon={PencilEdit01Icon} size={15} className="text-primary" />
             <span className="text-[12px] font-semibold text-primary">New research</span>
           </button>
         )}

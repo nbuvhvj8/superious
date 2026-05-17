@@ -1,7 +1,8 @@
 'use client';
 
 import React from 'react';
-import { ChevronRight, Wrench } from 'lucide-react';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { ArrowRight01Icon, Wrench01Icon } from '@hugeicons/core-free-icons';
 
 interface ThinkingIndicatorProps {
   thinkingSteps?: string[];
@@ -25,10 +26,9 @@ export default function ThinkingIndicator({
         onClick={() => setIsOpen((prev) => !prev)}
         className="inline-flex items-center gap-1 text-[14px] font-normal tracking-tight text-muted-foreground"
       >
-        <ChevronRight
+        <HugeiconsIcon icon={ArrowRight01Icon}
           size={14}
-          className={`text-muted-foreground transition-transform ${isOpen ? 'rotate-90' : ''}`}
-        />
+          className={`text-muted-foreground transition-transform ${isOpen ? 'rotate-90' : ''}`} />
         <span className={isThinking ? 'shimmer-text opacity-70' : ''}>Thinking</span>
       </button>
       {isOpen && (hasSteps || hasToolCalls) && (
@@ -37,7 +37,7 @@ export default function ThinkingIndicator({
             <div className="space-y-1">
               {toolCalls.map((call, index) => (
                 <div key={`${call.tool}-${index}`} className="flex items-start gap-1.5">
-                  <Wrench size={12} className="mt-0.5 shrink-0" />
+                  <HugeiconsIcon icon={Wrench01Icon} size={12} className="mt-0.5 shrink-0" />
                   <p>
                     <span className="font-medium">{call.tool}:</span> {call.query}
                   </p>

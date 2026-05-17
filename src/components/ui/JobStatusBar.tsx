@@ -1,7 +1,8 @@
 'use client';
 
 import React from 'react';
-import { Clock, Search, Camera, PenLine, CheckCircle2, XCircle } from 'lucide-react';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { Camera01Icon, CancelCircleIcon, CheckmarkCircle01Icon, Clock01Icon, PenTool01Icon, Search01Icon } from '@hugeicons/core-free-icons';
 import type { JobStatus } from './StatusBadge';
 
 interface JobStatusBarProps {
@@ -11,15 +12,15 @@ interface JobStatusBarProps {
 }
 
 const STAGES: { key: JobStatus; label: string; icon: React.ReactNode }[] = [
-  { key: 'queued', label: 'Queued', icon: <Clock size={11} strokeWidth={2.25} /> },
-  { key: 'researching', label: 'Researching', icon: <Search size={11} strokeWidth={2.25} /> },
+  { key: 'queued', label: 'Queued', icon: <HugeiconsIcon icon={Clock01Icon} size={11} strokeWidth={2.25} /> },
+  { key: 'researching', label: 'Researching', icon: <HugeiconsIcon icon={Search01Icon} size={11} strokeWidth={2.25} /> },
   {
     key: 'screenshotting',
     label: 'Capturing Sources',
-    icon: <Camera size={11} strokeWidth={2.25} />,
+    icon: <HugeiconsIcon icon={Camera01Icon} size={11} strokeWidth={2.25} />,
   },
-  { key: 'writing', label: 'Writing Script', icon: <PenLine size={11} strokeWidth={2.25} /> },
-  { key: 'done', label: 'Done', icon: <CheckCircle2 size={11} strokeWidth={2.25} /> },
+  { key: 'writing', label: 'Writing Script', icon: <HugeiconsIcon icon={PenTool01Icon} size={11} strokeWidth={2.25} /> },
+  { key: 'done', label: 'Done', icon: <HugeiconsIcon icon={CheckmarkCircle01Icon} size={11} strokeWidth={2.25} /> },
 ];
 
 const STAGE_ORDER: Record<JobStatus, number> = {
@@ -63,7 +64,7 @@ export default function JobStatusBar({
               `}
               >
                 {isFailed && i === currentIdx ? (
-                  <XCircle size={11} strokeWidth={2.25} />
+                  <HugeiconsIcon icon={CancelCircleIcon} size={11} strokeWidth={2.25} />
                 ) : (
                   stage.icon
                 )}

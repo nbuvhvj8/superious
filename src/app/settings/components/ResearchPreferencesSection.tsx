@@ -2,7 +2,8 @@
 
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Sliders, CheckCircle2, Loader2 } from 'lucide-react';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { CheckmarkCircle01Icon, Loading03Icon, SlidersHorizontalIcon } from '@hugeicons/core-free-icons';
 import Toggle from '@/components/ui/Toggle';
 
 interface ResearchFormData {
@@ -52,7 +53,7 @@ export default function ResearchPreferencesSection() {
     <section id="research-preferences" className="space-y-12">
       <div className="flex items-center gap-2.5 pb-1 border-b border-border/60">
         <div className="w-8 h-8 rounded-lg bg-[#f2f3f6] flex items-center justify-center">
-          <Sliders size={15} className="text-foreground" />
+          <HugeiconsIcon icon={SlidersHorizontalIcon} size={15} className="text-foreground" />
         </div>
         <div>
           <h2 className="text-base font-bold text-foreground">Research Preferences</h2>
@@ -178,12 +179,12 @@ export default function ResearchPreferencesSection() {
           >
             {saving ? (
               <span className="flex items-center justify-center gap-2">
-                <Loader2 size={14} className="animate-spin" />
+                <HugeiconsIcon icon={Loading03Icon} size={14} className="animate-spin" />
                 Saving...
               </span>
             ) : saved ? (
               <span className="flex items-center justify-center gap-2">
-                <CheckCircle2 size={14} className="text-primary" />
+                <HugeiconsIcon icon={CheckmarkCircle01Icon} size={14} className="text-primary" />
                 Saved
               </span>
             ) : (

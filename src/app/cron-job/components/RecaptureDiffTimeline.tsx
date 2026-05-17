@@ -1,15 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import {
-  GitCommit,
-  Plus,
-  Link2Off,
-  AlertOctagon,
-  ExternalLink,
-  ChevronRight,
-  ChevronDown,
-} from 'lucide-react';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { Add01Icon, OctagonIcon, ArrowDown01Icon, ArrowRight01Icon, ArrowUpRight01Icon, GitCommitIcon, Unlink01Icon } from '@hugeicons/core-free-icons';
 import type { RecaptureRun } from '@/server/types';
 
 /**
@@ -200,7 +193,7 @@ function RunCard({ run, defaultExpanded }: { run: RecaptureRun; defaultExpanded:
           ${hasContradictions ? 'bg-red-500' : 'bg-primary'}
         `}
       >
-        <GitCommit size={9} className="text-white" strokeWidth={3} />
+        <HugeiconsIcon icon={GitCommitIcon} size={9} className="text-white" strokeWidth={3} />
       </span>
 
       <div className="card overflow-hidden">
@@ -210,9 +203,9 @@ function RunCard({ run, defaultExpanded }: { run: RecaptureRun; defaultExpanded:
         >
           <div className="flex items-center gap-3 min-w-0">
             {open ? (
-              <ChevronDown size={14} className="text-muted-foreground shrink-0" />
+              <HugeiconsIcon icon={ArrowDown01Icon} size={14} className="text-muted-foreground shrink-0" />
             ) : (
-              <ChevronRight size={14} className="text-muted-foreground shrink-0" />
+              <HugeiconsIcon icon={ArrowRight01Icon} size={14} className="text-muted-foreground shrink-0" />
             )}
             <div className="min-w-0 space-y-0.5">
               <p className="text-sm font-bold text-foreground truncate">
@@ -227,21 +220,21 @@ function RunCard({ run, defaultExpanded }: { run: RecaptureRun; defaultExpanded:
           <div className="flex items-center gap-1.5 shrink-0">
             {run.newSources.length > 0 && (
               <Pill
-                icon={<Plus size={10} />}
+                icon={<HugeiconsIcon icon={Add01Icon} size={10} />}
                 label={`+${run.newSources.length} new`}
                 tone="green"
               />
             )}
             {run.brokenSources.length > 0 && (
               <Pill
-                icon={<Link2Off size={10} />}
+                icon={<HugeiconsIcon icon={Unlink01Icon} size={10} />}
                 label={`${run.brokenSources.length} broken`}
                 tone="amber"
               />
             )}
             {hasContradictions && (
               <Pill
-                icon={<AlertOctagon size={10} />}
+                icon={<HugeiconsIcon icon={OctagonIcon} size={10} />}
                 label={`${run.contradictedClaims.length} conflict${run.contradictedClaims.length > 1 ? 's' : ''}`}
                 tone="red"
               />
@@ -261,7 +254,7 @@ function RunCard({ run, defaultExpanded }: { run: RecaptureRun; defaultExpanded:
               <SourcesBlock
                 title="New sources"
                 tone="green"
-                icon={<Plus size={11} />}
+                icon={<HugeiconsIcon icon={Add01Icon} size={11} />}
                 items={run.newSources}
               />
             )}
@@ -269,7 +262,7 @@ function RunCard({ run, defaultExpanded }: { run: RecaptureRun; defaultExpanded:
               <SourcesBlock
                 title="Broken sources"
                 tone="amber"
-                icon={<Link2Off size={11} />}
+                icon={<HugeiconsIcon icon={Unlink01Icon} size={11} />}
                 items={run.brokenSources}
               />
             )}
@@ -347,7 +340,7 @@ function SourcesBlock({
               }`}
             >
               {s.title}
-              <ExternalLink size={10} className="mt-0.5 shrink-0 opacity-70" />
+              <HugeiconsIcon icon={ArrowUpRight01Icon} size={10} className="mt-0.5 shrink-0 opacity-70" />
             </a>
           </li>
         ))}
@@ -360,7 +353,7 @@ function ContradictionsBlock({ claims }: { claims: RecaptureRun['contradictedCla
   return (
     <div className="px-4 py-3 space-y-3 bg-red-500/5">
       <div className="flex items-center gap-1.5 text-2xs font-bold uppercase tracking-widest text-red-600">
-        <AlertOctagon size={11} />
+        <HugeiconsIcon icon={OctagonIcon} size={11} />
         Contradicted claims
       </div>
       <ul className="space-y-3">

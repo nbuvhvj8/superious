@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useEffect, useRef } from 'react';
-import { X } from 'lucide-react';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { Cancel01Icon } from '@hugeicons/core-free-icons';
 
 interface ModalProps {
   open: boolean;
@@ -60,7 +61,7 @@ export default function Modal({ open, onClose, title, children, size = 'md' }: M
           <div className="flex items-center justify-between px-5 py-4 border-b border-border">
             <h3 className="text-base font-bold text-foreground">{title}</h3>
             <button onClick={onClose} className="btn-ghost p-1.5" aria-label="Close modal">
-              <X size={16} strokeWidth={2.25} />
+              <HugeiconsIcon icon={Cancel01Icon} size={16} strokeWidth={2.25} />
             </button>
           </div>
         )}
@@ -70,7 +71,7 @@ export default function Modal({ open, onClose, title, children, size = 'md' }: M
             className="absolute top-3 right-3 z-10 btn-ghost p-1.5 bg-card/80 backdrop-blur-sm"
             aria-label="Close modal"
           >
-            <X size={16} />
+            <HugeiconsIcon icon={Cancel01Icon} size={16} />
           </button>
         )}
         <div>{children}</div>

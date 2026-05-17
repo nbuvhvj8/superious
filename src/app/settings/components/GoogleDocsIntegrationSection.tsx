@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { CheckCircle2, AlertCircle, Loader2, ExternalLink, Unlink } from 'lucide-react';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { AlertCircleIcon, ArrowUpRight01Icon, CheckmarkCircle01Icon, Loading03Icon, Unlink01Icon } from '@hugeicons/core-free-icons';
 
 export default function GoogleDocsIntegrationSection() {
   const [status, setStatus] = useState<'idle' | 'connecting' | 'connected' | 'error'>('idle');
@@ -121,7 +122,7 @@ export default function GoogleDocsIntegrationSection() {
               <h3 className="text-sm font-medium text-foreground">Google Docs</h3>
               {status === 'connected' && (
                 <span className="flex items-center gap-1 text-[10px] font-bold text-primary bg-primary/10 px-2 py-0.5 rounded-full">
-                  <CheckCircle2 size={10} />
+                  <HugeiconsIcon icon={CheckmarkCircle01Icon} size={10} />
                   Connected
                 </span>
               )}
@@ -139,7 +140,7 @@ export default function GoogleDocsIntegrationSection() {
                 onClick={handleDisconnect}
                 className="flex items-center gap-2 px-3 py-1.5 bg-[#f2f3f6] rounded-[8px] text-[12px] font-bold text-muted-foreground hover:text-red-500 hover:bg-red-50 transition-all"
               >
-                <Unlink size={13} />
+                <HugeiconsIcon icon={Unlink01Icon} size={13} />
                 Disconnect
               </button>
             ) : (
@@ -150,12 +151,12 @@ export default function GoogleDocsIntegrationSection() {
               >
                 {status === 'connecting' ? (
                   <>
-                    <Loader2 size={14} className="animate-spin" />
+                    <HugeiconsIcon icon={Loading03Icon} size={14} className="animate-spin" />
                     Connecting...
                   </>
                 ) : (
                   <>
-                    <ExternalLink size={13} />
+                    <HugeiconsIcon icon={ArrowUpRight01Icon} size={13} />
                     Connect Google Account
                   </>
                 )}
@@ -166,7 +167,7 @@ export default function GoogleDocsIntegrationSection() {
 
         {errorMsg && (
           <div className="flex items-start gap-2 px-3 py-2.5 rounded-[8px] bg-red-50 border border-red-100">
-            <AlertCircle size={14} className="text-red-500 shrink-0 mt-0.5" />
+            <HugeiconsIcon icon={AlertCircleIcon} size={14} className="text-red-500 shrink-0 mt-0.5" />
             <p className="text-xs text-red-600 font-medium leading-relaxed">{errorMsg}</p>
           </div>
         )}

@@ -2,7 +2,8 @@
 
 import React, { useMemo, useState } from 'react';
 import AppLayout from '@/components/AppLayout';
-import { Bell, Clock, ExternalLink, Filter, Plus, Trash2 } from 'lucide-react';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { Add01Icon, ArrowUpRight01Icon, Clock01Icon, Delete02Icon, FilterIcon, Notification01Icon } from '@hugeicons/core-free-icons';
 import Modal from '@/components/ui/Modal';
 import RecaptureDiffTimeline from './components/RecaptureDiffTimeline';
 
@@ -99,7 +100,7 @@ export default function CronJobPage() {
               onClick={() => setIsModalOpen(true)}
               className="inline-flex items-center gap-2 rounded-full border border-[#e2e5ec] bg-[#f2f3f6] px-4 py-2 text-[13px] font-bold text-foreground transition-colors hover:bg-[#e9ecf2]"
             >
-              <Plus size={14} /> Create New
+              <HugeiconsIcon icon={Add01Icon} size={14} /> Create New
             </button>
           </header>
 
@@ -120,7 +121,7 @@ export default function CronJobPage() {
                     }}
                     className="mt-3 inline-flex items-center gap-2 rounded-[8px] bg-[#f2f3f6] px-3 py-1.5 text-[12px] font-bold"
                   >
-                    <Plus size={13} /> {item.action}
+                    <HugeiconsIcon icon={Add01Icon} size={13} /> {item.action}
                   </button>
                 </article>
               ))}
@@ -130,7 +131,7 @@ export default function CronJobPage() {
           <section className="overflow-hidden rounded-[10px] border border-[#ebedf2]">
             <div className="flex items-center justify-between border-b border-[#ebedf2] bg-[#fafafa] px-5 py-3 gap-3 flex-wrap">
               <div className="flex items-center gap-2">
-                <Filter size={13} className="text-muted-foreground" />
+                <HugeiconsIcon icon={FilterIcon} size={13} className="text-muted-foreground" />
                 {TYPE_FILTERS.map((f) => (
                   <button
                     key={f.key}
@@ -175,7 +176,7 @@ export default function CronJobPage() {
                       <td className="px-4 py-3 text-xs font-semibold">{job.type}</td>
                       <td className="px-4 py-3">
                         <span className="inline-flex items-center gap-1.5 text-xs">
-                          <Clock size={13} />
+                          <HugeiconsIcon icon={Clock01Icon} size={13} />
                           {job.schedule}
                         </span>
                       </td>
@@ -184,13 +185,13 @@ export default function CronJobPage() {
                       <td className="px-4 py-3">
                         <div className="flex justify-end gap-1">
                           <button className="rounded-[6px] p-1.5 hover:bg-[#f2f3f6]">
-                            <Bell size={14} />
+                            <HugeiconsIcon icon={Notification01Icon} size={14} />
                           </button>
                           <button className="rounded-[6px] p-1.5 hover:bg-[#f2f3f6]">
-                            <ExternalLink size={14} />
+                            <HugeiconsIcon icon={ArrowUpRight01Icon} size={14} />
                           </button>
                           <button className="rounded-[6px] p-1.5 text-red-500 hover:bg-red-50">
-                            <Trash2 size={14} />
+                            <HugeiconsIcon icon={Delete02Icon} size={14} />
                           </button>
                         </div>
                       </td>

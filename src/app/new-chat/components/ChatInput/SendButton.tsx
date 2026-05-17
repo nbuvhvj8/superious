@@ -1,7 +1,8 @@
 'use client';
 
 import React from 'react';
-import { ArrowUp, Square } from 'lucide-react';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { ArrowUp01Icon, SquareIcon } from '@hugeicons/core-free-icons';
 
 interface SendButtonProps {
   state: 'empty' | 'ready' | 'stop';
@@ -33,9 +34,9 @@ export default function SendButton({ state, onClick }: SendButtonProps) {
       aria-label={state === 'stop' ? 'Stop generation' : 'Send message'}
     >
       {state === 'stop' ? (
-        <Square size={16} fill="currentColor" strokeWidth={0} />
+        <HugeiconsIcon icon={SquareIcon} size={16} fill="currentColor" strokeWidth={0} />
       ) : (
-        <ArrowUp size={16} strokeWidth={2.5} />
+        <HugeiconsIcon icon={ArrowUp01Icon} size={16} strokeWidth={2.5} />
       )}
     </button>
   );

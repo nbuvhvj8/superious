@@ -2,7 +2,8 @@
 
 import React from 'react';
 import AppLayout from '@/components/AppLayout';
-import { Clock3, FileText, Sparkles } from 'lucide-react';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { Clock03Icon, File02Icon, SparklesIcon } from '@hugeicons/core-free-icons';
 
 const MOCK_ARTIFACTS = [
   { id: 'art-1', title: 'Netflix Streaming Trends 2024', type: 'Script Draft', date: '2024-03-20' },
@@ -17,7 +18,7 @@ export default function ArtifactPage() {
         <div className="min-h-[600px] rounded-[12px] border border-[#ebedf2] bg-white p-10 pt-6">
           <header className="mb-8">
             <div className="mb-2 inline-flex items-center gap-2 rounded-[6px] bg-[#f2f3f6] px-2 py-1 text-[11px] font-semibold text-muted-foreground">
-              <Sparkles size={12} />
+              <HugeiconsIcon icon={SparklesIcon} size={12} />
               GENERATED OUTPUTS
             </div>
             <h1 className="text-[28px] font-bold tracking-tight text-foreground">Artifacts</h1>
@@ -34,7 +35,7 @@ export default function ArtifactPage() {
               >
                 <div className="flex items-center gap-3">
                   <div className="rounded-[8px] bg-white p-2 text-muted-foreground ring-1 ring-[#eceff4]">
-                    <FileText size={18} />
+                    <HugeiconsIcon icon={File02Icon} size={18} />
                   </div>
                   <div>
                     <h3 className="text-sm font-semibold text-foreground">{artifact.title}</h3>
@@ -42,7 +43,7 @@ export default function ArtifactPage() {
                   </div>
                 </div>
                 <div className="inline-flex items-center gap-1 rounded-[6px] bg-[#f2f3f6] px-2.5 py-1 text-[11px] font-medium text-muted-foreground">
-                  <Clock3 size={12} />
+                  <HugeiconsIcon icon={Clock03Icon} size={12} />
                   {artifact.date}
                 </div>
               </article>

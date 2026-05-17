@@ -6,15 +6,8 @@ import ScriptViewer, { type BRollExportItem } from './ScriptViewer';
 import SourcePanel from './SourcePanel';
 import BRollPanel from './BRollPanel';
 import TitleThumbnailPack from './TitleThumbnailPack';
-import {
-  Camera,
-  BookOpen,
-  ExternalLink,
-  Loader2,
-  CheckCircle2,
-  AlertCircle,
-  Sparkles,
-} from 'lucide-react';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { AlertCircleIcon, ArrowUpRight01Icon, BookOpen01Icon, Camera01Icon, CheckmarkCircle01Icon, Loading03Icon, SparklesIcon } from '@hugeicons/core-free-icons';
 
 type RightTab = 'sources' | 'broll' | 'pack';
 
@@ -139,7 +132,7 @@ CRISPR is not a silver bullet — it is a platform. A set of molecular tools tha
       {/* Google Docs Status Banner */}
       {gdocsStatus === 'not_connected' && (
         <div className="flex items-center gap-3 px-6 py-2.5 bg-amber-50 border-b border-amber-200 shrink-0">
-          <AlertCircle size={14} strokeWidth={2.25} className="text-amber-600 shrink-0" />
+          <HugeiconsIcon icon={AlertCircleIcon} size={14} strokeWidth={2.25} className="text-amber-600 shrink-0" />
           <p className="text-xs text-amber-700 font-medium flex-1">
             Google Docs is not connected. Connect your account in{' '}
             <Link href="/settings" className="underline font-bold">
@@ -161,7 +154,7 @@ CRISPR is not a silver bullet — it is a platform. A set of molecular tools tha
       )}
       {gdocsStatus === 'success' && (
         <div className="flex items-center gap-3 px-6 py-2.5 bg-primary/10 border-b border-primary/20 shrink-0">
-          <CheckCircle2 size={14} strokeWidth={2.25} className="text-primary shrink-0" />
+          <HugeiconsIcon icon={CheckmarkCircle01Icon} size={14} strokeWidth={2.25} className="text-primary shrink-0" />
           <p className="text-xs text-primary font-medium flex-1">
             Script exported to Google Docs successfully!
           </p>
@@ -171,7 +164,7 @@ CRISPR is not a silver bullet — it is a platform. A set of molecular tools tha
             rel="noopener noreferrer"
             className="flex items-center gap-1 text-xs font-bold text-primary hover:underline"
           >
-            Open Doc <ExternalLink size={11} strokeWidth={2.25} />
+            Open Doc <HugeiconsIcon icon={ArrowUpRight01Icon} size={11} strokeWidth={2.25} />
           </a>
           <button
             onClick={() => setGdocsStatus('idle')}
@@ -183,7 +176,7 @@ CRISPR is not a silver bullet — it is a platform. A set of molecular tools tha
       )}
       {gdocsStatus === 'error' && (
         <div className="flex items-center gap-3 px-6 py-2.5 bg-red-50 border-b border-red-200 shrink-0">
-          <AlertCircle size={14} strokeWidth={2.25} className="text-red-500 shrink-0" />
+          <HugeiconsIcon icon={AlertCircleIcon} size={14} strokeWidth={2.25} className="text-red-500 shrink-0" />
           <p className="text-xs text-red-600 font-medium flex-1">{gdocsError}</p>
           <button
             onClick={() => setGdocsStatus('idle')}
@@ -195,7 +188,7 @@ CRISPR is not a silver bullet — it is a platform. A set of molecular tools tha
       )}
       {gdocsStatus === 'exporting' && (
         <div className="flex items-center gap-3 px-6 py-2.5 bg-muted border-b border-border shrink-0">
-          <Loader2 size={14} strokeWidth={2.25} className="text-primary animate-spin shrink-0" />
+          <HugeiconsIcon icon={Loading03Icon} size={14} strokeWidth={2.25} className="text-primary animate-spin shrink-0" />
           <p className="text-xs text-muted-foreground font-medium">Exporting to Google Docs…</p>
         </div>
       )}
@@ -226,7 +219,7 @@ CRISPR is not a silver bullet — it is a platform. A set of molecular tools tha
                 }
               `}
             >
-              <BookOpen size={13} />
+              <HugeiconsIcon icon={BookOpen01Icon} size={13} />
               Sources
             </button>
             <button
@@ -240,7 +233,7 @@ CRISPR is not a silver bullet — it is a platform. A set of molecular tools tha
                 }
               `}
             >
-              <Camera size={13} />
+              <HugeiconsIcon icon={Camera01Icon} size={13} />
               B-Roll
               {bRollItems.length > 0 && (
                 <span className="ml-1 font-mono text-2xs bg-muted px-1.5 py-0.5 rounded-full tabular-nums">
@@ -260,7 +253,7 @@ CRISPR is not a silver bullet — it is a platform. A set of molecular tools tha
               `}
               title="YouTube title + thumbnail concept pack"
             >
-              <Sparkles size={13} />
+              <HugeiconsIcon icon={SparklesIcon} size={13} />
               Pack
             </button>
           </div>

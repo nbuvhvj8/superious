@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Type, Image as ImageIcon, Copy, CheckCircle2, Sparkles, RefreshCw } from 'lucide-react';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { CheckmarkCircle01Icon, Copy01Icon, Image01Icon, RefreshIcon, SparklesIcon, TextIcon } from '@hugeicons/core-free-icons';
 import type { TitleThumbnailPack, TitleVariant, ThumbnailConcept } from '@/server/types';
 
 /**
@@ -87,7 +88,7 @@ export default function TitleThumbnailPack({ pack = MOCK_PACK, onRegenerate }: P
           <h3 className="text-sm font-bold text-foreground">Pack</h3>
           {onRegenerate && (
             <button onClick={onRegenerate} className="btn-secondary gap-1 text-2xs py-1 px-2">
-              <RefreshCw size={11} />
+              <HugeiconsIcon icon={RefreshIcon} size={11} />
               Regenerate
             </button>
           )}
@@ -102,7 +103,7 @@ export default function TitleThumbnailPack({ pack = MOCK_PACK, onRegenerate }: P
       <section className="space-y-3">
         <div className="flex items-center justify-between">
           <span className="section-label flex items-center gap-1.5">
-            <Type size={11} />
+            <HugeiconsIcon icon={TextIcon} size={11} />
             Title Variants
           </span>
           <span className="font-mono text-2xs text-muted-foreground tabular-nums">
@@ -120,7 +121,7 @@ export default function TitleThumbnailPack({ pack = MOCK_PACK, onRegenerate }: P
       <section className="space-y-3">
         <div className="flex items-center justify-between">
           <span className="section-label flex items-center gap-1.5">
-            <ImageIcon size={11} />
+            <HugeiconsIcon icon={Image01Icon} size={11} />
             Thumbnail Concepts
           </span>
           <span className="font-mono text-2xs text-muted-foreground tabular-nums">
@@ -135,7 +136,7 @@ export default function TitleThumbnailPack({ pack = MOCK_PACK, onRegenerate }: P
       </section>
 
       <p className="text-2xs text-muted-foreground flex items-center gap-1.5 pt-2 border-t border-border">
-        <Sparkles size={11} className="text-primary" />
+        <HugeiconsIcon icon={SparklesIcon} size={11} className="text-primary" />
         Concepts are art-direction briefs, not generated images — pass them to your designer or
         thumbnail tool of choice.
       </p>
@@ -166,7 +167,7 @@ function TitleRow({ title }: { title: TitleVariant }) {
           aria-label="Copy title"
           title="Copy title"
         >
-          {copied ? <CheckCircle2 size={12} className="text-primary" /> : <Copy size={12} />}
+          {copied ? <HugeiconsIcon icon={CheckmarkCircle01Icon} size={12} className="text-primary" /> : <HugeiconsIcon icon={Copy01Icon} size={12} />}
         </button>
       </div>
       <p className="text-2xs text-muted-foreground leading-relaxed">{title.rationale}</p>

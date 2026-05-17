@@ -1,19 +1,9 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { HugeiconsIcon } from '@hugeicons/react';
 import { useRouter } from 'next/navigation';
-import {
-  Feather,
-  FileVideo,
-  FolderOpen,
-  FileText,
-  CheckCircle2,
-  ChevronRight,
-  ExternalLink,
-  Loader2,
-  AlertCircle,
-  Video,
-} from 'lucide-react';
+import { AlertCircleIcon, ArrowRight01Icon, ArrowUpRight01Icon, CheckmarkCircle01Icon, FeatherIcon, File02Icon, FileVideoIcon, FolderOpenIcon, Loading03Icon, VideoIcon } from '@hugeicons/core-free-icons';
 import AppLogo from '@/components/ui/AppLogo';
 
 const STEPS = [
@@ -139,7 +129,7 @@ export default function OnboardingPage() {
                       : 'bg-muted text-muted-foreground'
                 }`}
               >
-                {i < step ? <CheckCircle2 size={14} /> : i + 1}
+                {i < step ? <HugeiconsIcon icon={CheckmarkCircle01Icon} size={14} /> : i + 1}
               </div>
               <span
                 className={`text-xs font-semibold hidden sm:block ${
@@ -163,7 +153,7 @@ export default function OnboardingPage() {
         {step === 0 && (
           <div className="card p-8 space-y-6 animate-fade-in text-center">
             <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto">
-              <Feather size={28} className="text-primary" />
+              <HugeiconsIcon icon={FeatherIcon} size={28} className="text-primary" />
             </div>
             <div className="space-y-2">
               <h1 className="text-2xl font-extrabold text-foreground">Welcome to outlier</h1>
@@ -174,10 +164,10 @@ export default function OnboardingPage() {
             </div>
             <div className="grid grid-cols-2 gap-3 text-left">
               {[
-                { icon: <Feather size={14} strokeWidth={2.25} />, label: 'AI Script Generation' },
-                { icon: <FileVideo size={14} strokeWidth={2.25} />, label: 'Source Evidence' },
-                { icon: <FolderOpen size={14} strokeWidth={2.25} />, label: 'Job Collections' },
-                { icon: <FileText size={14} strokeWidth={2.25} />, label: 'Google Docs Export' },
+                { icon: <HugeiconsIcon icon={FeatherIcon} size={14} strokeWidth={2.25} />, label: 'AI Script Generation' },
+                { icon: <HugeiconsIcon icon={FileVideoIcon} size={14} strokeWidth={2.25} />, label: 'Source Evidence' },
+                { icon: <HugeiconsIcon icon={FolderOpenIcon} size={14} strokeWidth={2.25} />, label: 'Job Collections' },
+                { icon: <HugeiconsIcon icon={File02Icon} size={14} strokeWidth={2.25} />, label: 'Google Docs Export' },
               ]?.map((f) => (
                 <div
                   key={f?.label}
@@ -190,7 +180,7 @@ export default function OnboardingPage() {
             </div>
             <button onClick={() => setStep(1)} className="btn-primary w-full">
               Get Started
-              <ChevronRight size={16} />
+              <HugeiconsIcon icon={ArrowRight01Icon} size={16} />
             </button>
           </div>
         )}
@@ -207,27 +197,27 @@ export default function OnboardingPage() {
             <div className="space-y-3">
               {[
                 {
-                  icon: <Feather size={16} strokeWidth={2.25} className="text-primary" />,
+                  icon: <HugeiconsIcon icon={FeatherIcon} size={16} strokeWidth={2.25} className="text-primary" />,
                   title: 'Inline Script Editor',
                   desc: 'Edit AI-generated scripts directly in the app. Refine hooks, reorder sections, cut filler.',
                 },
                 {
-                  icon: <FileVideo size={16} strokeWidth={2.25} className="text-primary" />,
+                  icon: <HugeiconsIcon icon={FileVideoIcon} size={16} strokeWidth={2.25} className="text-primary" />,
                   title: 'Script Format Templates',
                   desc: 'Choose from YouTube long-form, Shorts/Reels, Podcast intro, or Documentary-style before generating.',
                 },
                 {
-                  icon: <FileText size={16} strokeWidth={2.25} className="text-primary" />,
+                  icon: <HugeiconsIcon icon={File02Icon} size={16} strokeWidth={2.25} className="text-primary" />,
                   title: 'B-Roll Shot List Panel',
                   desc: 'Auto-extracted B-roll cues from your script, numbered and exportable for your editor.',
                 },
                 {
-                  icon: <FolderOpen size={16} strokeWidth={2.25} className="text-primary" />,
+                  icon: <HugeiconsIcon icon={FolderOpenIcon} size={16} strokeWidth={2.25} className="text-primary" />,
                   title: 'Job Collections / Folders',
                   desc: 'Group related scripts into folders like "Finance Series" or "Client Work" for easy navigation.',
                 },
                 {
-                  icon: <ExternalLink size={16} strokeWidth={2.25} className="text-primary" />,
+                  icon: <HugeiconsIcon icon={ArrowUpRight01Icon} size={16} strokeWidth={2.25} className="text-primary" />,
                   title: 'Google Docs Export',
                   desc: 'Push your final script to Google Docs in one click — ready to share with editors or collaborators.',
                 },
@@ -252,7 +242,7 @@ export default function OnboardingPage() {
               </button>
               <button onClick={() => setStep(2)} className="btn-primary flex-1">
                 Continue
-                <ChevronRight size={16} />
+                <HugeiconsIcon icon={ArrowRight01Icon} size={16} />
               </button>
             </div>
           </div>
@@ -303,13 +293,13 @@ export default function OnboardingPage() {
                   </p>
                 </div>
                 {googleStatus === 'connected' && (
-                  <CheckCircle2 size={18} className="text-primary ml-auto shrink-0" />
+                  <HugeiconsIcon icon={CheckmarkCircle01Icon} size={18} className="text-primary ml-auto shrink-0" />
                 )}
               </div>
 
               {errorMsg && (
                 <div className="flex items-start gap-2 px-3 py-2.5 rounded-lg bg-red-50 border border-red-200">
-                  <AlertCircle size={14} className="text-red-500 shrink-0 mt-0.5" />
+                  <HugeiconsIcon icon={AlertCircleIcon} size={14} className="text-red-500 shrink-0 mt-0.5" />
                   <p className="text-xs text-red-600 font-medium leading-relaxed">{errorMsg}</p>
                 </div>
               )}
@@ -322,7 +312,7 @@ export default function OnboardingPage() {
                 >
                   {googleStatus === 'connecting' ? (
                     <>
-                      <Loader2 size={14} className="animate-spin" />
+                      <HugeiconsIcon icon={Loading03Icon} size={14} className="animate-spin" />
                       Redirecting to Google…
                     </>
                   ) : (
@@ -364,7 +354,7 @@ export default function OnboardingPage() {
             <div className="rounded-xl border border-border bg-muted/40 p-5 space-y-4">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-red-600 flex items-center justify-center shadow-sm shrink-0">
-                  <Video size={22} className="text-white" />
+                  <HugeiconsIcon icon={VideoIcon} size={22} className="text-white" />
                 </div>
                 <div>
                   <p className="text-sm font-bold text-foreground">YouTube Channel</p>
@@ -375,7 +365,7 @@ export default function OnboardingPage() {
                   </p>
                 </div>
                 {youtubeStatus === 'connected' && (
-                  <CheckCircle2 size={18} className="text-primary ml-auto shrink-0" />
+                  <HugeiconsIcon icon={CheckmarkCircle01Icon} size={18} className="text-primary ml-auto shrink-0" />
                 )}
               </div>
 
@@ -387,12 +377,12 @@ export default function OnboardingPage() {
                 >
                   {youtubeStatus === 'connecting' ? (
                     <>
-                      <Loader2 size={14} className="animate-spin" />
+                      <HugeiconsIcon icon={Loading03Icon} size={14} className="animate-spin" />
                       Connecting to YouTube…
                     </>
                   ) : (
                     <>
-                      <Video size={14} className="text-red-600" />
+                      <HugeiconsIcon icon={VideoIcon} size={14} className="text-red-600" />
                       Connect YouTube Account
                     </>
                   )}
@@ -420,7 +410,7 @@ export default function OnboardingPage() {
               {googleStatus === 'connected' ? (
                 <button onClick={() => setStep(3)} className="btn-primary flex-1">
                   Continue
-                  <ChevronRight size={16} />
+                  <HugeiconsIcon icon={ArrowRight01Icon} size={16} />
                 </button>
               ) : (
                 <button
@@ -438,7 +428,7 @@ export default function OnboardingPage() {
         {step === 3 && (
           <div className="card p-8 space-y-6 animate-fade-in text-center">
             <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto">
-              <CheckCircle2 size={28} className="text-primary" />
+              <HugeiconsIcon icon={CheckmarkCircle01Icon} size={28} className="text-primary" />
             </div>
             <div className="space-y-2">
               <h2 className="text-2xl font-extrabold text-foreground">You&apos;re all set!</h2>
@@ -450,7 +440,7 @@ export default function OnboardingPage() {
             </div>
             {googleStatus !== 'connected' && (
               <div className="flex items-center gap-2 px-3 py-2.5 rounded-lg bg-muted border border-border text-left">
-                <AlertCircle size={14} strokeWidth={2.25} className="text-foreground shrink-0" />
+                <HugeiconsIcon icon={AlertCircleIcon} size={14} strokeWidth={2.25} className="text-foreground shrink-0" />
                 <p className="text-xs text-foreground font-semibold">
                   Google Docs export is not connected. Go to{' '}
                   <span className="text-primary">Settings → Integrations</span> to connect later.
@@ -459,7 +449,7 @@ export default function OnboardingPage() {
             )}
             <button onClick={handleFinish} className="btn-primary w-full text-base py-3">
               Open outlier
-              <ChevronRight size={18} />
+              <HugeiconsIcon icon={ArrowRight01Icon} size={18} />
             </button>
           </div>
         )}

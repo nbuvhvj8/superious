@@ -1,7 +1,8 @@
 'use client';
 
 import React, { memo, useMemo } from 'react';
-import { Feather } from 'lucide-react';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { FeatherIcon } from '@hugeicons/core-free-icons';
 import AppImage from './AppImage';
 
 interface AppLogoProps {
@@ -39,7 +40,7 @@ const AppLogo = memo(function AppLogo({
           unoptimized={src.endsWith('.svg')}
         />
       ) : (
-        <Feather size={size} strokeWidth={2.25} className="flex-shrink-0 text-primary" />
+        <HugeiconsIcon icon={FeatherIcon} size={size} strokeWidth={2.25} className="flex-shrink-0 text-primary" />
       )}
     </div>
   );

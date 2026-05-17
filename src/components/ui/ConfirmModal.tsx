@@ -2,7 +2,8 @@
 
 import React from 'react';
 import Modal from './Modal';
-import { AlertTriangle } from 'lucide-react';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { Alert01Icon } from '@hugeicons/core-free-icons';
 
 interface ConfirmModalProps {
   open: boolean;
@@ -28,7 +29,7 @@ export default function ConfirmModal({
       <div className="px-5 py-4 space-y-4">
         <div className="flex items-start gap-3">
           <div className="shrink-0 w-9 h-9 rounded-full bg-red-100 flex items-center justify-center">
-            <AlertTriangle size={16} strokeWidth={2.25} className="text-red-600" />
+            <HugeiconsIcon icon={Alert01Icon} size={16} strokeWidth={2.25} className="text-red-600" />
           </div>
           <p className="text-sm text-muted-foreground leading-relaxed">{description}</p>
         </div>

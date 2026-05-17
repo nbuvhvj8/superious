@@ -1,7 +1,8 @@
 'use client';
 
 import React from 'react';
-import { ShieldCheck, ShieldAlert, ShieldQuestion, ShieldX } from 'lucide-react';
+import { HugeiconsIcon, IconSvgElement } from '@hugeicons/react';
+import { SecurityCheckIcon, Shield01Icon, Shield02Icon, ShieldQuestionMarkIcon } from '@hugeicons/core-free-icons';
 import type { SegmentVerification, VerificationStatus } from '@/server/types';
 
 /**
@@ -46,7 +47,7 @@ export function VerificationBadge({ verification, size = 'md', className = '' }:
       title={tooltip}
       aria-label={tooltip}
     >
-      <Icon size={isSmall ? 9 : 11} strokeWidth={2.5} />
+      <HugeiconsIcon icon={Icon} size={isSmall ? 9 : 11} strokeWidth={2.5} />
       {meta.label}
       {verification.status !== 'unverified' && (
         <span className="font-mono tabular-nums opacity-70">
@@ -61,28 +62,28 @@ const STATUS_META: Record<
   VerificationStatus,
   {
     label: string;
-    icon: typeof ShieldCheck;
+    icon: IconSvgElement;
     classes: string;
   }
 > = {
   supported: {
     label: 'Verified',
-    icon: ShieldCheck,
+    icon: SecurityCheckIcon,
     classes: 'bg-primary/10 text-primary border-primary/30',
   },
   'single-source': {
     label: '1 Source',
-    icon: ShieldAlert,
+    icon: Shield01Icon,
     classes: 'bg-amber-50 text-amber-700 border-amber-300',
   },
   contradicted: {
     label: 'Conflict',
-    icon: ShieldX,
+    icon: Shield02Icon,
     classes: 'bg-red-50 text-red-600 border-red-300',
   },
   unverified: {
     label: 'Unverified',
-    icon: ShieldQuestion,
+    icon: ShieldQuestionMarkIcon,
     classes: 'bg-muted text-muted-foreground border-border',
   },
 };
@@ -114,7 +115,7 @@ export function VerificationLegend({ counts }: { counts: Record<VerificationStat
             `}
             title={`${count} ${meta.label.toLowerCase()}`}
           >
-            <Icon size={10} strokeWidth={2.5} />
+            <HugeiconsIcon icon={Icon} size={10} strokeWidth={2.5} />
             <span>{meta.label}</span>
             <span className="font-mono tabular-nums opacity-70">{count}</span>
           </span>

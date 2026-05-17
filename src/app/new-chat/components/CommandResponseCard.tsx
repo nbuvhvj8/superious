@@ -1,20 +1,8 @@
 'use client';
 
 import React from 'react';
-import {
-  Clock,
-  Play,
-  Pause,
-  CheckCircle2,
-  AlertCircle,
-  Microscope,
-  BookOpenText,
-  FileText,
-  BarChart3,
-  Upload,
-  ExternalLink,
-  Search,
-} from 'lucide-react';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { AlertCircleIcon, ArrowUpRight01Icon, BarChartIcon, BookOpenTextIcon, CheckmarkCircle01Icon, Clock01Icon, File02Icon, MicroscopeIcon, PauseIcon, PlayIcon, Search01Icon, UploadIcon } from '@hugeicons/core-free-icons';
 
 export type CommandType =
   | 'cron_list'
@@ -105,7 +93,7 @@ function CronListCard() {
   return (
     <div className="space-y-2">
       <div className="flex items-center gap-2 mb-3">
-        <Clock size={14} className="text-primary" />
+        <HugeiconsIcon icon={Clock01Icon} size={14} className="text-primary" />
         <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest">
           Active Schedules
         </span>
@@ -134,7 +122,7 @@ function CronListCard() {
         href="/cron-job"
         className="flex items-center gap-1.5 text-[11px] font-bold text-primary hover:underline mt-2"
       >
-        Open Cron Jobs <ExternalLink size={10} />
+        Open Cron Jobs <HugeiconsIcon icon={ArrowUpRight01Icon} size={10} />
       </a>
     </div>
   );
@@ -144,7 +132,7 @@ function CronRunCard() {
   return (
     <div className="space-y-2">
       <div className="flex items-center gap-2 mb-1">
-        <Play size={14} className="text-green-500" fill="currentColor" />
+        <HugeiconsIcon icon={PlayIcon} size={14} className="text-green-500" fill="currentColor" />
         <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest">
           Job Triggered
         </span>
@@ -163,7 +151,7 @@ function CronPauseCard() {
   return (
     <div className="space-y-2">
       <div className="flex items-center gap-2 mb-1">
-        <Pause size={14} className="text-amber-500" />
+        <HugeiconsIcon icon={PauseIcon} size={14} className="text-amber-500" />
         <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest">
           Schedule Paused
         </span>
@@ -182,7 +170,7 @@ function CronDeleteCard() {
   return (
     <div className="space-y-2">
       <div className="flex items-center gap-2 mb-1">
-        <AlertCircle size={14} className="text-red-500" />
+        <HugeiconsIcon icon={AlertCircleIcon} size={14} className="text-red-500" />
         <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest">
           Schedule Deleted
         </span>
@@ -201,7 +189,7 @@ function WorkspaceSearchCard() {
   return (
     <div className="space-y-2">
       <div className="flex items-center gap-2 mb-3">
-        <Search size={14} className="text-primary" />
+        <HugeiconsIcon icon={Search01Icon} size={14} className="text-primary" />
         <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest">
           Search Results
         </span>
@@ -222,7 +210,7 @@ function WorkspaceSearchCard() {
         href="/workspace"
         className="flex items-center gap-1.5 text-[11px] font-bold text-primary hover:underline mt-2"
       >
-        Open Workspace <ExternalLink size={10} />
+        Open Workspace <HugeiconsIcon icon={ArrowUpRight01Icon} size={10} />
       </a>
     </div>
   );
@@ -232,7 +220,7 @@ function WorkspaceRecentCard() {
   return (
     <div className="space-y-2">
       <div className="flex items-center gap-2 mb-3">
-        <Microscope size={14} className="text-primary" />
+        <HugeiconsIcon icon={MicroscopeIcon} size={14} className="text-primary" />
         <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest">
           Recent Research
         </span>
@@ -242,7 +230,7 @@ function WorkspaceRecentCard() {
           key={job.id}
           className="flex items-center gap-3 p-2.5 rounded-lg border border-border bg-card hover:border-primary/30 transition-colors"
         >
-          <CheckCircle2 size={14} className="text-green-500 shrink-0" />
+          <HugeiconsIcon icon={CheckmarkCircle01Icon} size={14} className="text-green-500 shrink-0" />
           <div className="flex-1 min-w-0">
             <p className="text-[12px] font-bold text-foreground truncate">{job.title}</p>
             <div className="flex items-center gap-2 mt-0.5">
@@ -257,7 +245,7 @@ function WorkspaceRecentCard() {
         href="/workspace"
         className="flex items-center gap-1.5 text-[11px] font-bold text-primary hover:underline mt-2"
       >
-        Open Workspace <ExternalLink size={10} />
+        Open Workspace <HugeiconsIcon icon={ArrowUpRight01Icon} size={10} />
       </a>
     </div>
   );
@@ -267,7 +255,7 @@ function WorkspaceStatsCard() {
   return (
     <div className="space-y-3">
       <div className="flex items-center gap-2 mb-1">
-        <BarChart3 size={14} className="text-primary" />
+        <HugeiconsIcon icon={BarChartIcon} size={14} className="text-primary" />
         <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest">
           Workspace Stats
         </span>
@@ -314,7 +302,7 @@ function JobStatusCard() {
   return (
     <div className="space-y-2">
       <div className="flex items-center gap-2 mb-1">
-        <BookOpenText size={14} className="text-primary" />
+        <HugeiconsIcon icon={BookOpenTextIcon} size={14} className="text-primary" />
         <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest">
           Job Status
         </span>
@@ -338,7 +326,7 @@ function JobStatusCard() {
           {['Queued', 'Researching', 'Capturing', 'Writing', 'Done'].map((step, i) => (
             <React.Fragment key={step}>
               <div className="w-4 h-4 rounded-full bg-primary flex items-center justify-center">
-                <CheckCircle2 size={8} className="text-white" />
+                <HugeiconsIcon icon={CheckmarkCircle01Icon} size={8} className="text-white" />
               </div>
               {i < 4 && <div className="h-0.5 flex-1 bg-primary" />}
             </React.Fragment>
@@ -349,7 +337,7 @@ function JobStatusCard() {
         href="/job-detail"
         className="flex items-center gap-1.5 text-[11px] font-bold text-primary hover:underline mt-2"
       >
-        Open Job Detail <ExternalLink size={10} />
+        Open Job Detail <HugeiconsIcon icon={ArrowUpRight01Icon} size={10} />
       </a>
     </div>
   );
@@ -370,7 +358,7 @@ function JobSourcesCard() {
   return (
     <div className="space-y-2">
       <div className="flex items-center gap-2 mb-3">
-        <BookOpenText size={14} className="text-primary" />
+        <HugeiconsIcon icon={BookOpenTextIcon} size={14} className="text-primary" />
         <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest">
           Job Sources
         </span>
@@ -383,7 +371,7 @@ function JobSourcesCard() {
           key={src.id}
           className="flex items-center gap-2.5 p-2 rounded-lg border border-border bg-card"
         >
-          <CheckCircle2 size={12} className="text-green-500 shrink-0" />
+          <HugeiconsIcon icon={CheckmarkCircle01Icon} size={12} className="text-green-500 shrink-0" />
           <div className="flex-1 min-w-0">
             <p className="text-[11px] font-bold text-foreground truncate">{src.title}</p>
             <p className="text-[10px] text-muted-foreground">{src.domain}</p>
@@ -394,7 +382,7 @@ function JobSourcesCard() {
         href="/job-detail"
         className="flex items-center gap-1.5 text-[11px] font-bold text-primary hover:underline mt-2"
       >
-        View All Sources <ExternalLink size={10} />
+        View All Sources <HugeiconsIcon icon={ArrowUpRight01Icon} size={10} />
       </a>
     </div>
   );
@@ -404,7 +392,7 @@ function JobScriptCard() {
   return (
     <div className="space-y-2">
       <div className="flex items-center gap-2 mb-1">
-        <FileText size={14} className="text-primary" />
+        <HugeiconsIcon icon={File02Icon} size={14} className="text-primary" />
         <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest">
           Script Preview
         </span>
@@ -428,7 +416,7 @@ function JobScriptCard() {
         href="/job-detail"
         className="flex items-center gap-1.5 text-[11px] font-bold text-primary hover:underline mt-2"
       >
-        Open Full Script <ExternalLink size={10} />
+        Open Full Script <HugeiconsIcon icon={ArrowUpRight01Icon} size={10} />
       </a>
     </div>
   );
@@ -438,14 +426,14 @@ function GDriveBackupCard() {
   return (
     <div className="space-y-2">
       <div className="flex items-center gap-2 mb-1">
-        <Upload size={14} className="text-primary" />
+        <HugeiconsIcon icon={UploadIcon} size={14} className="text-primary" />
         <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest">
           Backup to Google Drive
         </span>
       </div>
       <div className="p-3 rounded-lg border border-border bg-card space-y-2">
         <div className="flex items-center gap-2">
-          <CheckCircle2 size={14} className="text-green-500" />
+          <HugeiconsIcon icon={CheckmarkCircle01Icon} size={14} className="text-green-500" />
           <span className="text-[12px] font-bold text-foreground">Backup initiated</span>
         </div>
         <p className="text-[10px] text-muted-foreground">
@@ -461,7 +449,7 @@ function GDriveBackupCard() {
         href="/storages"
         className="flex items-center gap-1.5 text-[11px] font-bold text-primary hover:underline mt-2"
       >
-        Open Storages <ExternalLink size={10} />
+        Open Storages <HugeiconsIcon icon={ArrowUpRight01Icon} size={10} />
       </a>
     </div>
   );

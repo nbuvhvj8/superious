@@ -2,7 +2,8 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { ArrowRight01Icon } from '@hugeicons/core-free-icons';
 import JobStatusBar from '@/components/ui/JobStatusBar';
 import type { JobStatus } from '@/components/ui/StatusBadge';
 
@@ -39,7 +40,7 @@ export default function ActiveJobBanner() {
         <div className="flex items-center gap-2 shrink-0">
           <Link href="/job-detail" className="btn-secondary text-xs gap-1.5 py-1.5 px-3">
             View Live
-            <ArrowRight size={12} strokeWidth={2.25} />
+            <HugeiconsIcon icon={ArrowRight01Icon} size={12} strokeWidth={2.25} />
           </Link>
         </div>
       </div>

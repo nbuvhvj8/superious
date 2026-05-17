@@ -1,7 +1,8 @@
 'use client';
 
 import React from 'react';
-import { Mail, CreditCard, ChevronRight } from 'lucide-react';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { ArrowRight01Icon, CreditCardIcon, Mail01Icon } from '@hugeicons/core-free-icons';
 
 export default function AccountSection() {
   return (
@@ -20,7 +21,7 @@ export default function AccountSection() {
               </p>
             </div>
             <div className="flex items-center gap-2 px-3 py-1.5 bg-[#f2f3f6] rounded-[8px] text-[12.5px] font-bold text-foreground">
-              <Mail size={13} className="text-muted-foreground" />
+              <HugeiconsIcon icon={Mail01Icon} size={13} className="text-muted-foreground" />
               <span>user@example.com</span>
             </div>
           </div>
@@ -34,7 +35,7 @@ export default function AccountSection() {
               </p>
             </div>
             <button className="flex items-center gap-2 px-3 py-1.5 bg-[#f2f3f6] rounded-[8px] text-[11.5px] font-bold text-primary hover:bg-[#ebecef] transition-all">
-              <CreditCard size={13} />
+              <HugeiconsIcon icon={CreditCardIcon} size={13} />
               <span>Manage Billing</span>
             </button>
           </div>
@@ -54,7 +55,7 @@ export default function AccountSection() {
             </div>
             <button className="flex items-center gap-2 px-3 py-1.5 bg-[#f2f3f6] rounded-[8px] text-[11.5px] font-bold text-foreground hover:bg-[#ebecef] transition-all">
               <span>Update Password</span>
-              <ChevronRight size={13} className="text-muted-foreground" />
+              <HugeiconsIcon icon={ArrowRight01Icon} size={13} className="text-muted-foreground" />
             </button>
           </div>
 

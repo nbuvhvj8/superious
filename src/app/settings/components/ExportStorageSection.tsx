@@ -2,7 +2,8 @@
 
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Download, CheckCircle2, Loader2, ChevronDown } from 'lucide-react';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { ArrowDown01Icon, CheckmarkCircle01Icon, Download01Icon, Loading03Icon } from '@hugeicons/core-free-icons';
 import Toggle from '@/components/ui/Toggle';
 
 interface ExportFormData {
@@ -39,7 +40,7 @@ export default function ExportStorageSection() {
     <section id="export-storage" className="space-y-12">
       <div className="flex items-center gap-2.5 pb-1 border-b border-border/60">
         <div className="w-8 h-8 rounded-lg bg-[#f2f3f6] flex items-center justify-center">
-          <Download size={15} className="text-foreground" />
+          <HugeiconsIcon icon={Download01Icon} size={15} className="text-foreground" />
         </div>
         <div>
           <h2 className="text-base font-bold text-foreground">Export & Storage</h2>
@@ -67,7 +68,7 @@ export default function ExportStorageSection() {
                 <option value="json">JSON (.json)</option>
               </select>
               <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
-                <ChevronDown size={14} className="text-muted-foreground" />
+                <HugeiconsIcon icon={ArrowDown01Icon} size={14} className="text-muted-foreground" />
               </div>
             </div>
           </div>
@@ -137,12 +138,12 @@ export default function ExportStorageSection() {
           >
             {saving ? (
               <span className="flex items-center justify-center gap-2">
-                <Loader2 size={14} className="animate-spin" />
+                <HugeiconsIcon icon={Loading03Icon} size={14} className="animate-spin" />
                 Saving...
               </span>
             ) : saved ? (
               <span className="flex items-center justify-center gap-2">
-                <CheckCircle2 size={14} className="text-primary" />
+                <HugeiconsIcon icon={CheckmarkCircle01Icon} size={14} className="text-primary" />
                 Saved
               </span>
             ) : (
