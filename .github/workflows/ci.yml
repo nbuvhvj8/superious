@@ -15,7 +15,19 @@ jobs:
       - name: Setup Rust
         uses: dtolnay/rust-toolchain@stable
       - name: Install Dependencies
-        run: sudo apt-get update && sudo apt-get install -y libwebkit2gtk-4.1-dev build-essential curl wget file libssl-dev libgtk-3-dev libayatana-appindicator3-dev librsvg2-dev
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev build-essential curl wget file libssl-dev libgtk-3-dev libayatana-appindicator3-dev librsvg2-dev libsoup-3.0-dev libjavascriptcoregtk-4.1-dev libxdo-dev pkg-config
+      - name: Create Dummy Resources
+        run: |
+          mkdir -p src-tauri/binaries
+          touch src-tauri/binaries/outlier-sidecar-x86_64-unknown-linux-gnu
+          chmod +x src-tauri/binaries/outlier-sidecar-x86_64-unknown-linux-gnu
+          mkdir -p src-tauri/sidecar
+          touch src-tauri/sidecar/start-sidecar.js
+          mkdir -p .next/standalone
+          mkdir -p .next/static
+          mkdir -p public
       - name: Build
         run: cargo build --verbose
         working-directory: src-tauri
@@ -31,6 +43,10 @@ jobs:
         uses: dtolnay/rust-toolchain@stable
         with:
           components: clippy, rustfmt
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev build-essential curl wget file libssl-dev libgtk-3-dev libayatana-appindicator3-dev librsvg2-dev libsoup-3.0-dev libjavascriptcoregtk-4.1-dev libxdo-dev pkg-config
       - name: Check Formatting
         run: cargo fmt -- --check
         working-directory: src-tauri
@@ -47,7 +63,19 @@ jobs:
       - name: Setup Rust
         uses: dtolnay/rust-toolchain@stable
       - name: Install Dependencies
-        run: sudo apt-get update && sudo apt-get install -y libwebkit2gtk-4.1-dev build-essential curl wget file libssl-dev libgtk-3-dev libayatana-appindicator3-dev librsvg2-dev
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev build-essential curl wget file libssl-dev libgtk-3-dev libayatana-appindicator3-dev librsvg2-dev libsoup-3.0-dev libjavascriptcoregtk-4.1-dev libxdo-dev pkg-config
+      - name: Create Dummy Resources
+        run: |
+          mkdir -p src-tauri/binaries
+          touch src-tauri/binaries/outlier-sidecar-x86_64-unknown-linux-gnu
+          chmod +x src-tauri/binaries/outlier-sidecar-x86_64-unknown-linux-gnu
+          mkdir -p src-tauri/sidecar
+          touch src-tauri/sidecar/start-sidecar.js
+          mkdir -p .next/standalone
+          mkdir -p .next/static
+          mkdir -p public
       - name: Build and Release
         uses: tauri-apps/tauri-action@v0
         env:
