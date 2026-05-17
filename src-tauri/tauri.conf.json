@@ -22,7 +22,8 @@
         "fullscreen": false,
         "decorations": true,
         "transparent": false,
-        "url": "index.html"
+        "url": "index.html",
+        "zoomHotkeysEnabled": true
       }
     ],
     "security": {

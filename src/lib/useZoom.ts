@@ -2,10 +2,10 @@
 
 import { useEffect, useRef } from 'react';
 
-const ZOOM_MIN = 0.5;
-const ZOOM_MAX = 2.0;
-const ZOOM_STEP = 0.1;
+const ZOOM_LEVELS = [0.33, 0.5, 0.67, 0.75, 0.8, 0.9, 1.0, 1.1, 1.25, 1.5, 1.75, 2.0];
 const ZOOM_DEFAULT = 1.0;
+const ZOOM_MIN = ZOOM_LEVELS[0];
+const ZOOM_MAX = ZOOM_LEVELS[ZOOM_LEVELS.length - 1];
 const STORE_PATH = 'settings.json';
 const ZOOM_KEY = 'zoom-level';
 
@@ -70,13 +70,19 @@ export function useZoom() {
       if (e.key === '=' || e.key === '+') {
         // Ctrl + Plus (or Ctrl + =)
         e.preventDefault();
-        zoomLevel.current = Math.min(ZOOM_MAX, zoomLevel.current + ZOOM_STEP);
-        changed = true;
+        const nextLevel = ZOOM_LEVELS.find((l) => l > zoomLevel.current + 0.01);
+        if (nextLevel) {
+          zoomLevel.current = nextLevel;
+          changed = true;
+        }
       } else if (e.key === '-') {
         // Ctrl + Minus
         e.preventDefault();
-        zoomLevel.current = Math.max(ZOOM_MIN, zoomLevel.current - ZOOM_STEP);
-        changed = true;
+        const prevLevel = [...ZOOM_LEVELS].reverse().find((l) => l < zoomLevel.current - 0.01);
+        if (prevLevel) {
+          zoomLevel.current = prevLevel;
+          changed = true;
+        }
       } else if (e.key === '0') {
         // Ctrl + 0 (Reset)
         e.preventDefault();
