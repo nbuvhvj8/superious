@@ -1,5 +1,5 @@
 import { getDecryptedApiKey } from '@/lib/api-keys-store';
-import { DevAuthResolver, type AuthResolver } from './auth';
+import { DevAuthResolver, type AuthResolver, SupabaseAuthResolver } from './auth';
 import { hasAnthropicCredentials, loadEnv, type BackendEnv } from './env';
 import { AnthropicLLMProvider, MockLLMProvider, type LLMProvider } from './llm';
 import { MemoryRateLimiter, type RateLimiter } from './rate-limit';
@@ -29,7 +29,17 @@ export async function getBackend(init: Partial<Backend> = {}): Promise<Backend> 
   const llm = init.llm ?? (await pickLLM(env));
   const rateLimiter =
     init.rateLimiter ?? new MemoryRateLimiter(env.jobsPerHourPerUser, 60 * 60 * 1000);
-  const auth = init.auth ?? new DevAuthResolver();
+
+  let auth: AuthResolver;
+  if (init.auth) {
+    auth = init.auth;
+  } else if (env.supabaseUrl && env.supabaseAnonKey) {
+    auth = new SupabaseAuthResolver();
+  } else if (process.env.NODE_ENV === 'development' || env.forceInMemory) {
+    auth = new DevAuthResolver();
+  } else {
+    throw new Error('No authentication resolver provided and production environment is not configured.');
+  }
 
   const backend: Backend = {
     env,

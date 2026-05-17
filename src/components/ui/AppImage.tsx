@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useCallback, useMemo, memo } from 'react';
+import React, { useState, useCallback, useMemo, memo, useEffect } from 'react';
 
 interface AppImageProps {
   src: string;
@@ -9,15 +9,10 @@ interface AppImageProps {
   height?: number;
   className?: string;
   priority?: boolean;
-  quality?: number;
-  placeholder?: 'blur' | 'empty';
-  blurDataURL?: string;
   fill?: boolean;
-  sizes?: string;
   onClick?: () => void;
   fallbackSrc?: string;
   loading?: 'lazy' | 'eager';
-  unoptimized?: boolean;
   [key: string]: unknown;
 }
 
@@ -28,20 +23,21 @@ const AppImage = memo(function AppImage({
   height,
   className = '',
   priority = false,
-  quality = 85,
-  placeholder = 'empty',
-  blurDataURL,
   fill = false,
-  sizes,
   onClick,
   fallbackSrc = '/assets/images/no_image.png',
   loading = 'lazy',
-  unoptimized = false,
   ...props
 }: AppImageProps) {
   const [imageSrc, setImageSrc] = useState(src);
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
+
+  useEffect(() => {
+    setImageSrc(src);
+    setIsLoading(true);
+    setHasError(false);
+  }, [src]);
 
   const handleError = useCallback(() => {
     if (!hasError && imageSrc !== fallbackSrc) {
@@ -63,6 +59,8 @@ const AppImage = memo(function AppImage({
     return classes.filter(Boolean).join(' ');
   }, [className, isLoading, onClick]);
 
+  const resolvedLoading = priority ? 'eager' : loading;
+
   if (fill) {
     return (
       <div className="relative" style={{ width: '100%', height: '100%' }}>
@@ -73,7 +71,7 @@ const AppImage = memo(function AppImage({
           onError={handleError}
           onLoad={handleLoad}
           onClick={onClick}
-          loading={loading}
+          loading={resolvedLoading}
           style={{ objectFit: 'cover', width: '100%', height: '100%' }}
           {...props}
         />
@@ -91,7 +89,7 @@ const AppImage = memo(function AppImage({
       onError={handleError}
       onLoad={handleLoad}
       onClick={onClick}
-      loading={loading}
+      loading={resolvedLoading}
       {...props}
     />
   );

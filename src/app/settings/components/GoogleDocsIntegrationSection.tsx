@@ -50,7 +50,6 @@ export default function GoogleDocsIntegrationSection() {
     setStatus('connecting');
     setErrorMsg('');
 
-    // @ts-ignore
     const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
     if (!clientId) {
       setStatus('error');

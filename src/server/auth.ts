@@ -17,14 +17,7 @@ export class DevAuthResolver implements AuthResolver {
 }
 
 export class SupabaseAuthResolver implements AuthResolver {
-  async resolve(req: Request): Promise<AuthenticatedUser | null> {
-    const authHeader = req.headers.get('authorization');
-    if (!authHeader) return null;
-
-    // In a real implementation, we would verify the JWT with Supabase
-    return {
-      id: 'supabase-user',
-      email: 'user@example.com',
-    };
+  async resolve(_req: Request): Promise<AuthenticatedUser | null> {
+    throw new Error('Not implemented');
   }
 }
