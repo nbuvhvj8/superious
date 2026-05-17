@@ -22,14 +22,6 @@ const TOP_NAV_ITEMS: NavItem[] = [
   { key: 'nav-cron', label: 'Scheduled', href: '/cron-job', icon: <HugeiconsIcon icon={Clock01Icon} size={16} strokeWidth={2.25} /> },
 ];
 
-const BOTTOM_NAV_ITEMS: NavItem[] = [
-  {
-    key: 'nav-operations',
-    label: 'Operations Hub',
-    href: '/research-hub',
-    icon: <HugeiconsIcon icon={Briefcase02Icon} size={16} strokeWidth={2.25} />,
-  },
-];
 
 const mockSessions = [
   { id: 's1', title: 'Q2 Product Positioning Review', href: '/new-chat' },
@@ -136,7 +128,6 @@ export default function Sidebar() {
       )}
 
       <div className="mt-auto border-t border-border p-2 space-y-1">
-        {BOTTOM_NAV_ITEMS.map(renderNavLink)}
         {!collapsed && (
           <Link href="/settings" className={`flex items-center justify-between gap-2 px-3 py-2 rounded-[6px] text-sm font-semibold transition-all duration-150 ${pathname.startsWith('/settings') ? 'bg-[#f2f3f6] text-foreground shadow-sm' : 'text-muted-foreground hover:bg-[#f9f9f9] hover:text-foreground'}`}>
             <div className="flex items-center gap-2 min-w-0">
