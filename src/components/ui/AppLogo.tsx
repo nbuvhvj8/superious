@@ -1,4 +1,4 @@
-'use client';
+
 
 import React, { memo, useMemo } from 'react';
 import { HugeiconsIcon } from '@hugeicons/react';

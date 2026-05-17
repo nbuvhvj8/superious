@@ -42,3 +42,7 @@ turbo/
 
 .gemini/
 gha-creds-*.json
+dist
+.next
+src-tauri/target
+src-tauri/binaries

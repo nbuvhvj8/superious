@@ -1,11 +1,27 @@
-'use client';
+
 
 import React, { useMemo, useState } from 'react';
 import AppLogo from './ui/AppLogo';
+<<<<<<< HEAD
 import Link from 'next/link';
 import { HugeiconsIcon } from '@hugeicons/react';
 import { usePathname } from 'next/navigation';
 import { Briefcase02Icon, Clock01Icon, MoreHorizontalIcon, PanelLeftIcon, PanelRightIcon, Pen01Icon, PuzzleIcon, Search01Icon, Settings01Icon, UserIcon } from '@hugeicons/core-free-icons';
+=======
+import { Link, usePathname } from '@/lib/compat/next';
+import {
+  BriefcaseBusiness,
+  PanelLeft,
+  PanelRight,
+  SquarePen,
+  Clock,
+  Puzzle,
+  Search,
+  User,
+  MoreHorizontal,
+  Settings,
+} from 'lucide-react';
+>>>>>>> 46resume
 import Modal from './ui/Modal';
 
 interface NavItem {

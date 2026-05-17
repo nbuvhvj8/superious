@@ -1,6 +1,6 @@
 import { getClock } from '../clock';
 import { newId } from '../ids';
-import type { Job, Script, ScriptSegment, Source } from '../types';
+import type { Job, Script, ScriptSegment, Source } from '@/shared/types';
 import type {
   JobRepository,
   JobsPage,

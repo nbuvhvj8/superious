@@ -4,10 +4,10 @@
   "version": "0.1.0",
   "identifier": "ai.outlier.desktop",
   "build": {
-    "frontendDist": "../src-tauri/bootstrap",
+    "frontendDist": "../dist",
     "devUrl": "http://localhost:4028",
     "beforeDevCommand": "npm run dev",
-    "beforeBuildCommand": "npm run desktop:prebuild"
+    "beforeBuildCommand": "npm run build:vite && npm run desktop:prepare-sidecar"
   },
   "app": {
     "windows": [

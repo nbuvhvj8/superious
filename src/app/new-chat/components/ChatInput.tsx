@@ -1,4 +1,4 @@
-'use client';
+
 
 import React, { useRef, useState, useEffect, forwardRef, useImperativeHandle } from 'react';
 import { HugeiconsIcon } from '@hugeicons/react';

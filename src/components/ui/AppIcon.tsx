@@ -1,4 +1,4 @@
-'use client';
+
 
 import React from 'react';
 import { HugeiconsIcon, IconSvgElement } from '@hugeicons/react';

@@ -1,4 +1,4 @@
-'use client';
+
 
 import React from 'react';
 import AppLogo from '@/components/ui/AppLogo';
