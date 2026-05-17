@@ -223,5 +223,12 @@ export function getProviderForModel(modelId: string): string {
       return provider.id;
     }
   }
-  return 'openai'; // fallback
+
+  const availableProviders = PROVIDERS.filter((p) => p.category === 'llm')
+    .map((p) => p.id)
+    .join(', ');
+
+  throw new Error(
+    `Unknown modelId: "${modelId}". Available LLM providers: ${availableProviders}`
+  );
 }

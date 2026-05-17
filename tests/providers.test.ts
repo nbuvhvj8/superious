@@ -5,6 +5,6 @@ describe('Providers Lib', () => {
   it('should return correct provider for model', () => {
     expect(getProviderForModel('gpt-4o')).toBe('openai');
     expect(getProviderForModel('claude-3-5-sonnet-latest')).toBe('anthropic');
-    expect(getProviderForModel('unknown')).toBe('openai'); // default
+    expect(() => getProviderForModel('unknown')).toThrow(/Unknown modelId/);
   });
 });

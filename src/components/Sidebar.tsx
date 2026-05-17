@@ -115,7 +115,7 @@ export default function Sidebar() {
   return (
     <>
       <aside
-        className={`relative flex flex-col h-full border-r border-border bg-[fdfdfe] transition-all duration-300 ease-in-out shrink-0 ${collapsed ? 'w-14' : 'w-[280px]'}`}
+        className={`relative flex flex-col h-full border-r border-border bg-[#fdfdfe] transition-all duration-300 ease-in-out shrink-0 ${collapsed ? 'w-14' : 'w-[280px]'}`}
       >
         <div
           className={`flex items-center h-12 px-4 gap-3 overflow-hidden ${collapsed ? 'justify-center' : 'justify-between'}`}
