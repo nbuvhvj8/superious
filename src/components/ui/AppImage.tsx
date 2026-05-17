@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useCallback, useMemo, memo, useEffect } from 'react';
+import React, { useState, useCallback, useMemo, memo } from 'react';
 
 interface AppImageProps {
   src: string;
@@ -29,23 +29,22 @@ const AppImage = memo(function AppImage({
   loading = 'lazy',
   ...props
 }: AppImageProps) {
-  const [imageSrc, setImageSrc] = useState(src);
-  const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    setImageSrc(src);
-    setIsLoading(true);
+  // When src changes, the browser naturally handles the new load.
+  // We just need to reset our error/loading states if the URL actually changed.
+  const [lastSrc, setLastSrc] = useState(src);
+  if (src !== lastSrc) {
+    setLastSrc(src);
     setHasError(false);
-  }, [src]);
+    setIsLoading(true);
+  }
 
   const handleError = useCallback(() => {
-    if (!hasError && imageSrc !== fallbackSrc) {
-      setImageSrc(fallbackSrc);
-      setHasError(true);
-    }
+    setHasError(true);
     setIsLoading(false);
-  }, [hasError, imageSrc, fallbackSrc]);
+  }, []);
 
   const handleLoad = useCallback(() => {
     setIsLoading(false);
@@ -60,12 +59,13 @@ const AppImage = memo(function AppImage({
   }, [className, isLoading, onClick]);
 
   const resolvedLoading = priority ? 'eager' : loading;
+  const currentSrc = hasError ? fallbackSrc : src;
 
   if (fill) {
     return (
       <div className="relative" style={{ width: '100%', height: '100%' }}>
         <img
-          src={imageSrc}
+          src={currentSrc}
           alt={alt}
           className={imageClassName}
           onError={handleError}
@@ -81,7 +81,7 @@ const AppImage = memo(function AppImage({
 
   return (
     <img
-      src={imageSrc}
+      src={currentSrc}
       alt={alt}
       width={width}
       height={height}

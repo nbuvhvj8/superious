@@ -17,7 +17,7 @@ export class DevAuthResolver implements AuthResolver {
 }
 
 export class SupabaseAuthResolver implements AuthResolver {
-  async resolve(_req: Request): Promise<AuthenticatedUser | null> {
+  resolve(_req: Request): Promise<AuthenticatedUser | null> {
     throw new Error('Not implemented');
   }
 }
