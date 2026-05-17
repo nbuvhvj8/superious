@@ -6,7 +6,7 @@ import { ArrowDown01Icon, Camera01Icon, ComputerIcon, MoonIcon, Sun01Icon, Tick0
 import Toggle from '@/components/ui/Toggle';
 
 const APP_COLORS = [
-  { name: 'Green', value: '#16a34a' },
+  { name: 'Emerald', value: '#16a34a' },
   { name: 'Blue', value: '#2563eb' },
   { name: 'Purple', value: '#9333ea' },
   { name: 'Rose', value: '#e11d48' },

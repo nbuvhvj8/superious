@@ -107,8 +107,8 @@ function CronListCard() {
           className="flex items-center gap-3 p-2.5 rounded-lg border border-border bg-card hover:border-primary/30 transition-colors group"
         >
           <div
-            className={`w-2 h-2 rounded-full shrink-0 ${job.status === 'active' ? 'bg-green-500 animate-pulse' : 'bg-amber-500'}`}
-          />
+            className={`w-2 h-2 rounded-full shrink-0 ${job.status === 'active' ? 'bg-primary animate-pulse' : 'bg-amber-500'}`}
+          /> // was: green — replaced per design audit
           <div className="flex-1 min-w-0">
             <p className="text-[12px] font-bold text-foreground truncate">{job.title}</p>
             <p className="text-[10px] text-muted-foreground">{job.schedule}</p>
@@ -230,7 +230,7 @@ function WorkspaceRecentCard() {
           key={job.id}
           className="flex items-center gap-3 p-2.5 rounded-lg border border-border bg-card hover:border-primary/30 transition-colors"
         >
-          <HugeiconsIcon icon={CheckmarkCircle01Icon} size={14} className="text-green-500 shrink-0" />
+          <HugeiconsIcon icon={CheckmarkCircle01Icon} size={14} className="text-primary shrink-0" /> // was: green — replaced per design audit
           <div className="flex-1 min-w-0">
             <p className="text-[12px] font-bold text-foreground truncate">{job.title}</p>
             <div className="flex items-center gap-2 mt-0.5">
@@ -312,9 +312,9 @@ function JobStatusCard() {
           <span className="text-[12px] font-bold text-foreground">
             CRISPR Gene Editing Revolution
           </span>
-          <span className="text-[9px] px-2 py-0.5 rounded-full font-extrabold uppercase bg-green-100 text-green-700">
+          <span className="text-[9px] px-2 py-0.5 rounded-full font-extrabold uppercase bg-muted text-muted-foreground">
             Done
-          </span>
+          </span> // was: green — replaced per design audit
         </div>
         <div className="flex items-center gap-4 text-[10px] text-muted-foreground">
           <span className="font-mono">JOB-042</span>
@@ -371,7 +371,7 @@ function JobSourcesCard() {
           key={src.id}
           className="flex items-center gap-2.5 p-2 rounded-lg border border-border bg-card"
         >
-          <HugeiconsIcon icon={CheckmarkCircle01Icon} size={12} className="text-green-500 shrink-0" />
+          <HugeiconsIcon icon={CheckmarkCircle01Icon} size={12} className="text-primary shrink-0" /> // was: green — replaced per design audit
           <div className="flex-1 min-w-0">
             <p className="text-[11px] font-bold text-foreground truncate">{src.title}</p>
             <p className="text-[10px] text-muted-foreground">{src.domain}</p>
@@ -433,7 +433,7 @@ function GDriveBackupCard() {
       </div>
       <div className="p-3 rounded-lg border border-border bg-card space-y-2">
         <div className="flex items-center gap-2">
-          <HugeiconsIcon icon={CheckmarkCircle01Icon} size={14} className="text-green-500" />
+          <HugeiconsIcon icon={CheckmarkCircle01Icon} size={14} className="text-primary" /> // was: green — replaced per design audit
           <span className="text-[12px] font-bold text-foreground">Backup initiated</span>
         </div>
         <p className="text-[10px] text-muted-foreground">

@@ -32,8 +32,8 @@ const JOB_STATUS_CONFIG: Record<
   done: {
     label: 'Done',
     icon: <HugeiconsIcon icon={CheckmarkCircle01Icon} size={11} strokeWidth={2.25} />,
-    className: 'bg-green-500/10 text-green-700 border border-green-500/20',
-  },
+    className: 'bg-primary/10 text-primary border border-primary/20',
+  }, // was: green — replaced per design audit
   failed: {
     label: 'Failed',
     icon: <HugeiconsIcon icon={CancelCircleIcon} size={11} strokeWidth={2.25} />,
@@ -48,8 +48,8 @@ const SOURCE_STATUS_CONFIG: Record<SourceStatus, { label: string; className: str
   },
   done: {
     label: 'Captured',
-    className: 'bg-green-500/10 text-green-700 border border-green-500/20',
-  },
+    className: 'bg-primary/10 text-primary border border-primary/20',
+  }, // was: green — replaced per design audit
   failed: {
     label: 'Failed',
     className: 'bg-red-500/10 text-red-600 border border-red-500/20',
