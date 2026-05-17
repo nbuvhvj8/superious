@@ -6,6 +6,8 @@ import { MemoryRateLimiter, type RateLimiter } from './rate-limit';
 import { MemoryJobRepository, type JobRepository } from './repo';
 import { MemoryScreenshotStorage, type ScreenshotStorage } from './storage';
 
+export type { AuthenticatedUser } from './auth';
+
 export interface Backend {
   env: BackendEnv;
   repo: JobRepository;

@@ -7,7 +7,7 @@
     "frontendDist": "../dist",
     "devUrl": "http://localhost:4028",
     "beforeDevCommand": "npm run dev",
-    "beforeBuildCommand": "npm run build:vite && npm run desktop:prepare-sidecar"
+    "beforeBuildCommand": "npm run build:vite"
   },
   "app": {
     "windows": [
@@ -39,19 +39,9 @@
       "icons/icon.icns",
       "icons/icon.ico"
     ],
-    "externalBin": ["binaries/outlier-sidecar"],
-    "resources": {
-      "../.next/standalone": "next-standalone",
-      "../.next/static": "next-standalone/.next/static",
-      "../public": "next-standalone/public",
-      "sidecar/start-sidecar.js": "sidecar/start-sidecar.js"
-    },
     "category": "Productivity",
     "shortDescription": "Autonomous research workstation for video script production",
-    "longDescription": "Outlier is an autonomous research and content generation desktop application that captures verified web sources, generates structured video scripts, and manages recurring research jobs.",
-    "android": {
-      "debugApplicationIdSuffix": ".debug"
-    }
+    "longDescription": "Outlier is an autonomous research and content generation desktop application that captures verified web sources, generates structured video scripts, and manages recurring research jobs."
   },
   "plugins": {
     "updater": {
