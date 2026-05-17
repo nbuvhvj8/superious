@@ -1,15 +1,8 @@
 'use client';
 
 import React, { useState, useEffect, useCallback } from 'react';
-import {
-  Search,
-  Loader2,
-  CheckCircle2,
-  ShieldCheck,
-  AlertCircle,
-  Cpu,
-  ExternalLink,
-} from 'lucide-react';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { AlertCircleIcon, ArrowUpRight01Icon, CheckmarkCircle01Icon, CpuIcon, Loading03Icon, Search01Icon, SecurityCheckIcon } from '@hugeicons/core-free-icons';
 
 interface DetectedProvider {
   id: string;
@@ -90,7 +83,7 @@ export default function SmartKeyInput({ onSave }: SmartKeyInputProps) {
     <div className="space-y-4">
       <div className="relative">
         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-muted-foreground">
-          <Search size={18} />
+          <HugeiconsIcon icon={Search01Icon} size={18} />
         </div>
         <input
           type="password"
@@ -101,8 +94,8 @@ export default function SmartKeyInput({ onSave }: SmartKeyInputProps) {
           autoComplete="off"
         />
         <div className="absolute inset-y-0 right-3 flex items-center">
-          {isDetecting && <Loader2 size={18} className="animate-spin text-primary" />}
-          {isSaved && <CheckCircle2 size={18} className="text-primary" />}
+          {isDetecting && <HugeiconsIcon icon={Loading03Icon} size={18} className="animate-spin text-primary" />}
+          {isSaved && <HugeiconsIcon icon={CheckmarkCircle01Icon} size={18} className="text-primary" />}
         </div>
       </div>
 
@@ -112,7 +105,7 @@ export default function SmartKeyInput({ onSave }: SmartKeyInputProps) {
             <div className="flex items-start justify-between gap-4">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-lg bg-white border border-border flex items-center justify-center shadow-sm">
-                  <Cpu size={20} className="text-primary" />
+                  <HugeiconsIcon icon={CpuIcon} size={20} className="text-primary" />
                 </div>
                 <div>
                   <h4 className="text-sm font-bold text-foreground flex items-center gap-2">
@@ -130,7 +123,7 @@ export default function SmartKeyInput({ onSave }: SmartKeyInputProps) {
                 rel="noopener noreferrer"
                 className="text-[11px] text-muted-foreground hover:text-foreground inline-flex items-center gap-1"
               >
-                Docs <ExternalLink size={10} />
+                Docs <HugeiconsIcon icon={ArrowUpRight01Icon} size={10} />
               </a>
             </div>
 
@@ -154,7 +147,7 @@ export default function SmartKeyInput({ onSave }: SmartKeyInputProps) {
 
             {error && (
               <div className="flex items-center gap-2 text-red-500 text-xs font-medium">
-                <AlertCircle size={14} />
+                <HugeiconsIcon icon={AlertCircleIcon} size={14} />
                 {error}
               </div>
             )}
@@ -166,11 +159,11 @@ export default function SmartKeyInput({ onSave }: SmartKeyInputProps) {
             >
               {isSaving ? (
                 <>
-                  <Loader2 size={16} className="animate-spin" /> Saving...
+                  <HugeiconsIcon icon={Loading03Icon} size={16} className="animate-spin" /> Saving...
                 </>
               ) : (
                 <>
-                  <ShieldCheck size={16} /> Encrypt & Save {detectedProvider.name} Key
+                  <HugeiconsIcon icon={SecurityCheckIcon} size={16} /> Encrypt & Save {detectedProvider.name} Key
                 </>
               )}
             </button>
@@ -180,7 +173,7 @@ export default function SmartKeyInput({ onSave }: SmartKeyInputProps) {
 
       {!detectedProvider && apiKey.length > 10 && !isDetecting && (
         <div className="flex items-center gap-2 p-3 rounded-lg bg-muted border border-border text-[11px] text-muted-foreground animate-in fade-in">
-          <AlertCircle size={14} className="shrink-0" />
+          <HugeiconsIcon icon={AlertCircleIcon} size={14} className="shrink-0" />
           Key pattern not recognized. Please ensure it&apos;s a valid key from a supported provider.
         </div>
       )}

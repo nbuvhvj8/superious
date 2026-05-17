@@ -1,18 +1,8 @@
 'use client';
 
 import React, { useState, useRef } from 'react';
-import {
-  Microscope,
-  BetweenHorizontalStart,
-  SendHorizonal,
-  Lightbulb,
-  ChevronDown,
-  FileVideo,
-  Mic,
-  Film,
-  PlayCircle,
-  PlusCircle,
-} from 'lucide-react';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { ArrowDown01Icon, Layout01Icon, FileVideoIcon, FilmIcon, Idea01Icon, MicIcon, MicroscopeIcon, PlayCircleIcon, AddCircleIcon, SentIcon } from '@hugeicons/core-free-icons';
 
 const TOPIC_SUGGESTIONS = [
   'The history of solar energy in Africa',
@@ -39,7 +29,7 @@ const SCRIPT_TEMPLATES: ScriptTemplate[] = [
   {
     id: 'youtube-longform',
     label: 'YouTube Long-form',
-    icon: <PlayCircle size={14} strokeWidth={2.25} />,
+    icon: <HugeiconsIcon icon={PlayCircleIcon} size={14} strokeWidth={2.25} />,
     description: 'Deep-dive format with strong hook, multiple sections, and CTA',
     hookLength: '30–60s',
     sections: 6,
@@ -48,7 +38,7 @@ const SCRIPT_TEMPLATES: ScriptTemplate[] = [
   {
     id: 'short-reel',
     label: 'Short / Reel',
-    icon: <Film size={14} strokeWidth={2.25} />,
+    icon: <HugeiconsIcon icon={FilmIcon} size={14} strokeWidth={2.25} />,
     description: 'Fast-paced vertical video — hook in 3s, single key insight',
     hookLength: '3s',
     sections: 2,
@@ -57,7 +47,7 @@ const SCRIPT_TEMPLATES: ScriptTemplate[] = [
   {
     id: 'podcast-intro',
     label: 'Podcast Intro',
-    icon: <Mic size={14} strokeWidth={2.25} />,
+    icon: <HugeiconsIcon icon={MicIcon} size={14} strokeWidth={2.25} />,
     description: 'Conversational tone, episode framing, guest intro if applicable',
     hookLength: '15–30s',
     sections: 3,
@@ -66,7 +56,7 @@ const SCRIPT_TEMPLATES: ScriptTemplate[] = [
   {
     id: 'documentary',
     label: 'Documentary-style',
-    icon: <FileVideo size={14} strokeWidth={2.25} />,
+    icon: <HugeiconsIcon icon={FileVideoIcon} size={14} strokeWidth={2.25} />,
     description: 'Narrative arc, B-roll heavy, authoritative voice, no direct CTA',
     hookLength: '45–90s',
     sections: 8,
@@ -131,7 +121,7 @@ export default function PromptInputCard() {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-            <Microscope size={16} strokeWidth={2.25} className="text-primary" />
+            <HugeiconsIcon icon={MicroscopeIcon} size={16} strokeWidth={2.25} className="text-primary" />
           </div>
           <div>
             <h2 className="text-base font-bold text-foreground">New Research Job</h2>
@@ -151,7 +141,7 @@ export default function PromptInputCard() {
               ${sidePopOpen ? 'bg-primary/10 text-primary' : 'text-muted-foreground hover:bg-muted hover:text-foreground'}
             `}
           >
-            <BetweenHorizontalStart size={18} strokeWidth={2.25} />
+            <HugeiconsIcon icon={Layout01Icon} size={18} strokeWidth={2.25} />
             <span className="absolute top-1.5 right-1.5 w-3 h-3 bg-green-500 rounded-full border border-background animate-pulse" />
           </button>
 
@@ -168,7 +158,7 @@ export default function PromptInputCard() {
                   onClick={() => setSidePopOpen(false)}
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  <ChevronDown size={14} className="rotate-90" />
+                  <HugeiconsIcon icon={ArrowDown01Icon} size={14} className="rotate-90" />
                 </button>
               </div>
               <div className="p-4 space-y-4">
@@ -187,7 +177,7 @@ export default function PromptInputCard() {
                       title="Send to prompt"
                       className="absolute bottom-2 right-2 p-1.5 bg-primary text-primary-foreground rounded-md opacity-0 group-hover/draft:opacity-100 transition-opacity shadow-sm hover:scale-105 active:scale-95"
                     >
-                      <PlusCircle size={14} strokeWidth={2.5} />
+                      <HugeiconsIcon icon={AddCircleIcon} size={14} strokeWidth={2.5} />
                     </button>
                   </div>
                 </div>
@@ -211,7 +201,7 @@ export default function PromptInputCard() {
                   onClick={handleInsert}
                   className="w-full py-2.5 bg-primary text-primary-foreground rounded-lg text-xs font-bold hover:opacity-90 transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary/20"
                 >
-                  <PlusCircle size={14} strokeWidth={2.5} />
+                  <HugeiconsIcon icon={AddCircleIcon} size={14} strokeWidth={2.5} />
                   Insert Draft & Format
                 </button>
               </div>
@@ -242,10 +232,9 @@ export default function PromptInputCard() {
                 <span>·</span>
                 <span>{activeTemplate.sections} sections</span>
               </div>
-              <ChevronDown
+              <HugeiconsIcon icon={ArrowDown01Icon}
                 size={14}
-                className={`text-muted-foreground transition-transform duration-150 shrink-0 ${templateOpen ? 'rotate-180' : ''}`}
-              />
+                className={`text-muted-foreground transition-transform duration-150 shrink-0 ${templateOpen ? 'rotate-180' : ''}`} />
             </button>
 
             {templateOpen && (
@@ -335,7 +324,7 @@ export default function PromptInputCard() {
         {/* Suggestions */}
         <div className="space-y-2">
           <div className="flex items-center gap-1.5">
-            <Lightbulb size={12} strokeWidth={2.25} className="text-foreground" />
+            <HugeiconsIcon icon={Idea01Icon} size={12} strokeWidth={2.25} className="text-foreground" />
             <span className="text-xs font-semibold text-foreground uppercase tracking-widest">
               Topic ideas
             </span>
@@ -393,7 +382,7 @@ export default function PromptInputCard() {
               </span>
             ) : (
               <span className="flex items-center gap-2">
-                <SendHorizonal size={14} />
+                <HugeiconsIcon icon={SentIcon} size={14} />
                 Generate Script
               </span>
             )}

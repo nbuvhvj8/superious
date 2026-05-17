@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Shield } from 'lucide-react';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { Shield01Icon } from '@hugeicons/core-free-icons';
 import Toggle from '@/components/ui/Toggle';
 
 export default function PrivacySection() {
@@ -13,7 +14,7 @@ export default function PrivacySection() {
     <section id="privacy" className="space-y-12">
       <div className="flex items-center gap-2.5 pb-1 border-b border-border/60">
         <div className="w-8 h-8 rounded-lg bg-[#f2f3f6] flex items-center justify-center">
-          <Shield size={15} className="text-foreground" />
+          <HugeiconsIcon icon={Shield01Icon} size={15} className="text-foreground" />
         </div>
         <div>
           <h2 className="text-base font-bold text-foreground">Privacy</h2>

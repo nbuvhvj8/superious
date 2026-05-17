@@ -2,7 +2,8 @@
 
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Feather, CheckCircle2 } from 'lucide-react';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { CheckmarkCircle01Icon, FeatherIcon } from '@hugeicons/core-free-icons';
 import Toggle from '@/components/ui/Toggle';
 
 interface AnimationFormData {
@@ -79,7 +80,7 @@ export default function AnimationSection() {
     <section id="animation-design" className="card p-6 space-y-5">
       <div className="flex items-center gap-2.5 pb-1 border-b border-border">
         <div className="w-8 h-8 rounded-lg bg-purple-500/10 flex items-center justify-center">
-          <Feather size={15} className="text-purple-500" />
+          <HugeiconsIcon icon={FeatherIcon} size={15} className="text-purple-500" />
         </div>
         <div>
           <h2 className="text-base font-bold text-foreground">Motion Design & Animation</h2>
@@ -249,7 +250,7 @@ export default function AnimationSection() {
               </span>
             ) : saved ? (
               <span className="flex items-center gap-2">
-                <CheckCircle2 size={14} />
+                <HugeiconsIcon icon={CheckmarkCircle01Icon} size={14} />
                 Saved
               </span>
             ) : (

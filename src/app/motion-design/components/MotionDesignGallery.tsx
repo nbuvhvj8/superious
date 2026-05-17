@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { RotateCcw, Download, Play, Pause } from 'lucide-react';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { Download01Icon, PauseIcon, PlayIcon, RotateLeft01Icon } from '@hugeicons/core-free-icons';
 import Image from 'next/image';
 
 interface CapturedAsset {
@@ -141,7 +142,7 @@ export default function MotionDesignGallery() {
                   className="w-16 h-16 rounded-full bg-primary text-white opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center shadow-lg"
                   title={isPlaying ? 'Pause' : 'Play'}
                 >
-                  {isPlaying ? <Pause size={24} /> : <Play size={24} className="ml-1" />}
+                  {isPlaying ? <HugeiconsIcon icon={PauseIcon} size={24} /> : <HugeiconsIcon icon={PlayIcon} size={24} className="ml-1" />}
                 </button>
               </div>
             </div>
@@ -171,11 +172,11 @@ export default function MotionDesignGallery() {
                 disabled={isProcessing || !selectedAsset}
                 className="btn-secondary flex items-center justify-center gap-2"
               >
-                <Download size={16} />
+                <HugeiconsIcon icon={Download01Icon} size={16} />
                 Export
               </button>
               <button onClick={() => setIsPlaying(false)} className="btn-ghost" title="Reset">
-                <RotateCcw size={16} />
+                <HugeiconsIcon icon={RotateLeft01Icon} size={16} />
               </button>
             </div>
           </div>

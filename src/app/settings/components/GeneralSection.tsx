@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { User, Sun, Moon, Monitor, Camera, ChevronDown, Check } from 'lucide-react';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { ArrowDown01Icon, Camera01Icon, ComputerIcon, MoonIcon, Sun01Icon, Tick01Icon, UserIcon } from '@hugeicons/core-free-icons';
 import Toggle from '@/components/ui/Toggle';
 
 const APP_COLORS = [
@@ -68,10 +69,10 @@ export default function GeneralSection() {
             </div>
             <div className="relative group cursor-pointer shrink-0">
               <div className="w-12 h-12 rounded-full bg-[#f2f3f6] border border-border/40 flex items-center justify-center overflow-hidden">
-                <User size={20} className="text-muted-foreground" />
+                <HugeiconsIcon icon={UserIcon} size={20} className="text-muted-foreground" />
               </div>
               <div className="absolute inset-0 rounded-full bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                <Camera size={14} className="text-white" />
+                <HugeiconsIcon icon={Camera01Icon} size={14} className="text-white" />
               </div>
             </div>
           </div>
@@ -114,9 +115,9 @@ export default function GeneralSection() {
             </div>
             <div className="flex items-center gap-1 p-1 bg-[#f2f3f6] rounded-[8px]">
               {[
-                { id: 'light', label: 'White', icon: <Sun size={14} /> },
-                { id: 'dark', label: 'Black', icon: <Moon size={14} /> },
-                { id: 'system', label: 'System', icon: <Monitor size={14} /> },
+                { id: 'light', label: 'White', icon: <HugeiconsIcon icon={Sun01Icon} size={14} /> },
+                { id: 'dark', label: 'Black', icon: <HugeiconsIcon icon={MoonIcon} size={14} /> },
+                { id: 'system', label: 'System', icon: <HugeiconsIcon icon={ComputerIcon} size={14} /> },
               ].map((mode) => (
                 <button
                   key={mode.id}
@@ -150,10 +151,9 @@ export default function GeneralSection() {
                   />
                   <span>{APP_COLORS.find((c) => c.value === appColor)?.name}</span>
                 </div>
-                <ChevronDown
+                <HugeiconsIcon icon={ArrowDown01Icon}
                   size={14}
-                  className={`text-muted-foreground transition-transform ${showColorDropdown ? 'rotate-180' : ''}`}
-                />
+                  className={`text-muted-foreground transition-transform ${showColorDropdown ? 'rotate-180' : ''}`} />
               </button>
 
               {showColorDropdown && (
@@ -171,7 +171,7 @@ export default function GeneralSection() {
                           style={{ backgroundColor: color.value }}
                         />
                         <span className="flex-1">{color.name}</span>
-                        {appColor === color.value && <Check className="text-primary" size={13} />}
+                        {appColor === color.value && <HugeiconsIcon icon={Tick01Icon} className="text-primary" size={13} />}
                       </button>
                     ))}
                   </div>

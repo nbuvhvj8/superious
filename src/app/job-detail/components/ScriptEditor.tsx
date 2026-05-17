@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
-import { Check, Edit3, RotateCcw } from 'lucide-react';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { PencilEdit01Icon, RotateLeft01Icon, Tick01Icon } from '@hugeicons/core-free-icons';
 
 interface Props {
   value: string;
@@ -74,11 +75,11 @@ export default function ScriptEditor({
           "
           title="Edit this section"
         >
-          <Edit3 size={11} />
+          <HugeiconsIcon icon={PencilEdit01Icon} size={11} />
         </button>
         {saved && (
           <span className="absolute -top-1 -right-1 flex items-center gap-1 text-2xs font-semibold text-primary animate-fade-in">
-            <Check size={11} /> Saved
+            <HugeiconsIcon icon={Tick01Icon} size={11} /> Saved
           </span>
         )}
       </div>
@@ -115,21 +116,21 @@ export default function ScriptEditor({
             className="flex items-center gap-1 text-2xs text-muted-foreground hover:text-foreground px-2 py-1 rounded-md hover:bg-muted transition-colors"
             title="Reset to original"
           >
-            <RotateCcw size={11} />
+            <HugeiconsIcon icon={RotateLeft01Icon} size={11} />
             Reset
           </button>
           <button
             onClick={handleReset}
             className="flex items-center gap-1 text-2xs text-foreground hover:text-primary px-2 py-1 rounded-md hover:bg-muted transition-colors font-semibold"
           >
-            <RotateCcw size={10} strokeWidth={2.25} />
+            <HugeiconsIcon icon={RotateLeft01Icon} size={10} strokeWidth={2.25} />
             Reset
           </button>
           <button
             onClick={handleSave}
             className="flex items-center gap-1 text-2xs font-semibold text-primary-foreground bg-primary px-2.5 py-1 rounded-md hover:opacity-90 transition-opacity"
           >
-            <Check size={11} />
+            <HugeiconsIcon icon={Tick01Icon} size={11} />
             Save
           </button>
         </div>

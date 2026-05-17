@@ -1,7 +1,8 @@
 'use client';
 
 import AppLayout from '@/components/AppLayout';
-import { ChevronLeft, ChevronRight, Puzzle, Star, Download, Slash } from 'lucide-react';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { ArrowLeft01Icon, ArrowRight01Icon, CircleSlashTwoIcon, Download01Icon, PuzzleIcon, StarIcon } from '@hugeicons/core-free-icons';
 import { useMemo, useState } from 'react';
 
 const BANNERS = [
@@ -117,7 +118,7 @@ export default function PluginsPage() {
 
           <div className="relative z-10">
             <div className="inline-flex items-center gap-2 rounded-full bg-white/20 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.1em]">
-              <Puzzle size={13} /> Plugin Spotlight
+              <HugeiconsIcon icon={PuzzleIcon} size={13} /> Plugin Spotlight
             </div>
             <h2 className="mt-4 max-w-[640px] text-3xl font-bold">{active.title}</h2>
             <p className="mt-3 max-w-[640px] text-sm text-white/90">{active.subtitle}</p>
@@ -128,13 +129,13 @@ export default function PluginsPage() {
               onClick={() => setBanner((p) => (p - 1 + BANNERS.length) % BANNERS.length)}
               className="rounded-full bg-white/20 p-2 hover:bg-white/30"
             >
-              <ChevronLeft size={16} />
+              <HugeiconsIcon icon={ArrowLeft01Icon} size={16} />
             </button>
             <button
               onClick={() => setBanner((p) => (p + 1) % BANNERS.length)}
               className="rounded-full bg-white/20 p-2 hover:bg-white/30"
             >
-              <ChevronRight size={16} />
+              <HugeiconsIcon icon={ArrowRight01Icon} size={16} />
             </button>
           </div>
         </section>
@@ -184,16 +185,16 @@ export default function PluginsPage() {
                     </p>
                     <div className="mt-3 flex items-center justify-between gap-2">
                       <span className="inline-flex items-center gap-1 text-[12px] font-bold text-amber-600">
-                        <Star size={13} className="fill-amber-400" />
+                        <HugeiconsIcon icon={StarIcon} size={13} className="fill-amber-400" />
                         {plugin.rating.toFixed(1)}
                       </span>
                       <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-muted-foreground">
-                        <Download size={12} />
+                        <HugeiconsIcon icon={Download01Icon} size={12} />
                         {plugin.installs.toLocaleString()} installs
                       </span>
                     </div>
                     <button className="mt-3 inline-flex items-center gap-1 rounded-md border border-[#dce0eb] px-2.5 py-1.5 text-[11px] font-semibold text-foreground hover:bg-[#f5f7fb]">
-                      <Slash size={12} /> Add to chat commands
+                      <HugeiconsIcon icon={CircleSlashTwoIcon} size={12} /> Add to chat commands
                     </button>
                   </article>
                 ))}

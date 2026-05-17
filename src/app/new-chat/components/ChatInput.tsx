@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useRef, useState, useEffect, forwardRef, useImperativeHandle } from 'react';
-import { Plus, ChevronDown } from 'lucide-react';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { Add01Icon, ArrowDown01Icon } from '@hugeicons/core-free-icons';
 import SendButton from './ChatInput/SendButton';
 import { useChatModels } from '@/lib/use-chat-models';
 
@@ -106,7 +107,7 @@ const ChatInput = forwardRef<ChatInputHandle, ChatInputProps>(
                 type="button"
                 className="flex items-center justify-center w-[32px] h-[32px] rounded-full text-foreground/70 hover:bg-[#0000000d] transition-all"
               >
-                <Plus size={20} />
+                <HugeiconsIcon icon={Add01Icon} size={20} />
               </button>
             </div>
 
@@ -152,10 +153,9 @@ const ChatInput = forwardRef<ChatInputHandle, ChatInputProps>(
                 "
               >
                 <span>{currentModel}</span>
-                <ChevronDown
+                <HugeiconsIcon icon={ArrowDown01Icon}
                   size={13}
-                  className={`transition-transform duration-200 ${showModels ? 'rotate-180' : ''}`}
-                />
+                  className={`transition-transform duration-200 ${showModels ? 'rotate-180' : ''}`} />
               </button>
 
               {showModels && (

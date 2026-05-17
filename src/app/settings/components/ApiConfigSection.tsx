@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useEffect, useMemo, useState } from 'react';
-import { ChevronDown, Eye, EyeOff, Loader2, Trash2, Edit3, Check } from 'lucide-react';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { ArrowDown01Icon, Delete02Icon, Loading03Icon, PencilEdit01Icon, Tick01Icon, ViewIcon, ViewOffIcon } from '@hugeicons/core-free-icons';
 import SmartKeyInput from './SmartKeyInput';
 import { PROVIDERS } from '@/lib/providers';
 import { broadcastModelsUpdate, syncModelsToStorage } from '@/lib/use-chat-models';
@@ -119,7 +120,7 @@ function ProviderRow({
                 aria-label={show ? 'Hide API key' : 'Show API key'}
                 className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground focus:outline-none focus:ring-2 focus:ring-primary rounded-sm"
               >
-                {show ? <EyeOff size={13} /> : <Eye size={13} />}
+                {show ? <HugeiconsIcon icon={ViewOffIcon} size={13} /> : <HugeiconsIcon icon={ViewIcon} size={13} />}
               </button>
             </div>
             <button
@@ -128,7 +129,7 @@ function ProviderRow({
               disabled={saving || !keyValue.trim()}
               className="btn-primary text-[11px] h-8 px-3"
             >
-              {saving ? <Loader2 size={12} className="animate-spin" /> : 'Save'}
+              {saving ? <HugeiconsIcon icon={Loading03Icon} size={12} className="animate-spin" /> : 'Save'}
             </button>
             {provider.configured && (
               <button
@@ -151,7 +152,7 @@ function ProviderRow({
                 aria-label="Edit API key"
                 className="p-1 rounded hover:bg-muted text-muted-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
               >
-                <Edit3 size={13} />
+                <HugeiconsIcon icon={PencilEdit01Icon} size={13} />
               </button>
               <button
                 onClick={async () => {
@@ -165,7 +166,7 @@ function ProviderRow({
                 aria-label="Delete API key"
                 className="p-1 rounded hover:bg-red-50 hover:text-red-500 text-muted-foreground transition-colors focus:outline-none focus:ring-2 focus:ring-red-500"
               >
-                <Trash2 size={13} />
+                <HugeiconsIcon icon={Delete02Icon} size={13} />
               </button>
             </div>
           </div>
@@ -181,10 +182,9 @@ function ProviderRow({
               className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-muted/50 hover:bg-muted text-[11px] font-bold text-foreground transition-all"
             >
               {selectedModels.length > 0 ? `${selectedModels.length} Models` : 'Select Models'}
-              <ChevronDown
+              <HugeiconsIcon icon={ArrowDown01Icon}
                 size={12}
-                className={`transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`}
-              />
+                className={`transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} />
             </button>
 
             {isDropdownOpen && (
@@ -199,7 +199,7 @@ function ProviderRow({
                     >
                       <span className="flex-1 truncate">{model}</span>
                       {selectedModels.includes(model) && (
-                        <Check className="text-primary" size={12} />
+                        <HugeiconsIcon icon={Tick01Icon} className="text-primary" size={12} />
                       )}
                     </button>
                   ))}
@@ -313,7 +313,7 @@ export default function ApiConfigSection() {
 
         {!providers ? (
           <div className="flex items-center gap-3 text-xs text-muted-foreground font-bold py-10 justify-center">
-            <Loader2 size={14} className="animate-spin text-primary" />
+            <HugeiconsIcon icon={Loading03Icon} size={14} className="animate-spin text-primary" />
             <span>Loading providers...</span>
           </div>
         ) : (

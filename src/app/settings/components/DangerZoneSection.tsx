@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Trash2, AlertTriangle, ImageOff } from 'lucide-react';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { Alert01Icon, Delete02Icon, ImageNotFound01Icon } from '@hugeicons/core-free-icons';
 import ConfirmModal from '@/components/ui/ConfirmModal';
 
 export default function DangerZoneSection() {
@@ -35,7 +36,7 @@ export default function DangerZoneSection() {
       <section id="danger-zone" className="space-y-12">
         <div className="flex items-center gap-2.5 pb-1 border-b border-red-100">
           <div className="w-8 h-8 rounded-lg bg-red-50 flex items-center justify-center">
-            <AlertTriangle size={15} className="text-red-600" />
+            <HugeiconsIcon icon={Alert01Icon} size={15} className="text-red-600" />
           </div>
           <div>
             <h2 className="text-base font-bold text-red-600">Danger Zone</h2>
@@ -47,7 +48,7 @@ export default function DangerZoneSection() {
           <div className="flex items-start justify-between gap-8">
             <div className="space-y-1 flex-1">
               <div className="flex items-center gap-2 text-red-600">
-                <Trash2 size={14} />
+                <HugeiconsIcon icon={Delete02Icon} size={14} />
                 <h3 className="text-sm font-medium">Delete All Jobs</h3>
               </div>
               <p className="text-xs text-muted-foreground leading-relaxed max-w-md">
@@ -73,7 +74,7 @@ export default function DangerZoneSection() {
           <div className="flex items-start justify-between gap-8">
             <div className="space-y-1 flex-1">
               <div className="flex items-center gap-2 text-red-600">
-                <ImageOff size={14} />
+                <HugeiconsIcon icon={ImageNotFound01Icon} size={14} />
                 <h3 className="text-sm font-medium">Purge All Screenshots</h3>
               </div>
               <p className="text-xs text-muted-foreground leading-relaxed max-w-md">

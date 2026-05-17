@@ -1,17 +1,8 @@
 'use client';
 
 import React, { useMemo, useState } from 'react';
-import {
-  Download,
-  ChevronDown,
-  FileText,
-  Code,
-  Hash,
-  Edit3,
-  Sparkles,
-  AlertTriangle,
-  RotateCcw,
-} from 'lucide-react';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { Alert01Icon, ArrowDown01Icon, CodeIcon, Download01Icon, File02Icon, HashtagIcon, PencilEdit01Icon, RotateLeft01Icon, SparklesIcon } from '@hugeicons/core-free-icons';
 import ScriptEditor from './ScriptEditor';
 import HookVariantsModal from './HookVariantsModal';
 import { VerificationBadge, VerificationLegend } from './VerificationBadge';
@@ -403,7 +394,7 @@ export default function ScriptViewer({
           <div className="flex items-center gap-2">
             <span className="section-label">Video Script</span>
             <span className="flex items-center gap-1 text-2xs font-semibold text-primary bg-primary/10 px-2 py-0.5 rounded-full">
-              <Edit3 size={10} strokeWidth={2.25} />
+              <HugeiconsIcon icon={PencilEdit01Icon} size={10} strokeWidth={2.25} />
               Editable
             </span>
           </div>
@@ -454,12 +445,11 @@ export default function ScriptViewer({
               onClick={() => setExportOpen(!exportOpen)}
               className="btn-secondary gap-1.5 text-xs py-1.5 px-3"
             >
-              <Download size={13} />
+              <HugeiconsIcon icon={Download01Icon} size={13} />
               Export
-              <ChevronDown
+              <HugeiconsIcon icon={ArrowDown01Icon}
                 size={12}
-                className={`transition-transform duration-150 ${exportOpen ? 'rotate-180' : ''}`}
-              />
+                className={`transition-transform duration-150 ${exportOpen ? 'rotate-180' : ''}`} />
             </button>
             {exportOpen && (
               <div className="absolute right-0 top-full mt-1.5 w-44 bg-card border border-border rounded-xl shadow-lg z-20 overflow-hidden animate-fade-in">
@@ -468,19 +458,19 @@ export default function ScriptViewer({
                     key: 'export-txt',
                     label: 'Plain Text',
                     fmt: 'txt' as const,
-                    icon: <FileText size={13} />,
+                    icon: <HugeiconsIcon icon={File02Icon} size={13} />,
                   },
                   {
                     key: 'export-md',
                     label: 'Markdown',
                     fmt: 'md' as const,
-                    icon: <Hash size={13} />,
+                    icon: <HugeiconsIcon icon={HashtagIcon} size={13} />,
                   },
                   {
                     key: 'export-json',
                     label: 'JSON',
                     fmt: 'json' as const,
-                    icon: <Code size={13} />,
+                    icon: <HugeiconsIcon icon={CodeIcon} size={13} />,
                   },
                 ].map((opt) => (
                   <button
@@ -511,7 +501,7 @@ export default function ScriptViewer({
             className="btn-secondary gap-1.5 text-2xs py-1 px-2.5"
             title="Generate alternative hooks"
           >
-            <Sparkles size={11} />
+            <HugeiconsIcon icon={SparklesIcon} size={11} />
             Hook variants
           </button>
         </div>
@@ -629,7 +619,7 @@ function UncitedWarning({ onReanchor }: { onReanchor: () => void }) {
   return (
     <div className="flex items-center gap-2 text-2xs">
       <span className="inline-flex items-center gap-1 text-amber-700 font-bold">
-        <AlertTriangle size={11} />
+        <HugeiconsIcon icon={Alert01Icon} size={11} />
         Uncited rewrite
       </span>
       <button
@@ -638,7 +628,7 @@ function UncitedWarning({ onReanchor }: { onReanchor: () => void }) {
         className="inline-flex items-center gap-1 text-primary hover:underline font-semibold"
         title="Mark this section as re-verified against its sources"
       >
-        <RotateCcw size={10} />
+        <HugeiconsIcon icon={RotateLeft01Icon} size={10} />
         Re-anchor to sources
       </button>
     </div>
@@ -775,7 +765,7 @@ function ScriptSegmentBlock({
           {isUncited && (
             <div className="flex items-center gap-2 text-2xs">
               <span className="inline-flex items-center gap-1 text-amber-700 font-bold">
-                <AlertTriangle size={11} />
+                <HugeiconsIcon icon={Alert01Icon} size={11} />
                 Uncited rewrite
               </span>
               <button
@@ -784,7 +774,7 @@ function ScriptSegmentBlock({
                 className="inline-flex items-center gap-1 text-primary hover:underline font-semibold"
                 title="Mark this section as re-verified against its sources"
               >
-                <RotateCcw size={10} />
+                <HugeiconsIcon icon={RotateLeft01Icon} size={10} />
                 Re-anchor
               </button>
             </div>

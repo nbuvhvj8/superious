@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Copy, RefreshCw, ThumbsUp, ThumbsDown, Check, Edit3, ChevronDown } from 'lucide-react';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { ArrowDown01Icon, Copy01Icon, PencilEdit01Icon, RefreshIcon, ThumbsDownIcon, ThumbsUpIcon, Tick01Icon } from '@hugeicons/core-free-icons';
 import StreamingText from './StreamingText';
 import CommandResponseCard, { type CommandType } from './CommandResponseCard';
 import ThinkingIndicator from './ThinkingIndicator';
@@ -132,26 +133,26 @@ export default function MessageRow({ message, onRegenerate, onEdit }: MessageRow
                         className="p-1.5 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-all"
                         title={copied ? 'Copied!' : 'Copy'}
                       >
-                        {copied ? <Check size={14} className="text-primary" /> : <Copy size={14} />}
+                        {copied ? <HugeiconsIcon icon={Tick01Icon} size={14} className="text-primary" /> : <HugeiconsIcon icon={Copy01Icon} size={14} />}
                       </button>
                       <button
                         onClick={onRegenerate}
                         className="p-1.5 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-all"
                         title="Regenerate"
                       >
-                        <RefreshCw size={14} />
+                        <HugeiconsIcon icon={RefreshIcon} size={14} />
                       </button>
                       <button
                         className="p-1.5 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-all"
                         title="Good Response"
                       >
-                        <ThumbsUp size={14} />
+                        <HugeiconsIcon icon={ThumbsUpIcon} size={14} />
                       </button>
                       <button
                         className="p-1.5 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-all"
                         title="Bad Response"
                       >
-                        <ThumbsDown size={14} />
+                        <HugeiconsIcon icon={ThumbsDownIcon} size={14} />
                       </button>
                     </div>
                   )}
@@ -174,10 +175,9 @@ export default function MessageRow({ message, onRegenerate, onEdit }: MessageRow
                   hover:text-foreground/80 transition-colors z-10
                 `}
               >
-                <ChevronDown
+                <HugeiconsIcon icon={ArrowDown01Icon}
                   size={14}
-                  className={`transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}
-                />
+                  className={`transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
               </button>
             )}
           </div>
@@ -190,14 +190,14 @@ export default function MessageRow({ message, onRegenerate, onEdit }: MessageRow
                 className="p-1 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-all"
                 title="Edit"
               >
-                <Edit3 size={13} />
+                <HugeiconsIcon icon={PencilEdit01Icon} size={13} />
               </button>
               <button
                 onClick={handleCopy}
                 className="p-1 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-all"
                 title={copied ? 'Copied!' : 'Copy'}
               >
-                {copied ? <Check size={13} className="text-primary" /> : <Copy size={13} />}
+                {copied ? <HugeiconsIcon icon={Tick01Icon} size={13} className="text-primary" /> : <HugeiconsIcon icon={Copy01Icon} size={13} />}
               </button>
             </div>
           )}

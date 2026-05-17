@@ -2,18 +2,8 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import Modal from '@/components/ui/Modal';
-import {
-  Upload,
-  CheckCircle2,
-  AlertCircle,
-  Loader2,
-  FolderOpen,
-  FileText,
-  Camera,
-  Archive,
-  RefreshCw,
-  ExternalLink,
-} from 'lucide-react';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { AlertCircleIcon, ArchiveIcon, ArrowUpRight01Icon, Camera01Icon, CheckmarkCircle01Icon, File02Icon, FolderOpenIcon, Loading03Icon, RefreshIcon, UploadIcon } from '@hugeicons/core-free-icons';
 import Image from 'next/image';
 
 type BackupStatus = 'idle' | 'selecting' | 'uploading' | 'success' | 'error' | 'not_connected';
@@ -86,10 +76,10 @@ const MOCK_BACKUP_ITEMS: BackupItem[] = [
 ];
 
 const TYPE_ICONS: Record<string, React.ReactNode> = {
-  script: <FileText size={14} className="text-blue-500" />,
-  screenshots: <Camera size={14} className="text-pink-500" />,
-  sources: <FolderOpen size={14} className="text-emerald-500" />,
-  archive: <Archive size={14} className="text-amber-500" />,
+  script: <HugeiconsIcon icon={File02Icon} size={14} className="text-blue-500" />,
+  screenshots: <HugeiconsIcon icon={Camera01Icon} size={14} className="text-pink-500" />,
+  sources: <HugeiconsIcon icon={FolderOpenIcon} size={14} className="text-emerald-500" />,
+  archive: <HugeiconsIcon icon={ArchiveIcon} size={14} className="text-amber-500" />,
 };
 
 interface GoogleDriveBackupModalProps {
@@ -206,7 +196,7 @@ export default function GoogleDriveBackupModal({ open, onClose }: GoogleDriveBac
 
         {status === 'not_connected' && (
           <div className="flex items-center gap-3 p-3 rounded-xl border border-amber-200 bg-amber-50">
-            <AlertCircle size={16} className="text-amber-600 shrink-0" />
+            <HugeiconsIcon icon={AlertCircleIcon} size={16} className="text-amber-600 shrink-0" />
             <div className="flex-1">
               <p className="text-[12px] font-bold text-amber-700">Google Drive not connected</p>
               <p className="text-[10px] text-amber-600">
@@ -217,7 +207,7 @@ export default function GoogleDriveBackupModal({ open, onClose }: GoogleDriveBac
               href="/settings"
               className="text-[11px] font-bold text-amber-700 hover:underline flex items-center gap-1"
             >
-              Settings <ExternalLink size={10} />
+              Settings <HugeiconsIcon icon={ArrowUpRight01Icon} size={10} />
             </a>
           </div>
         )}
@@ -231,7 +221,7 @@ export default function GoogleDriveBackupModal({ open, onClose }: GoogleDriveBac
               </label>
               <div className="flex items-center gap-2">
                 <div className="flex-1 flex items-center gap-2 px-3 py-2 rounded-lg border border-border bg-white text-sm">
-                  <FolderOpen size={14} className="text-muted-foreground shrink-0" />
+                  <HugeiconsIcon icon={FolderOpenIcon} size={14} className="text-muted-foreground shrink-0" />
                   <input
                     value={targetFolder}
                     onChange={(e) => setTargetFolder(e.target.value)}
@@ -310,7 +300,7 @@ export default function GoogleDriveBackupModal({ open, onClose }: GoogleDriveBac
                     : 'bg-primary text-primary-foreground hover:opacity-90 shadow-lg shadow-primary/20'
                 }`}
               >
-                <Upload size={14} />
+                <HugeiconsIcon icon={UploadIcon} size={14} />
                 Upload to Drive
               </button>
             </div>
@@ -320,7 +310,7 @@ export default function GoogleDriveBackupModal({ open, onClose }: GoogleDriveBac
         {status === 'uploading' && (
           <div className="space-y-4 py-4">
             <div className="flex flex-col items-center gap-3 text-center">
-              <Loader2 size={32} className="text-primary animate-spin" />
+              <HugeiconsIcon icon={Loading03Icon} size={32} className="text-primary animate-spin" />
               <div>
                 <p className="text-sm font-bold text-foreground">Uploading to Google Drive</p>
                 <p className="text-[11px] text-muted-foreground mt-1">
@@ -346,7 +336,7 @@ export default function GoogleDriveBackupModal({ open, onClose }: GoogleDriveBac
           <div className="space-y-4 py-4">
             <div className="flex flex-col items-center gap-3 text-center">
               <div className="w-14 h-14 rounded-full bg-green-50 border-2 border-green-200 flex items-center justify-center">
-                <CheckCircle2 size={28} className="text-green-500" />
+                <HugeiconsIcon icon={CheckmarkCircle01Icon} size={28} className="text-green-500" />
               </div>
               <div>
                 <p className="text-sm font-bold text-foreground">Backup Complete</p>
@@ -363,14 +353,14 @@ export default function GoogleDriveBackupModal({ open, onClose }: GoogleDriveBac
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 px-4 py-2 rounded-lg text-[11px] font-bold text-primary border border-primary/20 hover:bg-primary/5 transition-colors"
               >
-                <ExternalLink size={12} />
+                <HugeiconsIcon icon={ArrowUpRight01Icon} size={12} />
                 Open in Drive
               </a>
               <button
                 onClick={handleReset}
                 className="flex items-center gap-2 px-4 py-2 rounded-lg text-[11px] font-bold text-muted-foreground hover:bg-muted transition-colors"
               >
-                <RefreshCw size={12} />
+                <HugeiconsIcon icon={RefreshIcon} size={12} />
                 New Backup
               </button>
             </div>
@@ -381,7 +371,7 @@ export default function GoogleDriveBackupModal({ open, onClose }: GoogleDriveBac
           <div className="space-y-4 py-4">
             <div className="flex flex-col items-center gap-3 text-center">
               <div className="w-14 h-14 rounded-full bg-red-50 border-2 border-red-200 flex items-center justify-center">
-                <AlertCircle size={28} className="text-red-500" />
+                <HugeiconsIcon icon={AlertCircleIcon} size={28} className="text-red-500" />
               </div>
               <div>
                 <p className="text-sm font-bold text-foreground">Backup Failed</p>
@@ -396,7 +386,7 @@ export default function GoogleDriveBackupModal({ open, onClose }: GoogleDriveBac
                 onClick={handleReset}
                 className="flex items-center gap-2 px-4 py-2 rounded-lg text-[11px] font-bold text-primary border border-primary/20 hover:bg-primary/5 transition-colors"
               >
-                <RefreshCw size={12} />
+                <HugeiconsIcon icon={RefreshIcon} size={12} />
                 Try Again
               </button>
             </div>

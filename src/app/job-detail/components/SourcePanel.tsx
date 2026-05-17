@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { ExternalLink, AlertCircle } from 'lucide-react';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { AlertCircleIcon, ArrowUpRight01Icon } from '@hugeicons/core-free-icons';
 import { SourceStatusBadge, type SourceStatus } from '@/components/ui/StatusBadge';
 import Modal from '@/components/ui/Modal';
 import AppImage from '@/components/ui/AppImage';
@@ -160,7 +161,7 @@ export default function SourcePanel({ highlightedSourceId, onSourceClick }: Prop
         </div>
         {failedCount > 0 && (
           <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-red-50 border border-red-200">
-            <AlertCircle size={13} className="text-red-500 shrink-0" />
+            <HugeiconsIcon icon={AlertCircleIcon} size={13} className="text-red-500 shrink-0" />
             <p className="text-xs text-red-600 font-medium">
               {failedCount} source{failedCount > 1 ? 's' : ''} failed to capture
             </p>
@@ -226,7 +227,7 @@ export default function SourcePanel({ highlightedSourceId, onSourceClick }: Prop
                   {modalSource.url.length > 70
                     ? modalSource.url.slice(0, 70) + '…'
                     : modalSource.url}
-                  <ExternalLink size={10} />
+                  <HugeiconsIcon icon={ArrowUpRight01Icon} size={10} />
                 </a>
               </div>
               <button
@@ -312,7 +313,7 @@ function SourceCard({
           className="btn-ghost p-1 shrink-0 text-foreground"
           aria-label={`Open ${source.domain} in new tab`}
         >
-          <ExternalLink size={12} strokeWidth={2.25} />
+          <HugeiconsIcon icon={ArrowUpRight01Icon} size={12} strokeWidth={2.25} />
         </a>
       </div>
 
@@ -347,7 +348,7 @@ function SourceCard({
 
       {source.status === 'failed' && (
         <div className="w-full h-[80px] rounded-lg border border-red-200 bg-red-50 flex items-center justify-center gap-2">
-          <AlertCircle size={14} className="text-red-400" />
+          <HugeiconsIcon icon={AlertCircleIcon} size={14} className="text-red-400" />
           <span className="text-xs text-red-500 font-medium">Screenshot capture failed</span>
         </div>
       )}

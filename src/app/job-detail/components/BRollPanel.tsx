@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Camera, Download, CheckSquare, Square, Copy, Check } from 'lucide-react';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { Camera01Icon, CheckmarkSquare01Icon, Copy01Icon, Download01Icon, SquareIcon, Tick01Icon } from '@hugeicons/core-free-icons';
 
 interface BRollItem {
   id: string;
@@ -80,7 +81,7 @@ export default function BRollPanel({ items }: Props) {
       <div className="space-y-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <Camera size={15} className="text-primary" />
+            <HugeiconsIcon icon={Camera01Icon} size={15} className="text-primary" />
             <h3 className="text-sm font-bold text-foreground">B-Roll Shot List</h3>
           </div>
           <span className="font-mono text-xs text-muted-foreground tabular-nums">
@@ -103,9 +104,9 @@ export default function BRollPanel({ items }: Props) {
             className="flex items-center gap-1.5 text-xs font-semibold text-muted-foreground hover:text-foreground transition-colors"
           >
             {checkedIds.size === items.length ? (
-              <CheckSquare size={13} className="text-primary" />
+              <HugeiconsIcon icon={CheckmarkSquare01Icon} size={13} className="text-primary" />
             ) : (
-              <Square size={13} />
+              <HugeiconsIcon icon={SquareIcon} size={13} />
             )}
             {checkedIds.size === items.length ? 'Uncheck all' : 'Check all'}
           </button>
@@ -114,14 +115,14 @@ export default function BRollPanel({ items }: Props) {
             onClick={handleCopy}
             className="flex items-center gap-1.5 text-xs font-semibold text-muted-foreground hover:text-foreground transition-colors"
           >
-            {copied ? <Check size={13} className="text-primary" /> : <Copy size={13} />}
+            {copied ? <HugeiconsIcon icon={Tick01Icon} size={13} className="text-primary" /> : <HugeiconsIcon icon={Copy01Icon} size={13} />}
             {copied ? 'Copied!' : 'Copy'}
           </button>
           <button
             onClick={handleExport}
             className="flex items-center gap-1.5 text-xs font-semibold text-primary hover:opacity-80 transition-opacity"
           >
-            <Download size={13} />
+            <HugeiconsIcon icon={Download01Icon} size={13} />
             Export
           </button>
         </div>
@@ -157,9 +158,9 @@ export default function BRollPanel({ items }: Props) {
                   >
                     <div className="shrink-0 mt-0.5">
                       {checkedIds.has(item.id) ? (
-                        <CheckSquare size={14} strokeWidth={2.25} className="text-primary" />
+                        <HugeiconsIcon icon={CheckmarkSquare01Icon} size={14} strokeWidth={2.25} className="text-primary" />
                       ) : (
-                        <Square size={14} strokeWidth={2.25} className="text-foreground" />
+                        <HugeiconsIcon icon={SquareIcon} size={14} strokeWidth={2.25} className="text-foreground" />
                       )}
                     </div>
                     <div className="min-w-0">

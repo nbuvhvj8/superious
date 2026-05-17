@@ -1,7 +1,8 @@
 'use client';
 
 import AppLayout from '@/components/AppLayout';
-import { ArrowUpDown, Clock3, Search, Sparkles } from 'lucide-react';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { ArrowUpDownIcon, Clock03Icon, Search01Icon, SparklesIcon } from '@hugeicons/core-free-icons';
 
 const SESSIONS = [
   {
@@ -46,14 +47,14 @@ export default function ResearchHubPage() {
 
           <section className="mb-6 flex flex-wrap items-center gap-3">
             <div className="flex h-10 min-w-[320px] flex-1 items-center gap-2 rounded-[8px] bg-[#f2f3f6] px-3">
-              <Search size={15} className="text-muted-foreground" />
+              <HugeiconsIcon icon={Search01Icon} size={15} className="text-muted-foreground" />
               <input
                 placeholder="Search sessions, topics, tags, or source URLs..."
                 className="h-full w-full bg-transparent text-sm outline-none"
               />
             </div>
             <button className="inline-flex h-10 items-center gap-2 rounded-[8px] bg-[#f2f3f6] px-3 text-[13px] font-semibold">
-              <ArrowUpDown size={14} /> Sort by recent activity
+              <HugeiconsIcon icon={ArrowUpDownIcon} size={14} /> Sort by recent activity
             </button>
           </section>
 
@@ -69,7 +70,7 @@ export default function ResearchHubPage() {
                     <p className="mt-1 font-mono text-[11px] text-muted-foreground">{session.id}</p>
                   </div>
                   <div className="inline-flex items-center gap-1 rounded-full bg-white px-2 py-1 text-[11px] font-semibold text-muted-foreground">
-                    <Clock3 size={12} />
+                    <HugeiconsIcon icon={Clock03Icon} size={12} />
                     {session.updated}
                   </div>
                 </div>
@@ -84,7 +85,7 @@ export default function ResearchHubPage() {
                   ))}
                 </div>
                 <button className="mt-3 inline-flex items-center gap-2 text-[12px] font-bold text-muted-foreground group-hover:text-foreground">
-                  <Sparkles size={13} /> Resume session
+                  <HugeiconsIcon icon={SparklesIcon} size={13} /> Resume session
                 </button>
               </article>
             ))}

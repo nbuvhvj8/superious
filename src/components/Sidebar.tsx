@@ -3,19 +3,9 @@
 import React, { useMemo, useState } from 'react';
 import AppLogo from './ui/AppLogo';
 import Link from 'next/link';
+import { HugeiconsIcon } from '@hugeicons/react';
 import { usePathname } from 'next/navigation';
-import {
-  BriefcaseBusiness,
-  PanelLeft,
-  PanelRight,
-  SquarePen,
-  Clock,
-  Puzzle,
-  Search,
-  User,
-  MoreHorizontal,
-  Settings,
-} from 'lucide-react';
+import { Briefcase02Icon, Clock01Icon, MoreHorizontalIcon, PanelLeftIcon, PanelRightIcon, Pen01Icon, PuzzleIcon, Search01Icon, Settings01Icon, UserIcon } from '@hugeicons/core-free-icons';
 import Modal from './ui/Modal';
 
 interface NavItem {
@@ -26,10 +16,10 @@ interface NavItem {
 }
 
 const TOP_NAV_ITEMS: NavItem[] = [
-  { key: 'nav-search', label: 'Search', href: '#search', icon: <Search size={16} strokeWidth={2.25} /> },
-  { key: 'nav-chat', label: 'New Chat', href: '/new-chat', icon: <SquarePen size={16} strokeWidth={2.25} /> },
-  { key: 'nav-plugins', label: 'Extensions', href: '/plugins', icon: <Puzzle size={16} strokeWidth={2.25} /> },
-  { key: 'nav-cron', label: 'Scheduled', href: '/cron-job', icon: <Clock size={16} strokeWidth={2.25} /> },
+  { key: 'nav-search', label: 'Search', href: '#search', icon: <HugeiconsIcon icon={Search01Icon} size={16} strokeWidth={2.25} /> },
+  { key: 'nav-chat', label: 'New Chat', href: '/new-chat', icon: <HugeiconsIcon icon={Pen01Icon} size={16} strokeWidth={2.25} /> },
+  { key: 'nav-plugins', label: 'Extensions', href: '/plugins', icon: <HugeiconsIcon icon={PuzzleIcon} size={16} strokeWidth={2.25} /> },
+  { key: 'nav-cron', label: 'Scheduled', href: '/cron-job', icon: <HugeiconsIcon icon={Clock01Icon} size={16} strokeWidth={2.25} /> },
 ];
 
 const BOTTOM_NAV_ITEMS: NavItem[] = [
@@ -37,7 +27,7 @@ const BOTTOM_NAV_ITEMS: NavItem[] = [
     key: 'nav-operations',
     label: 'Operations Hub',
     href: '/research-hub',
-    icon: <BriefcaseBusiness size={16} strokeWidth={2.25} />,
+    icon: <HugeiconsIcon icon={Briefcase02Icon} size={16} strokeWidth={2.25} />,
   },
 ];
 
@@ -105,7 +95,7 @@ export default function Sidebar() {
       <div className={`flex items-center h-12 px-4 gap-3 overflow-hidden ${collapsed ? 'justify-center' : 'justify-between'}`}>
         {!collapsed && <AppLogo size={32} />}
         <button onClick={() => setCollapsed(!collapsed)} className="p-1.5 rounded-md text-foreground hover:bg-muted transition-all duration-150" aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}>
-          {collapsed ? <PanelRight size={18} strokeWidth={2.25} /> : <PanelLeft size={18} strokeWidth={2.25} />}
+          {collapsed ? <HugeiconsIcon icon={PanelRightIcon} size={18} strokeWidth={2.25} /> : <HugeiconsIcon icon={PanelLeftIcon} size={18} strokeWidth={2.25} />}
         </button>
       </div>
 
@@ -125,7 +115,7 @@ export default function Sidebar() {
                   className={`p-1.5 rounded-[6px] text-muted-foreground hover:bg-[#f2f3f6] hover:text-foreground transition-all ${openMenuId === session.id ? 'opacity-100 bg-[#f2f3f6]' : 'opacity-0 group-hover:opacity-100'}`} 
                   aria-label={`Open options for ${session.title}`}
                 >
-                  <MoreHorizontal size={14} />
+                  <HugeiconsIcon icon={MoreHorizontalIcon} size={14} />
                 </button>
 
                 {openMenuId === session.id && (
@@ -150,10 +140,10 @@ export default function Sidebar() {
         {!collapsed && (
           <Link href="/settings" className={`flex items-center justify-between gap-2 px-3 py-2 rounded-[6px] text-sm font-semibold transition-all duration-150 ${pathname.startsWith('/settings') ? 'bg-[#f2f3f6] text-foreground shadow-sm' : 'text-muted-foreground hover:bg-[#f9f9f9] hover:text-foreground'}`}>
             <div className="flex items-center gap-2 min-w-0">
-              <User size={16} strokeWidth={2.25} />
+              <HugeiconsIcon icon={UserIcon} size={16} strokeWidth={2.25} />
               <span className="truncate">johndoe</span>
             </div>
-            <Settings size={15} strokeWidth={2.25} />
+            <HugeiconsIcon icon={Settings01Icon} size={15} strokeWidth={2.25} />
           </Link>
         )}
       </div>
@@ -162,7 +152,7 @@ export default function Sidebar() {
     <Modal open={searchOpen} onClose={() => setSearchOpen(false)} size="xl">
       <div className="p-4 space-y-6">
         <div className="relative group">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground group-focus-within:text-primary transition-colors" size={18} />
+          <HugeiconsIcon icon={Search01Icon} className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground group-focus-within:text-primary transition-colors" size={18} />
           <input
             type="text"
             autoFocus
@@ -186,7 +176,7 @@ export default function Sidebar() {
               <button key={i} className="flex items-center justify-between w-full p-2.5 rounded-[8px] hover:bg-[#f2f3f6] transition-all group active:scale-[0.99]">
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 rounded-[6px] bg-white border border-border/50 flex items-center justify-center text-muted-foreground group-hover:text-primary transition-colors">
-                    <Clock size={14} />
+                    <HugeiconsIcon icon={Clock01Icon} size={14} />
                   </div>
                   <div className="text-left">
                     <div className="text-[13px] font-medium text-foreground">{item.title}</div>
