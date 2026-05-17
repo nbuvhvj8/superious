@@ -1,8 +1,18 @@
-
-
 import React, { useEffect, useRef, useState } from 'react';
 import { HugeiconsIcon } from '@hugeicons/react';
-import { BarChartIcon, BookOpenTextIcon, Clock01Icon, Delete02Icon, File02Icon, MicroscopeIcon, PauseIcon, PlayIcon, RefreshIcon, Search01Icon, UploadIcon } from '@hugeicons/core-free-icons';
+import {
+  BarChartIcon,
+  BookOpenTextIcon,
+  Clock01Icon,
+  Delete02Icon,
+  File02Icon,
+  MicroscopeIcon,
+  PauseIcon,
+  PlayIcon,
+  RefreshIcon,
+  Search01Icon,
+  UploadIcon,
+} from '@hugeicons/core-free-icons';
 
 export interface SlashCommand {
   id: string;

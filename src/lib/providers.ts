@@ -55,11 +55,8 @@ export const PROVIDERS: ProviderDefinition[] = [
     keyPlaceholder: 'AIza…',
     keyPattern: '^AIza[a-zA-Z0-9_-]{35}$',
     docsUrl: 'https://aistudio.google.com/app/apikey',
-    models: [
-      'gemma-4-26b',
-      'gemma-4-31b',
-    ],
-    },
+    models: ['gemma-4-26b', 'gemma-4-31b'],
+  },
   {
     id: 'xai',
     name: 'xAI (Grok)',
@@ -219,3 +216,12 @@ export function getProvider(id: string): ProviderDefinition | undefined {
 }
 
 export const PROVIDER_IDS: string[] = PROVIDERS.map((p) => p.id);
+
+export function getProviderForModel(modelId: string): string {
+  for (const provider of PROVIDERS) {
+    if (provider.models?.includes(modelId)) {
+      return provider.id;
+    }
+  }
+  return 'openai'; // fallback
+}

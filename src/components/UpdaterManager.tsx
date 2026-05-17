@@ -86,14 +86,18 @@ export default function UpdaterManager() {
           </div>
           <div className="truncate">
             <p className="text-[13px] font-bold leading-tight">
-              {status === 'downloading' ? 'Downloading Update...' :
-               status === 'installed' ? 'Update Installed!' :
-               `Version ${update.version} is available!`}
+              {status === 'downloading'
+                ? 'Downloading Update...'
+                : status === 'installed'
+                  ? 'Update Installed!'
+                  : `Version ${update.version} is available!`}
             </p>
             <p className="text-[11px] font-medium opacity-80 truncate">
-              {status === 'downloading' ? 'Please wait while we prepare the latest version.' :
-               status === 'installed' ? 'Relaunching application...' :
-               'A new version is ready to be installed.'}
+              {status === 'downloading'
+                ? 'Please wait while we prepare the latest version.'
+                : status === 'installed'
+                  ? 'Relaunching application...'
+                  : 'A new version is ready to be installed.'}
             </p>
           </div>
         </div>
@@ -122,12 +126,12 @@ export default function UpdaterManager() {
             </div>
           )}
           {status === 'error' && (
-             <button
-                onClick={() => setStatus('available')}
-                className="bg-red-500 text-white px-3 py-1.5 rounded-[6px] text-[12px] font-bold"
-             >
-               Retry
-             </button>
+            <button
+              onClick={() => setStatus('available')}
+              className="bg-red-500 text-white px-3 py-1.5 rounded-[6px] text-[12px] font-bold"
+            >
+              Retry
+            </button>
           )}
         </div>
       </div>

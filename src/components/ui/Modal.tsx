@@ -1,5 +1,3 @@
-
-
 import React, { useEffect, useRef } from 'react';
 import { HugeiconsIcon } from '@hugeicons/react';
 import { Cancel01Icon } from '@hugeicons/core-free-icons';
@@ -53,7 +51,7 @@ export default function Modal({ open, onClose, title, children, size = 'md' }: M
     >
       <div
         className={`
-          relative w-full ${SIZE_MAP[size]} ${(size === 'notification' || size === 'notification-lg') ? 'bg-background' : 'bg-card'} rounded-2xl border border-border
+          relative w-full ${SIZE_MAP[size]} ${size === 'notification' || size === 'notification-lg' ? 'bg-background' : 'bg-card'} rounded-2xl border border-border
           shadow-2xl animate-slide-up overflow-hidden
         `}
       >

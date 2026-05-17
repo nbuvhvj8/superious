@@ -1,5 +1,3 @@
-
-
 import React from 'react';
 import { HugeiconsIcon, IconSvgElement } from '@hugeicons/react';
 import * as HugeIcons from '@hugeicons/core-free-icons';

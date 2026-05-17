@@ -1,5 +1,3 @@
-
-
 import React from 'react';
 import { HugeiconsIcon } from '@hugeicons/react';
 import { ArrowRight01Icon, CreditCardIcon, Mail01Icon } from '@hugeicons/core-free-icons';

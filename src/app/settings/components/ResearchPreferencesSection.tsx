@@ -1,9 +1,11 @@
-
-
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { HugeiconsIcon } from '@hugeicons/react';
-import { CheckmarkCircle01Icon, Loading03Icon, SlidersHorizontalIcon } from '@hugeicons/core-free-icons';
+import {
+  CheckmarkCircle01Icon,
+  Loading03Icon,
+  SlidersHorizontalIcon,
+} from '@hugeicons/core-free-icons';
 import Toggle from '@/components/ui/Toggle';
 
 interface ResearchFormData {

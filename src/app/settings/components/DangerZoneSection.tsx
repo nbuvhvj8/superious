@@ -1,5 +1,3 @@
-
-
 import React, { useState } from 'react';
 import { HugeiconsIcon } from '@hugeicons/react';
 import { Alert01Icon, Delete02Icon, ImageNotFound01Icon } from '@hugeicons/core-free-icons';

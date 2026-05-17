@@ -1,8 +1,14 @@
-
-
 import React, { useState, useEffect, useCallback } from 'react';
 import { HugeiconsIcon } from '@hugeicons/react';
-import { AlertCircleIcon, ArrowUpRight01Icon, CheckmarkCircle01Icon, CpuIcon, Loading03Icon, Search01Icon, SecurityCheckIcon } from '@hugeicons/core-free-icons';
+import {
+  AlertCircleIcon,
+  ArrowUpRight01Icon,
+  CheckmarkCircle01Icon,
+  CpuIcon,
+  Loading03Icon,
+  Search01Icon,
+  SecurityCheckIcon,
+} from '@hugeicons/core-free-icons';
 
 interface DetectedProvider {
   id: string;
@@ -94,8 +100,12 @@ export default function SmartKeyInput({ onSave }: SmartKeyInputProps) {
           autoComplete="off"
         />
         <div className="absolute inset-y-0 right-3 flex items-center">
-          {isDetecting && <HugeiconsIcon icon={Loading03Icon} size={18} className="animate-spin text-primary" />}
-          {isSaved && <HugeiconsIcon icon={CheckmarkCircle01Icon} size={18} className="text-primary" />}
+          {isDetecting && (
+            <HugeiconsIcon icon={Loading03Icon} size={18} className="animate-spin text-primary" />
+          )}
+          {isSaved && (
+            <HugeiconsIcon icon={CheckmarkCircle01Icon} size={18} className="text-primary" />
+          )}
         </div>
       </div>
 
@@ -159,11 +169,13 @@ export default function SmartKeyInput({ onSave }: SmartKeyInputProps) {
             >
               {isSaving ? (
                 <>
-                  <HugeiconsIcon icon={Loading03Icon} size={16} className="animate-spin" /> Saving...
+                  <HugeiconsIcon icon={Loading03Icon} size={16} className="animate-spin" />{' '}
+                  Saving...
                 </>
               ) : (
                 <>
-                  <HugeiconsIcon icon={SecurityCheckIcon} size={16} /> Encrypt & Save {detectedProvider.name} Key
+                  <HugeiconsIcon icon={SecurityCheckIcon} size={16} /> Encrypt & Save{' '}
+                  {detectedProvider.name} Key
                 </>
               )}
             </button>

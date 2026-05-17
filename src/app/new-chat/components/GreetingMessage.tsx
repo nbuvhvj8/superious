@@ -1,5 +1,3 @@
-
-
 import React from 'react';
 import AppLogo from '@/components/ui/AppLogo';
 
@@ -13,8 +11,8 @@ export default function GreetingMessage() {
             Hello, ready to research?
           </h1>
           <p className="text-[16px] text-muted-foreground leading-relaxed">
-            I'm your autonomous research partner. Give me a topic, and I'll explore sources, 
-            structure insights, and draft professional video scripts for you.
+            I&apos;m your autonomous research partner. Give me a topic, and I&apos;ll explore
+            sources, structure insights, and draft professional video scripts for you.
           </p>
         </div>
       </div>

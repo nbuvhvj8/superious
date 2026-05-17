@@ -1,5 +1,3 @@
-
-
 import React, { useRef, useState, useEffect, forwardRef, useImperativeHandle } from 'react';
 import { HugeiconsIcon } from '@hugeicons/react';
 import { Add01Icon, ArrowDown01Icon } from '@hugeicons/core-free-icons';
@@ -21,7 +19,18 @@ export interface ChatInputHandle {
 }
 
 const ChatInput = forwardRef<ChatInputHandle, ChatInputProps>(
-  ({ value, onChange, onSend, selectedModel: propSelectedModel, onModelChange, isGenerating = false, showDisclaimer = false }, ref) => {
+  (
+    {
+      value,
+      onChange,
+      onSend,
+      selectedModel: propSelectedModel,
+      onModelChange,
+      isGenerating = false,
+      showDisclaimer = false,
+    },
+    ref
+  ) => {
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const [isFocused, setIsFocused] = useState(false);
     const [localSelectedModel, setLocalSelectedModel] = useState('Select Model');
@@ -153,9 +162,11 @@ const ChatInput = forwardRef<ChatInputHandle, ChatInputProps>(
                 "
               >
                 <span>{currentModel}</span>
-                <HugeiconsIcon icon={ArrowDown01Icon}
+                <HugeiconsIcon
+                  icon={ArrowDown01Icon}
                   size={13}
-                  className={`transition-transform duration-200 ${showModels ? 'rotate-180' : ''}`} />
+                  className={`transition-transform duration-200 ${showModels ? 'rotate-180' : ''}`}
+                />
               </button>
 
               {showModels && (

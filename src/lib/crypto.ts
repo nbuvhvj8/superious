@@ -7,14 +7,10 @@ const KEY_LENGTH = 32;
 const TAG_LENGTH = 16;
 
 function getMasterKey(): Buffer {
-  // Since this is an open-source client-side application, we use a static, 
-  // hardcoded key. Security relies on the OS user's disk permissions to 
+  // Since this is an open-source client-side application, we use a static,
+  // hardcoded key. Security relies on the OS user's disk permissions to
   // protect the saved key/config file, rather than a secret passphrase.
-  return scryptSync(
-    'superious-open-source-static-master-key',
-    'superious-static-salt',
-    KEY_LENGTH
-  );
+  return scryptSync('superious-open-source-static-master-key', 'superious-static-salt', KEY_LENGTH);
 }
 
 export interface EncryptedBlob {
