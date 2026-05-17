@@ -1,5 +1,3 @@
-
-
 import React from 'react';
 import { useTypewriter } from '@/lib/useTypewriter';
 
@@ -58,7 +56,12 @@ export default function StreamingText({
     if (!headingMatch) return <p key={index}>{renderInline(line)}</p>;
     const level = headingMatch[1].length;
     const textValue = headingMatch[2];
-    const headingClass = level === 1 ? 'text-[1.2em] font-semibold' : level === 2 ? 'text-[1.1em] font-semibold' : 'font-semibold';
+    const headingClass =
+      level === 1
+        ? 'text-[1.2em] font-semibold'
+        : level === 2
+          ? 'text-[1.1em] font-semibold'
+          : 'font-semibold';
     return (
       <p key={index} className={headingClass}>
         {renderInline(textValue)}

@@ -1,8 +1,14 @@
-
-
 import React, { useState, useEffect } from 'react';
 import { HugeiconsIcon } from '@hugeicons/react';
-import { ArrowDown01Icon, Camera01Icon, ComputerIcon, MoonIcon, Sun01Icon, Tick01Icon, UserIcon } from '@hugeicons/core-free-icons';
+import {
+  ArrowDown01Icon,
+  Camera01Icon,
+  ComputerIcon,
+  MoonIcon,
+  Sun01Icon,
+  Tick01Icon,
+  UserIcon,
+} from '@hugeicons/core-free-icons';
 import Toggle from '@/components/ui/Toggle';
 
 const APP_COLORS = [
@@ -24,7 +30,7 @@ export default function GeneralSection() {
   const handleAppearanceChange = (mode: 'light' | 'dark' | 'system') => {
     setAppearance(mode);
     localStorage.setItem('appearance', mode);
-    
+
     if (mode === 'system') {
       const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
       document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
@@ -34,7 +40,8 @@ export default function GeneralSection() {
   };
 
   useEffect(() => {
-    const savedAppearance = localStorage.getItem('appearance') as 'light' | 'dark' | 'system' || 'system';
+    const savedAppearance =
+      (localStorage.getItem('appearance') as 'light' | 'dark' | 'system') || 'system';
     setAppearance(savedAppearance);
 
     const savedColor = localStorage.getItem('app_color');
@@ -117,7 +124,11 @@ export default function GeneralSection() {
               {[
                 { id: 'light', label: 'White', icon: <HugeiconsIcon icon={Sun01Icon} size={14} /> },
                 { id: 'dark', label: 'Black', icon: <HugeiconsIcon icon={MoonIcon} size={14} /> },
-                { id: 'system', label: 'System', icon: <HugeiconsIcon icon={ComputerIcon} size={14} /> },
+                {
+                  id: 'system',
+                  label: 'System',
+                  icon: <HugeiconsIcon icon={ComputerIcon} size={14} />,
+                },
               ].map((mode) => (
                 <button
                   key={mode.id}
@@ -131,7 +142,8 @@ export default function GeneralSection() {
                   {mode.icon}
                   {mode.label}
                 </button>
-              ))}            </div>
+              ))}{' '}
+            </div>
           </div>
 
           {/* App Color Row */}
@@ -151,9 +163,11 @@ export default function GeneralSection() {
                   />
                   <span>{APP_COLORS.find((c) => c.value === appColor)?.name}</span>
                 </div>
-                <HugeiconsIcon icon={ArrowDown01Icon}
+                <HugeiconsIcon
+                  icon={ArrowDown01Icon}
                   size={14}
-                  className={`text-muted-foreground transition-transform ${showColorDropdown ? 'rotate-180' : ''}`} />
+                  className={`text-muted-foreground transition-transform ${showColorDropdown ? 'rotate-180' : ''}`}
+                />
               </button>
 
               {showColorDropdown && (
@@ -171,7 +185,9 @@ export default function GeneralSection() {
                           style={{ backgroundColor: color.value }}
                         />
                         <span className="flex-1">{color.name}</span>
-                        {appColor === color.value && <HugeiconsIcon icon={Tick01Icon} className="text-primary" size={13} />}
+                        {appColor === color.value && (
+                          <HugeiconsIcon icon={Tick01Icon} className="text-primary" size={13} />
+                        )}
                       </button>
                     ))}
                   </div>

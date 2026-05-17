@@ -1,8 +1,12 @@
-
-
 import React, { useState, useEffect } from 'react';
 import { HugeiconsIcon } from '@hugeicons/react';
-import { AlertCircleIcon, ArrowUpRight01Icon, CheckmarkCircle01Icon, Loading03Icon, Unlink01Icon } from '@hugeicons/core-free-icons';
+import {
+  AlertCircleIcon,
+  ArrowUpRight01Icon,
+  CheckmarkCircle01Icon,
+  Loading03Icon,
+  Unlink01Icon,
+} from '@hugeicons/core-free-icons';
 
 export default function GoogleDocsIntegrationSection() {
   const [status, setStatus] = useState<'idle' | 'connecting' | 'connected' | 'error'>('idle');
@@ -167,7 +171,11 @@ export default function GoogleDocsIntegrationSection() {
 
         {errorMsg && (
           <div className="flex items-start gap-2 px-3 py-2.5 rounded-[8px] bg-red-50 border border-red-100">
-            <HugeiconsIcon icon={AlertCircleIcon} size={14} className="text-red-500 shrink-0 mt-0.5" />
+            <HugeiconsIcon
+              icon={AlertCircleIcon}
+              size={14}
+              className="text-red-500 shrink-0 mt-0.5"
+            />
             <p className="text-xs text-red-600 font-medium leading-relaxed">{errorMsg}</p>
           </div>
         )}

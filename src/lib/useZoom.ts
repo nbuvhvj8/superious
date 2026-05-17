@@ -15,7 +15,10 @@ const ZOOM_KEY = 'zoom-level';
  */
 export function useZoom() {
   const zoomLevel = useRef(ZOOM_DEFAULT);
-  const storeRef = useRef<{ set: (key: string, value: number) => Promise<void>; save: () => Promise<void> } | null>(null);
+  const storeRef = useRef<{
+    set: (key: string, value: number) => Promise<void>;
+    save: () => Promise<void>;
+  } | null>(null);
 
   useEffect(() => {
     // Only run in browser/Tauri environment
@@ -23,7 +26,13 @@ export function useZoom() {
 
     // Dynamically import Tauri APIs to avoid errors in non-Tauri environments (like browsers or playwright)
     let appWindow: { setZoom: (zoom: number) => Promise<void> } | null = null;
-    let load: ((path: string) => Promise<{ get: (key: string) => Promise<unknown>; set: (key: string, value: number) => Promise<void>; save: () => Promise<void> }>) | null = null;
+    let load:
+      | ((path: string) => Promise<{
+          get: (key: string) => Promise<unknown>;
+          set: (key: string, value: number) => Promise<void>;
+          save: () => Promise<void>;
+        }>)
+      | null = null;
 
     const initZoom = async () => {
       try {

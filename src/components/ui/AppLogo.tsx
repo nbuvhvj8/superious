@@ -1,5 +1,3 @@
-
-
 import React, { memo, useMemo } from 'react';
 import { HugeiconsIcon } from '@hugeicons/react';
 import { FeatherIcon } from '@hugeicons/core-free-icons';
@@ -40,7 +38,12 @@ const AppLogo = memo(function AppLogo({
           unoptimized={src.endsWith('.svg')}
         />
       ) : (
-        <HugeiconsIcon icon={FeatherIcon} size={size} strokeWidth={2.25} className="flex-shrink-0 text-primary" />
+        <HugeiconsIcon
+          icon={FeatherIcon}
+          size={size}
+          strokeWidth={2.25}
+          className="flex-shrink-0 text-primary"
+        />
       )}
     </div>
   );

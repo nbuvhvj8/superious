@@ -1,5 +1,3 @@
-
-
 import React, { useRef, useEffect } from 'react';
 import GreetingMessage from './GreetingMessage';
 import MessageRow, { Message } from './MessageRow';

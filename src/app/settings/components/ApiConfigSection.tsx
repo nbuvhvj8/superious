@@ -1,8 +1,14 @@
-
-
 import React, { useEffect, useMemo, useState } from 'react';
 import { HugeiconsIcon } from '@hugeicons/react';
-import { ArrowDown01Icon, Delete02Icon, Loading03Icon, PencilEdit01Icon, Tick01Icon, ViewIcon, ViewOffIcon } from '@hugeicons/core-free-icons';
+import {
+  ArrowDown01Icon,
+  Delete02Icon,
+  Loading03Icon,
+  PencilEdit01Icon,
+  Tick01Icon,
+  ViewIcon,
+  ViewOffIcon,
+} from '@hugeicons/core-free-icons';
 import SmartKeyInput from './SmartKeyInput';
 import { PROVIDERS } from '@/lib/providers';
 import { broadcastModelsUpdate, syncModelsToStorage } from '@/lib/use-chat-models';
@@ -120,7 +126,11 @@ function ProviderRow({
                 aria-label={show ? 'Hide API key' : 'Show API key'}
                 className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground focus:outline-none focus:ring-2 focus:ring-primary rounded-sm"
               >
-                {show ? <HugeiconsIcon icon={ViewOffIcon} size={13} /> : <HugeiconsIcon icon={ViewIcon} size={13} />}
+                {show ? (
+                  <HugeiconsIcon icon={ViewOffIcon} size={13} />
+                ) : (
+                  <HugeiconsIcon icon={ViewIcon} size={13} />
+                )}
               </button>
             </div>
             <button
@@ -129,7 +139,11 @@ function ProviderRow({
               disabled={saving || !keyValue.trim()}
               className="btn-primary text-[11px] h-8 px-3"
             >
-              {saving ? <HugeiconsIcon icon={Loading03Icon} size={12} className="animate-spin" /> : 'Save'}
+              {saving ? (
+                <HugeiconsIcon icon={Loading03Icon} size={12} className="animate-spin" />
+              ) : (
+                'Save'
+              )}
             </button>
             {provider.configured && (
               <button
@@ -182,9 +196,11 @@ function ProviderRow({
               className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-muted/50 hover:bg-muted text-[11px] font-bold text-foreground transition-all"
             >
               {selectedModels.length > 0 ? `${selectedModels.length} Models` : 'Select Models'}
-              <HugeiconsIcon icon={ArrowDown01Icon}
+              <HugeiconsIcon
+                icon={ArrowDown01Icon}
                 size={12}
-                className={`transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} />
+                className={`transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`}
+              />
             </button>
 
             {isDropdownOpen && (

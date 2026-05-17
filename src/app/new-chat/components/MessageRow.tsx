@@ -1,8 +1,14 @@
-
-
 import React, { useState } from 'react';
 import { HugeiconsIcon } from '@hugeicons/react';
-import { ArrowDown01Icon, Copy01Icon, PencilEdit01Icon, RefreshIcon, ThumbsDownIcon, ThumbsUpIcon, Tick01Icon } from '@hugeicons/core-free-icons';
+import {
+  ArrowDown01Icon,
+  Copy01Icon,
+  PencilEdit01Icon,
+  RefreshIcon,
+  ThumbsDownIcon,
+  ThumbsUpIcon,
+  Tick01Icon,
+} from '@hugeicons/core-free-icons';
 import StreamingText from './StreamingText';
 import CommandResponseCard, { type CommandType } from './CommandResponseCard';
 import ThinkingIndicator from './ThinkingIndicator';
@@ -44,7 +50,12 @@ export default function MessageRow({ message, onRegenerate, onEdit }: MessageRow
 
   const parsedThinking = React.useMemo(() => {
     if (!isAI)
-      return { responseText: message.content, thoughts: [] as string[], isThinking: false, toolCalls: [] as Array<{ tool: string; query: string }> };
+      return {
+        responseText: message.content,
+        thoughts: [] as string[],
+        isThinking: false,
+        toolCalls: [] as Array<{ tool: string; query: string }>,
+      };
 
     const thinkingRegex = /<thinking>([\s\S]*?)(?:<\/thinking>|$)/gi;
     const thoughts: string[] = [];
@@ -59,9 +70,13 @@ export default function MessageRow({ message, onRegenerate, onEdit }: MessageRow
     const closeTagCount = (message.content.match(/<\/thinking>/gi) ?? []).length;
 
     const toolCalls: Array<{ tool: string; query: string }> = [];
-    const toolTagRegex = /<tool(?:_call)?\s+[^>]*?(?:name|tool)=['"]([^'"]+)['"][^>]*?(?:query=['"]([^'"]*)['"])?[^>]*\/?>(?:([^<]*)<\/tool(?:_call)?>)?/gi;
+    const toolTagRegex =
+      /<tool(?:_call)?\s+[^>]*?(?:name|tool)=['"]([^'"]+)['"][^>]*?(?:query=['"]([^'"]*)['"])?[^>]*\/?>(?:([^<]*)<\/tool(?:_call)?>)?/gi;
     while ((match = toolTagRegex.exec(message.content)) !== null) {
-      toolCalls.push({ tool: match[1], query: (match[2] || match[3] || '').trim() || 'Running tool' });
+      toolCalls.push({
+        tool: match[1],
+        query: (match[2] || match[3] || '').trim() || 'Running tool',
+      });
     }
 
     const bracketToolRegex = /\[tool:([^\]]+)]\s*([^\n]*)/gi;
@@ -90,7 +105,9 @@ export default function MessageRow({ message, onRegenerate, onEdit }: MessageRow
     <div
       className={`group/msg w-full flex flex-col ${isAI ? 'items-start' : 'items-end'} mb-4 animate-fade-in px-4 md:px-0`}
     >
-      <div className={`flex items-start w-full max-w-[720px] mx-auto gap-2 ${isAI ? 'justify-start' : 'justify-end'}`}>
+      <div
+        className={`flex items-start w-full max-w-[720px] mx-auto gap-2 ${isAI ? 'justify-start' : 'justify-end'}`}
+      >
         <div className={`flex-1 flex flex-col gap-1 min-w-0 ${isAI ? 'items-start' : 'items-end'}`}>
           {/* Bubble */}
           <div
@@ -107,11 +124,15 @@ export default function MessageRow({ message, onRegenerate, onEdit }: MessageRow
                 <CommandResponseCard commandType={message.commandType as CommandType} />
               ) : message.streaming && !message.content.trim() ? (
                 <div className="inline-flex items-center gap-2">
-                  <span className="text-[12px] font-normal shimmer-text opacity-70">Thinking...</span>
+                  <span className="text-[12px] font-normal shimmer-text opacity-70">
+                    Thinking...
+                  </span>
                 </div>
               ) : (
                 <div className="space-y-1">
-                  {(parsedThinking.thoughts.length > 0 || parsedThinking.isThinking || parsedThinking.toolCalls.length > 0) && (
+                  {(parsedThinking.thoughts.length > 0 ||
+                    parsedThinking.isThinking ||
+                    parsedThinking.toolCalls.length > 0) && (
                     <div className="flex justify-start w-full">
                       <ThinkingIndicator
                         thinkingSteps={parsedThinking.thoughts}
@@ -125,7 +146,7 @@ export default function MessageRow({ message, onRegenerate, onEdit }: MessageRow
                     instant={message.instant ?? !message.streaming}
                     showCaret={message.streaming === true}
                   />
-                  
+
                   {/* AI Icons Below AI Text */}
                   {!message.streaming && (
                     <div className="flex items-center justify-start gap-1 mt-2 transition-opacity">
@@ -134,7 +155,11 @@ export default function MessageRow({ message, onRegenerate, onEdit }: MessageRow
                         className="p-1.5 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-all"
                         title={copied ? 'Copied!' : 'Copy'}
                       >
-                        {copied ? <HugeiconsIcon icon={Tick01Icon} size={14} className="text-primary" /> : <HugeiconsIcon icon={Copy01Icon} size={14} />}
+                        {copied ? (
+                          <HugeiconsIcon icon={Tick01Icon} size={14} className="text-primary" />
+                        ) : (
+                          <HugeiconsIcon icon={Copy01Icon} size={14} />
+                        )}
                       </button>
                       <button
                         onClick={onRegenerate}
@@ -160,11 +185,9 @@ export default function MessageRow({ message, onRegenerate, onEdit }: MessageRow
                 </div>
               )
             ) : (
-              <div className="whitespace-pre-wrap break-words">
-                {message.content}
-              </div>
+              <div className="whitespace-pre-wrap break-words">{message.content}</div>
             )}
-            
+
             {/* Expand Chevron for User Bubble */}
             {!isAI && isLongMessage && (
               <button
@@ -176,13 +199,15 @@ export default function MessageRow({ message, onRegenerate, onEdit }: MessageRow
                   hover:text-foreground/80 transition-colors z-10
                 `}
               >
-                <HugeiconsIcon icon={ArrowDown01Icon}
+                <HugeiconsIcon
+                  icon={ArrowDown01Icon}
                   size={14}
-                  className={`transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`} />
+                  className={`transition-transform duration-300 ${isExpanded ? 'rotate-180' : ''}`}
+                />
               </button>
             )}
           </div>
-          
+
           {/* User Icons Below Bubble */}
           {!isAI && (
             <div className="flex items-center justify-end gap-1 mt-1 opacity-0 group-hover/msg:opacity-100 transition-opacity">
@@ -198,7 +223,11 @@ export default function MessageRow({ message, onRegenerate, onEdit }: MessageRow
                 className="p-1 rounded-md text-muted-foreground hover:bg-muted hover:text-foreground transition-all"
                 title={copied ? 'Copied!' : 'Copy'}
               >
-                {copied ? <HugeiconsIcon icon={Tick01Icon} size={13} className="text-primary" /> : <HugeiconsIcon icon={Copy01Icon} size={13} />}
+                {copied ? (
+                  <HugeiconsIcon icon={Tick01Icon} size={13} className="text-primary" />
+                ) : (
+                  <HugeiconsIcon icon={Copy01Icon} size={13} />
+                )}
               </button>
             </div>
           )}

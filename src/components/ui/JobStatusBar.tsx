@@ -1,8 +1,13 @@
-
-
 import React from 'react';
 import { HugeiconsIcon } from '@hugeicons/react';
-import { Camera01Icon, CancelCircleIcon, CheckmarkCircle01Icon, Clock01Icon, PenTool01Icon, Search01Icon } from '@hugeicons/core-free-icons';
+import {
+  Camera01Icon,
+  CancelCircleIcon,
+  CheckmarkCircle01Icon,
+  Clock01Icon,
+  PenTool01Icon,
+  Search01Icon,
+} from '@hugeicons/core-free-icons';
 import type { JobStatus } from './StatusBadge';
 
 interface JobStatusBarProps {
@@ -12,15 +17,31 @@ interface JobStatusBarProps {
 }
 
 const STAGES: { key: JobStatus; label: string; icon: React.ReactNode }[] = [
-  { key: 'queued', label: 'Queued', icon: <HugeiconsIcon icon={Clock01Icon} size={11} strokeWidth={2.25} /> },
-  { key: 'researching', label: 'Researching', icon: <HugeiconsIcon icon={Search01Icon} size={11} strokeWidth={2.25} /> },
+  {
+    key: 'queued',
+    label: 'Queued',
+    icon: <HugeiconsIcon icon={Clock01Icon} size={11} strokeWidth={2.25} />,
+  },
+  {
+    key: 'researching',
+    label: 'Researching',
+    icon: <HugeiconsIcon icon={Search01Icon} size={11} strokeWidth={2.25} />,
+  },
   {
     key: 'screenshotting',
     label: 'Capturing Sources',
     icon: <HugeiconsIcon icon={Camera01Icon} size={11} strokeWidth={2.25} />,
   },
-  { key: 'writing', label: 'Writing Script', icon: <HugeiconsIcon icon={PenTool01Icon} size={11} strokeWidth={2.25} /> },
-  { key: 'done', label: 'Done', icon: <HugeiconsIcon icon={CheckmarkCircle01Icon} size={11} strokeWidth={2.25} /> },
+  {
+    key: 'writing',
+    label: 'Writing Script',
+    icon: <HugeiconsIcon icon={PenTool01Icon} size={11} strokeWidth={2.25} />,
+  },
+  {
+    key: 'done',
+    label: 'Done',
+    icon: <HugeiconsIcon icon={CheckmarkCircle01Icon} size={11} strokeWidth={2.25} />,
+  },
 ];
 
 const STAGE_ORDER: Record<JobStatus, number> = {

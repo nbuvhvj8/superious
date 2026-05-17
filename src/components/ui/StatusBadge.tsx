@@ -1,6 +1,13 @@
 import React from 'react';
 import { HugeiconsIcon } from '@hugeicons/react';
-import { Camera01Icon, CancelCircleIcon, CheckmarkCircle01Icon, Clock01Icon, PenTool01Icon, Search01Icon } from '@hugeicons/core-free-icons';
+import {
+  Camera01Icon,
+  CancelCircleIcon,
+  CheckmarkCircle01Icon,
+  Clock01Icon,
+  PenTool01Icon,
+  Search01Icon,
+} from '@hugeicons/core-free-icons';
 
 export type JobStatus = 'queued' | 'researching' | 'screenshotting' | 'writing' | 'done' | 'failed';
 export type SourceStatus = 'pending' | 'done' | 'failed';
@@ -16,17 +23,23 @@ const JOB_STATUS_CONFIG: Record<
   },
   researching: {
     label: 'Researching',
-    icon: <HugeiconsIcon icon={Search01Icon} size={11} strokeWidth={2.25} className="status-pulse" />,
+    icon: (
+      <HugeiconsIcon icon={Search01Icon} size={11} strokeWidth={2.25} className="status-pulse" />
+    ),
     className: 'bg-primary/10 text-primary border border-primary/20',
   },
   screenshotting: {
     label: 'Capturing',
-    icon: <HugeiconsIcon icon={Camera01Icon} size={11} strokeWidth={2.25} className="status-pulse" />,
+    icon: (
+      <HugeiconsIcon icon={Camera01Icon} size={11} strokeWidth={2.25} className="status-pulse" />
+    ),
     className: 'bg-violet-500/10 text-violet-600 border border-violet-500/20',
   },
   writing: {
     label: 'Writing',
-    icon: <HugeiconsIcon icon={PenTool01Icon} size={11} strokeWidth={2.25} className="status-pulse" />,
+    icon: (
+      <HugeiconsIcon icon={PenTool01Icon} size={11} strokeWidth={2.25} className="status-pulse" />
+    ),
     className: 'bg-blue-500/10 text-blue-600 border border-blue-500/20',
   },
   done: {

@@ -1,5 +1,3 @@
-
-
 import React from 'react';
 import { HugeiconsIcon } from '@hugeicons/react';
 import { ArrowRight01Icon, Wrench01Icon } from '@hugeicons/core-free-icons';
@@ -26,9 +24,11 @@ export default function ThinkingIndicator({
         onClick={() => setIsOpen((prev) => !prev)}
         className="inline-flex items-center gap-1 text-[14px] font-normal tracking-tight text-muted-foreground"
       >
-        <HugeiconsIcon icon={ArrowRight01Icon}
+        <HugeiconsIcon
+          icon={ArrowRight01Icon}
           size={14}
-          className={`text-muted-foreground transition-transform ${isOpen ? 'rotate-90' : ''}`} />
+          className={`text-muted-foreground transition-transform ${isOpen ? 'rotate-90' : ''}`}
+        />
         <span className={isThinking ? 'shimmer-text opacity-70' : ''}>Thinking</span>
       </button>
       {isOpen && (hasSteps || hasToolCalls) && (
