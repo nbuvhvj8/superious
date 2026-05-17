@@ -2,11 +2,9 @@
 
 import React, { useMemo, useState } from 'react';
 import AppLogo from './ui/AppLogo';
-import Link from 'next/link';
+import { Link, usePathname } from '@/lib/compat/next';
 import { HugeiconsIcon } from '@hugeicons/react';
-import { usePathname } from 'next/navigation';
 import {
-  Briefcase02Icon,
   Clock01Icon,
   MoreHorizontalIcon,
   PanelLeftIcon,

@@ -50,20 +50,14 @@ export default function GoogleDocsIntegrationSection() {
     setStatus('connecting');
     setErrorMsg('');
 
-    const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
+    const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
     if (!clientId) {
       setStatus('error');
-      setErrorMsg('NEXT_PUBLIC_GOOGLE_CLIENT_ID is not configured in environment variables.');
+      setErrorMsg('VITE_GOOGLE_CLIENT_ID is not configured in environment variables.');
       return;
     }
 
-    // Prefer NEXT_PUBLIC_SITE_URL so reverse-proxied web deploys keep a
-    // deterministic redirect_uri (matches the server callback's
-    // `process.env.NEXT_PUBLIC_SITE_URL || request.nextUrl.origin`). The
-    // desktop sidecar build strips this env var so the client falls back
-    // to `window.location.origin`, which matches the random localhost
-    // port the standalone server is listening on.
-    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || window.location.origin;
+    const siteUrl = window.location.origin;
     const redirectUri = `${siteUrl}/api/auth/google/callback`;
     const scope = encodeURIComponent(
       'https://www.googleapis.com/auth/documents https://www.googleapis.com/auth/drive.file email profile'

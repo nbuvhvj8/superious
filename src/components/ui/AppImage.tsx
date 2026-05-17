@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useCallback, useMemo, memo } from 'react';
-import Image, { type ImageProps } from 'next/image';
 
 interface AppImageProps {
   src: string;
@@ -10,15 +9,10 @@ interface AppImageProps {
   height?: number;
   className?: string;
   priority?: boolean;
-  quality?: number;
-  placeholder?: 'blur' | 'empty';
-  blurDataURL?: string;
   fill?: boolean;
-  sizes?: string;
   onClick?: () => void;
   fallbackSrc?: string;
   loading?: 'lazy' | 'eager';
-  unoptimized?: boolean;
   [key: string]: unknown;
 }
 
@@ -29,34 +23,28 @@ const AppImage = memo(function AppImage({
   height,
   className = '',
   priority = false,
-  quality = 85,
-  placeholder = 'empty',
-  blurDataURL,
   fill = false,
-  sizes,
   onClick,
   fallbackSrc = '/assets/images/no_image.png',
   loading = 'lazy',
-  unoptimized = false,
   ...props
 }: AppImageProps) {
-  const [imageSrc, setImageSrc] = useState(src);
-  const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const isExternalUrl = useMemo(
-    () => typeof imageSrc === 'string' && imageSrc.startsWith('http'),
-    [imageSrc]
-  );
-  const resolvedUnoptimized = unoptimized || isExternalUrl;
+  // When src changes, the browser naturally handles the new load.
+  // We just need to reset our error/loading states if the URL actually changed.
+  const [lastSrc, setLastSrc] = useState(src);
+  if (src !== lastSrc) {
+    setLastSrc(src);
+    setHasError(false);
+    setIsLoading(true);
+  }
 
   const handleError = useCallback(() => {
-    if (!hasError && imageSrc !== fallbackSrc) {
-      setImageSrc(fallbackSrc);
-      setHasError(true);
-    }
+    setHasError(true);
     setIsLoading(false);
-  }, [hasError, imageSrc, fallbackSrc]);
+  }, []);
 
   const handleLoad = useCallback(() => {
     setIsLoading(false);
@@ -70,54 +58,21 @@ const AppImage = memo(function AppImage({
     return classes.filter(Boolean).join(' ');
   }, [className, isLoading, onClick]);
 
-  const imageProps = useMemo<ImageProps>(() => {
-    const baseProps: ImageProps = {
-      src: imageSrc,
-      alt,
-      className: imageClassName,
-      quality,
-      placeholder,
-      unoptimized: resolvedUnoptimized,
-      onError: handleError,
-      onLoad: handleLoad,
-      onClick,
-    };
-
-    if (priority) {
-      baseProps.priority = true;
-    } else {
-      baseProps.loading = loading;
-    }
-
-    if (blurDataURL && placeholder === 'blur') {
-      baseProps.blurDataURL = blurDataURL;
-    }
-
-    return baseProps;
-  }, [
-    imageSrc,
-    alt,
-    imageClassName,
-    quality,
-    placeholder,
-    blurDataURL,
-    resolvedUnoptimized,
-    priority,
-    loading,
-    handleError,
-    handleLoad,
-    onClick,
-  ]);
+  const resolvedLoading = priority ? 'eager' : loading;
+  const currentSrc = hasError ? fallbackSrc : src;
 
   if (fill) {
     return (
       <div className="relative" style={{ width: '100%', height: '100%' }}>
-        <Image
-          {...imageProps}
+        <img
+          src={currentSrc}
           alt={alt}
-          fill
-          sizes={sizes || '(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'}
-          style={{ objectFit: 'cover' }}
+          className={imageClassName}
+          onError={handleError}
+          onLoad={handleLoad}
+          onClick={onClick}
+          loading={resolvedLoading}
+          style={{ objectFit: 'cover', width: '100%', height: '100%' }}
           {...props}
         />
       </div>
@@ -125,12 +80,16 @@ const AppImage = memo(function AppImage({
   }
 
   return (
-    <Image
-      {...imageProps}
+    <img
+      src={currentSrc}
       alt={alt}
-      width={width || 400}
-      height={height || 300}
-      sizes={sizes}
+      width={width}
+      height={height}
+      className={imageClassName}
+      onError={handleError}
+      onLoad={handleLoad}
+      onClick={onClick}
+      loading={resolvedLoading}
       {...props}
     />
   );

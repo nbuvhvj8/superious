@@ -18,15 +18,11 @@ on:
       - main
     paths:
       - 'src-tauri/**'
-      - 'scripts/prepare-sidecar.mjs'
-      - 'next.config.mjs'
       - 'package.json'
       - '.github/workflows/desktop-build.yml'
   pull_request:
     paths:
       - 'src-tauri/**'
-      - 'scripts/prepare-sidecar.mjs'
-      - 'next.config.mjs'
       - 'package.json'
       - '.github/workflows/desktop-build.yml'
   workflow_dispatch:
@@ -109,8 +105,8 @@ jobs:
       - name: Install npm deps
         run: npm install --no-audit --no-fund
 
-      - name: Build the Next.js app + sidecar
-        run: npm run desktop:prebuild
+      - name: Build the SPA
+        run: npm run build:vite
 
       - name: Build Tauri bundle (unsigned)
         run: npx tauri build --target ${{ matrix.target }}
