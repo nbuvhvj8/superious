@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function AppImage({ src, alt, fill, ...props }: any) {
+export default function AppImage({ src, alt, fill, unoptimized, priority, ...props }: any) {
   const style = fill ? {
     position: 'absolute',
     height: '100%',
