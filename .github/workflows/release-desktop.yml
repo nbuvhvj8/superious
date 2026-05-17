@@ -85,8 +85,8 @@ jobs:
       - name: Install npm deps
         run: npm install --no-audit --no-fund
 
-      - name: Build the Next.js app + sidecar
-        run: npm run desktop:prebuild
+      - name: Build the SPA
+        run: npm run build:vite
 
       - name: Build Tauri bundle (unsigned)
         run: npx tauri build --target ${{ matrix.target }}

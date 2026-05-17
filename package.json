@@ -12,8 +12,7 @@
     "test:watch": "vitest",
     "tauri": "tauri",
     "tauri:dev": "tauri dev",
-    "tauri:build": "tauri build",
-    "desktop:prepare-sidecar": "node scripts/prepare-sidecar.mjs"
+    "tauri:build": "tauri build"
   },
   "dependencies": {
     "@hugeicons/core-free-icons": "^4.1.4",

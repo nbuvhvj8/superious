@@ -25,7 +25,7 @@ jobs:
       - name: Setup Rust
         uses: dtolnay/rust-toolchain@stable
       - name: Prepare Build Artifacts
-        run: npm run desktop:prebuild
+        run: npm run build:vite
       - name: Build
         run: cargo build --verbose
         working-directory: src-tauri
@@ -52,7 +52,7 @@ jobs:
         with:
           components: clippy, rustfmt
       - name: Prepare Build Artifacts
-        run: npm run desktop:prebuild
+        run: npm run build:vite
       - name: Check Formatting
         run: cargo fmt -- --check
         working-directory: src-tauri
