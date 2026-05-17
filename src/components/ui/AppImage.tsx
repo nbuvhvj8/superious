@@ -1,11 +1,7 @@
-
+'use client';
 
 import React, { useState, useCallback, useMemo, memo } from 'react';
-<<<<<<< HEAD
 import Image, { type ImageProps } from 'next/image';
-=======
-import Image from '@/lib/compat/image';
->>>>>>> 46resume
 
 interface AppImageProps {
   src: string;

@@ -6,11 +6,13 @@ import UpdaterManager from '@/components/UpdaterManager';
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <div className="font-outfit antialiased">
-      <UpdaterManager />
-      <ZoomManager />
-      <ColorManager />
-      {children}
-    </div>
+    <html lang="en">
+      <body className="font-outfit antialiased">
+        <UpdaterManager />
+        <ZoomManager />
+        <ColorManager />
+        {children}
+      </body>
+    </html>
   );
 }
