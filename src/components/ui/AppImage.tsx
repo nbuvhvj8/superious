@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useCallback, useMemo, memo } from 'react';
-import Image from 'next/image';
+import Image, { type ImageProps } from 'next/image';
 
 interface AppImageProps {
   src: string;
@@ -70,8 +70,8 @@ const AppImage = memo(function AppImage({
     return classes.filter(Boolean).join(' ');
   }, [className, isLoading, onClick]);
 
-  const imageProps = useMemo(() => {
-    const baseProps: Record<string, unknown> = {
+  const imageProps = useMemo<ImageProps>(() => {
+    const baseProps: ImageProps = {
       src: imageSrc,
       alt,
       className: imageClassName,
