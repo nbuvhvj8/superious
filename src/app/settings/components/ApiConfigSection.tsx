@@ -1,4 +1,4 @@
-'use client';
+
 
 import React, { useEffect, useMemo, useState } from 'react';
 import { ChevronDown, Eye, EyeOff, Loader2, Trash2, Edit3, Check } from 'lucide-react';

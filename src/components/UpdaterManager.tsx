@@ -1,4 +1,4 @@
-'use client';
+
 import { useEffect } from 'react';
 import { check } from '@tauri-apps/plugin-updater';
 

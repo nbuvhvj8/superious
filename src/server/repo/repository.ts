@@ -1,4 +1,4 @@
-import type { Job, JobStatus, Script, Source, SourceStatus } from '../types';
+import type { Job, JobStatus, Script, Source, SourceStatus } from '@/shared/types';
 
 /**
  * Persistence interface for the backend.

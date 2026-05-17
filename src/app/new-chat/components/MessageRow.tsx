@@ -1,4 +1,4 @@
-'use client';
+
 
 import React, { useState } from 'react';
 import { Copy, RefreshCw, ThumbsUp, ThumbsDown, Check, Edit3, ChevronDown } from 'lucide-react';

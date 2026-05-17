@@ -1,4 +1,4 @@
-'use client';
+
 
 import React from 'react';
 import { Clock, Search, Camera, PenLine, CheckCircle2, XCircle } from 'lucide-react';

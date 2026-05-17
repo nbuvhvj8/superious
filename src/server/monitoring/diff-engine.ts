@@ -3,7 +3,7 @@ import type {
   RecaptureRun,
   RecaptureSourceRef,
   Source,
-} from '@/server/types';
+} from '@/shared/types';
 
 export interface DiffInput {
   scheduleId: string;

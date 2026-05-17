@@ -1,9 +1,8 @@
-'use client';
+
 
 import React, { useMemo, useState } from 'react';
 import AppLogo from './ui/AppLogo';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { Link, usePathname } from '@/lib/compat/next';
 import {
   BriefcaseBusiness,
   PanelLeft,

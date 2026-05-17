@@ -1,4 +1,4 @@
-'use client';
+
 
 import React, { useState, useEffect } from 'react';
 import { User, Sun, Moon, Monitor, Camera, ChevronDown, Check } from 'lucide-react';

@@ -1,4 +1,4 @@
-'use client';
+
 
 import React, { useState } from 'react';
 import { Trash2, AlertTriangle, ImageOff } from 'lucide-react';
