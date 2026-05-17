@@ -30,6 +30,7 @@ export default function UpdaterManager() {
     } catch (err) {
       console.error('Failed to check for updates:', err);
       setError('Failed to check for updates');
+      setStatus('error');
     }
   }, []);
 
@@ -69,9 +70,39 @@ export default function UpdaterManager() {
     }
   };
 
-  if (isDismissed || status === 'idle' || !update) {
+  if (isDismissed || status === 'idle' || (!update && status !== 'error')) {
     return null;
   }
+
+  const getBannerTitle = () => {
+    switch (status) {
+      case 'downloading':
+        return 'Downloading Update...';
+      case 'installed':
+        return 'Update Installed!';
+      case 'error':
+        return 'Update Error';
+      default:
+        return `Version ${update?.version} is available!`;
+    }
+  };
+
+  const getBannerSubtitle = () => {
+    switch (status) {
+      case 'downloading':
+        return 'Please wait while we prepare the latest version.';
+      case 'installed':
+        return 'Relaunching application...';
+      case 'error':
+        return error || 'Failed to check for updates';
+      default:
+        return 'A new version is ready to be installed.';
+    }
+  };
+
+  const getStatusLabel = () => {
+    return status === 'downloading' ? 'Working...' : 'Ready';
+  };
 
   return (
     <div className="fixed top-0 left-0 right-0 z-[1000] animate-in slide-in-from-top duration-300">
@@ -85,16 +116,8 @@ export default function UpdaterManager() {
             )}
           </div>
           <div className="truncate">
-            <p className="text-[13px] font-bold leading-tight">
-              {status === 'downloading' ? 'Downloading Update...' :
-               status === 'installed' ? 'Update Installed!' :
-               `Version ${update.version} is available!`}
-            </p>
-            <p className="text-[11px] font-medium opacity-80 truncate">
-              {status === 'downloading' ? 'Please wait while we prepare the latest version.' :
-               status === 'installed' ? 'Relaunching application...' :
-               'A new version is ready to be installed.'}
-            </p>
+            <p className="text-[13px] font-bold leading-tight">{getBannerTitle()}</p>
+            <p className="text-[11px] font-medium opacity-80 truncate">{getBannerSubtitle()}</p>
           </div>
         </div>
 
@@ -117,17 +140,15 @@ export default function UpdaterManager() {
             </>
           )}
           {(status === 'downloading' || status === 'installed') && (
-            <div className="px-3 py-1.5 text-[12px] font-bold opacity-60">
-              {status === 'downloading' ? 'Working...' : 'Ready'}
-            </div>
+            <div className="px-3 py-1.5 text-[12px] font-bold opacity-60">{getStatusLabel()}</div>
           )}
           {status === 'error' && (
-             <button
-                onClick={() => setStatus('available')}
-                className="bg-red-500 text-white px-3 py-1.5 rounded-[6px] text-[12px] font-bold"
-             >
-               Retry
-             </button>
+            <button
+              onClick={checkForUpdates}
+              className="bg-red-500 text-white px-3 py-1.5 rounded-[6px] text-[12px] font-bold"
+            >
+              Retry
+            </button>
           )}
         </div>
       </div>
