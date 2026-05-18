@@ -202,7 +202,7 @@ export default function ChatPage() {
 
   return (
     <AppLayout>
-      <div className="flex flex-col h-[100dvh] bg-background">
+      <div className="flex flex-col h-full bg-background">
         {/* Top Bar */}
         <ChatTopBar onNewChat={handleNewChat} />
 
