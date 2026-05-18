@@ -63,7 +63,10 @@ export function useZoom() {
       if (savedZoom === null) {
         const localValue = localStorage.getItem(ZOOM_KEY);
         if (localValue) {
-          savedZoom = parseFloat(localValue);
+          const parsed = parseFloat(localValue);
+          if (Number.isFinite(parsed)) {
+            savedZoom = parsed;
+          }
         }
       }
 
