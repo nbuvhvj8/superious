@@ -33,6 +33,9 @@ All notable changes to the Outlier project will be documented in this file.
   - *File: `README.md`*
 
 ### Bug Fixes & Maintenance
+- **Production-Grade Zoom System** ([#59](https://github.com/nbuvhvj8/superious/pull/59)) by @jules
+  - Re-implemented Tauri v2 zoom using native `setZoom` API with Electron-matched discrete levels and layout compensation.
+  - *Files: `src/lib/useZoom.ts`, `src/lib/tauri.ts`, `src-tauri/tauri.conf.json`, `src-tauri/capabilities/default.json`, `src/styles/tailwind.css`, `src/app/new-chat/page.tsx`, `src/components/AppLayout.tsx`*
 - **UI & Logic Refinement** ([#56](https://github.com/nbuvhvj8/superious/pull/56)) by @nbuvhvj8
   - Fixed Sidebar coloring, improved provider logic, and updated cryptography tests.
   - *Files: `src/components/Sidebar.tsx`, `src/lib/providers.ts`, `tests/crypto.test.ts`*
